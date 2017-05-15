@@ -27,4 +27,12 @@ public class IntWrapper implements iIntWrapper{
         }
         myInt=i;
     }
+
+    @Override
+    public void add(int i) throws IllegalArgumentException {
+        if (myInt+i<0) {
+            throw new IllegalArgumentException();
+        }
+        myInt+=i;
+    }
 }

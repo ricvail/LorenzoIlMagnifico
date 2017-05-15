@@ -7,6 +7,7 @@ public class Player {
     public final iIntWrapper stone, wood, servant, coin;
     public final iIntWrapper victoryPoints, militaryPoints, faithPoints;
     private PlayerColor color;
+    //private final AbstractClient client;
 
     public PlayerColor getColor() {
         return color;
@@ -28,7 +29,7 @@ public class Player {
     }
 
 
-    public enum PlayerColor{
+    public enum PlayerColor {
         RED, GREEN, BLUE, YELLOW
     }
 }
