@@ -33,6 +33,9 @@ public class AppTest
      */
     public void testApp()
     {
-        assertTrue( true );
+        App a = new App();
+        String [] s = {"lol", "asd"};
+        App.main(s);
+        assertEquals(a.asd(), 3);
     }
 }
