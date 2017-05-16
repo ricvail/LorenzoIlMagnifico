@@ -14,27 +14,27 @@ public class ActionSpace extends AbstractActionSpace {
     }
 
     @Override
-    boolean canPlace(FamilyMember familyMember) {
+    public boolean canPlace(FamilyMember familyMember) {
         return true;
     }
 
     @Override
-    void placeFamilyMember(FamilyMember familyMember) {
+    public void placeFamilyMember(FamilyMember familyMember) {
 
     }
 
     @Override
-    void cleanup() {
+    public void cleanup() {
 
     }
 
     @Override
-    ArrayList<FamilyMember> getFamilyMembers() {
+    public ArrayList<FamilyMember> getFamilyMembers() {
         return familyMembers;
     }
 
     @Override
-    Area getArea() {
+    public Area getArea() {
         return area;
     }
 }

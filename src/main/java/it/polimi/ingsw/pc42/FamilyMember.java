@@ -6,9 +6,9 @@ public class FamilyMember {
     private int value;
     public final Dice.DiceColor diceColor;
 
-    public FamilyMember(Player owner, int diceValue, Dice.DiceColor diceColor){
+    public FamilyMember(Player owner, Dice.DiceColor diceColor){
         this.owner = owner;
-        this.value = diceValue;
+        this.value = 0;
         this.diceColor = diceColor;
     }
 
