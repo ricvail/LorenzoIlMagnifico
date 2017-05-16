@@ -2,22 +2,19 @@ package it.polimi.ingsw.pc42.ActionSpace;
 
 
 import it.polimi.ingsw.pc42.FamilyMember;
-import it.polimi.ingsw.pc42.Player;
 
 public class WoodImmediateBonus extends AbstractDecorator {
 
+    private int q;
+
     public WoodImmediateBonus(int quantity, AbstractActionSpace actionSpace){
-        super(quantity, actionSpace);
+        super(actionSpace);
+        q = quantity;
     }
 
     @Override
-    boolean canPlace(FamilyMember familyMember) {
-        return false;
+    void placeFamilyMember(FamilyMember familyMember) {
+        super.placeFamilyMember(familyMember);
+        familyMember.owner.wood.add(q);
     }
-
-    @Override
-    void applyDrawEffect(Player player) {
-
-    }
-
 }
