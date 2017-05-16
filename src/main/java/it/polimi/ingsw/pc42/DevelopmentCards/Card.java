@@ -2,9 +2,6 @@ package it.polimi.ingsw.pc42.DevelopmentCards;
 
 import it.polimi.ingsw.pc42.Player;
 
-/**
- * Created by RICVA on 15/05/2017.
- */
 public class Card implements iCard{
     public int getEra() {
         return era;
