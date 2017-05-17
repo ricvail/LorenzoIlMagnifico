@@ -4,5 +4,4 @@ public interface iIntWrapper
 {
     int get();
     void set(int i) throws IllegalArgumentException;
-    void add(int i) throws IllegalArgumentException;
 }

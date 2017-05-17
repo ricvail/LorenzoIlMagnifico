@@ -4,7 +4,7 @@ import it.polimi.ingsw.pc42.Player;
 
 public class IntWrapper implements iIntWrapper{
 
-    private int myInt;
+    protected int myInt;
 
     public IntWrapper(int i){
         myInt=i;
@@ -28,11 +28,4 @@ public class IntWrapper implements iIntWrapper{
         myInt=i;
     }
 
-    @Override
-    public void add(int i) throws IllegalArgumentException {
-        if (myInt+i<0) {
-            throw new IllegalArgumentException();
-        }
-        myInt+=i;
-    }
 }

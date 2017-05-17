@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public interface Board {
 
-    ArrayList<AbstractActionSpace> actionSpaces;
-    ArrayList<Player> turnOrder;
+    //ArrayList<AbstractActionSpace> actionSpaces;
+    //ArrayList<Player> turnOrder;
 
 }
