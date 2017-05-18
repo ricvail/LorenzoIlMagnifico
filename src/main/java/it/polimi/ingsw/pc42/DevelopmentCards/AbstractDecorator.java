@@ -4,7 +4,7 @@ import it.polimi.ingsw.pc42.Player;
 
 public abstract class AbstractDecorator implements iCard{
 
-    private iCard card;
+    protected iCard card;
 
     public AbstractDecorator(iCard c){
         card=c;

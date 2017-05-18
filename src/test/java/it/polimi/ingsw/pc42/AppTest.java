@@ -1,6 +1,7 @@
 package it.polimi.ingsw.pc42;
 
 import it.polimi.ingsw.pc42.DevelopmentCards.Card;
+import it.polimi.ingsw.pc42.DevelopmentCards.ImmediateBonusChoice;
 import it.polimi.ingsw.pc42.DevelopmentCards.ResourceImmediateBonus;
 import it.polimi.ingsw.pc42.DevelopmentCards.iCard;
 import junit.framework.Test;
@@ -53,8 +54,15 @@ public class AppTest
         c.applyDrawEffect(p);
         assertEquals (p.getResource(ResourceType.SERVANT).get(), 5);
         assertEquals (p.getResource(ResourceType.STONE).get(), 3);
+    }
 
 
+    public void testChoice(){
+        iCard c= new Card(2, "Boh", Card.CardType.BUILDING);
+        ImmediateBonusChoice choiceDec = new ImmediateBonusChoice(c);
+        choiceDec.addChoice();
+        c=new ResourceImmediateBonus(ResourceType.COIN, 3, choiceDec.choices.get(0));
+        choiceDec.choices.set(0, c);
 
     }
 }
