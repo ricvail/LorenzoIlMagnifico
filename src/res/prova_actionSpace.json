@@ -1,0 +1,21 @@
+{
+  "area": "TERRITORY/BUILDING/CHARACTER/VENTURE/COUNCIL/MARKET/HARVEST/PRODUCTION",
+  "actionSpaces": [
+    {
+      "id": "MARKET.3",
+      "minPlayers": 3,
+      "actionValue": 7,
+      "singleFamilyMember": true,
+      "immediateResourceEffect": {
+        "wood": 1,
+        "stone": 2,
+        "servants": 3,
+        "coins": 4,
+        "privileges": 3,
+        "militaryPoints": 5,
+        "faithPoints": 5,
+        "victoryPoints": 5
+      }
+    }
+  ]
+}

@@ -1,9 +1,10 @@
 {
+  "id": 2,
   "name": "nome_carta",
   "era": 2,
   "type": "building",
   "activationCost": 2,
-  "cost": [
+  "costs": [
     {
       "wood": 1,
       "stone": 2,
@@ -44,7 +45,7 @@
       "ratio": 2
     }
   },
-  "permanentEffect": [
+  "permanentEffects": [
     {
       "wood": 1,
       "stone": 2,
@@ -68,7 +69,8 @@
         "left": "coins/wood/servants/stone/faithPoints/victoryPoints",
         "right": "territory/buildings/..../victoryPoints/coins/servants/faithPoints/militaryPoints/privileges/wood/stone/",
         "ratio": 2
-      }
+      },
+      "disableImmediateBonus":true
     }
   ]
 }

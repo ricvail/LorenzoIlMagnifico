@@ -1,5 +1,8 @@
 package it.polimi.ingsw.pc42;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.polimi.ingsw.pc42.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.DevelopmentCards.ImmediateBonusChoice;
 import it.polimi.ingsw.pc42.DevelopmentCards.ResourceImmediateBonus;
@@ -7,6 +10,8 @@ import it.polimi.ingsw.pc42.DevelopmentCards.iCard;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import java.util.logging.Logger;
 
 /**
  * Unit test for simple App.
@@ -64,5 +69,16 @@ public class AppTest
         c=new ResourceImmediateBonus(ResourceType.COIN, 3, choiceDec.choices.get(0));
         choiceDec.choices.set(0, c);
 
+    }
+
+    public void testJSON(){
+        ObjectMapper mapper=new ObjectMapper();
+        try {
+            JsonNode json = mapper.readTree("res/prova_carta.json");
+            assertEquals(json.get("era").asInt(), 2);
+            assertEquals(json.get("costs"). get(1).get("coins").asInt(), 4);
+        } catch (Exception e) {
+
+        }
     }
 }
