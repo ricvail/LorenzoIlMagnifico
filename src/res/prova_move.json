@@ -1,0 +1,19 @@
+{
+  "familyMember": "orange/black/white/neutral",
+  "servants": 2,
+  "slotID": "market.3",
+  "paymentChoice": [0,1],
+  "tradeChoice":[0,1],
+  "privileges": [2,5,7],
+  "choiceCardToActivate": [0,1,2,3,4,5],
+  "acceptScomunication": true,
+  "immediateEffect": [
+    {
+      "slotID": 2,
+      "servants": 3,
+      "paymentMethod": [0,1],
+      "choiceCardToActivate": [0,1,2,3,4,5],
+      "tradeChoice": [0,1]
+    }
+  ]
+}
