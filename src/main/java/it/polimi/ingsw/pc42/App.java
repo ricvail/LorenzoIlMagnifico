@@ -1,5 +1,8 @@
 package it.polimi.ingsw.pc42;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 /**
  * Hello world!
  *
@@ -9,7 +12,8 @@ public class App {
     {
         //System.out.println( "Hello World!" );
 
-        
+        JsonNode js;
+
     }
 
     public int asd(){
