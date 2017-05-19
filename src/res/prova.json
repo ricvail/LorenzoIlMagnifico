@@ -1,3 +1,74 @@
 {
-  "test": "yo"
+  "name": "nome_carta",
+  "era": 2,
+  "type": "building",
+  "activationCost": 2,
+  "cost": [
+    {
+      "wood": 1,
+      "stone": 2,
+      "servants": 3,
+      "coins": 4,
+      "militaryPointsRequired": 12,
+      "militaryPointsSubtracted": 6
+    },
+    {
+      "wood": 1,
+      "stone": 2,
+      "servants": 3,
+      "coins": 4
+    }
+  ],
+  "immediateEffect": {
+    "wood": 1,
+    "stone": 2,
+    "servants": 3,
+    "coins": 4,
+    "privileges": 3,
+    "militaryPoints": 5,
+    "faithPoints": 5,
+    "victoryPoints": 5,
+    "harvest": 4,
+    "production": 2,
+    "card": {
+      "value": 7,
+      "type": "all/territory/building/../harvest/prodution",
+      "wood": 1,
+      "stone": 2,
+      "servants": 3,
+      "coins": 4
+    },
+    "foreach": {
+      "left": "victoryPoints/coins",
+      "right": "territory/building/../militaryPoints/..",
+      "ratio": 2
+    }
+  },
+  "permanentEffect": [
+    {
+      "wood": 1,
+      "stone": 2,
+      "servants": 3,
+      "coins": 4,
+      "privileges": 3,
+      "militaryPoints": 5,
+      "faithPoints": 5,
+      "victoryPoints": 5,
+      "harvest": 4,
+      "production": 2,
+      "finalVictoryPoint": 7,
+      "addValueToDice": {
+        "value": 2,
+        "type": "all/territory/building/../harvest/production",
+        "wood": 1,
+        "stone": 2,
+        "coins": 3
+      },
+      "forEach": {
+        "left": "coins/wood/servants/stone/faithPoints/victoryPoints",
+        "right": "territory/buildings/..../victoryPoints/coins/servants/faithPoints/militaryPoints/privileges/wood/stone/",
+        "ratio": 2
+      }
+    }
+  ]
 }
