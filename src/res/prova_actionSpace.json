@@ -1,8 +1,12 @@
 {
   "area": "TERRITORY/BUILDING/CHARACTER/VENTURE/COUNCIL/MARKET/HARVEST/PRODUCTION",
+  "additionalCoinsTax": 3,
+  "actionValuePenaltyForSecondPlayer": 3,
+  "oneFamilyMemberPerPlayer": true,
+  "turnOrderModifier": true,
   "actionSpaces": [
     {
-      "id": "MARKET.3",
+      "id": 3,
       "minPlayers": 3,
       "actionValue": 7,
       "singleFamilyMember": true,
@@ -14,7 +18,8 @@
         "privileges": 3,
         "militaryPoints": 5,
         "faithPoints": 5,
-        "victoryPoints": 5
+        "victoryPoints": 5,
+        "effect": "harvest/production/building/territory/..."
       }
     }
   ]
