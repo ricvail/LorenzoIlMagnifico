@@ -38,6 +38,16 @@ public class Card implements iCard{
 
 
     public enum CardType {
-        TERRITORY, CHARACTER, BUILDING, VENTURE
+        TERRITORY("territory"), CHARACTER("character"), BUILDING("building"), VENTURE("venture");
+
+        private String cardType;
+        CardType(String cardType){
+            this.cardType = cardType;
+        }
+
+        public String getCTString(){
+            return cardType;
+        }
+
     }
 }
