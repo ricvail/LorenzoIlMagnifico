@@ -1,5 +1,6 @@
 package it.polimi.ingsw.pc42.DevelopmentCards;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import it.polimi.ingsw.pc42.Player;
 import it.polimi.ingsw.pc42.ResourceType;
 
@@ -14,9 +15,9 @@ public class ResourceImmediateBonus extends AbstractDecorator {
     }
 
     @Override
-    public void applyDrawEffect(Player player) {
+    public void applyDrawEffect(Player player, JsonNode json) {
         player.getResource(resourceType).add(q);
-        super.applyDrawEffect(player);
+        super.applyDrawEffect(player, json);
     }
 
 }

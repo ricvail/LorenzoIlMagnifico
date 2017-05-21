@@ -2,5 +2,6 @@ package it.polimi.ingsw.pc42.ActionSpace;
 
 
 public enum Area {
-    TOWER, COUNCIL, MARKET, HARVEST, PRODUCTION
+    TERRITORY, BUILDING, CHARACTER, VENTURE,
+    COUNCIL, MARKET, HARVEST, PRODUCTION
 }

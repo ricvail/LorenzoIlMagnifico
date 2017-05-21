@@ -1,30 +1,42 @@
 package it.polimi.ingsw.pc42.ActionSpace;
 
 
+import com.fasterxml.jackson.databind.JsonNode;
 import it.polimi.ingsw.pc42.FamilyMember;
 
 import java.util.ArrayList;
 
-public abstract class AbstractDecorator extends AbstractActionSpace{
-    private AbstractActionSpace actionSpace;
+public abstract class AbstractDecorator implements iActionSpace {
+    private iActionSpace actionSpace;
 
-    public AbstractDecorator(AbstractActionSpace actionSpace){
+    public AbstractDecorator(iActionSpace actionSpace){
         this.actionSpace = actionSpace;
     }
 
-    boolean canPlace(FamilyMember familyMember){
+    public boolean canPlace(FamilyMember familyMember){
         return actionSpace.canPlace(familyMember);
     }
-    void placeFamilyMember(FamilyMember familyMember){
-        actionSpace.placeFamilyMember(familyMember);
+
+    public void placeFamilyMember(FamilyMember familyMember, JsonNode json){
+        actionSpace.placeFamilyMember(familyMember, json);
     }
-    void cleanup(){
+    public void cleanup(){
         actionSpace.cleanup();
     }
-    ArrayList<FamilyMember> getFamilyMembers(){
+    public ArrayList<FamilyMember> getFamilyMembers(){
         return actionSpace.getFamilyMembers();
     }
-    Area getArea(){
+    public Area getArea(){
         return actionSpace.getArea();
+    }
+
+    @Override
+    public int getID() {
+        return actionSpace.getID();
+    }
+
+    @Override
+    public int getNumberOfVisibleFamilyMembers() {
+        return actionSpace.getNumberOfVisibleFamilyMembers();
     }
 }

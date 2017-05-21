@@ -16,6 +16,10 @@ public class Dice {
     }
 
     public enum DiceColor{
-        WHITE, BLACK, ORANGE, NEUTRAL
+        WHITE (true), BLACK(true), ORANGE(true), NEUTRAL(true);
+        public final boolean visible;
+        DiceColor (boolean v){
+            visible = v;
+        }
     }
 }

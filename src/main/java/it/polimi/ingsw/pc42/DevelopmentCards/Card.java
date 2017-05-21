@@ -1,5 +1,6 @@
 package it.polimi.ingsw.pc42.DevelopmentCards;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import it.polimi.ingsw.pc42.Player;
 
 public class Card implements iCard{
@@ -30,7 +31,7 @@ public class Card implements iCard{
         return true;
     }
 
-    public void applyDrawEffect(Player player) {
+    public void applyDrawEffect(Player player, JsonNode json) {
     }
 
     public void applyEndgameEffect(Player player) {

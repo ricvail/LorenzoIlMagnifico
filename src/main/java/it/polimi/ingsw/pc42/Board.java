@@ -1,13 +1,14 @@
 package it.polimi.ingsw.pc42;
 
 
-import it.polimi.ingsw.pc42.ActionSpace.AbstractActionSpace;
+import it.polimi.ingsw.pc42.ActionSpace.iActionSpace;
 
 import java.util.ArrayList;
 
 public interface Board {
 
-    //ArrayList<AbstractActionSpace> actionSpaces;
+    ArrayList<iActionSpace> getActionSpaces();
+
     //ArrayList<Player> turnOrder;
 
 }

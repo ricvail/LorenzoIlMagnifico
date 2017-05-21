@@ -8,9 +8,8 @@ import java.util.ArrayList;
 
 public class Player {
     private PlayerColor color;
-    private ArrayList<iCard> cardsTakenArrayList;
-    private ArrayList<FamilyMember> familyMemberArrayList;
-    //private final AbstractClient client;
+    private ArrayList<iCard> cardsOwned;
+    private ArrayList<FamilyMember> familyMembers;
 
     public PlayerColor getColor() {
         return color;
@@ -32,8 +31,8 @@ public class Player {
         resources.add(new ResourceWrapper(ResourceType.MILITARY));
         resources.add(new ResourceWrapper(ResourceType.VICTORY));
 
-        cardsTakenArrayList = new ArrayList<>();
-        familyMemberArrayList = new ArrayList<>();
+        cardsOwned = new ArrayList<>();
+        familyMembers = new ArrayList<>();
     }
 
     public iResourceWrapper getResource(ResourceType rt){
@@ -44,8 +43,8 @@ public class Player {
     }
 
 
-    public void addCard( iCard card){
-        // add card to cardTaken
+    public void addCard(iCard card){
+        cardsOwned.add(card);
     }
 
     public void addFamilyMember(FamilyMember familyMember){
