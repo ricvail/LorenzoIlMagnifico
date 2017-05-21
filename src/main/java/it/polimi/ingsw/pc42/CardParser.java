@@ -91,7 +91,6 @@ public class CardParser {
             iCard c;
             c = createCard(json);
 
-
             /*Iterator<String> it = json.fieldNames();
             while (it.hasNext()) {
                 String key = it.next();
