@@ -17,26 +17,32 @@ public class CardParser {
 
     public static iCard createCard(JsonNode root){
 
+        try {
+            isJsonValid(root);
+        } catch (Exception e){
+            final String message = e.getMessage();
+            System.out.println(message);
+        }
+
         iCard c = new Card(root.get("era").asInt(),
             root.get("name").asText(),
             Card.CardType.fromString(root.get("type").asText()));
 
-        if (root.has("immediateEffect")) {
-            JsonNode jsonNode = root.get("immediateEffect");
-            magicIterator(jsonNode, c);
-        }
+        //decorate immediate effect
+        JsonNode immediateEffectNode = root.get("immediateEffect");
+        decoIterator(immediateEffectNode, c);
 
-        if (root.has("costs")) {
-            JsonNode jsonNode = root.get("costs");
-            magicIterator(jsonNode, c);
-        }
+        //decorate costs
+        JsonNode costsNode = root.get("costs");
+        decoIterator(costsNode, c);
+
         return c;
     }
 
-// needed the  match between json and enum strings
 
-
-    private static void magicIterator(JsonNode jsonNode, iCard c){
+    //TODO extra card handler
+    private static void decoIterator(JsonNode jsonNode, iCard c){
+        //check if has multiple effect
         if (jsonNode.isArray()) {
             ImmediateBonusChoice choiceDec = new ImmediateBonusChoice(c);
             int choiceCounter = 0;
@@ -45,10 +51,15 @@ public class CardParser {
                 Iterator<String> it = arrayNode.fieldNames();
                 while (it.hasNext()) {
                     String key = it.next();
-                    c = new ResourceImmediateBonus(ResourceType.fromString(key),
-                            arrayNode.get(key).asInt(),
-                            choiceDec.choices.get(choiceCounter));
-                    choiceDec.choices.set(choiceCounter, c);
+                    try {
+                        ResourceType rt = ResourceType.fromString(key);
+                        c = new ResourceImmediateBonus(rt,
+                                arrayNode.get(key).asInt(),
+                                choiceDec.choices.get(choiceCounter));
+                        choiceDec.choices.set(choiceCounter, c);
+                    } catch (IllegalArgumentException e){
+                        //something wrong with resource type
+                    }
                 }
                 choiceCounter++;
             }
@@ -56,9 +67,27 @@ public class CardParser {
             Iterator<String> it = jsonNode.fieldNames();
             while (it.hasNext()) {
                 String key = it.next();
-                c = new ResourceImmediateBonus(ResourceType.fromString(key),
-                        jsonNode.get(key).asInt(), c);
+                try {
+                    ResourceType rt = ResourceType.fromString(key);
+                    c = new ResourceImmediateBonus(rt, jsonNode.get(key).asInt(), c);
+                } catch (IllegalArgumentException e){
+                    //something wrong with resource type
+                }
             }
+        }
+    }
+
+    private static void isJsonValid(JsonNode root) throws Exception{
+        if (!(root.has("era")&&
+                root.has("name")&&
+                root.has("type"))){
+            throw new Exception("missing base fieldname");
+        } else if (!(root.has("immediateEffect")&&
+                    root.get("immediateEffect").isObject())){
+            throw new Exception("no or wrong type of immediateEffect");
+        } else if (!(root.has("costs")&&
+                    root.get("costs").isArray())){
+            throw new Exception("no or wrong type of costs");
         }
     }
 
@@ -74,11 +103,6 @@ public class CardParser {
             iCard c;
             c = createCard(json);
 
-            /*Iterator<String> it = json.fieldNames();
-            while (it.hasNext()) {
-                String key = it.next();
-                System.out.println("key:  " + key);
-            }*/
         } catch (JsonGenerationException e) {
             e.printStackTrace();
         } catch (JsonMappingException e) {

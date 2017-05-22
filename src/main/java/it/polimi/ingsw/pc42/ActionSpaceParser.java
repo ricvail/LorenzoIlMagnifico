@@ -1,11 +1,10 @@
 package it.polimi.ingsw.pc42;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.sun.org.apache.regexp.internal.RE;
 import it.polimi.ingsw.pc42.ActionSpace.*;
 import it.polimi.ingsw.pc42.DevelopmentCards.Card;
 
-import java.net.Socket;
+
 import java.util.Iterator;
 
 public class ActionSpaceParser {
@@ -121,7 +120,7 @@ public class ActionSpaceParser {
 
     }
 
-    public static boolean isJsonValid(JsonNode root){
+    private static boolean isJsonValid(JsonNode root){
         if (!(root.has("area")&&
             root.has("actionSpaces")&&
             root.get("actionSpaces").isArray())){
