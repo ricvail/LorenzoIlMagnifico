@@ -19,7 +19,7 @@ public class CardParser {
 
         iCard c = new Card(root.get("era").asInt(),
             root.get("name").asText(),
-            stringToCardType(root.get("type").asText()));
+            Card.CardType.stringToCardType(root.get("type").asText()));
 
         if (root.has("immediateEffect")) {
             JsonNode jsonNode = root.get("immediateEffect");
@@ -43,7 +43,7 @@ public class CardParser {
         }
         return null;
     }
-
+/*
     private static Card.CardType stringToCardType(String ct) {
         for (Card.CardType cardType : Card.CardType.values()) {
             if (cardType.getCTString().equals(ct)) {
@@ -51,7 +51,7 @@ public class CardParser {
             }
         }
         return null;
-    }
+    }*/
 
     private static void magicIterator(JsonNode jsonNode, iCard c){
         if (jsonNode.isArray()) {
@@ -62,7 +62,7 @@ public class CardParser {
                 Iterator<String> it = arrayNode.fieldNames();
                 while (it.hasNext()) {
                     String key = it.next();
-                    c = new ResourceImmediateBonus(stringToResourceType(key),
+                    c = new ResourceImmediateBonus(ResourceType.stringToResourceType(key),
                             arrayNode.get(key).asInt(),
                             choiceDec.choices.get(choiceCounter));
                     choiceDec.choices.set(choiceCounter, c);
@@ -73,7 +73,7 @@ public class CardParser {
             Iterator<String> it = jsonNode.fieldNames();
             while (it.hasNext()) {
                 String key = it.next();
-                c = new ResourceImmediateBonus(stringToResourceType(key),
+                c = new ResourceImmediateBonus(ResourceType.stringToResourceType(key),
                         jsonNode.get(key).asInt(), c);
             }
         }

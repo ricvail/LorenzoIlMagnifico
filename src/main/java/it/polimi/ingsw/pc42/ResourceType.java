@@ -12,5 +12,14 @@ public enum ResourceType{
         return resourceType;
     }
 
+    public static ResourceType stringToResourceType(String rt) {
+        for (ResourceType resourceType : ResourceType.values()) {
+            if (resourceType.getRTString().equals(rt)) {
+                return resourceType;
+            }
+        }
+        throw new IllegalArgumentException(); //TODO more specific ex
+    }
+
 
 }
