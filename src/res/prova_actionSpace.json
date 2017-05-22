@@ -1,14 +1,14 @@
 {
   "area": "TERRITORY/BUILDING/CHARACTER/VENTURE/COUNCIL/MARKET/HARVEST/PRODUCTION",
   "additionalCoinsTax": 3,
-  "actionValuePenaltyForSecondPlayer": 3,//to do
+  "actionValuePenaltyForSecondPlayer": 3,
   "oneFamilyMemberPerPlayer": true,
-  "turnOrderModifier": true,//to do
+  "turnOrderModifier": true,
   "actionSpaces": [
     {
       "id": 3,
-      "minPlayers": 3,//to do
-      "actionValue": 7,//to do
+      "minPlayers": 3,
+      "actionValue": 7,
       "singleFamilyMember": true,
       "immediateResourceEffect": {
         "wood": 1,

@@ -2,8 +2,10 @@ package it.polimi.ingsw.pc42.ActionSpace;
 
 
 import com.fasterxml.jackson.databind.JsonNode;
+import it.polimi.ingsw.pc42.Board;
 import it.polimi.ingsw.pc42.Dice;
 import it.polimi.ingsw.pc42.FamilyMember;
+import it.polimi.ingsw.pc42.ResourceType;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,24 +14,38 @@ public class ActionSpace implements iActionSpace {
     private ArrayList<FamilyMember> familyMembers;
     private Area area;
     private int ID;
+    private int actionValue;
 
-    public ActionSpace(Area area, int ID){
+    public ActionSpace(Area area, int ID, int actionValue){
         this.area = area;
         this.ID=ID;
+        this.actionValue=actionValue;
     }
 
     @Override
     public boolean canPlace(FamilyMember familyMember) {
+        if (familyMember.getValue()<actionValue){
+            if (familyMember.owner.getResource(ResourceType.SERVANT).get()>=(actionValue-familyMember.getValue())){
+                return true;
+            } else {
+                return false;
+            }
+        }
         return true;
     }
 
     @Override
     public void placeFamilyMember(FamilyMember familyMember, JsonNode json) {
-
+        familyMember.setUsed(true);
+        this.familyMembers.add(familyMember);
     }
 
     @Override
     public void cleanup() {
+        while (familyMembers.size()>0){
+            familyMembers.get(0).setUsed(false);
+            familyMembers.remove(0);
+        }
 
     }
 
@@ -61,4 +77,22 @@ public class ActionSpace implements iActionSpace {
         }
         return i;
     }
+
+    public static boolean isFirstInArea(Board board, Area area){
+        Iterator<iActionSpace> iterator = board.getActionSpaces().iterator();
+        while (iterator.hasNext()){
+            iActionSpace actionSpace = iterator.next();
+            if (actionSpace.getArea()==area){
+                Iterator<FamilyMember> fmIterator= actionSpace.getFamilyMembers().iterator();
+                while (fmIterator.hasNext()){
+                    FamilyMember fm = fmIterator.next();
+                    if (fm.diceColor.visible){
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
 }

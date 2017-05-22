@@ -6,6 +6,16 @@ public class FamilyMember {
     private int value;
     public final Dice.DiceColor diceColor;
 
+    public boolean isUsed() {
+        return used;
+    }
+
+    public void setUsed(boolean used) {
+        this.used = used;
+    }
+
+    private boolean used;
+
     public FamilyMember(Player owner, Dice.DiceColor diceColor){
         this.owner = owner;
         this.value = 0;
@@ -14,6 +24,10 @@ public class FamilyMember {
 
     public void setValue(int diceValue){
         // refresh dice value
+    }
+
+    public  int getValue(){
+        return value;
     }
 
 }
