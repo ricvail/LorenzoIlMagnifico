@@ -15,11 +15,13 @@ public class ActionSpace implements iActionSpace {
     private Area area;
     private int ID;
     private int actionValue;
+    Board board;
 
-    public ActionSpace(Area area, int ID, int actionValue){
+    public ActionSpace(Board board, Area area, int ID, int actionValue){
         this.area = area;
         this.ID=ID;
         this.actionValue=actionValue;
+        this.board= board;
     }
 
     @Override
@@ -76,6 +78,11 @@ public class ActionSpace implements iActionSpace {
 
         }
         return i;
+    }
+
+    @Override
+    public Board getBoard() {
+        return board;
     }
 
     public static boolean isFirstInArea(Board board, Area area){

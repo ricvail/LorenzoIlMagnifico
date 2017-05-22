@@ -7,12 +7,19 @@ import it.polimi.ingsw.pc42.PrivilegeManager;
 
 
 public class privilegesActionSpaceDecorator extends AbstractDecorator {
-    public privilegesActionSpaceDecorator(iActionSpace actionSpace) {
+
+    //TODO
+
+    private int quantity;
+
+    public privilegesActionSpaceDecorator(int q, iActionSpace actionSpace) {
         super(actionSpace);
+        this.quantity=q;
     }
 
     @Override
     public void placeFamilyMember(FamilyMember familyMember, JsonNode json) {
+
         PrivilegeManager.applyDifferentPrivileges(familyMember.owner, json.get("privileges"));
         super.placeFamilyMember(familyMember, json);
     }

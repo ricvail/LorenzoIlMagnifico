@@ -2,6 +2,7 @@ package it.polimi.ingsw.pc42.ActionSpace;
 
 
 import com.fasterxml.jackson.databind.JsonNode;
+import it.polimi.ingsw.pc42.Board;
 import it.polimi.ingsw.pc42.FamilyMember;
 
 import java.util.ArrayList;
@@ -38,5 +39,10 @@ public abstract class AbstractDecorator implements iActionSpace {
     @Override
     public int getNumberOfVisibleFamilyMembers() {
         return actionSpace.getNumberOfVisibleFamilyMembers();
+    }
+
+    @Override
+    public Board getBoard() {
+        return actionSpace.getBoard();
     }
 }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.pc42;
 
+import it.polimi.ingsw.pc42.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.DevelopmentCards.iCard;
 import it.polimi.ingsw.pc42.Utilities.ResourceWrapper;
 import it.polimi.ingsw.pc42.Utilities.iResourceWrapper;
@@ -40,6 +41,14 @@ public class Player {
             if (res.getResourceType()==rt) return res;
         }
         return null;
+    }
+
+    public int getNumberOfCards(Card.CardType type){
+        int i=0;
+        for (iCard c:cardsOwned) {
+            if (c.getCardType()==type) i++;
+        }
+        return i;
     }
 
 

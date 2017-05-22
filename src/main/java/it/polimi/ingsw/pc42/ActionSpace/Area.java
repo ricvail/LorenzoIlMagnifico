@@ -12,4 +12,13 @@ public enum Area {
     public String getAreaString(){
         return area;
     }
+
+    public static Area fromString(String a){
+        for (Area area : Area.values()) {
+            if (area.getAreaString().equalsIgnoreCase(a)) {
+                return area;
+            }
+        }
+        throw new IllegalArgumentException();//TODO throw more specific exception
+    }
 }

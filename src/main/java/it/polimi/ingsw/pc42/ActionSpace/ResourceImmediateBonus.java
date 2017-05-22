@@ -22,13 +22,13 @@ public class ResourceImmediateBonus extends AbstractDecorator {
 
     @Override
     public boolean canPlace(FamilyMember familyMember) {
+        boolean b=  super.canPlace(familyMember);
         try {
             familyMember.owner.getResource(resourceType).add(q);
         } catch (IllegalArgumentException e){
             familyMember.owner.getResource(resourceType).add(q * -1);
             return false;
         }
-        boolean b=  super.canPlace(familyMember);
         familyMember.owner.getResource(resourceType).add(q * -1);
         return b;
     }

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.pc42.ActionSpace;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import it.polimi.ingsw.pc42.Board;
 import it.polimi.ingsw.pc42.FamilyMember;
 
 import java.util.ArrayList;
@@ -14,4 +15,5 @@ public interface iActionSpace {
     Area getArea();
     int getID();
     int getNumberOfVisibleFamilyMembers();
+    Board getBoard();
 }

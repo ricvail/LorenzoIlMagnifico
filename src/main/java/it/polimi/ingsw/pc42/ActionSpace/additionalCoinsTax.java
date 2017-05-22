@@ -13,11 +13,9 @@ import java.util.Iterator;
  */
 public class additionalCoinsTax extends AbstractDecorator {
     private int coins;
-    private Board board;
-    public additionalCoinsTax(int coins, Board b, iActionSpace actionSpace) {
+    public additionalCoinsTax(int coins, iActionSpace actionSpace) {
         super(actionSpace);
         this.coins=coins;
-        board=b;
     }
 
     @Override
@@ -48,6 +46,6 @@ public class additionalCoinsTax extends AbstractDecorator {
     }
 
     public boolean doesTaxApply(){
-        return !ActionSpace.isFirstInArea(board, this.getArea());
+        return !ActionSpace.isFirstInArea(getBoard(), this.getArea());
     }
 }

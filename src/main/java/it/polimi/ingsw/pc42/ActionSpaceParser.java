@@ -1,17 +1,88 @@
 package it.polimi.ingsw.pc42;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import it.polimi.ingsw.pc42.ActionSpace.iActionSpace;
-import it.polimi.ingsw.pc42.ActionSpace.ActionSpace;
-import it.polimi.ingsw.pc42.ActionSpace.Area;
-import it.polimi.ingsw.pc42.ActionSpace.ResourceImmediateBonus;
+import com.sun.org.apache.regexp.internal.RE;
+import it.polimi.ingsw.pc42.ActionSpace.*;
+import it.polimi.ingsw.pc42.DevelopmentCards.Card;
 
+import java.net.Socket;
 import java.util.Iterator;
 
 public class ActionSpaceParser {
-    public static iActionSpace actionSpace(JsonNode root){
-        iActionSpace actionSpace=new ActionSpace(stringToArea(root.get("area").asText()), root.get("id").asInt());
 
+    public static void actionSpace(JsonNode root, Board b){
+
+        if (!isJsonValid(root)){
+            //throw exception
+        }
+
+        Iterator<JsonNode> iterator=root.get("actionSpaces").elements();
+        while (iterator.hasNext()){
+            JsonNode actionSpaceJson= iterator.next();
+
+            iActionSpace actionSpace= buildBaseActionSpace(root, actionSpaceJson, b);
+
+            if (actionSpaceJson.get("immediateResourceEffect").has("effect")){
+                String effect= actionSpaceJson.get("immediateResourceEffect").get("effect").asText();
+
+                try {
+                    Card.CardType cardType= Card.CardType.fromString(effect);
+                    actionSpace=new CardDecorator(cardType, b, actionSpace);
+                } catch (IllegalArgumentException e){
+                    if (effect.equalsIgnoreCase("harvest")){
+                        actionSpace=new ActionDecorator(ActionDecorator.ActionType.HARVEST, actionSpace);
+                    } else if (effect.equalsIgnoreCase("production")){
+                        actionSpace=new ActionDecorator(ActionDecorator.ActionType.PRODUCTION, actionSpace);
+                    } else {
+                        throw new IllegalArgumentException(); //TODO throw more specific exception
+                    }
+                }
+
+            } // End of "effect" part
+
+            Iterator<String> it = actionSpaceJson.get("immediateResourceEffect").fieldNames();
+            while (it.hasNext()) {
+                String key = it.next();
+                try {
+                    ResourceType rt = ResourceType.fromString(key);
+                    int q = actionSpaceJson.get("immediateResourceEffect").get(key).asInt();
+                    actionSpace = new ResourceImmediateBonus(rt,q, actionSpace);
+                } catch (IllegalArgumentException e){
+                    if (key.equalsIgnoreCase("privileges")){
+                        int q = actionSpaceJson.get("immediateResourceEffect").get(key).asInt();
+                        actionSpace=new privilegesActionSpaceDecorator(q, actionSpace);
+                    } else if (key.equalsIgnoreCase("effect")){
+                        //do nothing
+                    } else {
+                        throw new IllegalArgumentException(); //TODO throw more specific exception
+                    }
+                }
+            }
+            if (actionSpaceJson.has("singleFamilyMember")&&
+                    actionSpaceJson.get("singleFamilyMember").asBoolean()){
+                actionSpace=new singleFamilyMemberDecorator(actionSpace);
+            }
+            if (root.has("oneFamilyMemberPerPlayer")&&
+                    root.get("oneFamilyMemberPerPlayer").asBoolean()){
+                actionSpace=new oneFamilyMemberPerPlayer(actionSpace, b);
+            }
+            if (root.has("actionValuePenaltyForSecondPlayer")){
+                int q = root.get("actionValuePenaltyForSecondPlayer").asInt();
+                actionSpace=new ActionValuePenaltyForSecondPlayer(q, actionSpace);
+            }
+            if (root.has("additionalCoinsTax")){
+                int q = root.get("additionalCoinsTax").asInt();
+                actionSpace=new additionalCoinsTax(q, actionSpace);
+            }
+            //TODO
+            b.getActionSpaces().add(actionSpace);
+        }
+
+
+
+
+
+        /*
         if (root.has("additionalCoinsTax")){
             int additionalCoinsTax = root.get("additionalCoinsTax").asInt();
         }
@@ -38,34 +109,35 @@ public class ActionSpaceParser {
                 immediateResourceEffectIterator(jsonNode, actionSpace);
             }
         }
-        return null;
+        return null;*/
     }
 
-    private static Area stringToArea(String a){
-        for (Area area : Area.values()) {
-            if (area.getAreaString().equals(a)) {
-                return area;
+
+    private static iActionSpace buildBaseActionSpace(JsonNode root, JsonNode actionSpaceJson, Board b){
+        Area area=Area.fromString(root.get("area").asText());
+        int id=actionSpaceJson.get("id").asInt();
+        int actionValue=actionSpaceJson.get("actionValue").asInt();
+        return new ActionSpace(b, area, id, actionValue);
+
+    }
+
+    public static boolean isJsonValid(JsonNode root){
+        if (!(root.has("area")&&
+            root.has("actionSpaces")&&
+            root.get("actionSpaces").isArray())){
+            return false;
+        }
+        Iterator<JsonNode> iterator=root.get("actionSpaces").elements();
+        while (iterator.hasNext()){
+            JsonNode actionSpace= iterator.next();
+            if (!(actionSpace.has("id")&&
+                actionSpace.has("actionValue")&&
+                actionSpace.has("immediateResourceEffect")&&
+                actionSpace.get("immediateResourceEffect").isObject())){
+                return false;
             }
         }
-        return null;
-    }
-
-    private static ResourceType stringToResourceType(String rt) {
-        for (ResourceType resourceType : ResourceType.values()) {
-            if (resourceType.getRTString().equals(rt)) {
-                return resourceType;
-            }
-        }
-        return null;
-    }
-
-    private static void immediateResourceEffectIterator(JsonNode jsonNode, iActionSpace iActionSpace){
-        Iterator<String> it = jsonNode.fieldNames();
-        while (it.hasNext()) {
-            String key = it.next();
-            iActionSpace = new ResourceImmediateBonus(stringToResourceType(key),
-                    jsonNode.get(key).asInt(), iActionSpace);
-        }
+        return true;
     }
 }
 

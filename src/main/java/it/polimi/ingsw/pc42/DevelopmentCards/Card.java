@@ -46,8 +46,17 @@ public class Card implements iCard{
             this.cardType = cardType;
         }
 
-        public String getCTString(){
+        public String getString(){
             return cardType;
+        }
+
+        public static CardType fromString(String s){
+            for (CardType cardType : CardType.values()) {
+                if (cardType.getString().equalsIgnoreCase(s)) {
+                    return cardType;
+                }
+            }
+            throw new IllegalArgumentException(); //TODO more specific exception
         }
 
     }

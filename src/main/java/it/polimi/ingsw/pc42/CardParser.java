@@ -19,7 +19,7 @@ public class CardParser {
 
         iCard c = new Card(root.get("era").asInt(),
             root.get("name").asText(),
-            Card.CardType.stringToCardType(root.get("type").asText()));
+            Card.CardType.fromString(root.get("type").asText()));
 
         if (root.has("immediateEffect")) {
             JsonNode jsonNode = root.get("immediateEffect");
@@ -35,23 +35,6 @@ public class CardParser {
 
 // needed the  match between json and enum strings
 
-    private static ResourceType stringToResourceType(String rt) {
-        for (ResourceType resourceType : ResourceType.values()) {
-            if (resourceType.getRTString().equals(rt)) {
-                return resourceType;
-            }
-        }
-        return null;
-    }
-/*
-    private static Card.CardType stringToCardType(String ct) {
-        for (Card.CardType cardType : Card.CardType.values()) {
-            if (cardType.getCTString().equals(ct)) {
-                return cardType;
-            }
-        }
-        return null;
-    }*/
 
     private static void magicIterator(JsonNode jsonNode, iCard c){
         if (jsonNode.isArray()) {
@@ -62,7 +45,7 @@ public class CardParser {
                 Iterator<String> it = arrayNode.fieldNames();
                 while (it.hasNext()) {
                     String key = it.next();
-                    c = new ResourceImmediateBonus(ResourceType.stringToResourceType(key),
+                    c = new ResourceImmediateBonus(ResourceType.fromString(key),
                             arrayNode.get(key).asInt(),
                             choiceDec.choices.get(choiceCounter));
                     choiceDec.choices.set(choiceCounter, c);
@@ -73,7 +56,7 @@ public class CardParser {
             Iterator<String> it = jsonNode.fieldNames();
             while (it.hasNext()) {
                 String key = it.next();
-                c = new ResourceImmediateBonus(ResourceType.stringToResourceType(key),
+                c = new ResourceImmediateBonus(ResourceType.fromString(key),
                         jsonNode.get(key).asInt(), c);
             }
         }

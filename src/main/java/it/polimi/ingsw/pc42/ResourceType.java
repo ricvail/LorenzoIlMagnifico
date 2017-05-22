@@ -8,18 +8,17 @@ public enum ResourceType{
         this.resourceType = resourceType;
     }
 
-    public String getRTString(){
+    public String getString(){
         return resourceType;
     }
 
-    public static ResourceType stringToResourceType(String rt) {
+    public static ResourceType fromString(String rt) {
         for (ResourceType resourceType : ResourceType.values()) {
-            if (resourceType.getRTString().equals(rt)) {
+            if (resourceType.getString().equalsIgnoreCase(rt)) {
                 return resourceType;
             }
         }
-        throw new IllegalArgumentException(); //TODO more specific ex
+        throw new IllegalArgumentException();//TODO throw more specific exception
     }
-
 
 }
