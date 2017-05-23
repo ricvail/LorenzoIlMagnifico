@@ -1,0 +1,347 @@
+{
+"developmentCards":[
+  {
+    "id": 1,
+    "name": "commercial hub",
+    "era": 1,
+    "type": "territories",
+    "activationCost": 1
+  },
+  {
+    "id": 2,
+    "name": "woods",
+    "era": 1,
+    "type": "territories",
+    "activationCost": 2,
+    "immediateEffect":{
+      "wood": 1
+    }
+  },
+  {
+    "id": 3,
+    "name": "village",
+    "era": 1,
+    "type": "territories",
+    "activationCost": 3
+  },
+  {
+    "id": 4,
+    "name": "gravel pit",
+    "era": 1,
+    "type": "territories",
+    "activationCost": 4,
+    "immediateEffect":{
+      "stone": 2
+    }
+  },
+  {
+    "id": 5,
+    "name": "forest",
+    "era": 1,
+    "type": "territories",
+    "activationCost": 5,
+    "immediateEffect":{
+      "wood": 1
+    }
+  },
+  {
+    "id": 6,
+    "name": "Monastery",
+    "era": 1,
+    "type": "territories",
+    "activationCost": 6,
+    "immediateEffect":{
+      "servants": 1,
+      "militaryPoints": 2
+    }
+  },
+  {
+    "id": 7,
+    "name": "citadel",
+    "era": 1,
+    "type": "territories",
+    "activationCost": 5
+  },
+  {
+    "id": 8,
+    "name": "City",
+    "era": 1,
+    "type": "territories",
+    "activationCost": 6,
+    "immediateEffect":{
+      "coins": 3
+    }
+  },
+  {
+    "id": 9,
+    "name": "Gold Mine",
+    "era": 2,
+    "type": "territories",
+    "activationCost": 1,
+    "immediateEffect":{
+      "coins": 1
+    }
+  },
+  {
+    "id": 10,
+    "name": "Mountain Town",
+    "era": 2,
+    "type": "territories",
+    "activationCost": 3,
+    "immediateEffect":{
+      "servants": 1
+    }
+  },
+  {
+    "id": 11,
+    "name": "Mining Town",
+    "era": 2,
+    "type": "territories",
+    "activationCost": 4,
+    "immediateEffect":{
+      "servants": 2,
+      "stone": 1
+    }
+  },
+  {
+    "id": 12,
+    "name": "Rock Pit",
+    "era": 2,
+    "type": "territories",
+    "activationCost": 3,
+    "immediateEffect":{
+      "wood": 1
+    }
+  },
+  {
+    "id": 13,
+    "name": "Estate",
+    "era": 2,
+    "type": "territories",
+    "activationCost": 4,
+    "immediateEffect":{
+      "servants": 2,
+      "wood": 1
+    }
+  },
+  {
+    "id": 14,
+    "name": "Hermitage",
+    "era": 2,
+    "type": "territories",
+    "activationCost": 2,
+    "immediateEffect":{
+      "faithPoints": 1
+    }
+  },
+  {
+    "id": 15,
+    "name": "Manor House",
+    "era": 2,
+    "type": "territories",
+    "activationCost": 5
+  },
+  {
+    "id": 16,
+    "name": "Dukedom",
+    "era": 2,
+    "type": "territories",
+    "activationCost": 6,
+    "immediateEffect":{
+      "coins": 4
+    }
+  },
+  {
+    "id": 17,
+    "name": "Trading Town",
+    "era": 3,
+    "type": "territories",
+    "activationCost": 1,
+    "immediateEffect":{
+      "servants": 1,
+      "coins": 1
+    }
+  },
+  {
+    "id": 18,
+    "name": "Farm",
+    "era": 3,
+    "type": "territories",
+    "activationCost": 3,
+    "immediateEffect":{
+      "victoryPoints": 1,
+      "wood": 1
+    }
+  },
+  {
+    "id": 19,
+    "name": "Colony",
+    "era": 3,
+    "type": "territories",
+    "activationCost": 5,
+    "immediateEffect":{
+      "militaryPoints": 2
+    }
+  },
+  {
+    "id": 20,
+    "name": "Marble Pit",
+    "era": 3,
+    "type": "territories",
+    "activationCost": 2,
+    "immediateEffect":{
+      "victoryPoints": 3
+    }
+  },
+  {
+    "id": 21,
+    "name": "Province",
+    "era": 3,
+    "type": "territories",
+    "activationCost": 6,
+    "immediateEffect":{
+      "privileges": 1,
+      "stone": 1
+    }
+  },
+  {
+    "id": 22,
+    "name": "Sanctuary",
+    "era": 3,
+    "type": "territories",
+    "activationCost": 1,
+    "immediateEffect":{
+      "faithPoints": 1
+    }
+  },
+  {
+    "id": 23,
+    "name": "Castle",
+    "era": 3,
+    "type": "territories",
+    "activationCost": 4,
+    "immediateEffect":{
+      "victoryPoints": 2,
+      "coins": 2
+    }
+  },
+  {
+    "id": 24,
+    "name": "Fortified Town",
+    "era": 3,
+    "type": "territories",
+    "activationCost": 2,
+    "immediateEffect":{
+      "militaryPoints": 2,
+      "servants": 1
+    }
+  },
+
+
+  {
+    "id": 49,
+    "name": "Warlord",
+    "era": 1,
+    "type": "characters",
+    "costs":{
+      "coins": 2
+    },
+    "immediateEffect":{
+      "militaryPoints": 3
+    }
+  },
+  {
+    "id": 50,
+    "name": "Stonemason",
+    "era": 1,
+    "type": "characters",
+    "costs":{
+      "coins": 4
+    }
+  },
+  {
+    "id": 51,
+    "name": "Dame",
+    "era": 1,
+    "type": "characters",
+    "costs":{
+      "coins": 4
+    }
+  },
+  {
+    "id": 52,
+    "name": "Knight",
+    "era": 1,
+    "type": "characters",
+    "costs":{
+      "coins": 2
+    },
+    "immediateEffect":{
+      "privileges": 1
+    }
+  },
+  {
+    "id": 53,
+    "name": "Farmer",
+    "era": 1,
+    "type": "characters",
+    "costs":{
+      "coins": 3
+    }
+  },
+  {
+    "id": 54,
+    "name": "Artisan",
+    "era": 1,
+    "type": "characters",
+    "costs":{
+      "coins": 3
+    }
+  },
+  {
+    "id": 55,
+    "name": "Preacher",
+    "era": 1,
+    "type": "characters",
+    "costs":{
+      "coins": 2
+    },
+    "immediateEffect":{
+      "faithPoints": 4
+    }
+  },
+  {
+    "id": 56,
+    "name": "Abbess",
+    "era": 1,
+    "type": "characters",
+    "costs":{
+      "coins": 3
+    },
+    "immediateEffect":{
+      "faithPoints": 3,
+      "card":{
+        "value": 4,
+        "type": "all"
+      }
+    }
+  },
+  {
+    "id": 57,
+    "name": "Captain",
+    "era": 2,
+    "type": "characters",
+    "costs":{
+      "coins": 4
+    },
+    "immediateEffect":{
+      "militaryPoints": 3,
+      "card":{
+        "value": 6,
+        "type": "territories"
+      }
+    }
+  }
+
+  ]
+}
