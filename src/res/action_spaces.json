@@ -1,0 +1,273 @@
+{
+  "action_spaces": [
+    {
+      "area": "TERRITORY",
+      "additionalCoinsTax": 3,
+      "oneFamilyMemberPerPlayer": true,
+      "actionSpaces": [
+        {
+          "id": 1,
+          "minPlayers": 2,
+          "actionValue": 1,
+          "singleFamilyMember": true
+        },
+        {
+          "id": 2,
+          "minPlayers": 2,
+          "actionValue": 3,
+          "singleFamilyMember": true
+        },
+        {
+          "id": 3,
+          "minPlayers": 2,
+          "actionValue": 5,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "wood": 1
+          }
+        },
+        {
+          "id": 4,
+          "minPlayers": 2,
+          "actionValue": 7,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "wood": 2
+          }
+        }
+      ]
+    },
+    {
+      "area": "CHARACTER",
+      "additionalCoinsTax": 3,
+      "oneFamilyMemberPerPlayer": true,
+      "actionSpaces": [
+        {
+          "id": 5,
+          "minPlayers": 2,
+          "actionValue": 1,
+          "singleFamilyMember": true
+        },
+        {
+          "id": 6,
+          "minPlayers": 2,
+          "actionValue": 3,
+          "singleFamilyMember": true
+        },
+        {
+          "id": 7,
+          "minPlayers": 2,
+          "actionValue": 5,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "stone": 1
+          }
+        },
+        {
+          "id": 8,
+          "minPlayers": 2,
+          "actionValue": 7,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "stone": 2
+          }
+        }
+      ]
+    },
+    {
+      "area": "BUILDING",
+      "additionalCoinsTax": 3,
+      "oneFamilyMemberPerPlayer": true,
+      "actionSpaces": [
+        {
+          "id": 9,
+          "minPlayers": 2,
+          "actionValue": 1,
+          "singleFamilyMember": true
+        },
+        {
+          "id": 10,
+          "minPlayers": 2,
+          "actionValue": 3,
+          "singleFamilyMember": true
+        }
+      ]
+    },
+    {
+      "area": "BUILDING",
+      "additionalCoinsTax": 3,
+      "oneFamilyMemberPerPlayer": true,
+      "actionSpaces": [
+        {
+          "id": 10,
+          "minPlayers": 2,
+          "actionValue": 3,
+          "singleFamilyMember": true
+        },
+        {
+          "id": 11,
+          "minPlayers": 2,
+          "actionValue": 5,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "militaryPoints": 1
+          }
+        },
+        {
+          "id": 12,
+          "minPlayers": 2,
+          "actionValue": 7,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "militaryPoints": 2
+          }
+        }
+      ]
+    },
+    {
+      "area": "VENTURE",
+      "additionalCoinsTax": 3,
+      "oneFamilyMemberPerPlayer": true,
+      "actionSpaces": [
+        {
+          "id": 13,
+          "minPlayers": 2,
+          "actionValue": 1,
+          "singleFamilyMember": true
+        },
+        {
+          "id": 14,
+          "minPlayers": 2,
+          "actionValue": 3,
+          "singleFamilyMember": true
+        },
+        {
+          "id": 15,
+          "minPlayers": 2,
+          "actionValue": 5,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "coins": 1
+          }
+        },
+        {
+          "id": 16,
+          "minPlayers": 2,
+          "actionValue": 7,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "coins": 2
+          }
+        }
+      ]
+    },
+    {
+      "area": "COUNCIL",
+      "turnOrderModifier": true,
+      "actionSpaces": [
+        {
+          "id": 17,
+          "minPlayers": 2,
+          "actionValue": 1,
+          "immediateResourceEffect": {
+            "coins": 1,
+            "privileges": 1
+          }
+        }
+      ]
+    },
+    {
+      "area": "HARVEST",
+      "actionValuePenaltyForSecondPlayer": 3,
+      "oneFamilyMemberPerPlayer": true,
+      "actionSpaces": [
+        {
+          "id": 18,
+          "minPlayers": 2,
+          "actionValue": 1,
+          "singleFamilyMember": false,
+          "immediateResourceEffect": {
+            "effect": "harvest"
+          }
+        }
+      ]
+    },
+    {
+      "area": "PRODUCTION",
+      "actionValuePenaltyForSecondPlayer": 3,
+      "oneFamilyMemberPerPlayer": true,
+      "actionSpaces": [
+        {
+          "id": 19,
+          "minPlayers": 2,
+          "actionValue": 1,
+          "singleFamilyMember": false,
+          "immediateResourceEffect": {
+            "effect": "production"
+          }
+        }
+      ]
+    },
+    {
+      "area": "MARKET",
+      "oneFamilyMemberPerPlayer": true,
+      "actionSpaces": [
+        {
+          "id": 20,
+          "minPlayers": 2,
+          "actionValue": 1,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "coins": 5
+          }
+        }
+      ]
+    },
+    {
+      "area": "MARKET",
+      "oneFamilyMemberPerPlayer": true,
+      "actionSpaces": [
+        {
+          "id": 21,
+          "minPlayers": 2,
+          "actionValue": 1,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "servants": 5
+          }
+        }
+      ]
+    },
+    {
+      "area": "MARKET",
+      "oneFamilyMemberPerPlayer": true,
+      "actionSpaces": [
+        {
+          "id": 22,
+          "minPlayers": 4,
+          "actionValue": 1,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "coins": 2,
+            "militaryPoints": 3
+          }
+        }
+      ]
+    },
+    {
+      "area": "MARKET",
+      "oneFamilyMemberPerPlayer": true,
+      "actionSpaces": [
+        {
+          "id": 23,
+          "minPlayers": 4,
+          "actionValue": 1,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "privileges": 2
+          }
+        }
+      ]
+    }
+  ]
+}

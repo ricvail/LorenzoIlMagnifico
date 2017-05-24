@@ -28,9 +28,9 @@ public class Player {
         resources.add(new ResourceWrapper(ResourceType.SERVANT));
         resources.add(new ResourceWrapper(ResourceType.STONE));
         resources.add(new ResourceWrapper(ResourceType.WOOD));
-        resources.add(new ResourceWrapper(ResourceType.FAITH));
-        resources.add(new ResourceWrapper(ResourceType.MILITARY));
-        resources.add(new ResourceWrapper(ResourceType.VICTORY));
+        resources.add(new ResourceWrapper(ResourceType.FAITHPOINTS));
+        resources.add(new ResourceWrapper(ResourceType.MILITARYPOINTS));
+        resources.add(new ResourceWrapper(ResourceType.VICTORYPOINTS));
 
         cardsOwned = new ArrayList<>();
         familyMembers = new ArrayList<>();

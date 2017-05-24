@@ -7,7 +7,10 @@ public enum Area {
 
     private String area;
 
-    Area(String area){this.area=area;}
+    Area(String area) {
+        this.area = area;
+    }
+
 
     public String getAreaString(){
         return area;

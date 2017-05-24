@@ -1,347 +1,1884 @@
 {
-"developmentCards":[
-  {
-    "id": 1,
-    "name": "commercial hub",
-    "era": 1,
-    "type": "territories",
-    "activationCost": 1
-  },
-  {
-    "id": 2,
-    "name": "woods",
-    "era": 1,
-    "type": "territories",
-    "activationCost": 2,
-    "immediateEffect":{
-      "wood": 1
-    }
-  },
-  {
-    "id": 3,
-    "name": "village",
-    "era": 1,
-    "type": "territories",
-    "activationCost": 3
-  },
-  {
-    "id": 4,
-    "name": "gravel pit",
-    "era": 1,
-    "type": "territories",
-    "activationCost": 4,
-    "immediateEffect":{
-      "stone": 2
-    }
-  },
-  {
-    "id": 5,
-    "name": "forest",
-    "era": 1,
-    "type": "territories",
-    "activationCost": 5,
-    "immediateEffect":{
-      "wood": 1
-    }
-  },
-  {
-    "id": 6,
-    "name": "Monastery",
-    "era": 1,
-    "type": "territories",
-    "activationCost": 6,
-    "immediateEffect":{
-      "servants": 1,
-      "militaryPoints": 2
-    }
-  },
-  {
-    "id": 7,
-    "name": "citadel",
-    "era": 1,
-    "type": "territories",
-    "activationCost": 5
-  },
-  {
-    "id": 8,
-    "name": "City",
-    "era": 1,
-    "type": "territories",
-    "activationCost": 6,
-    "immediateEffect":{
-      "coins": 3
-    }
-  },
-  {
-    "id": 9,
-    "name": "Gold Mine",
-    "era": 2,
-    "type": "territories",
-    "activationCost": 1,
-    "immediateEffect":{
-      "coins": 1
-    }
-  },
-  {
-    "id": 10,
-    "name": "Mountain Town",
-    "era": 2,
-    "type": "territories",
-    "activationCost": 3,
-    "immediateEffect":{
-      "servants": 1
-    }
-  },
-  {
-    "id": 11,
-    "name": "Mining Town",
-    "era": 2,
-    "type": "territories",
-    "activationCost": 4,
-    "immediateEffect":{
-      "servants": 2,
-      "stone": 1
-    }
-  },
-  {
-    "id": 12,
-    "name": "Rock Pit",
-    "era": 2,
-    "type": "territories",
-    "activationCost": 3,
-    "immediateEffect":{
-      "wood": 1
-    }
-  },
-  {
-    "id": 13,
-    "name": "Estate",
-    "era": 2,
-    "type": "territories",
-    "activationCost": 4,
-    "immediateEffect":{
-      "servants": 2,
-      "wood": 1
-    }
-  },
-  {
-    "id": 14,
-    "name": "Hermitage",
-    "era": 2,
-    "type": "territories",
-    "activationCost": 2,
-    "immediateEffect":{
-      "faithPoints": 1
-    }
-  },
-  {
-    "id": 15,
-    "name": "Manor House",
-    "era": 2,
-    "type": "territories",
-    "activationCost": 5
-  },
-  {
-    "id": 16,
-    "name": "Dukedom",
-    "era": 2,
-    "type": "territories",
-    "activationCost": 6,
-    "immediateEffect":{
-      "coins": 4
-    }
-  },
-  {
-    "id": 17,
-    "name": "Trading Town",
-    "era": 3,
-    "type": "territories",
-    "activationCost": 1,
-    "immediateEffect":{
-      "servants": 1,
-      "coins": 1
-    }
-  },
-  {
-    "id": 18,
-    "name": "Farm",
-    "era": 3,
-    "type": "territories",
-    "activationCost": 3,
-    "immediateEffect":{
-      "victoryPoints": 1,
-      "wood": 1
-    }
-  },
-  {
-    "id": 19,
-    "name": "Colony",
-    "era": 3,
-    "type": "territories",
-    "activationCost": 5,
-    "immediateEffect":{
-      "militaryPoints": 2
-    }
-  },
-  {
-    "id": 20,
-    "name": "Marble Pit",
-    "era": 3,
-    "type": "territories",
-    "activationCost": 2,
-    "immediateEffect":{
-      "victoryPoints": 3
-    }
-  },
-  {
-    "id": 21,
-    "name": "Province",
-    "era": 3,
-    "type": "territories",
-    "activationCost": 6,
-    "immediateEffect":{
-      "privileges": 1,
-      "stone": 1
-    }
-  },
-  {
-    "id": 22,
-    "name": "Sanctuary",
-    "era": 3,
-    "type": "territories",
-    "activationCost": 1,
-    "immediateEffect":{
-      "faithPoints": 1
-    }
-  },
-  {
-    "id": 23,
-    "name": "Castle",
-    "era": 3,
-    "type": "territories",
-    "activationCost": 4,
-    "immediateEffect":{
-      "victoryPoints": 2,
-      "coins": 2
-    }
-  },
-  {
-    "id": 24,
-    "name": "Fortified Town",
-    "era": 3,
-    "type": "territories",
-    "activationCost": 2,
-    "immediateEffect":{
-      "militaryPoints": 2,
-      "servants": 1
-    }
-  },
-
-
-  {
-    "id": 49,
-    "name": "Warlord",
-    "era": 1,
-    "type": "characters",
-    "costs":{
-      "coins": 2
+  "developmentCards": [
+    {
+      "id": 1,
+      "name": "commercial hub",
+      "era": 1,
+      "type": "territories",
+      "activationCost": 1,
+      "permanentEffects": [
+        {
+          "coins": 1
+        }
+      ]
     },
-    "immediateEffect":{
-      "militaryPoints": 3
-    }
-  },
-  {
-    "id": 50,
-    "name": "Stonemason",
-    "era": 1,
-    "type": "characters",
-    "costs":{
-      "coins": 4
-    }
-  },
-  {
-    "id": 51,
-    "name": "Dame",
-    "era": 1,
-    "type": "characters",
-    "costs":{
-      "coins": 4
-    }
-  },
-  {
-    "id": 52,
-    "name": "Knight",
-    "era": 1,
-    "type": "characters",
-    "costs":{
-      "coins": 2
+    {
+      "id": 2,
+      "name": "woods",
+      "era": 1,
+      "type": "territories",
+      "activationCost": 2,
+      "immediateEffect": {
+        "wood": 1
+      },
+      "permanentEffects":[
+        {
+          "wood": 1
+        }
+      ]
     },
-    "immediateEffect":{
-      "privileges": 1
-    }
-  },
-  {
-    "id": 53,
-    "name": "Farmer",
-    "era": 1,
-    "type": "characters",
-    "costs":{
-      "coins": 3
-    }
-  },
-  {
-    "id": 54,
-    "name": "Artisan",
-    "era": 1,
-    "type": "characters",
-    "costs":{
-      "coins": 3
-    }
-  },
-  {
-    "id": 55,
-    "name": "Preacher",
-    "era": 1,
-    "type": "characters",
-    "costs":{
-      "coins": 2
+    {
+      "id": 3,
+      "name": "village",
+      "era": 1,
+      "type": "territories",
+      "activationCost": 3,
+      "permanentEffects":[
+        {
+          "coins": 1,
+          "servants": 1
+        }
+      ]
     },
-    "immediateEffect":{
-      "faithPoints": 4
-    }
-  },
-  {
-    "id": 56,
-    "name": "Abbess",
-    "era": 1,
-    "type": "characters",
-    "costs":{
-      "coins": 3
+    {
+      "id": 4,
+      "name": "gravel pit",
+      "era": 1,
+      "type": "territories",
+      "activationCost": 4,
+      "immediateEffect": {
+        "stone": 2
+      },
+      "permanentEffects":[
+        {
+          "stone": 2
+        }
+      ]
     },
-    "immediateEffect":{
-      "faithPoints": 3,
-      "card":{
-        "value": 4,
-        "type": "all"
+    {
+      "id": 5,
+      "name": "forest",
+      "era": 1,
+      "type": "territories",
+      "activationCost": 5,
+      "immediateEffect": {
+        "wood": 1
+      },
+      "permanentEffects":[
+        {
+          "wood": 3
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Monastery",
+      "era": 1,
+      "type": "territories",
+      "activationCost": 6,
+      "immediateEffect": {
+        "servants": 1,
+        "militaryPoints": 2
+      },
+      "permanentEffects":[
+        {
+          "stone": 1,
+          "faithPoints": 1
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "citadel",
+      "era": 1,
+      "type": "territories",
+      "activationCost": 5,
+      "permanentEffects":[
+        {
+          "stone": 1,
+          "militaryPoints": 2
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "City",
+      "era": 1,
+      "type": "territories",
+      "activationCost": 6,
+      "immediateEffect": {
+        "coins": 3
+      },
+      "permanentEffects":[
+        {
+          "privileges": 1
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Gold Mine",
+      "era": 2,
+      "type": "territories",
+      "activationCost": 1,
+      "immediateEffect": {
+        "coins": 1
+      },
+      "permanentEffects":[
+        {
+          "coins": 2
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Mountain Town",
+      "era": 2,
+      "type": "territories",
+      "activationCost": 3,
+      "immediateEffect": {
+        "servants": 1
+      },
+      "permanentEffects":[
+        {
+          "wood": 2,
+          "militaryPoints": 1
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Mining Town",
+      "era": 2,
+      "type": "territories",
+      "activationCost": 4,
+      "immediateEffect": {
+        "servants": 2,
+        "stone": 1
+      },
+      "permanentEffects":[
+        {
+          "stone": 2,
+          "servants": 1
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "name": "Rock Pit",
+      "era": 2,
+      "type": "territories",
+      "activationCost": 3,
+      "immediateEffect": {
+        "wood": 1
+      },
+      "permanentEffects":[
+        {
+          "stone": 3
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "name": "Estate",
+      "era": 2,
+      "type": "territories",
+      "activationCost": 4,
+      "immediateEffect": {
+        "servants": 2,
+        "wood": 1
+      },
+      "permanentEffects":[
+        {
+          "wood": 2,
+          "coins": 1
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "name": "Hermitage",
+      "era": 2,
+      "type": "territories",
+      "activationCost": 2,
+      "immediateEffect": {
+        "faithPoints": 1
+      },
+      "permanentEffects":[
+        {
+          "faithPoints": 1
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "name": "Manor House",
+      "era": 2,
+      "type": "territories",
+      "activationCost": 5,
+      "permanentEffects":[
+        {
+          "militaryPoints": 2,
+          "servants": 2
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "name": "Dukedom",
+      "era": 2,
+      "type": "territories",
+      "activationCost": 6,
+      "immediateEffect": {
+        "coins": 4
+      },
+      "permanentEffects":[
+        {
+          "wood": 2,
+          "stone": 1,
+          "coins": 1
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "name": "Trading Town",
+      "era": 3,
+      "type": "territories",
+      "activationCost": 1,
+      "immediateEffect": {
+        "servants": 1,
+        "coins": 1
+      },
+      "permanentEffects":[
+        {
+          "coins": 3
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "name": "Farm",
+      "era": 3,
+      "type": "territories",
+      "activationCost": 3,
+      "immediateEffect": {
+        "victoryPoints": 1,
+        "wood": 1
+      },
+      "permanentEffects":[
+        {
+          "wood": 2,
+          "victoryPoints": 2
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "name": "Colony",
+      "era": 3,
+      "type": "territories",
+      "activationCost": 5,
+      "immediateEffect": {
+        "militaryPoints": 2
+      },
+      "permanentEffects":[
+        {
+          "wood": 1,
+          "victoryPoints": 4
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "name": "Marble Pit",
+      "era": 3,
+      "type": "territories",
+      "activationCost": 2,
+      "immediateEffect": {
+        "victoryPoints": 3
+      },
+      "permanentEffects":[
+        {
+          "stone": 2,
+          "victoryPoints": 1
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "name": "Province",
+      "era": 3,
+      "type": "territories",
+      "activationCost": 6,
+      "immediateEffect": {
+        "privileges": 1,
+        "stone": 1
+      },
+      "permanentEffects":[
+        {
+          "stone": 1,
+          "victoryPoints": 4
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "name": "Sanctuary",
+      "era": 3,
+      "type": "territories",
+      "activationCost": 1,
+      "immediateEffect": {
+        "faithPoints": 1
+      },
+      "permanentEffects":[
+        {
+          "coins": 1,
+          "faithPoints": 1
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "name": "Castle",
+      "era": 3,
+      "type": "territories",
+      "activationCost": 4,
+      "immediateEffect": {
+        "victoryPoints": 2,
+        "coins": 2
+      },
+      "permanentEffects":[
+        {
+          "servants": 1,
+          "militaryPoints": 3
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "name": "Fortified Town",
+      "era": 3,
+      "type": "territories",
+      "activationCost": 2,
+      "immediateEffect": {
+        "militaryPoints": 2,
+        "servants": 1
+      },
+      "permanentEffects":[
+        {
+          "militaryPoints": 1,
+          "servants": 2
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "name": "Mint",
+      "era": 1,
+      "type": "buildings",
+      "activationCost": 5,
+      "costs": [
+        {
+          "wood": 1,
+          "stone": 3
+        }
+      ],
+      "immediateEffect": {
+        "victoryPoints": 5,
+        "permanentEffects": [
+          {
+            "forEach": {
+              "left": "coins",
+              "right": "buildings",
+              "ratio": 1
+            }
+          }
+        ]
       }
-    }
-  },
-  {
-    "id": 57,
-    "name": "Captain",
-    "era": 2,
-    "type": "characters",
-    "costs":{
-      "coins": 4
     },
-    "immediateEffect":{
-      "militaryPoints": 3,
-      "card":{
-        "value": 6,
-        "type": "territories"
+    {
+      "id": 26,
+      "name": "Tax Office",
+      "era": 1,
+      "type": "buildings",
+      "activationCost": 5,
+      "costs": [
+        {
+          "wood": 3,
+          "stone": 1
+        }
+      ],
+      "immediateEffect": {
+        "victoryPoints": 5
+      },
+      "permanentEffects": [
+        {
+          "forEach": {
+            "left": "coins",
+            "right": "territories",
+            "ratio": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "name": "Triumphal Arch",
+      "era": 1,
+      "type": "buildings",
+      "activationCost": 6,
+      "costs": [
+        {
+          "coins": 2,
+          "stone": 2
+        }
+      ],
+      "immediateEffect": {
+        "victoryPoints": 6
+      },
+      "permanentEffects": [
+        {
+          "forEach": {
+            "left": "victoryPoints",
+            "right": "ventures",
+            "ratio": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "name": "Theater",
+      "era": 1,
+      "type": "buildings",
+      "activationCost": 6,
+      "costs": [
+        {
+          "wood": 1,
+          "coins": 4
+        }
+      ],
+      "immediateEffect": {
+        "victoryPoints": 6
+      },
+      "permanentEffects": [
+        {
+          "forEach": {
+            "left": "victoryPoints",
+            "right": "characters",
+            "ratio": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "name": "Carpenter's Shop",
+      "era": 1,
+      "type": "buildings",
+      "activationCost": 4,
+      "costs": [
+        {
+          "wood": 1,
+          "coins": 2
+        }
+      ],
+      "immediateEffect": {
+        "victoryPoints": 3
+      },
+      "permanentEffects": [
+        {
+          "wood": -1,
+          "coins": 3
+        },
+        {
+          "wood": -2,
+          "coins": 5
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "name": "Stonemason's Shop",
+      "era": 1,
+      "type": "buildings",
+      "activationCost": 3,
+      "costs": [
+        {
+          "stone": 2,
+          "coins": 1
+        }
+      ],
+      "immediateEffect": {
+        "victoryPoints": 2
+      },
+      "permanentEffects": [
+        {
+          "stone": -1,
+          "coins": 3
+        },
+        {
+          "stone": -2,
+          "coins": 5
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "name": "Chapel",
+      "era": 1,
+      "type": "buildings",
+      "activationCost": 2,
+      "costs": [
+        {
+          "wood": 2
+        }
+      ],
+      "immediateEffect": {
+        "faithPoints": 1
+      },
+      "permanentEffects": [
+        {
+          "coins": -1,
+          "faithPoints": 1
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "name": "Residence",
+      "era": 1,
+      "type": "buildings",
+      "activationCost": 1,
+      "costs": [
+        {
+          "stone": 2
+        }
+      ],
+      "immediateEffect": {
+        "victoryPoints": 1
+      },
+      "permanentEffects": [
+        {
+          "coins": -1,
+          "privileges": 1
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "name": "Marketplace",
+      "era": 2,
+      "type": "buildings",
+      "activationCost": 3,
+      "costs": [
+        {
+          "wood": 2,
+          "stone": 1
+        }
+      ],
+      "immediateEffect": {
+        "victoryPoints": 5
+      },
+      "permanentEffects": [
+        {
+          "wood": 2,
+          "stone": 2,
+          "coins": -3
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "name": "Treasury",
+      "era": 2,
+      "type": "buildings",
+      "activationCost": 3,
+      "costs": [
+        {
+          "wood": 3
+        }
+      ],
+      "immediateEffect": {
+        "victoryPoints": 4
+      },
+      "permanentEffects": [
+        {
+          "coins": -1,
+          "victoryPoints": 3
+        },
+        {
+          "coins": -2,
+          "victoryPoints": 5
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "name": "Painters' Guild",
+      "era": 2,
+      "type": "buildings",
+      "activationCost": 4,
+      "costs": [
+        {
+          "wood": 4
+        }
+      ],
+      "immediateEffect": {
+        "victoryPoints": 5
+      },
+      "permanentEffects": [
+        {
+          "wood": -1,
+          "victoryPoints": 3
+        },
+        {
+          "wood": -3,
+          "victoryPoints": 7
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "name": "Sculptors' Guild",
+      "era": 2,
+      "type": "buildings",
+      "activationCost": 5,
+      "costs": [
+        {
+          "stone": 4
+        }
+      ],
+      "immediateEffect": {
+        "victoryPoints": 6
+      },
+      "permanentEffects": [
+        {
+          "stone": -1,
+          "victoryPoints": 3
+        },
+        {
+          "stone": -3,
+          "victoryPoints": 7
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "name": "Stonemasons' Guild",
+      "era": 2,
+      "type": "buildings",
+      "activationCost": 4,
+      "costs": [
+        {
+          "wood": 1,
+          "stone": 2
+        }
+      ],
+      "immediateEffect": {
+        "victoryPoints": 4
+      },
+      "permanentEffects": [
+        {
+          "wood": -1,
+          "stone": -1,
+          "servants": -1,
+          "victoryPoints": 6
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "name": "Baptistery",
+      "era": 2,
+      "type": "buildings",
+      "activationCost": 2,
+      "costs": [
+        {
+          "stone": 3
+        }
+      ],
+      "immediateEffect": {
+        "faithPoints": 1,
+        "victoryPoints": 2
+      },
+      "permanentEffects": [
+        {
+          "coins": 2,
+          "faithPoints": -1,
+          "victoryPoints": 2
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "name": "Barracks",
+      "era": 2,
+      "type": "buildings",
+      "activationCost": 1,
+      "costs": [
+        {
+          "wood": 1,
+          "stone": 1
+        }
+      ],
+      "immediateEffect": {
+        "victoryPoints": 5
+      },
+      "permanentEffects": [
+        {
+          "servants": -1,
+          "militaryPoints": 3
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "name": "Stronghold",
+      "era": 2,
+      "type": "buildings",
+      "activationCost": 6,
+      "costs": [
+        {
+          "wood": 2,
+          "stone": 2,
+          "coins": 2
+        }
+      ],
+      "immediateEffect": {
+        "victoryPoints": 8
+      },
+      "permanentEffects": [
+        {
+          "militaryPoints": 2,
+          "victoryPoints": 2
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "name": "Bank",
+      "era": 3,
+      "type": "buildings",
+      "activationCost": 2,
+      "costs": [
+        {
+          "wood": 1,
+          "stone": 3,
+          "coins": 3
+        }
+      ],
+      "immediateEffect": {
+        "victoryPoints": 5
+      },
+      "permanentEffects": [
+        {
+          "coins": 5
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "name": "Fair",
+      "era": 3,
+      "type": "buildings",
+      "activationCost": 4,
+      "costs": [
+        {
+          "wood": 3,
+          "coins": 4
+        }
+      ],
+      "immediateEffect": {
+        "victoryPoints": 8
+      },
+      "permanentEffects": [
+        {
+          "wood": 3,
+          "stone": 3,
+          "coins": -4
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "name": "Garden",
+      "era": 3,
+      "type": "buildings",
+      "activationCost": 1,
+      "costs": [
+        {
+          "wood": 4,
+          "stone": 2,
+          "servants": 2
+        }
+      ],
+      "immediateEffect": {
+        "victoryPoints": 10
+      },
+      "permanentEffects": [
+        {
+          "victoryPoints": 3
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "name": "Fortress",
+      "era": 3,
+      "type": "buildings",
+      "activationCost": 5,
+      "costs": [
+        {
+          "wood": 2,
+          "stone": 4,
+          "coins": 2
+        }
+      ],
+      "immediateEffect": {
+        "victoryPoints": 9
+      },
+      "permanentEffects": [
+        {
+          "privileges": 1,
+          "victoryPoints": 2
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "name": "Palace",
+      "era": 3,
+      "type": "buildings",
+      "activationCost": 6,
+      "costs": [
+        {
+          "wood": 3,
+          "stone": 1,
+          "coins": 3
+        }
+      ],
+      "immediateEffect": {
+        "victoryPoints": 9
+      },
+      "permanentEffects": [
+        {
+          "servants": 2,
+          "coins": -1,
+          "victoryPoints": 4
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "name": "Church",
+      "era": 3,
+      "type": "buildings",
+      "activationCost": 1,
+      "costs": [
+        {
+          "wood": 1,
+          "stone": 4
+        }
+      ],
+      "immediateEffect": {
+        "faithPoints": 1,
+        "victoryPoints": 5
+      },
+      "permanentEffects": [
+        {
+          "wood": -1,
+          "faithPoints": 2
+        },
+        {
+          "stone": -1,
+          "faithPoints": 2
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "name": "Military Academy",
+      "era": 3,
+      "type": "buildings",
+      "activationCost": 3,
+      "costs": [
+        {
+          "wood": 2,
+          "stone": 2,
+          "servants": 1
+        }
+      ],
+      "immediateEffect": {
+        "victoryPoints": 7
+      },
+      "permanentEffects": [
+        {
+          "servants": 1,
+          "militaryPoints": 3,
+          "victoryPoints": 1
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "name": "Cathedral",
+      "era": 3,
+      "type": "buildings",
+      "activationCost": 2,
+      "costs": [
+        {
+          "wood": 4,
+          "stone": 4
+        }
+      ],
+      "immediateEffect": {
+        "faithPoints": 3,
+        "victoryPoints": 7
+      },
+      "permanentEffects": [
+        {
+          "victoryPoints": 1
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "name": "Warlord",
+      "era": 1,
+      "type": "characters",
+      "costs": {
+        "coins": 2
+      },
+      "immediateEffect": {
+        "militaryPoints": 3
+      },
+      "permanentEffects": [
+        {
+          "addValueToDice": {
+            "value": 2,
+            "type": "territories"
+          }
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "name": "Stonemason",
+      "era": 1,
+      "type": "characters",
+      "costs": {
+        "coins": 4
+      },
+      "permanentEffects": [
+        {
+          "addValueToDice": {
+            "value": 2,
+            "type": "buildings",
+            "wood": 1
+          }
+        },
+        {
+          "addValueToDice": {
+            "value": 2,
+            "type": "buildings",
+            "stone": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "name": "Dame",
+      "era": 1,
+      "type": "characters",
+      "costs": {
+        "coins": 4
+      },
+      "permanentEffects": [
+        {
+          "addValueToDice": {
+            "value": 2,
+            "type": "characters",
+            "coins": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "name": "Knight",
+      "era": 1,
+      "type": "characters",
+      "costs": {
+        "coins": 2
+      },
+      "immediateEffect": {
+        "privileges": 1
+      },
+      "permanentEffects": [
+        {
+          "addValueToDice": {
+            "value": 2,
+            "type": "ventures"
+          }
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "name": "Farmer",
+      "era": 1,
+      "type": "characters",
+      "costs": {
+        "coins": 3
+      },
+      "permanentEffects": [
+        {
+          "addValueToDice": {
+            "value": 2,
+            "type": "harvest"
+          }
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "name": "Artisan",
+      "era": 1,
+      "type": "characters",
+      "costs": {
+        "coins": 3
+      },
+      "permanentEffects": [
+        {
+          "addValueToDice": {
+            "value": 2,
+            "type": "production"
+          }
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "name": "Preacher",
+      "era": 1,
+      "type": "characters",
+      "costs": {
+        "coins": 2
+      },
+      "immediateEffect": {
+        "faithPoints": 4
+      },
+      "permanentEffects": [
+        {
+          "disableImmediateBonus": true
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "name": "Abbess",
+      "era": 1,
+      "type": "characters",
+      "costs": {
+        "coins": 3
+      },
+      "immediateEffect": {
+        "faithPoints": 3,
+        "card": {
+          "value": 4,
+          "type": "all"
+        }
       }
+    },
+    {
+      "id": 57,
+      "name": "Captain",
+      "era": 2,
+      "type": "characters",
+      "costs": {
+        "coins": 4
+      },
+      "immediateEffect": {
+        "militaryPoints": 3,
+        "card": {
+          "value": 6,
+          "type": "territories"
+        }
+      }
+    },
+    {
+      "id": 58,
+      "name": "Architect",
+      "era": 2,
+      "type": "characters",
+      "costs": [
+        {
+          "coins": 4
+        }
+      ],
+      "immediateEffect": {
+        "card": {
+          "value": 6,
+          "type": "buildings",
+          "wood": 1,
+          "stone": 2
+        }
+      }
+    },
+    {
+      "id": 59,
+      "name": "Patron",
+      "era": 2,
+      "type": "characters",
+      "costs": [
+        {
+          "coins": 3
+        }
+      ],
+      "immediateEffect": {
+        "card": {
+          "value": 6,
+          "type": "characters",
+          "coins": 2
+        }
+      }
+    },
+    {
+      "id": 60,
+      "name": "Hero",
+      "era": 2,
+      "type": "characters",
+      "costs": [
+        {
+          "coins": 4
+        }
+      ],
+      "immediateEffect": {
+        "privileges": 1,
+        "card": {
+          "value": 6,
+          "type": "ventures"
+        }
+      }
+    },
+    {
+      "id": 61,
+      "name": "Peasant",
+      "era": 2,
+      "type": "characters",
+      "costs": [
+        {
+          "coins": 4
+        }
+      ],
+      "permanentEffects": [
+        {
+          "addValueToDice": {
+            "value": 3,
+            "type": "harvest"
+          }
+        }
+      ]
+    },
+    {
+      "id": 62,
+      "name": "Scholar",
+      "era": 2,
+      "type": "characters",
+      "costs": [
+        {
+          "coins": 4
+        }
+      ],
+      "permanentEffects": [
+        {
+          "addValueToDice": {
+            "value": 3,
+            "type": "production"
+          }
+        }
+      ]
+    },
+    {
+      "id": 63,
+      "name": "Papal Messenger",
+      "era": 2,
+      "type": "characters",
+      "costs": [
+        {
+          "coins": 5
+        }
+      ],
+      "immediateEffect": {
+        "faithPoints": 3
+      }
+    },
+    {
+      "id": 64,
+      "name": "Royal Messenger",
+      "era": 2,
+      "type": "characters",
+      "costs": [
+        {
+          "coins": 5
+        }
+      ],
+      "immediateEffect": {
+        "privileges": 3
+      }
+    },
+    {
+      "id": 65,
+      "name": "Noble",
+      "era": 3,
+      "type": "characters",
+      "costs": [
+        {
+          "coins": 6
+        }
+      ],
+      "immediateEffect": {
+        "foreach": {
+          "left": "victoryPoints",
+          "right": "territories",
+          "ratio": 2
+        }
+      }
+    },
+    {
+      "id": 66,
+      "name": "Governor",
+      "era": 3,
+      "type": "characters",
+      "costs": [
+        {
+          "coins": 6
+        }
+      ],
+      "immediateEffect": {
+        "foreach": {
+          "left": "victoryPoints",
+          "right": "buildings",
+          "ratio": 2
+        }
+      }
+    },
+    {
+      "id": 67,
+      "name": "Paramour",
+      "era": 3,
+      "type": "characters",
+      "costs": [
+        {
+          "coins": 7
+        }
+      ],
+      "immediateEffect": {
+        "foreach": {
+          "left": "victoryPoints",
+          "right": "characters",
+          "ratio": 2
+        }
+      }
+    },
+    {
+      "id": 68,
+      "name": "Herald",
+      "era": 3,
+      "type": "characters",
+      "costs": [
+        {
+          "coins": 6
+        }
+      ],
+      "immediateEffect": {
+        "foreach": {
+          "left": "victoryPoints",
+          "right": "ventures",
+          "ratio": 2
+        }
+      }
+    },
+    {
+      "id": 69,
+      "name": "Cardinal",
+      "era": 3,
+      "type": "characters",
+      "costs": [
+        {
+          "coins": 4
+        }
+      ],
+      "immediateEffect": {
+        "faithPoints": 2,
+        "card": {
+          "value": 4,
+          "type": "harvest"
+        }
+      }
+    },
+    {
+      "id": 70,
+      "name": "Bishop",
+      "era": 3,
+      "type": "characters",
+      "costs": [
+        {
+          "coins": 5
+        }
+      ],
+      "immediateEffect": {
+        "faithPoints": 1,
+        "card": {
+          "value": 4,
+          "type": "production"
+        }
+      }
+    },
+    {
+      "id": 71,
+      "name": "General",
+      "era": 3,
+      "type": "characters",
+      "costs": [
+        {
+          "coins": 5
+        }
+      ],
+      "immediateEffect": {
+        "foreach": {
+          "left": "victoryPoints",
+          "right": "militaryPoints",
+          "ratio": 0.5
+        }
+      }
+    },
+    {
+      "id": 72,
+      "name": "Ambassador",
+      "era": 3,
+      "type": "characters",
+      "costs": [
+        {
+          "coins": 6
+        }
+      ],
+      "immediateEffect": {
+        "privileges": 1,
+        "card": {
+          "value": 7,
+          "type": "all"
+        }
+      }
+    },
+    {
+      "id": 73,
+      "name": "Hiring Recruits",
+      "era": 1,
+      "type": "ventures",
+      "costs": [
+        {
+          "coins": 4
+        }
+      ],
+      "immediateEffect": {
+        "militaryPoints": 5
+      },
+      "permanentEffects": [
+        {
+          "finalVictoryPoint": 4
+        }
+      ]
+    },
+    {
+      "id": 74,
+      "name": "Repairing the Church",
+      "era": 1,
+      "type": "ventures",
+      "costs": [
+        {
+          "wood": 1,
+          "stone": 1,
+          "coins": 1
+        }
+      ],
+      "immediateEffect": {
+        "faithPoints": 1
+      },
+      "permanentEffects": [
+        {
+          "finalVictoryPoint": 5
+        }
+      ]
+    },
+    {
+      "id": 75,
+      "name": "Building the Walls",
+      "era": 1,
+      "type": "ventures",
+      "costs": [
+        {
+          "stone": 3
+        }
+      ],
+      "immediateEffect": {
+        "privileges": 1,
+        "militaryPoints": 2
+      },
+      "permanentEffects": [
+        {
+          "finalVictoryPoint": 3
+        }
+      ]
+    },
+    {
+      "id": 76,
+      "name": "Raising a Statue",
+      "era": 1,
+      "type": "ventures",
+      "costs": [
+        {
+          "wood": 2,
+          "stone": 2
+        }
+      ],
+      "immediateEffect": {
+        "privileges": 2
+      },
+      "permanentEffects": [
+        {
+          "finalVictoryPoint": 4
+        }
+      ]
+    },
+    {
+      "id": 77,
+      "name": "Military Campaign",
+      "era": 1,
+      "type": "ventures",
+      "costs": [
+        {
+          "militaryPointsRequired": 3,
+          "militaryPointsSubtracted": 2
+        }
+      ],
+      "immediateEffect": {
+        "coins": 3
+      },
+      "permanentEffects": [
+        {
+          "finalVictoryPoint": 5
+        }
+      ]
+    },
+    {
+      "id": 78,
+      "name": "Hosting Panhandlers",
+      "era": 1,
+      "type": "ventures",
+      "costs": [
+        {
+          "wood": 3
+        }
+      ],
+      "immediateEffect": {
+        "servants": 4
+      },
+      "permanentEffects": [
+        {
+          "finalVictoryPoint": 4
+        }
+      ]
+    },
+    {
+      "id": 79,
+      "name": "Fighting Heresies",
+      "era": 1,
+      "type": "ventures",
+      "costs": [
+        {
+          "militaryPointsRequired": 5,
+          "militaryPointsSubtracted": 3
+        }
+      ],
+      "immediateEffect": {
+        "faithPoints": 5
+      },
+      "permanentEffects": [
+        {
+          "finalVictoryPoint": 5
+        }
+      ]
+    },
+    {
+      "id": 80,
+      "name": "Support to the Bishop",
+      "era": 1,
+      "type": "ventures",
+      "costs": [
+        {
+          "militaryPointsRequired": 4,
+          "militaryPointsSubtracted": 2
+        },
+        {
+          "wood": 1,
+          "stone": 1,
+          "coins": 2
+        }
+      ],
+      "immediateEffect": {
+        "faithPoints": 3
+      },
+      "permanentEffects": [
+        {
+          "finalVictoryPoint": 1
+        }
+      ]
+    },
+    {
+      "id": 81,
+      "name": "Hiring Soldiers",
+      "era": 2,
+      "type": "ventures",
+      "costs": [
+        {
+          "coins": 6
+        }
+      ],
+      "immediateEffect": {
+        "militaryPoints": 5
+      },
+      "permanentEffects": [
+        {
+          "finalVictoryPoint": 5
+        }
+      ]
+    },
+    {
+      "id": 82,
+      "name": "Repairing the Abbey",
+      "era": 2,
+      "type": "ventures",
+      "costs": [
+        {
+          "wood": 2,
+          "stone": 2,
+          "coins": 2
+        }
+      ],
+      "immediateEffect": {
+        "faithPoints": 5
+      },
+      "permanentEffects": [
+        {
+          "finalVictoryPoint": 6
+        }
+      ]
+    },
+    {
+      "id": 83,
+      "name": "Building the Bastions",
+      "era": 2,
+      "type": "ventures",
+      "costs": [
+        {
+          "stone": 4
+        }
+      ],
+      "immediateEffect": {
+        "privileges": 1,
+        "militaryPoints": 3
+      },
+      "permanentEffects": [
+        {
+          "finalVictoryPoint": 2
+        }
+      ]
+    },
+    {
+      "id": 84,
+      "name": "Support to the King",
+      "era": 2,
+      "type": "ventures",
+      "costs": [
+        {
+          "militaryPointsRequired": 6,
+          "militaryPointsSubtracted": 3
+        }
+      ],
+      "immediateEffect": {
+        "coins": 5,
+        "privileges": 1
+      },
+      "permanentEffects": [
+        {
+          "finalVictoryPoint": 3
+        }
+      ]
+    },
+    {
+      "id": 85,
+      "name": "Improving the Canals",
+      "era": 2,
+      "type": "ventures",
+      "costs": [
+        {
+          "servants": 2,
+          "coins": 3
+        }
+      ],
+      "immediateEffect": {
+        "card": {
+          "value": 4,
+          "type": "harvest"
+        }
+      },
+      "permanentEffects": [
+        {
+          "finalVictoryPoint": 5
+        }
+      ]
+    },
+    {
+      "id": 86,
+      "name": "Hosting Foreigner",
+      "era": 2,
+      "type": "ventures",
+      "costs": [
+        {
+          "wood": 4
+        }
+      ],
+      "immediateEffect": {
+        "servants": 5
+      },
+      "permanentEffects": [
+        {
+          "finalVictoryPoint": 4
+        }
+      ]
+    },
+    {
+      "id": 87,
+      "name": "Crusade",
+      "era": 2,
+      "type": "ventures",
+      "costs": [
+        {
+          "militaryPointsRequired": 8,
+          "militaryPointsSubtracted": 4
+        }
+      ],
+      "immediateEffect": {
+        "coins": 5,
+        "faithPoints": 1
+      },
+      "permanentEffects": [
+        {
+          "finalVictoryPoint": 5
+        }
+      ]
+    },
+    {
+      "id": 88,
+      "name": "Support to the Cardinal",
+      "era": 2,
+      "type": "ventures",
+      "costs": [
+        {
+          "militaryPointsRequired": 7,
+          "militaryPointsSubtracted": 4
+        },
+        {
+          "wood": 2,
+          "stone": 2,
+          "coins": 3
+        }
+      ],
+      "immediateEffect": {
+        "faithPoints": 3
+      },
+      "permanentEffects": [
+        {
+          "finalVictoryPoint": 4
+        }
+      ]
+    },
+    {
+      "id": 89,
+      "name": "Hiring Mercenaries",
+      "era": 3,
+      "type": "ventures",
+      "costs": [
+        {
+          "coins": 8
+        }
+      ],
+      "immediateEffect": {
+        "militaryPoints": 7
+      },
+      "permanentEffects": [
+        {
+          "finalVictoryPoint": 6
+        }
+      ]
+    },
+    {
+      "id": 90,
+      "name": "Repairing the Cathedral",
+      "era": 3,
+      "type": "ventures",
+      "costs": [
+        {
+          "wood": 3,
+          "stone": 3,
+          "coins": 3
+        }
+      ],
+      "immediateEffect": {
+        "faithPoints": 1,
+        "card": {
+          "value": 7,
+          "type": "all"
+        }
+      },
+      "permanentEffects": [
+        {
+          "finalVictoryPoint": 5
+        }
+      ]
+    },
+    {
+      "id": 91,
+      "name": "Building the Towers",
+      "era": 3,
+      "type": "ventures",
+      "costs": [
+        {
+          "stone": 6
+        }
+      ],
+      "immediateEffect": {
+        "privileges": 1,
+        "militaryPoints": 4
+      },
+      "permanentEffects": [
+        {
+          "finalVictoryPoint": 4
+        }
+      ]
+    },
+    {
+      "id": 92,
+      "name": "Promoting Sacred Art",
+      "era": 3,
+      "type": "ventures",
+      "costs": [
+        {
+          "wood": 6
+        }
+      ],
+      "immediateEffect": {
+        "faithPoints": 3
+      },
+      "permanentEffects": [
+        {
+          "finalVictoryPoint": 3
+        }
+      ]
+    },
+    {
+      "id": 93,
+      "name": "Military Conquest",
+      "era": 3,
+      "type": "ventures",
+      "costs": [
+        {
+          "militaryPointsRequired": 12,
+          "militaryPointsSubtracted": 6
+        }
+      ],
+      "immediateEffect": {
+        "wood": 3,
+        "stone": 3,
+        "coins": 3
+      },
+      "permanentEffects": [
+        {
+          "finalVictoryPoint": 7
+        }
+      ]
+    },
+    {
+      "id": 94,
+      "name": "Improving the Roads",
+      "era": 3,
+      "type": "ventures",
+      "costs": [
+        {
+          "servants": 3,
+          "coins": 4
+        }
+      ],
+      "immediateEffect": {
+        "card": {
+          "value": 3,
+          "type": "production"
+        }
+      },
+      "permanentEffects": [
+        {
+          "finalVictoryPoint": 5
+        }
+      ]
+    },
+    {
+      "id": 95,
+      "name": "Sacred War",
+      "era": 3,
+      "type": "ventures",
+      "costs": [
+        {
+          "militaryPointsRequired": 15,
+          "militaryPointsSubtracted": 8
+        }
+      ],
+      "immediateEffect": {
+        "faithPoints": 5
+      },
+      "permanentEffects": [
+        {
+          "finalVictoryPoint": 8
+        }
+      ]
+    },
+    {
+      "id": 96,
+      "name": "Support to the Pope",
+      "era": 3,
+      "type": "ventures",
+      "costs": [
+        {
+          "militaryPointsRequired": 10,
+          "militaryPointsSubtracted": 5
+        },
+        {
+          "wood": 3,
+          "stone": 3,
+          "coins": 4
+        }
+      ],
+      "immediateEffect": {
+        "faithPoints": 2
+      },
+      "permanentEffects": [
+        {
+          "finalVictoryPoint": 10
+        }
+      ]
     }
-  }
-
   ]
 }

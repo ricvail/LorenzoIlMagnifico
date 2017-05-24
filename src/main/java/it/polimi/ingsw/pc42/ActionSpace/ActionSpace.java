@@ -1,9 +1,6 @@
 package it.polimi.ingsw.pc42.ActionSpace;
 
-
 import com.fasterxml.jackson.databind.JsonNode;
-import it.polimi.ingsw.pc42.Board;
-import it.polimi.ingsw.pc42.Dice;
 import it.polimi.ingsw.pc42.FamilyMember;
 import it.polimi.ingsw.pc42.ResourceType;
 
@@ -15,9 +12,9 @@ public class ActionSpace implements iActionSpace {
     private Area area;
     private int ID;
     private int actionValue;
-    Board board;
+    iBoard board;
 
-    public ActionSpace(Board board, Area area, int ID, int actionValue){
+    public ActionSpace(iBoard board, Area area, int ID, int actionValue){
         this.area = area;
         this.ID=ID;
         this.actionValue=actionValue;
