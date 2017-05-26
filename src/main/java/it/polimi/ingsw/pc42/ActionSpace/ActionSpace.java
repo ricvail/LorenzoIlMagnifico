@@ -3,6 +3,7 @@ package it.polimi.ingsw.pc42.ActionSpace;
 import com.fasterxml.jackson.databind.JsonNode;
 import it.polimi.ingsw.pc42.FamilyMember;
 import it.polimi.ingsw.pc42.ResourceType;
+import it.polimi.ingsw.pc42.Board;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,9 +13,9 @@ public class ActionSpace implements iActionSpace {
     private Area area;
     private int ID;
     private int actionValue;
-    iBoard board;
+    Board board;
 
-    public ActionSpace(iBoard board, Area area, int ID, int actionValue){
+    public ActionSpace(Board board, Area area, int ID, int actionValue){
         this.area = area;
         this.ID=ID;
         this.actionValue=actionValue;
