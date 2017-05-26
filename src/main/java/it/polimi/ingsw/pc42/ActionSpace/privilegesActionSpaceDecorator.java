@@ -1,6 +1,7 @@
 package it.polimi.ingsw.pc42.ActionSpace;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import it.polimi.ingsw.pc42.FamilyMember;
 import it.polimi.ingsw.pc42.PrivilegeManager;
 
@@ -17,9 +18,16 @@ public class privilegesActionSpaceDecorator extends AbstractDecorator {
         this.quantity=q;
     }
 
+    private boolean checkPrivilegesChoiceLength(JsonNode json){
+        if (!(json.has("privileges")&&json.get("privileges").isArray())) {
+            return false;
+        }
+        int len = ((ArrayNode) json.get("privileges")).size();
+        return (len==quantity);
+    }
+
     @Override
     public void placeFamilyMember(FamilyMember familyMember, JsonNode json) {
-
         PrivilegeManager.applyDifferentPrivileges(familyMember.owner, json.get("privileges"));
         super.placeFamilyMember(familyMember, json);
     }

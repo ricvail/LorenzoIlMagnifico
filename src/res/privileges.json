@@ -1,0 +1,20 @@
+{
+  "privileges":[
+    {
+      "stone":1,
+      "wood": 1
+    },
+    {
+      "servant": 2
+    },
+    {
+      "coin":2
+    },
+    {
+      "military":2
+    },
+    {
+      "faith":1
+    }
+  ]
+}

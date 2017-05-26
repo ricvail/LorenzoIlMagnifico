@@ -27,10 +27,6 @@ public class Card implements iCard{
         this.cardType = cardType;
     }
 
-    public Card(CardType cardType){
-        this.cardType=cardType;
-    }
-
     public boolean drawRequirementCheck(Player player) {
         return true;
     }
