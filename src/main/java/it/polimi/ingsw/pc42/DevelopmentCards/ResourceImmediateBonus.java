@@ -20,4 +20,18 @@ public class ResourceImmediateBonus extends AbstractDecorator {
         super.applyDrawEffect(player, json);
     }
 
+    @Override
+    public boolean drawRequirementCheck (Player player){
+        try{
+            player.getResource(resourceType).add(q);
+        }
+        catch (IllegalArgumentException e){
+            player.getResource(resourceType).add(q*-1);
+            return false;
+        }
+        boolean b=super.drawRequirementCheck(player);
+        player.getResource(resourceType).add(q*-1);
+        return b;
+    }
+
 }
