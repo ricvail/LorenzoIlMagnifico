@@ -1,7 +1,7 @@
 {
   "familyMember": "orange/black/white/neutral",
   "servants": 2,
-  "slotID": "market.3",
+  "slotID": 24,
   "paymentChoice": 0,
   "privileges": [2,5,7], //this refers to privileges obtained as an immediate effect from the ActionSpace
   "cardChoices": [ //this must be present when performing harvest or production.
