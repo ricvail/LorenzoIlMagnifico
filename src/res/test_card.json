@@ -1,5 +1,4 @@
 {
-  root:[{
   "id": 55,
   "name": "Preacher",
   "era": 1,
@@ -11,8 +10,4 @@
   "immediateEffect": {
     "faithPoints": 4
     }
-  },
-    {
-
-    }]
 }
