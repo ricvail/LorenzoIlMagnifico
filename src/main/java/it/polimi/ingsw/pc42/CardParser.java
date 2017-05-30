@@ -26,8 +26,9 @@ public class CardParser {
         }
 
         iCard c = new Card(root.get("era").asInt(),
-            root.get("name").asText(),
-            Card.CardType.fromString(root.get("type").asText()));
+                root.get("name").asText(),
+                Card.CardType.fromString(root.get("type").asText()),
+                root);
 
         //decorate immediate effect
         JsonNode immediateEffectNode = root.get("immediateEffect");
@@ -116,10 +117,6 @@ public class CardParser {
             }
 
             System.out.println(json.get("new property").isArray());
-
-
-
-
 
         } catch (JsonGenerationException e) {
             e.printStackTrace();
