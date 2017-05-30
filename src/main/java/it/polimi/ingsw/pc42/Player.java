@@ -22,6 +22,7 @@ public class Player {
 
     private ArrayList<iResourceWrapper> resources;
 
+
     public Player() {
         resources=new ArrayList<>();
         resources.add(new ResourceWrapper(ResourceType.COIN));
@@ -49,6 +50,10 @@ public class Player {
             if (c.getCardType()==type) i++;
         }
         return i;
+    }
+    
+    public ArrayList<FamilyMember> getFamilyMembers() {
+        return familyMembers;
     }
 
 

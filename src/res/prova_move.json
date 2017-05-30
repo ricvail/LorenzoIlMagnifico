@@ -3,16 +3,28 @@
   "servants": 2,
   "slotID": "market.3",
   "paymentChoice": 0,
-  "tradeChoice":0,
-  "privileges": [2,5,7],
-  "choiceCardToActivate": [0,1,2,3,4,5],
-  "immediateEffect": [
+  "privileges": [2,5,7], //this refers to privileges obtained as an immediate effect from the ActionSpace
+  "cardChoices": [ //this must be present when performing harvest or production. the array must have length equal to number of cards owned. leave an empty object {} if the card does not require a choice.
     {
-      "slotID": 2,
-      "servants": 3,
-      "paymentMethod": 0,
-      "choiceCardToActivate": [0,1,2,3,4,5],
-      "tradeChoice": 1
+      "optionToActivate": 2, //for yellow cards that require a choice (not all yellow cards)
+      "privileges": [1,2] //for cards that give privileges when activated
     }
-  ]
+  ],
+  "immediateEffect": //this must be present if the card has one (or more) immediate effects that require a choice: production/harvest/draw card/privileges
+  {
+    "slotID": 2, //specify card to draw
+    "servants": 3,//for all effects except privileges
+    "paymentMethod": 0,
+    "cardChoices": [//same as before. required when immediate effect of drawn card is harvest or production
+      {
+        "optionToActivate": 2, //for yellow cards that require a choice (not all yellow cards)
+        "privileges": [1,2] //for cards that give privileges when activated
+      }
+    ],
+    "privileges": [2,5,7],
+    "immediateEffect":{
+      //nested
+    }
+  }
 }
+//-------------------------------------------------

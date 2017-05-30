@@ -4,6 +4,7 @@ import it.polimi.ingsw.pc42.Board;
 import it.polimi.ingsw.pc42.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.DevelopmentCards.iCard;
 import it.polimi.ingsw.pc42.FamilyMember;
+import it.polimi.ingsw.pc42.iBoard;
 
 import java.util.Iterator;
 

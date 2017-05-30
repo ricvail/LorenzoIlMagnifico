@@ -3,6 +3,7 @@ package it.polimi.ingsw.pc42.ActionSpace;
 import com.fasterxml.jackson.databind.JsonNode;
 import it.polimi.ingsw.pc42.FamilyMember;
 import it.polimi.ingsw.pc42.ResourceType;
+import it.polimi.ingsw.pc42.iBoard;
 import it.polimi.ingsw.pc42.Board;
 
 import java.util.ArrayList;
@@ -77,6 +78,7 @@ public class ActionSpace implements iActionSpace {
         }
         return i;
     }
+    
 
     @Override
     public Board getBoard() {
