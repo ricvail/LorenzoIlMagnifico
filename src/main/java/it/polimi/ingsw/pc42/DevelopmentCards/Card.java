@@ -19,9 +19,10 @@ public class Card implements iCard{
     public final int era;
     public final String name;
     public final CardType cardType;
+    public final  JsonNode json;
 
-    public Card(int era, String name, CardType cardType){
-
+    public Card(int era, String name, CardType cardType, JsonNode j){
+        this.json=j;
         this.era = era;
         this.name = name;
         this.cardType = cardType;
@@ -37,6 +38,10 @@ public class Card implements iCard{
     public void applyEndgameEffect(Player player) {
     }
 
+    @Override
+    public JsonNode getJSONDescriptionOfCards() {
+        return null;
+    }
 
     public enum CardType {
         TERRITORY("territories"), CHARACTER("characters"), BUILDING("buildings"), VENTURE("ventures");

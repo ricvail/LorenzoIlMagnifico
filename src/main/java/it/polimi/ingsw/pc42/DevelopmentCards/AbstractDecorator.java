@@ -15,6 +15,12 @@ public abstract class AbstractDecorator implements iCard{
         return card.drawRequirementCheck(player);
     }
 
+    @Override
+    public JsonNode getJSONDescriptionOfCards() {
+        JsonNode json = card.getJSONDescriptionOfCards();
+        return json;
+    }
+
     public void applyDrawEffect(Player player, JsonNode json) {
         card.applyDrawEffect(player, json);
     }

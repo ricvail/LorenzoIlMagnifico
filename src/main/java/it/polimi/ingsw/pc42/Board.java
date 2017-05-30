@@ -103,6 +103,9 @@ public class Board implements iBoard {
         }
     }
 
+    public void vaticanPhase(){
+    }
+
     @Override
     public ArrayList<iActionSpace> getActionSpaces(){
         return this.actionSpaces;

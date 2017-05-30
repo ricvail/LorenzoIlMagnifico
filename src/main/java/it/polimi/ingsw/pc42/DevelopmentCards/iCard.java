@@ -11,6 +11,8 @@ public interface iCard {
 
     void applyEndgameEffect(Player player);
 
+    JsonNode getJSONDescriptionOfCards();
+
     int getEra();
 
     String getName();

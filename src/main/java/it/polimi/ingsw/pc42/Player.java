@@ -1,5 +1,9 @@
 package it.polimi.ingsw.pc42;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.polimi.ingsw.pc42.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.DevelopmentCards.iCard;
 import it.polimi.ingsw.pc42.Utilities.ResourceWrapper;
@@ -12,7 +16,7 @@ public class Player {
     private ArrayList<iCard> cardsOwned;
     private ArrayList<FamilyMember> familyMembers;
 
-    public PlayerColor getColor() {
+    private PlayerColor getColor() {
         return color;
     }
 
@@ -51,6 +55,38 @@ public class Player {
         }
         return i;
     }
+
+    public JsonNode generateJsonDescription(){
+        JsonNodeFactory factory=JsonNodeFactory.instance;
+        ObjectNode root= factory.objectNode();
+        root.put("color", this.getColor().getPlayerColorString());
+        for (iResourceWrapper rw:resources){
+            root.put(rw.getResourceType().getString(), rw.get());
+        }
+        ArrayNode listOfTerritoriesCards=factory.arrayNode();
+        ArrayNode listOfCharacterCards=factory.arrayNode();
+        ArrayNode listOfBuildingsCards=factory.arrayNode();
+        ArrayNode listOfVenturesCards=factory.arrayNode();
+        for (iCard card: cardsOwned) {
+            if (card.getCardType().getString().equalsIgnoreCase("territories")) {
+                listOfTerritoriesCards.add(card.getJSONDescriptionOfCards());
+            }
+            if (card.getCardType().getString().equalsIgnoreCase("characters")) {
+                listOfCharacterCards.add(card.getJSONDescriptionOfCards());
+            }
+            if (card.getCardType().getString().equalsIgnoreCase("buildings")) {
+                listOfBuildingsCards.add(card.getJSONDescriptionOfCards());
+            }
+            if (card.getCardType().getString().equalsIgnoreCase("ventures")) {
+                listOfVenturesCards.add(card.getJSONDescriptionOfCards());
+            }
+        }
+        root.set("territories", listOfTerritoriesCards);
+        root.set("characters", listOfCharacterCards);
+        root.set("buildings", listOfBuildingsCards);
+        root.set("ventures", listOfVenturesCards);
+        return root;
+    }
     
     public ArrayList<FamilyMember> getFamilyMembers() {
         return familyMembers;
@@ -71,6 +107,14 @@ public class Player {
 
 
     public enum PlayerColor {
-        RED, GREEN, BLUE, YELLOW
+        RED("red"), GREEN("green"), BLUE("blue"), YELLOW("yellow");
+
+        private String playerColor;
+
+        PlayerColor(String playerColor){
+            this.playerColor=playerColor;
+        }
+
+        public String getPlayerColorString(){return playerColor;}
     }
 }
