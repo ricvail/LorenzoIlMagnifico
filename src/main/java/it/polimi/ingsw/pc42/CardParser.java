@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.polimi.ingsw.pc42.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.DevelopmentCards.ImmediateBonusChoice;
 import it.polimi.ingsw.pc42.DevelopmentCards.ResourceImmediateBonus;
@@ -82,12 +83,11 @@ public class CardParser {
                 root.has("name")&&
                 root.has("type"))){
             throw new Exception("missing base fieldname");
-        } else if (!(root.has("immediateEffect")&&
-                    root.get("immediateEffect").isObject())){
-            throw new Exception("no or wrong type of immediateEffect");
-        } else if (!(root.has("costs")&&
-                    root.get("costs").isArray())){
-            throw new Exception("no or wrong type of costs");
+        } else if (!(root.get("immediateEffect").isObject())){
+            throw new Exception("wrong type of immediateEffect");
+        } else if (!(root.get("costs").isArray()
+                    ||root.get("costs").isObject())){
+            throw new Exception("wrong type of costs");
         }
     }
 
@@ -99,9 +99,26 @@ public class CardParser {
         try {
             ObjectMapper mapper = new ObjectMapper();
             //complete path in order to run the json
-            JsonNode json = mapper.readTree(new File("res\\prova_carta.json"));
-            iCard c;
-            c = createCard(json);
+            JsonNode json = mapper.readTree(new File("C:\\Users\\Paolo\\IdeaProjects\\LorenzoIlMagnifico\\src\\res\\prova_carta.json"));
+            //iCard c;
+            //c = createCard(json);
+            System.out.println(json.isObject());
+            ObjectNode obj = (ObjectNode) json;
+            JsonNode j = mapper.readTree("[1,2,3]");
+            obj.set("new property", j);
+            json = obj;
+
+            Iterator<String> it = json.fieldNames();
+            while(it.hasNext()){
+                String key = it.next();
+                System.out.println(key);
+            }
+
+            System.out.println(json.get("new property").isArray());
+
+
+
+
 
         } catch (JsonGenerationException e) {
             e.printStackTrace();

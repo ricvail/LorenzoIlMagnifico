@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 /**
  * Unit test for simple App.
  */
-public class AppTest 
+public class AppTest
     extends TestCase
 {
     /**
@@ -68,6 +68,7 @@ public class AppTest
         choiceDec.addChoice();
         c=new ResourceImmediateBonus(ResourceType.COIN, 3, choiceDec.choices.get(0));
         choiceDec.choices.set(0, c);
+
 
     }
 

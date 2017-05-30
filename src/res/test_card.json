@@ -1,0 +1,12 @@
+{
+  "id": 55,
+  "name": "Preacher",
+  "era": 1,
+  "type": "characters",
+  "costs": {
+    "coins": 2
+  },
+  "immediateEffect": {
+    "faithPoints": 4
+  }
+}

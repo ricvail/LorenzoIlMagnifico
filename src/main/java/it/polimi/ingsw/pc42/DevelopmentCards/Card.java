@@ -39,7 +39,7 @@ public class Card implements iCard{
 
 
     public enum CardType {
-        TERRITORY("territory"), CHARACTER("character"), BUILDING("building"), VENTURE("venture");
+        TERRITORY("territories"), CHARACTER("characters"), BUILDING("buildings"), VENTURE("ventures");
 
         private String cardType;
         CardType(String cardType){
