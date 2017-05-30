@@ -7,6 +7,7 @@ import it.polimi.ingsw.pc42.DevelopmentCards.iCard;
 
 import static it.polimi.ingsw.pc42.CardParser.createCard;
 import static org.junit.Assert.*;
+
 import org.junit.Test;
 
 import java.io.File;
@@ -47,7 +48,11 @@ public class CardTest {
             assertEquals(card.getCardType(), Card.CardType.CHARACTER );
             assertEquals(card.getName(), "Preacher");
             assertEquals(card.getEra(), 1);
-            //card.applyDrawEffect();
+
+            JsonNode moveNode = mapper.readTree(new File("src/res/test_move.json"));
+            card.applyDrawEffect(player, moveNode );
+
+            assertEquals(player.getResource(ResourceType.FAITHPOINTS).get(), 4);
 
         } catch (IOException e){
             e.printStackTrace();

@@ -4,7 +4,8 @@
   "slotID": "market.3",
   "paymentChoice": 0,
   "privileges": [2,5,7], //this refers to privileges obtained as an immediate effect from the ActionSpace
-  "cardChoices": [ //this must be present when performing harvest or production. the array must have length equal to number of cards owned. leave an empty object {} if the card does not require a choice.
+  "cardChoices": [ //this must be present when performing harvest or production.
+    //the array must have length equal to number of cards owned. leave an empty object {} if the card does not require a choice.
     {
       "optionToActivate": 2, //for yellow cards that require a choice (not all yellow cards)
       "privileges": [1,2] //for cards that give privileges when activated

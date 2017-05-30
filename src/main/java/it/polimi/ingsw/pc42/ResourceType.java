@@ -1,7 +1,7 @@
 package it.polimi.ingsw.pc42;
 
 public enum ResourceType{
-    STONE("stone"), WOOD("wood"), SERVANT("servant"), COIN("coin"), FAITHPOINTS("faith"), VICTORYPOINTS("victory"), MILITARYPOINTS("military");
+    STONE("stone"), WOOD("wood"), SERVANT("servants"), COIN("coins"), FAITHPOINTS("faithPoints"), VICTORYPOINTS("victoryPoints"), MILITARYPOINTS("militaryPoints");
 
     private String resourceType;
     ResourceType(String resourceType){

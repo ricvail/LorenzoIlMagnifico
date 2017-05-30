@@ -31,18 +31,18 @@ public class CardParser {
 
         //decorate immediate effect
         JsonNode immediateEffectNode = root.get("immediateEffect");
-        decoIterator(immediateEffectNode, c);
+        c = decoIterator(immediateEffectNode, c);
 
         //decorate costs
         JsonNode costsNode = root.get("costs");
-        decoIterator(costsNode, c);
+        c = decoIterator(costsNode, c);
 
         return c;
     }
 
 
     //TODO extra card handler
-    private static void decoIterator(JsonNode jsonNode, iCard c){
+    private static iCard decoIterator(JsonNode jsonNode, iCard c){
         //check if has multiple effect
         if (jsonNode.isArray()) {
             ImmediateBonusChoice choiceDec = new ImmediateBonusChoice(c);
@@ -76,6 +76,7 @@ public class CardParser {
                 }
             }
         }
+        return c;
     }
 
     private static void isJsonValid(JsonNode root) throws Exception{
