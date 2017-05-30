@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by diego on 28/05/2017.
  */
-public class Board {
+public class Board implements iBoard {
     private int era;
     private int round=1;
     private Player currentPlayer;
@@ -103,14 +103,17 @@ public class Board {
         }
     }
 
+    @Override
     public ArrayList<iActionSpace> getActionSpaces(){
         return this.actionSpaces;
     }
 
+    @Override
     public int getEra() {
         return era;
     }
 
+    @Override
     public ArrayList<iCard> getCards() {
         return cards;
     }
