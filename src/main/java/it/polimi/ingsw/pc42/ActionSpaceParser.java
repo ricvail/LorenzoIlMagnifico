@@ -1,7 +1,10 @@
 package it.polimi.ingsw.pc42;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import it.polimi.ingsw.pc42.ActionSpace.*;
+import it.polimi.ingsw.pc42.ActionSpace.ToDo.ActionDecorator;
 import it.polimi.ingsw.pc42.DevelopmentCards.Card;
 
 
@@ -9,10 +12,10 @@ import java.util.Iterator;
 
 public class ActionSpaceParser {
 
-    public static void actionSpace(JsonNode root, Board b){
+    public static void actionSpace(JsonNode root, Board b) throws Exception {
 
         if (!isJsonValid(root)){
-            //throw exception
+            throw new Exception("ActionSpace JSON is not valid");
         }
 
         Iterator<JsonNode> iterator=root.get("actionSpaces").elements();
@@ -21,40 +24,44 @@ public class ActionSpaceParser {
 
             iActionSpace actionSpace= buildBaseActionSpace(root, actionSpaceJson, b);
 
-            if (actionSpaceJson.get("immediateResourceEffect").has("effect")){
-                String effect= actionSpaceJson.get("immediateResourceEffect").get("effect").asText();
+            if (actionSpaceJson.has("immediateResourceEffect")) {
 
-                try {
-                    Card.CardType cardType= Card.CardType.fromString(effect);
-                    actionSpace=new CardDecorator(cardType, b, actionSpace);
-                } catch (IllegalArgumentException e){
-                    if (effect.equalsIgnoreCase("harvest")){
-                        actionSpace=new ActionDecorator(ActionDecorator.ActionType.HARVEST, actionSpace);
-                    } else if (effect.equalsIgnoreCase("production")){
-                        actionSpace=new ActionDecorator(ActionDecorator.ActionType.PRODUCTION, actionSpace);
-                    } else {
-                        throw new IllegalArgumentException(); //TODO throw more specific exception
+                if (actionSpaceJson.get("immediateResourceEffect").has("effect")) {
+                    String effect = actionSpaceJson.get("immediateResourceEffect").get("effect").asText();
+
+                    try {
+                        Card.CardType cardType = Card.CardType.fromString(effect);
+                        actionSpace = new CardDecorator(cardType, b, actionSpace);
+                    } catch (IllegalArgumentException e) {
+                        if (effect.equalsIgnoreCase("harvest")) {
+                            actionSpace = new ActionDecorator(ActionDecorator.ActionType.HARVEST, actionSpace);
+                        } else if (effect.equalsIgnoreCase("production")) {
+                            actionSpace = new ActionDecorator(ActionDecorator.ActionType.PRODUCTION, actionSpace);
+                        } else {
+                            throw new Exception("Invalid effect detected: "+effect);
+                        }
                     }
-                }
-            } // End of "effect" part
 
-            Iterator<String> it = actionSpaceJson.get("immediateResourceEffect").fieldNames();
-            while (it.hasNext()) {
-                String key = it.next();
-                try {
-                    ResourceType rt = ResourceType.fromString(key);
-                    int q = actionSpaceJson.get("immediateResourceEffect").get(key).asInt();
-                    actionSpace = new ResourceImmediateBonus(rt,q, actionSpace);
-                } catch (IllegalArgumentException e){
-                    if (key.equalsIgnoreCase("privileges")){
+                } // End of "effect" part
+
+                Iterator<String> it = actionSpaceJson.get("immediateResourceEffect").fieldNames();
+                while (it.hasNext()) {
+                    String key = it.next();
+                    try {
+                        ResourceType rt = ResourceType.fromString(key);
                         int q = actionSpaceJson.get("immediateResourceEffect").get(key).asInt();
-                        actionSpace=new privilegesActionSpaceDecorator(q, actionSpace);
-                    } else if (key.equalsIgnoreCase("effect")){
-                        //do nothing
-                    } else {
-                        throw new IllegalArgumentException(); //TODO throw more specific exception
+                        actionSpace = new ResourceImmediateBonus(rt, q, actionSpace);
+                    } catch (IllegalArgumentException e) {
+                        if (key.equalsIgnoreCase("privileges")) {
+                            int q = actionSpaceJson.get("immediateResourceEffect").get(key).asInt();
+                            actionSpace = new privilegesActionSpaceDecorator(q, actionSpace);
+                        } else if (key.equalsIgnoreCase("effect")) {
+                            //do nothing
+                        } else {
+                            throw new Exception("Invalid immediateResourceEffect detected: "+key);
+                        }
                     }
-                }
+                } //end of immediate resource effect
             }
             if (actionSpaceJson.has("singleFamilyMember")&&
                     actionSpaceJson.get("singleFamilyMember").asBoolean()){
@@ -72,7 +79,6 @@ public class ActionSpaceParser {
                 int q = root.get("additionalCoinsTax").asInt();
                 actionSpace=new additionalCoinsTax(q, actionSpace);
             }
-            //TODO
             b.getActionSpaces().add(actionSpace);
         }
 
@@ -129,9 +135,10 @@ public class ActionSpaceParser {
         while (iterator.hasNext()){
             JsonNode actionSpace= iterator.next();
             if (!(actionSpace.has("id")&&
-                actionSpace.has("actionValue")&&
+                actionSpace.has("actionValue")/*&&
                 actionSpace.has("immediateResourceEffect")&&
-                actionSpace.get("immediateResourceEffect").isObject())){
+                actionSpace.get("immediateResourceEffect").isObject()*/
+            )){
                 return false;
             }
         }

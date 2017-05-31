@@ -1,0 +1,12 @@
+{
+  "players":[
+    {
+      "color": "RED",
+      "personalBonusTile": 1,
+      "leaderCardsID":[3, 12, 2, 4]
+    },
+    {
+      "color": "BLUE"
+    }
+  ]
+}

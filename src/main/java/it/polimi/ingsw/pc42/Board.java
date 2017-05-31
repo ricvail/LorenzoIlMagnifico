@@ -5,6 +5,7 @@ import it.polimi.ingsw.pc42.ActionSpace.iActionSpace;
 import it.polimi.ingsw.pc42.DevelopmentCards.iCard;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -13,21 +14,29 @@ import java.util.List;
  */
 public class Board implements iBoard {
     private int era;
-    private int round=1;
+    private int round;
     private Player currentPlayer;
     private int currentTurn;
     private ArrayList<Player> playerArrayList;
-    private ArrayList<iActionSpace> actionSpaces= new ArrayList<>();
+    private ArrayList<iActionSpace> actionSpaces;
     private ArrayList<iCard> cards;
 
-    public Board(){
+
+    public Board(ArrayList<Player> players){
+        actionSpaces= new ArrayList<>();
+        round=1;
+        playerArrayList=players;
     }
 
-    public boolean myTurn(Player player){
+    public boolean isPlayerTurn(Player player){
         if (playerArrayList.get(currentTurn).getColor()==player.getColor()){
             return true;
         }
         return false;
+    }
+
+    public int getNumberOfPlayers(){
+        return playerArrayList.size();
     }
 
 
@@ -44,7 +53,7 @@ public class Board implements iBoard {
         return true;
     }
 
-    public Player nextPlayerWithFamilyMembers(){
+    public Player getNextPlayer(){
         int indexOfCurrentPlayer=playerArrayList.indexOf(currentPlayer);
         for (int i =1; i<=playerArrayList.size(); i++){
             Player nextPlayer=playerArrayList.get((indexOfCurrentPlayer+i)%playerArrayList.size());
@@ -58,7 +67,7 @@ public class Board implements iBoard {
         return null;
     }
 
-    public void nextTurn(){
+    public void advanceTurn(){
         if (currentTurn < playerArrayList.size()){
             currentTurn++;
             currentPlayer= playerArrayList.get(currentTurn);
@@ -81,7 +90,7 @@ public class Board implements iBoard {
         }
     }
 
-    public void nextRound(){
+    private void nextRound(){
         currentTurn=1;
         if (round<=2){
             round ++;

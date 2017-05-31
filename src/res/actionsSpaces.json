@@ -207,13 +207,7 @@
           "immediateResourceEffect": {
             "coins": 5
           }
-        }
-      ]
-    },
-    {
-      "area": "MARKET",
-      "oneFamilyMemberPerPlayer": true,
-      "actionSpaces": [
+        },
         {
           "id": 21,
           "minPlayers": 2,
@@ -222,13 +216,7 @@
           "immediateResourceEffect": {
             "servants": 5
           }
-        }
-      ]
-    },
-    {
-      "area": "MARKET",
-      "oneFamilyMemberPerPlayer": true,
-      "actionSpaces": [
+        },
         {
           "id": 22,
           "minPlayers": 4,
@@ -238,13 +226,7 @@
             "coins": 2,
             "militaryPoints": 3
           }
-        }
-      ]
-    },
-    {
-      "area": "MARKET",
-      "oneFamilyMemberPerPlayer": true,
-      "actionSpaces": [
+        },
         {
           "id": 23,
           "minPlayers": 4,

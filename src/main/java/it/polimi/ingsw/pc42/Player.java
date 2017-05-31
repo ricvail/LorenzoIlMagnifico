@@ -26,19 +26,38 @@ public class Player {
 
     private ArrayList<iResourceWrapper> resources;
 
+    public Player (PlayerColor color){
+        this();
+        setColor(color);
+    }
+
+    public static  Player fromColorString(String color){
+        PlayerColor col= null;
+        try {
+            col= PlayerColor.fromString(color);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new Player(col);
+    }
+
 
     public Player() {
         resources=new ArrayList<>();
-        resources.add(new ResourceWrapper(ResourceType.COIN));
-        resources.add(new ResourceWrapper(ResourceType.SERVANT));
-        resources.add(new ResourceWrapper(ResourceType.STONE));
-        resources.add(new ResourceWrapper(ResourceType.WOOD));
-        resources.add(new ResourceWrapper(ResourceType.FAITHPOINTS));
-        resources.add(new ResourceWrapper(ResourceType.MILITARYPOINTS));
-        resources.add(new ResourceWrapper(ResourceType.VICTORYPOINTS));
+        resources.add(new ResourceWrapper(ResourceType.COIN, 0));
+        resources.add(new ResourceWrapper(ResourceType.SERVANT,3));
+        resources.add(new ResourceWrapper(ResourceType.STONE,2));
+        resources.add(new ResourceWrapper(ResourceType.WOOD,2));
+        resources.add(new ResourceWrapper(ResourceType.FAITHPOINTS,0));
+        resources.add(new ResourceWrapper(ResourceType.MILITARYPOINTS,0));
+        resources.add(new ResourceWrapper(ResourceType.VICTORYPOINTS,0));
 
         cardsOwned = new ArrayList<>();
         familyMembers = new ArrayList<>();
+        familyMembers.add(new FamilyMember(this, Dice.DiceColor.ORANGE));
+        familyMembers.add(new FamilyMember(this, Dice.DiceColor.WHITE));
+        familyMembers.add(new FamilyMember(this, Dice.DiceColor.BLACK));
+        familyMembers.add(new FamilyMember(this, Dice.DiceColor.NEUTRAL));
     }
 
     public iResourceWrapper getResource(ResourceType rt){
@@ -121,6 +140,15 @@ public class Player {
 
         PlayerColor(String playerColor){
             this.playerColor=playerColor;
+        }
+
+        public static PlayerColor fromString(String color) throws Exception {
+            for (PlayerColor pc : PlayerColor.values()) {
+                if (pc.getPlayerColorString().equalsIgnoreCase(color)) {
+                    return pc;
+                }
+            }
+            throw new Exception("Invalid player color: "+ color);
         }
 
         public String getPlayerColorString(){return playerColor;}

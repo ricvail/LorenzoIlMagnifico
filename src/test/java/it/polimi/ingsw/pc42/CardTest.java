@@ -16,7 +16,7 @@ import java.io.IOException;
 
 public class CardTest {
 
-    @Test
+   /* @Test
     public void cardCreationTest(){
 
         iCard card =new Card(1, "test1", Card.CardType.fromString("ventures"));
@@ -35,7 +35,7 @@ public class CardTest {
     public void cardCreationFailureTest(){
         iCard card = new Card(1,"test", Card.CardType.fromString("venture"));
     }
-
+*/
     @Test
     public void cardFromJSONTest(){
         ObjectMapper mapper = new ObjectMapper();

@@ -1,0 +1,52 @@
+>>Player 1: it's your turn
+>>Your resources:
+    Coins: 5
+    Servants: 7
+    ...
+>>Your Cards
+    Territories: 4
+        Id: 7
+            Name
+            Immediate cost
+            Effect
+>>Action spaces:
+    Area: MARKET
+        Id: 32
+
+
+
+
+>>Select a Family Member:
+<<White
+>>Select number of servants:
+<<3
+>>Available Action Spaces:
+    (List)
+>>Select Action space:
+<<12
+>>Select 2 privileges:
+<<3,5
+>>Select
+
+
+
+Mostra elenco di family member non ancora usati
+
+chiedi numero servi da sacrificare
+
+Chiedi action space:
+    per questo usiamo canPlace
+
+
+
+Per ogni nodo:
+    Array FISSO di possibili scelte (i nodi figlio)
+    Boolean che ti dice se questo è un nodo foglia (e quindi scegliendolo faccio una mossa valida->controlla anche le risorse)
+    Boolean che ti dice se almeno uno dei discententi di questo nodo è foglia (applicando e annullando gli effetti)
+    Applica effetto del nodo
+    Annulla effetto del nodo
+
+Scelte possibili
+    per ogni scelta nell'array di nodi figlio
+        se è un nodo foglia o lo è uno dei suoi discendenti, allora aggiungila all'elenco
+       Se alla fine l'elenco è vuoto, allora
