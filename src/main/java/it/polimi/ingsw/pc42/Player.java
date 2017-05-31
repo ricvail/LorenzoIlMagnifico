@@ -81,6 +81,14 @@ public class Player {
                 listOfVenturesCards.add(card.getJSONDescriptionOfCards());
             }
         }
+        ArrayNode listOfFamilyMembers=factory.arrayNode();
+        for (FamilyMember fm: familyMembers){
+            ObjectNode fmObjectNode=new ObjectNode(factory);
+            fmObjectNode.put("ownerColor", fm.owner.getColor().getPlayerColorString());
+            fmObjectNode.put("familyMemberColor", fm.getDiceColor().getDiceColorString());
+            fmObjectNode.put("isUsed", fm.isUsed());
+            listOfFamilyMembers.add(fmObjectNode);
+        }
         root.set("territories", listOfTerritoriesCards);
         root.set("characters", listOfCharacterCards);
         root.set("buildings", listOfBuildingsCards);

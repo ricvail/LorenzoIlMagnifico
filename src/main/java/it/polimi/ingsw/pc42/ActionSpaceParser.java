@@ -36,7 +36,6 @@ public class ActionSpaceParser {
                         throw new IllegalArgumentException(); //TODO throw more specific exception
                     }
                 }
-
             } // End of "effect" part
 
             Iterator<String> it = actionSpaceJson.get("immediateResourceEffect").fieldNames();

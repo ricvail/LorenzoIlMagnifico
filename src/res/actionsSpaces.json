@@ -90,19 +90,6 @@
           "minPlayers": 2,
           "actionValue": 3,
           "singleFamilyMember": true
-        }
-      ]
-    },
-    {
-      "area": "BUILDING",
-      "additionalCoinsTax": 3,
-      "oneFamilyMemberPerPlayer": true,
-      "actionSpaces": [
-        {
-          "id": 10,
-          "minPlayers": 2,
-          "actionValue": 3,
-          "singleFamilyMember": true
         },
         {
           "id": 11,

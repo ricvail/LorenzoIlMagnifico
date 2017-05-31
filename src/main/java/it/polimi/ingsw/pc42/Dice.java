@@ -16,10 +16,12 @@ public class Dice {
     }
 
     public enum DiceColor{
-        WHITE (true), BLACK(true), ORANGE(true), NEUTRAL(true);
+        WHITE (true, "white"), BLACK(true, "black"), ORANGE(true, "orange"), NEUTRAL(true, "neutral");
         public final boolean visible;
-        DiceColor (boolean v){
+        private String diceColor;
+        DiceColor (boolean v, String diceColor){
             visible = v;
         }
+        public String getDiceColorString(){return diceColor;}
     }
 }

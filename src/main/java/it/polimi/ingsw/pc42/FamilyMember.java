@@ -30,4 +30,7 @@ public class FamilyMember {
         return value;
     }
 
+    public Dice.DiceColor getDiceColor() {
+        return diceColor;
+    }
 }
