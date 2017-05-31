@@ -16,7 +16,7 @@ public class Player {
     private ArrayList<iCard> cardsOwned;
     private ArrayList<FamilyMember> familyMembers;
 
-    private PlayerColor getColor() {
+    public PlayerColor getColor() {
         return color;
     }
 
