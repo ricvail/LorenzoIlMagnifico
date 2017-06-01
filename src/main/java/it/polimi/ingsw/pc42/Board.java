@@ -2,6 +2,7 @@ package it.polimi.ingsw.pc42;
 
 import it.polimi.ingsw.pc42.ActionSpace.ActionSpace;
 import it.polimi.ingsw.pc42.ActionSpace.iActionSpace;
+import it.polimi.ingsw.pc42.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.DevelopmentCards.iCard;
 
 import java.util.ArrayList;
@@ -22,10 +23,11 @@ public class Board implements iBoard {
     private ArrayList<iCard> cards;
 
 
-    public Board(ArrayList<Player> players){
+    public Board(ArrayList<Player> players,ArrayList<iCard> cards){
         actionSpaces= new ArrayList<>();
         round=1;
         playerArrayList=players;
+        this.cards=cards;
     }
 
     public boolean isPlayerTurn(Player player){
@@ -125,9 +127,16 @@ public class Board implements iBoard {
         return era;
     }
 
-    @Override
-    public ArrayList<iCard> getCards() {
-        return cards;
+    public iCard getCard(Card.CardType type) throws Exception {
+        Iterator<iCard> cardIterator = cards.iterator();
+        while (cardIterator.hasNext()){
+            iCard card= cardIterator.next();
+            if (card.getEra()==era && card.getCardType()==type){
+                cardIterator.remove();
+                return card;
+            }
+        }
+        throw new Exception("Out of cards of type "+type.getString()+" and era "+era);
     }
 
     public boolean cleanUp(){

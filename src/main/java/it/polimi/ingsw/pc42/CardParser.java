@@ -1,11 +1,8 @@
 package it.polimi.ingsw.pc42;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.polimi.ingsw.pc42.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.DevelopmentCards.ImmediateBonusChoice;
 import it.polimi.ingsw.pc42.DevelopmentCards.ResourceImmediateBonus;
@@ -20,72 +17,108 @@ public class CardParser {
 
     public static iCard createCard(JsonNode root){
 
+        iCard c = null;
         try {
             isJsonValid(root);
-        } catch (Exception e){
-            e.printStackTrace();
 
-            final String message = e.getMessage();
-            System.out.println(message);
-            System.out.println(root);
-        }
-
-        iCard c = new Card(root.get("era").asInt(),
+            c = new Card(root.get("era").asInt(),
                 root.get("name").asText(),
                 Card.CardType.fromString(root.get("type").asText()),
                 root);
 
-        //decorate immediate effect
-        if (root.has("immediateEffect")) {
-            JsonNode immediateEffectNode = root.get("immediateEffect");
-            c = decoEffectIterator(immediateEffectNode, c);
-        }
+            //decorate immediate effect
+            if (root.has("immediateEffect")) {
+                JsonNode immediateEffectNode = root.get("immediateEffect");
+                c = immediateEffectIterator(immediateEffectNode, c);
+            }
 
-        //decorate costs
-        if (root.has("costs")) {
-            ArrayNode costsNode = (ArrayNode) root.get("costs");
-            c = decoCostIterator(costsNode, c);
-        }
+            if (root.has("permanentEffects")) {
+                JsonNode immediateEffectNode = root.get("permanentEffects");
+                //c = immediateEffectIterator(immediateEffectNode, c);
+            }
 
-        return c;
-    }
+            //decorate costs
+            if (root.has("costs")) {
+                ArrayNode costsNode = (ArrayNode) root.get("costs");
+                c = costIterator(costsNode, c);
+            }
 
-    private static iCard decoEffectIterator(JsonNode jsonNode, iCard c){
-        if (jsonNode.isArray()){
-            //permanent effect
-        } else {
-            c = resourceIterator(jsonNode, c);
-        }
-        return c;
-    }
-
-    private static iCard decoCostIterator(JsonNode jsonNode, iCard c){
-        if (jsonNode.size()>1){
-            c = choiceIterator(jsonNode, c);
-        } else {
-            c = resourceIterator(jsonNode, c);
+        } catch (Exception e){
+            System.out.println(root.get("name").asText());
+            //e.printStackTrace();
         }
         return c;
     }
 
+    static iCard applyResource(String s, int q, iCard c){
+        ResourceType rt = ResourceType.fromString(s);
+        c = new ResourceImmediateBonus(rt, q, c);
+        return c;
 
-    private static iCard resourceIterator(JsonNode jsonNode, iCard c){
+    }
+
+    private static iCard immediateEffectIterator(JsonNode jsonNode, iCard c) throws Exception {
         Iterator<String> it = jsonNode.fieldNames();
         while (it.hasNext()) {
             String key = it.next();
             try {
-                ResourceType rt = ResourceType.fromString(key);
-                c = new ResourceImmediateBonus(rt, jsonNode.get(key).asInt(), c);
+                c = applyResource(key, jsonNode.get(key).asInt(), c);
             } catch (IllegalArgumentException e){
-                //something wrong with resource type
+                if (key.equalsIgnoreCase("privileges")){
+
+                } else if (key.equalsIgnoreCase("privileges")){
+
+                } else if (key.equalsIgnoreCase("privileges")){
+
+                } else if (key.equalsIgnoreCase("privileges")){
+
+                } else if (key.equalsIgnoreCase("privileges")){
+
+                } else {
+                    throw new Exception("Invalid immediate effect: "+ key);
+                }
             }
         }
         return c;
     }
 
-    private static iCard choiceIterator(JsonNode jsonNode, iCard c){
+    private static iCard singleCostIterator(JsonNode jsonNode, iCard c) throws Exception {
+        Iterator<String> it = jsonNode.fieldNames();
+        while (it.hasNext()) {
+            String key = it.next();
+            try {
+                c = applyResource(key, jsonNode.get(key).asInt()*-1, c);
+            } catch (IllegalArgumentException e){
+                if (key.equalsIgnoreCase("militaryPointsRequired")){
+
+                } else if (key.equalsIgnoreCase("militaryPointsSubtracted")){
+
+                } else {
+                    throw new Exception("Invalid cost: "+ key);
+                }
+            }
+        }
+        return c;
+    }
+
+    private static iCard costIterator(JsonNode jsonNode, iCard c) throws Exception {
+        if (jsonNode.size()>1){
+            c = choiceIterator(jsonNode, c);
+        } else {
+            c = singleCostIterator(jsonNode.get(0), c);
+        }
+        return c;
+    }
+
+
+
+    private static iCard choiceIterator(JsonNode jsonNode, iCard c) throws Exception {
         ImmediateBonusChoice choiceDec = new ImmediateBonusChoice(c);
-        int choiceCounter = 0;
+        for (int i = 0; i<jsonNode.size(); i++){
+            choiceDec.addChoice();
+            choiceDec.choices.set(i, singleCostIterator(jsonNode.get(i), choiceDec.choices.get(i)));
+        }
+        /*int choiceCounter = 0;
         for (JsonNode arrayNode : jsonNode) {
             choiceDec.addChoice();
             Iterator<String> it = arrayNode.fieldNames();
@@ -102,23 +135,39 @@ public class CardParser {
                 }
             }
             choiceCounter++;
-        }
-        return c;
+        } */
+        return choiceDec;
     }
 
     private static void isJsonValid(JsonNode root) throws Exception{
-        if (!(root.has("era")&&
-                root.has("name")&&
-                root.has("type"))){
-            throw new Exception("missing base fieldname");
-        } else if (root.has("immediateEffect")){
-            if (!(root.get("immediateEffect").isObject())) {
-                throw new Exception("wrong type of immediateEffect");
+        if (!(root.has("era")&&root.get("era").isInt()&&
+            root.has("name")&&
+            root.has("type")
+            //&& root.has("id")&&root.get("id").isInt()
+        )){
+            throw new Exception("missing base field");
+        }
+
+        Card.CardType type = Card.CardType.fromString(root.get("type").asText());
+        if (type== Card.CardType.TERRITORY || type== Card.CardType.BUILDING){
+            if (!(root.has("activationCost")&&root.get("activationCost").isInt())){
+                throw new Exception("missing activation cost");
             }
-        } else if (root.has("costs")) {
-            if (!(root.get("costs").isArray())) {
-                throw new Exception("wrong type of costs");
-            }
+        }
+
+        if (root.has("immediateEffect")&&
+            !root.get("immediateEffect").isObject()) {
+            throw new Exception("wrong type of immediateEffect");
+        }
+
+        if (root.has("permanentEffects")&&
+                !root.get("permanentEffects").isArray()) {
+            throw new Exception("wrong type of permanentEffects");
+        }
+
+        if (root.has("costs")&&
+            !root.get("costs").isArray()) {
+            throw new Exception("wrong type of costs");
         }
     }
 
@@ -128,17 +177,26 @@ public class CardParser {
 
         ArrayList<iCard> cards = new ArrayList<>();
 
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            //complete path in order to run the json
-            JsonNode json = mapper.readTree(new File("src/res/developmentCards.json"));
 
-            Iterator<JsonNode> jsonNodeIterator = json.get("developmentCards").elements();
-            while (jsonNodeIterator.hasNext()){
-                iCard c;
-                c = createCard(jsonNodeIterator.next());
-                cards.add(c);
-            }
+        ObjectMapper mapper = new ObjectMapper();
+        //complete path in order to run the json
+        JsonNode json = null;
+        try {
+            json = mapper.readTree(new File("src/res/developmentCards.json"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Iterator<JsonNode> jsonNodeIterator = json.get("developmentCards").elements();
+        while (jsonNodeIterator.hasNext()){
+            iCard c;
+            c = createCard(jsonNodeIterator.next());
+            cards.add(c);
+        }
+
+        System.out.print(
+                cards
+        );
 
 
             /*iCard c;
@@ -156,13 +214,6 @@ public class CardParser {
             }
             System.out.println(json.get("new property").isArray()); */
 
-        } catch (JsonGenerationException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
     }
 }

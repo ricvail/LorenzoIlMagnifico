@@ -12,8 +12,6 @@ public interface iBoard {
 
     int getEra();
 
-    ArrayList<iCard> getCards();
-
     //ArrayList<Player> turnOrder;
 
 }

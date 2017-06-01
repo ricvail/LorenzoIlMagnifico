@@ -32,7 +32,7 @@ public class ActionSpaceParser {
                     try {
                         Card.CardType cardType = Card.CardType.fromString(effect);
                         actionSpace = new CardDecorator(cardType, b, actionSpace);
-                    } catch (IllegalArgumentException e) {
+                    } catch (Exception e) {
                         if (effect.equalsIgnoreCase("harvest")) {
                             actionSpace = new ActionDecorator(ActionDecorator.ActionType.HARVEST, actionSpace);
                         } else if (effect.equalsIgnoreCase("production")) {

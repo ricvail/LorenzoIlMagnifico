@@ -46,16 +46,11 @@ public class CardDecorator extends AbstractDecorator{
     public void cleanup() {
         super.cleanup();
         empty=true;
-        int era = board.getEra();
-        Iterator<iCard> cardIterator = board.getCards().iterator();
-        while (empty&&cardIterator.hasNext()){
-            iCard card= cardIterator.next();
-            if (card.getEra()==era && card.getCardType()==type){
-                this.card=card;
-                cardIterator.remove();
-                empty=false;
-            }
+        try {
+            this.card=board.getCard(type);
+            empty=false;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        //if empty throw exception
     }
 }

@@ -55,13 +55,13 @@ public class Card implements iCard{
             return cardType;
         }
 
-        public static CardType fromString(String s){
+        public static CardType fromString(String s) throws Exception {
             for (CardType cardType : CardType.values()) {
                 if (cardType.getString().equalsIgnoreCase(s)) {
                     return cardType;
                 }
             }
-            throw new IllegalArgumentException(); //TODO more specific exception
+            throw new Exception("Invalid card type: "+ s); //TODO more specific exception
         }
 
     }

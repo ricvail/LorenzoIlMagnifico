@@ -3,9 +3,9 @@ package it.polimi.ingsw.pc42.Utilities;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.sun.media.jfxmedia.events.PlayerEvent;
 import it.polimi.ingsw.pc42.ActionSpaceParser;
 import it.polimi.ingsw.pc42.Board;
+import it.polimi.ingsw.pc42.DevelopmentCards.iCard;
 import it.polimi.ingsw.pc42.Player;
 import it.polimi.ingsw.pc42.ResourceType;
 
@@ -13,6 +13,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+
+import static it.polimi.ingsw.pc42.CardParser.createCard;
 
 /**
  * Created by RICVA on 30/05/2017.
@@ -34,7 +36,11 @@ public class GameInitializer {
         return readFile("src/res/actionsSpaces.json");
     }
 
-    public static boolean isBasicPlayerListJsonVaild(JsonNode playerList){
+    public static JsonNode getDefaultCardsJson(){
+        return readFile("src/res/developmentCards.json");
+    }
+
+    public static boolean isBasicPlayerListJsonValid(JsonNode playerList){
         if (!(playerList.has("players")&&playerList.get("players").isArray())){
             return false;
         }
@@ -61,7 +67,10 @@ public class GameInitializer {
     public static void main(String args []){
         Board b=null;
         try {
-            b= initGame(false, readFile("src/res/prova_playerInit.json"), getDefaultActionSpacesJson());
+            b= initGame(false,
+                    readFile("src/res/prova_playerInit.json"),
+                    getDefaultActionSpacesJson(),
+                    getDefaultCardsJson());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -69,6 +78,18 @@ public class GameInitializer {
             b
         );
 
+    }
+
+    public static ArrayList<iCard> readCards(JsonNode cardList){
+        ArrayList<iCard> cards = new ArrayList<>();
+        Iterator<JsonNode> jsonNodeIterator = cardList.get("developmentCards").elements();
+        while (jsonNodeIterator.hasNext()){
+            iCard c;
+            c = createCard(jsonNodeIterator.next());
+            cards.add(c);
+        }
+        Collections.shuffle(cards);
+        return cards;
     }
 
     public static ArrayList<Player> initBasicPlayers(JsonNode playerList){
@@ -106,14 +127,16 @@ public class GameInitializer {
      * @param actionSpaces
      * @return
      */
-    public static Board initGame(boolean advanced, JsonNode playerList, JsonNode actionSpaces) throws Exception {
+    public static Board initGame(boolean advanced, JsonNode playerList, JsonNode actionSpaces, JsonNode cards) throws Exception {
 
-        if (!isBasicPlayerListJsonVaild(playerList)){
+        if (!isBasicPlayerListJsonValid(playerList)){
             throw new Exception("Invalid PlayerInit Json");
         }
 
-        ArrayList<Player> players = initBasicPlayers(playerList);
-        Board b =new Board(players);
+        ArrayList<Player> players = initBasicPlayers(playerList); //TODO PersonalBonusTiles
+        ArrayList<iCard> cardList = readCards(cards);
+
+        Board b =new Board(players, cardList);
 
 
 
