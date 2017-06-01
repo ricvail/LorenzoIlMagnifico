@@ -50,9 +50,10 @@ public class CardTest {
             assertEquals(card.getEra(), 1);
 
             JsonNode moveNode = mapper.readTree(new File("src/res/test_move.json"));
-            card.applyDrawEffect(player, moveNode );
 
-            assertEquals(player.getResource(ResourceType.FAITHPOINTS).get(), 4);
+            //card.applyDrawEffect(player, moveNode );
+
+            //assertEquals(player.getResource(ResourceType.FAITHPOINTS).get(), 4);
 
         } catch (IOException e){
             e.printStackTrace();

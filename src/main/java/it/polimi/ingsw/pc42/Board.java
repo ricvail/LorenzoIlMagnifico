@@ -41,7 +41,6 @@ public class Board implements iBoard {
         return playerArrayList.size();
     }
 
-
     public boolean isEndOfRound(){
         Iterator <Player> playerIterator= playerArrayList.iterator();
         while (playerIterator.hasNext()){

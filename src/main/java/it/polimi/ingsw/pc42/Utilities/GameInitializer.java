@@ -65,6 +65,13 @@ public class GameInitializer {
     }
 
     public static void main(String args []){
+        System.out.print(
+            initBaseGame()
+        );
+
+    }
+
+    public static Board initBaseGame(){
         Board b=null;
         try {
             b= initGame(false,
@@ -74,10 +81,7 @@ public class GameInitializer {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.print(
-            b
-        );
-
+        return b;
     }
 
     public static ArrayList<iCard> readCards(JsonNode cardList){
@@ -92,7 +96,10 @@ public class GameInitializer {
         return cards;
     }
 
-    public static ArrayList<Player> initBasicPlayers(JsonNode playerList){
+    public static ArrayList<Player> initBasicPlayers(JsonNode playerList) throws Exception {
+        if (!isBasicPlayerListJsonValid(playerList)){
+            throw new Exception("Invalid PlayerInit Json");
+        }
         ArrayList<Player> players = new ArrayList<>();
         Iterator<JsonNode> playerIterator =playerList.get("players").iterator();
         while (playerIterator.hasNext()){
@@ -129,21 +136,16 @@ public class GameInitializer {
      */
     public static Board initGame(boolean advanced, JsonNode playerList, JsonNode actionSpaces, JsonNode cards) throws Exception {
 
-        if (!isBasicPlayerListJsonValid(playerList)){
-            throw new Exception("Invalid PlayerInit Json");
-        }
-
         ArrayList<Player> players = initBasicPlayers(playerList); //TODO PersonalBonusTiles
         ArrayList<iCard> cardList = readCards(cards);
 
         Board b =new Board(players, cardList);
 
-
-
         Iterator<JsonNode> actionSpacesIterator= actionSpaces.get("action_spaces").iterator();
         while (actionSpacesIterator.hasNext()) {
             ActionSpaceParser.actionSpace(actionSpacesIterator.next(), b);
         }
+
         return b;
     }
 

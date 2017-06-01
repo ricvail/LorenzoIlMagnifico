@@ -3,10 +3,11 @@
   "name": "Preacher",
   "era": 1,
   "type": "characters",
-  "costs": {
+  "costs": [
+    {
     "coins": 2
-
-  },
+    }
+  ],
   "immediateEffect": {
     "faithPoints": 4
     }
