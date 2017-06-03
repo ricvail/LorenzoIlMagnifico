@@ -3,6 +3,7 @@ package it.polimi.ingsw.pc42;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import it.polimi.ingsw.pc42.ActionSpace.*;
 import it.polimi.ingsw.pc42.ActionSpace.ToDo.ActionDecorator;
 import it.polimi.ingsw.pc42.DevelopmentCards.Card;
@@ -143,6 +144,18 @@ public class ActionSpaceParser {
             }
         }
         return true;
+    }
+
+    public static JsonNode getActionSpaceJSONByArea(JsonNode jsonNode, String area)  throws Exception {
+        Iterator<JsonNode> nodeIterator = jsonNode.elements();
+
+        while (nodeIterator.hasNext()) {
+            JsonNode arrNode = nodeIterator.next();
+            if (arrNode.has("area") && area.equalsIgnoreCase(arrNode.get("area").asText())) {
+                return arrNode;
+            }
+        }
+        throw new Exception("invalid area string:" + area);
     }
 }
 

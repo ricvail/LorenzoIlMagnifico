@@ -385,17 +385,17 @@
         }
       ],
       "immediateEffect": {
-        "victoryPoints": 5,
-        "permanentEffects": [
-          {
-            "forEach": {
-              "left": "coins",
-              "right": "buildings",
-              "ratio": 1
-            }
+        "victoryPoints": 5
+      },
+      "permanentEffects": [
+        {
+          "forEach": {
+            "left": "coins",
+            "right": "buildings",
+            "ratio": 1
           }
-        ]
-      }
+        }
+      ]
     },
     {
       "id": 26,
