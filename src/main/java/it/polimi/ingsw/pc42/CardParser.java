@@ -33,8 +33,8 @@ public class CardParser {
             }
 
             if (root.has("permanentEffects")) {
-                JsonNode immediateEffectNode = root.get("permanentEffects");
-                //c = immediateEffectIterator(immediateEffectNode, c);
+                JsonNode permanentEffectNode = root.get("permanentEffects");
+                //c = permanentEffectIterator(permanentEffectNode, c);
             }
 
             //decorate costs
