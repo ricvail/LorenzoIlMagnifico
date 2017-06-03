@@ -138,9 +138,11 @@ public class Board implements iBoard {
             } else {
                 round++;
                 if (isEndOfEra()){
-                    //TODO check for end of game
-                    era ++;
                     //TODO vatican phase
+                    era ++;
+                    if (era >=4){
+                        endGame();
+                    }
                 }
                 cleanUp();
             }
@@ -180,6 +182,21 @@ public class Board implements iBoard {
             playerArrayList.add(0,playerArrayList.remove(j));
         }
         currentPlayer=playerArrayList.get(0);
+    }
+
+    private void endGame(){
+        /*
+        Iterate i giocatori
+        aggiungete punti vittoria in base a
+            numero di carte blu possedute
+            numero di territori posseduti
+            punti fede
+            risorse divise per 5
+        poi cercate il giocatore con più punti militari e dategli 5 punti vittoria
+        e il secondo giocatore con più punti militari e dategli 2 punti vittoria
+
+        le carte viola le gestiamo più avanti, per ora lasciatele perdere
+        */
     }
 
 }
