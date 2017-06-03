@@ -1,19 +1,11 @@
 package it.polimi.ingsw.pc42;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.awt.*;
 
-/**
- * Hello world!
- *
- */
 public class App {
     public static void main( String[] args )
     {
-        //System.out.println( "Hello World!" );
-
-        JsonNode js;
-
+        System.out.println( "Hello World!" );
     }
 
     public int asd(){

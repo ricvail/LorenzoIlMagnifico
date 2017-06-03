@@ -27,7 +27,7 @@ public class FamilyMember {
     }
 
     public  int getValue(){
-        return value;
+        return value;//TODO get from board instead of using private var
     }
 
     public Dice.DiceColor getDiceColor() {

@@ -23,5 +23,13 @@ public class Dice {
             visible = v;
         }
         public String getDiceColorString(){return diceColor;}
+        public static DiceColor fromString(String dc) throws Exception {
+            for (DiceColor color : DiceColor.values()) {
+                if (color.diceColor.equalsIgnoreCase(dc)) {
+                    return color;
+                }
+            }
+            throw new Exception(dc+" is not a valid dice color");
+        }
     }
 }

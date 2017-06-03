@@ -10,6 +10,7 @@ import it.polimi.ingsw.pc42.Utilities.ResourceWrapper;
 import it.polimi.ingsw.pc42.Utilities.iResourceWrapper;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Player {
     private PlayerColor color;
@@ -119,18 +120,23 @@ public class Player {
         return familyMembers;
     }
 
+    public FamilyMember getFamilyMemberFromColor(String s) throws Exception {
+        Dice.DiceColor color = Dice.DiceColor.fromString(s);
+        Iterator<FamilyMember> iterator = familyMembers.iterator();
+        while (iterator.hasNext()){
+            FamilyMember fm = iterator.next();
+            if (fm.diceColor== color){
+                return fm;
+            }
+        }
+        throw new Exception("Could not find a family member with color "+s);
+    }
+
 
     public void addCard(iCard card){
         cardsOwned.add(card);
     }
 
-    public void addFamilyMember(FamilyMember familyMember){
-        // add family
-    }
-
-    public void removeFamilyMember(FamilyMember familyMember){
-        //remove fm
-    }
 
 
     public enum PlayerColor {
