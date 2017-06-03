@@ -66,13 +66,13 @@ public class CardParser {
             } catch (IllegalArgumentException e){
                 if (key.equalsIgnoreCase("privileges")){
 
-                } else if (key.equalsIgnoreCase("privileges")){
+                } else if (key.equalsIgnoreCase("card")){
 
-                } else if (key.equalsIgnoreCase("privileges")){
+                } else if (key.equalsIgnoreCase("foreach")){
 
-                } else if (key.equalsIgnoreCase("privileges")){
+                } else if (key.equalsIgnoreCase("harvest")){
 
-                } else if (key.equalsIgnoreCase("privileges")){
+                } else if (key.equalsIgnoreCase("production")){
 
                 } else {
                     throw new Exception("Invalid immediate effect: "+ key);
