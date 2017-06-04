@@ -40,7 +40,7 @@ public class Card implements iCard{
 
     @Override
     public JsonNode getJSONDescriptionOfCards() {
-        return null;
+        return json;
     }
 
     public enum CardType {

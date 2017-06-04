@@ -183,6 +183,49 @@ public class Board implements iBoard {
     }
 
     private void endGame(){
+        Iterator <Player> playerIterator=playerArrayList.iterator();
+        int counter;
+        ArrayList<Player> playerArrayList=new ArrayList<>();
+        int militaryPoints;
+        for (int i=0; i<=playerArrayList.size(); i++){
+            Player player = playerIterator.next();
+            for (int k=1; k<=player.getNumberOfCards(Card.CardType.CHARACTER); k++){
+                player.getResource(ResourceType.VICTORYPOINTS).add(k);
+            }
+            counter=0;
+            for (int j=2; j<=player.getNumberOfCards(Card.CardType.TERRITORY); j++){
+                counter=counter+j-2;
+                player.getResource(ResourceType.VICTORYPOINTS).add(counter);
+            }
+            counter=0;
+            for (int x=1; x<=player.getResource(ResourceType.FAITHPOINTS).get(); x++ ){
+                if (x<=5){
+                    counter=1;
+                }
+                if (x>5 && x<=12){
+                    counter=2;
+                }
+                if (x>12 && x<=14){
+                    counter=3;
+                }
+                if (x==15){
+                    counter=5;
+                }
+                player.getResource(ResourceType.VICTORYPOINTS).add(counter);
+            }
+            counter=player.getResource(ResourceType.WOOD).get()+player.getResource(ResourceType.SERVANT).get()
+                    +player.getResource(ResourceType.STONE).get()+player.getResource(ResourceType.COIN).get();
+            player.getResource(ResourceType.VICTORYPOINTS).add(counter/5);
+            militaryPoints=player.getResource(ResourceType.MILITARYPOINTS).get();
+            for (int e=0; e<=playerArrayList.size();e++){
+                if (militaryPoints>playerArrayList.get(e).getResource(ResourceType.MILITARYPOINTS).get()){
+                    playerArrayList.add(e, player);
+                    break;
+                }
+            }
+        }
+        playerArrayList.get(0).getResource(ResourceType.VICTORYPOINTS).add(5);
+        playerArrayList.get(1).getResource(ResourceType.VICTORYPOINTS).add(2);
         /*
         Iterate i giocatori
         aggiungete punti vittoria in base a
