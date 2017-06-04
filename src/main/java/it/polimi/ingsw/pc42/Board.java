@@ -189,7 +189,7 @@ public class Board implements iBoard {
         int militaryPoints;
         for (int i=0; i<=playerArrayList.size(); i++){
             Player player = playerIterator.next();
-            for (int k=1; k<=player.getNumberOfCards(Card.CardType.CHARACTER); k++){
+            for (int k=0; k<=player.getNumberOfCards(Card.CardType.CHARACTER); k++){
                 player.getResource(ResourceType.VICTORYPOINTS).add(k);
             }
             counter=0;
