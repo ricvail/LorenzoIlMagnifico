@@ -7,9 +7,7 @@ import it.polimi.ingsw.pc42.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.DevelopmentCards.iCard;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * Created by diego on 28/05/2017.

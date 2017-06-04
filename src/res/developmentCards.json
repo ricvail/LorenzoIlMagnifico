@@ -1102,7 +1102,7 @@
         }
       ],
       "immediateEffect": {
-        "faithPoints": 3,
+        "faithPoints": 1,
         "card": {
           "value": 4,
           "type": "all"
@@ -1120,7 +1120,7 @@
         }
       ],
       "immediateEffect": {
-        "militaryPoints": 3,
+        "militaryPoints": 2,
         "card": {
           "value": 6,
           "type": "territories"
@@ -1142,7 +1142,7 @@
           "value": 6,
           "type": "buildings",
           "wood": 1,
-          "stone": 2
+          "stone": 1
         }
       }
     },
