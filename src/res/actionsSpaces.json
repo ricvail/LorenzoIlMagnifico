@@ -150,12 +150,12 @@
     },
     {
       "area": "COUNCIL",
-      "turnOrderModifier": true,
       "actionSpaces": [
         {
           "id": 17,
           "minPlayers": 2,
           "actionValue": 1,
+          "turnOrderModifier": true,
           "immediateResourceEffect": {
             "coins": 1,
             "privileges": 1

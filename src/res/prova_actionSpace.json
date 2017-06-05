@@ -3,13 +3,13 @@
   "additionalCoinsTax": 3,
   "actionValuePenaltyForSecondPlayer": 3,
   "oneFamilyMemberPerPlayer": true,
-  "turnOrderModifier": true,
   "actionSpaces": [
     {
       "id": 3,
       "minPlayers": 3,
       "actionValue": 7,
       "singleFamilyMember": true,
+      "turnOrderModifier": true,
       "immediateResourceEffect": {
         "wood": 1,
         "stone": 2,

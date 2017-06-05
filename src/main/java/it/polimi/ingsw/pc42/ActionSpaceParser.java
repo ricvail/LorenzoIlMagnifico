@@ -76,7 +76,11 @@ public class ActionSpaceParser {
                 int q = root.get("actionValuePenaltyForSecondPlayer").asInt();
                 actionSpace=new ActionValuePenaltyForSecondPlayer(q, actionSpace);
             }
-            if (root.has("additionalCoinsTax")){
+            if (root.has("turnOrderModifier")) {
+                //Boolean turnOrderModifier = root.get("turnOrderModifier").asBoolean();
+                b.setCouncilID(root.get("id").asInt());
+            }
+                if (root.has("additionalCoinsTax")){
                 int q = root.get("additionalCoinsTax").asInt();
                 actionSpace=new additionalCoinsTax(q, actionSpace);
             }
@@ -100,8 +104,6 @@ public class ActionSpaceParser {
             Boolean oneFamilyMemberPerPlayer = root.get("oneFamilyMemberPerPlayer").asBoolean();
         }
 
-        if (root.has("turnOrderModifier")){
-            Boolean turnOrderModifier = root.get("turnOrderModifier").asBoolean();
         }
 
         JsonNode actionSpaceNode = root.path("actionSpaces");
