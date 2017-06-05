@@ -27,6 +27,7 @@ public class Dice {
         private String diceColor;
         DiceColor (boolean v, String diceColor){
             visible = v;
+            this.diceColor = diceColor;
         }
         public String getDiceColorString(){return diceColor;}
         public static DiceColor fromString(String dc) throws Exception {

@@ -1,0 +1,24 @@
+{
+  "moves":[
+    {
+      "DESCRIZIONE": "Questo campo viene ignorato dal parser, si può usare per i commenti",
+      "DESCRIZIONE2": "Turno del giocatore rosso, gioca nel market e ottiene 5 monete",
+      "familyMember": "neutral",
+      "servants": 1,
+      "slotID": 20
+    },
+    {
+      "DESCRIZIONE": "Turno del giocatore blu. Gioca nel market ma il neutro ha 0 action points e non usa servi",
+      "DESCRIZIONE2":  "quindi dovrebbe lanciare eccezione",
+      "familyMember": "neutral",
+      "servants": 0,
+      "slotID": 21
+    },
+    {
+      "DESCRIZIONE": "Sempre turno del giocatore blu, stavolta usa il familiare nero, dovrebbe ottenere 5 servi",
+      "familyMember": "black",
+      "servants": 0,
+      "slotID": 21
+    }
+  ]
+}

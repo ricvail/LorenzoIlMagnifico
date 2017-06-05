@@ -1,6 +1,7 @@
 package it.polimi.ingsw.pc42;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import it.polimi.ingsw.pc42.ActionSpace.NonRandomDice;
 import it.polimi.ingsw.pc42.ActionSpace.iActionSpace;
 import it.polimi.ingsw.pc42.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.DevelopmentCards.iCard;
@@ -27,6 +28,15 @@ public class Board implements iBoard {
     public void setCouncilID(int councilID) throws Exception {
         if (!councilHasBeenSet) {
             this.councilID = councilID;
+            //cleanUp();
+        } else{
+            throw new Exception("Council ID has already been set");
+        }
+    }
+
+    public void firstCleanup() throws Exception {
+        if (!councilHasBeenSet) {
+            councilHasBeenSet=true;
             cleanUp();
         } else{
             throw new Exception("Council ID has already been set");
@@ -40,15 +50,22 @@ public class Board implements iBoard {
      * @param players
      * @param cards
      */
-    public Board(ArrayList<Player> players,ArrayList<iCard> cards){
+    public Board(ArrayList<Player> players,ArrayList<iCard> cards, boolean random){
         //Initialization
         actionSpaces= new ArrayList<>();
         playerArrayList=players;
         this.cards=cards;
-        dices=new ArrayList<>();
-        dices.add(new Dice(Dice.DiceColor.WHITE));
-        dices.add(new Dice(Dice.DiceColor.ORANGE));
-        dices.add(new Dice(Dice.DiceColor.BLACK));
+        if (random) {
+            dices = new ArrayList<>();
+            dices.add(new Dice(Dice.DiceColor.WHITE));
+            dices.add(new Dice(Dice.DiceColor.ORANGE));
+            dices.add(new Dice(Dice.DiceColor.BLACK));
+        } else {
+            dices = new ArrayList<>();
+            dices.add(new NonRandomDice(Dice.DiceColor.WHITE, 1));
+            dices.add(new NonRandomDice(Dice.DiceColor.ORANGE, 3));
+            dices.add(new NonRandomDice(Dice.DiceColor.BLACK, 6));
+        }
         //Turn management
         councilHasBeenSet =false;
         round=0;
@@ -72,6 +89,11 @@ public class Board implements iBoard {
             }
         }
         return 0;//for neutral and ghost
+    }
+
+    public void makeMove(JsonNode move) throws Exception {
+        makeMove(currentPlayer, move);
+        endPlayerTurn();
     }
 
     public void makeMove(Player p, JsonNode move) throws Exception {
@@ -220,6 +242,13 @@ public class Board implements iBoard {
             playerArrayList.add(0,playerArrayList.remove(j));
         }
         currentPlayer=playerArrayList.get(0);
+    }
+
+    public Player getPlayerByColor(Player.PlayerColor color){
+        for (Player p:playerArrayList) {
+            if (p.getColor()==color) return p;
+        }
+        return null;
     }
 
     private void endGame(){

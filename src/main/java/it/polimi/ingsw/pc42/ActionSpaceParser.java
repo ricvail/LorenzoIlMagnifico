@@ -64,6 +64,10 @@ public class ActionSpaceParser {
                     }
                 } //end of immediate resource effect
             }
+            if (actionSpaceJson.has("turnOrderModifier")&&actionSpaceJson.get("turnOrderModifier").asBoolean()) {
+                //Boolean turnOrderModifier = ;
+                b.setCouncilID(actionSpaceJson.get("id").asInt());
+            }
             if (actionSpaceJson.has("singleFamilyMember")&&
                     actionSpaceJson.get("singleFamilyMember").asBoolean()){
                 actionSpace=new singleFamilyMemberDecorator(actionSpace);
@@ -76,11 +80,7 @@ public class ActionSpaceParser {
                 int q = root.get("actionValuePenaltyForSecondPlayer").asInt();
                 actionSpace=new ActionValuePenaltyForSecondPlayer(q, actionSpace);
             }
-            if (root.has("turnOrderModifier")) {
-                //Boolean turnOrderModifier = root.get("turnOrderModifier").asBoolean();
-                b.setCouncilID(root.get("id").asInt());
-            }
-                if (root.has("additionalCoinsTax")){
+            if (root.has("additionalCoinsTax")){
                 int q = root.get("additionalCoinsTax").asInt();
                 actionSpace=new additionalCoinsTax(q, actionSpace);
             }

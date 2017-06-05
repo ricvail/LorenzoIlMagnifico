@@ -21,6 +21,7 @@ public class ActionSpace implements iActionSpace {
         this.ID=ID;
         this.actionValue=actionValue;
         this.board= board;
+        this.familyMembers=new ArrayList<>();
     }
 
     @Override

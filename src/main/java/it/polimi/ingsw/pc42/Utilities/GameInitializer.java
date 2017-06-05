@@ -150,12 +150,13 @@ public class GameInitializer {
         ArrayList<Player> players = initBasicPlayers(playerList, shuffle); //TODO PersonalBonusTiles
         ArrayList<iCard> cardList = readCards(cards, shuffle);
 
-        Board b =new Board(players, cardList);
+        Board b =new Board(players, cardList, shuffle);
 
         Iterator<JsonNode> actionSpacesIterator= actionSpaces.get("action_spaces").iterator();
         while (actionSpacesIterator.hasNext()) {
             ActionSpaceParser.actionSpace(actionSpacesIterator.next(), b);
         }
+        b.firstCleanup();
 
         return b;
     }
