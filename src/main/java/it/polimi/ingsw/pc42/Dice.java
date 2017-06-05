@@ -3,16 +3,22 @@ package it.polimi.ingsw.pc42;
 
 public class Dice {
     private int value;
+
+    public DiceColor getColor() {
+        return color;
+    }
+
     private DiceColor color;
 
     public Dice(DiceColor color){
-        this.value = 0;
         this.color = color;
     }
 
-    public int rollDice(){
-        //random number
-        return 1;
+    public void rollDice(){
+        value = (int) (Math.floor(Math.random()*6)+1);
+    }
+    public int getValue(){
+        return value;
     }
 
     public enum DiceColor{

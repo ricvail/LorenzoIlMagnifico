@@ -66,25 +66,35 @@ public class GameInitializer {
 
     public static void main(String args []){
         System.out.print(
-            initBaseGame()
+            initBaseGame(true)
         );
 
     }
 
-    public static Board initBaseGame(){
+    public static Board initBaseGame(boolean shuffle){
         Board b=null;
         try {
             b= initGame(false,
                     readFile("src/res/prova_playerInit.json"),
                     getDefaultActionSpacesJson(),
-                    getDefaultCardsJson());
+                    getDefaultCardsJson(),
+                    shuffle);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return b;
     }
 
-    public static ArrayList<iCard> readCards(JsonNode cardList){
+    public static ArrayList<iCard> readCards(JsonNode cardList, boolean shuffle){
+        ArrayList<iCard> cards = readCards(cardList);
+        if (shuffle){
+            Collections.shuffle(cards);
+        }
+        return cards;
+    }
+
+
+        public static ArrayList<iCard> readCards(JsonNode cardList){
         ArrayList<iCard> cards = new ArrayList<>();
         Iterator<JsonNode> jsonNodeIterator = cardList.get("developmentCards").elements();
         while (jsonNodeIterator.hasNext()){
@@ -92,11 +102,10 @@ public class GameInitializer {
             c = createCard(jsonNodeIterator.next());
             cards.add(c);
         }
-        Collections.shuffle(cards);
         return cards;
     }
 
-    public static ArrayList<Player> initBasicPlayers(JsonNode playerList) throws Exception {
+    public static ArrayList<Player> initBasicPlayers(JsonNode playerList, boolean shuffle) throws Exception {
         if (!isBasicPlayerListJsonValid(playerList)){
             throw new Exception("Invalid PlayerInit Json");
         }
@@ -105,7 +114,9 @@ public class GameInitializer {
         while (playerIterator.hasNext()){
             players.add(Player.fromColorString(playerIterator.next().get("color").asText()));
         }
-        Collections.shuffle(players);
+        if (shuffle){
+            Collections.shuffle(players);
+        }
         for (int i =0; i<players.size(); i++){
             Player p = players.get(i);
             /*
@@ -134,10 +145,10 @@ public class GameInitializer {
      * @param actionSpaces
      * @return
      */
-    public static Board initGame(boolean advanced, JsonNode playerList, JsonNode actionSpaces, JsonNode cards) throws Exception {
+    public static Board initGame(boolean advanced, JsonNode playerList, JsonNode actionSpaces, JsonNode cards, boolean shuffle) throws Exception {
 
-        ArrayList<Player> players = initBasicPlayers(playerList); //TODO PersonalBonusTiles
-        ArrayList<iCard> cardList = readCards(cards);
+        ArrayList<Player> players = initBasicPlayers(playerList, shuffle); //TODO PersonalBonusTiles
+        ArrayList<iCard> cardList = readCards(cards, shuffle);
 
         Board b =new Board(players, cardList);
 

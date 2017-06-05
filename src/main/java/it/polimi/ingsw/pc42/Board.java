@@ -1,7 +1,6 @@
 package it.polimi.ingsw.pc42;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import it.polimi.ingsw.pc42.ActionSpace.ActionSpace;
 import it.polimi.ingsw.pc42.ActionSpace.iActionSpace;
 import it.polimi.ingsw.pc42.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.DevelopmentCards.iCard;
@@ -20,7 +19,20 @@ public class Board implements iBoard {
     private ArrayList<Player> playerArrayList;
     private ArrayList<iActionSpace> actionSpaces;
     private ArrayList<iCard> cards;
-    private int councilID;//TODO set this (in constructor?)
+    private int councilID;
+    private boolean councilHasBeenSet;
+    private ArrayList<Dice> dices;
+
+
+    public void setCouncilID(int councilID) throws Exception {
+        if (!councilHasBeenSet) {
+            this.councilID = councilID;
+            cleanUp();
+        } else{
+            throw new Exception("Council ID has already been set");
+        }
+    }
+
 
 
     /**
@@ -33,20 +45,48 @@ public class Board implements iBoard {
         actionSpaces= new ArrayList<>();
         playerArrayList=players;
         this.cards=cards;
+        dices=new ArrayList<>();
+        dices.add(new Dice(Dice.DiceColor.WHITE));
+        dices.add(new Dice(Dice.DiceColor.ORANGE));
+        dices.add(new Dice(Dice.DiceColor.BLACK));
         //Turn management
+        councilHasBeenSet =false;
         round=0;
         currentPlayer=playerArrayList.get(0);
         era = 1;
+        //cleanUp();//Council will be empty, so nothing happens to turn order;
+                    //cleanUp also rolls dices and causes tower action spaces to receive their first card
+    }
+
+    private void rollDices(){
+        Iterator<Dice> iterator = dices.iterator();
+        while (iterator.hasNext()){
+            iterator.next().rollDice();
+        }
+    }
+
+    public int getDiceValue (Dice.DiceColor color){
+        for (Dice d:dices) {
+            if (d.getColor()==color){
+                return d.getValue();
+            }
+        }
+        return 0;//for neutral and ghost
     }
 
     public void makeMove(Player p, JsonNode move) throws Exception {
+        if (!councilHasBeenSet){
+            throw new Exception("Council ID must be set first");
+        }
         if (!isPlayerTurn(p)){
             throw new Exception("it's not this player's turn");
         }
         //TODO check if move is complete and valid
-
         FamilyMember fm = p.getFamilyMemberFromColor(move.get("familyMember").asText());
         iActionSpace space = getActionSpaceByID(move.get("slotID").asInt());
+
+        //TODO player.applyBonuses (familyMember, move);
+            //TODO player.undoBonuses (for checking)
         if (space.canPlace(fm)){
             space.placeFamilyMember(fm, move);
         }else {
@@ -166,7 +206,7 @@ public class Board implements iBoard {
         while (iterator.hasNext()){
             iterator.next().cleanup();
         }
-        //TODO roll dices
+        rollDices();
     }
     private void changeTurnOrder(iActionSpace council){
         for (int i=council.getFamilyMembers().size()-1; i>=0; i--){
