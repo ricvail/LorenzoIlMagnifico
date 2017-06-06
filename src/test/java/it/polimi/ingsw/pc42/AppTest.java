@@ -2,16 +2,9 @@ package it.polimi.ingsw.pc42;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import it.polimi.ingsw.pc42.DevelopmentCards.Card;
-import it.polimi.ingsw.pc42.DevelopmentCards.ImmediateBonusChoice;
-import it.polimi.ingsw.pc42.DevelopmentCards.ResourceImmediateBonus;
-import it.polimi.ingsw.pc42.DevelopmentCards.iCard;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import java.util.logging.Logger;
 
 /**
  * Unit test for simple App.

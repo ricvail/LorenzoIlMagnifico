@@ -1,0 +1,29 @@
+package it.polimi.ingsw.pc42.Control;
+
+public class IntWrapper implements iIntWrapper{
+
+    protected int myInt;
+
+    public IntWrapper(int i){
+        myInt=i;
+    }
+
+    public IntWrapper(){
+        myInt=0;
+    }
+
+
+    @Override
+    public int get() {
+        return myInt;
+    }
+
+    @Override
+    public void set(int i) {
+        if (i<0) {
+            throw new IllegalArgumentException();
+        }
+        myInt=i;
+    }
+
+}

@@ -2,12 +2,13 @@ package it.polimi.ingsw.pc42;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import it.polimi.ingsw.pc42.DevelopmentCards.Card;
-import it.polimi.ingsw.pc42.DevelopmentCards.iCard;
+import it.polimi.ingsw.pc42.Control.DevelopmentCards.Card;
+import it.polimi.ingsw.pc42.Control.DevelopmentCards.iCard;
 
-import static it.polimi.ingsw.pc42.CardParser.createCard;
+import static it.polimi.ingsw.pc42.Utilities.CardParser.createCard;
 import static org.junit.Assert.*;
 
+import it.polimi.ingsw.pc42.Model.Player;
 import org.junit.Test;
 
 import java.io.File;

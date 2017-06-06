@@ -3,18 +3,17 @@ package it.polimi.ingsw.pc42.Utilities;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import it.polimi.ingsw.pc42.ActionSpaceParser;
-import it.polimi.ingsw.pc42.Board;
-import it.polimi.ingsw.pc42.DevelopmentCards.iCard;
-import it.polimi.ingsw.pc42.Player;
-import it.polimi.ingsw.pc42.ResourceType;
+import it.polimi.ingsw.pc42.Model.Board;
+import it.polimi.ingsw.pc42.Control.DevelopmentCards.iCard;
+import it.polimi.ingsw.pc42.Model.Player;
+import it.polimi.ingsw.pc42.Control.ResourceType;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 
-import static it.polimi.ingsw.pc42.CardParser.createCard;
+import static it.polimi.ingsw.pc42.Utilities.CardParser.createCard;
 
 /**
  * Created by RICVA on 30/05/2017.

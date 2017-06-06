@@ -1,7 +1,10 @@
 package it.polimi.ingsw.pc42;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import it.polimi.ingsw.pc42.Control.ResourceType;
+import it.polimi.ingsw.pc42.Model.Board;
+import it.polimi.ingsw.pc42.Model.FamilyMember;
+import it.polimi.ingsw.pc42.Model.Player;
 import it.polimi.ingsw.pc42.Utilities.GameInitializer;
 import junit.framework.Test;
 import junit.framework.TestCase;
