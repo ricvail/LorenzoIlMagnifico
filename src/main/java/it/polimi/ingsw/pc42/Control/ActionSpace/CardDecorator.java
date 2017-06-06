@@ -1,6 +1,5 @@
 package it.polimi.ingsw.pc42.Control.ActionSpace;
 
-import it.polimi.ingsw.pc42.Model.Board;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.iCard;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
@@ -11,16 +10,14 @@ import it.polimi.ingsw.pc42.Model.FamilyMember;
 public class CardDecorator extends AbstractDecorator{
 
     Card.CardType type;
-    Board board;
 
     private iCard card;
 
     private boolean empty;
 
-    public CardDecorator(Card.CardType type, Board board, iActionSpace actionSpace) {
+    public CardDecorator(Card.CardType type, iActionSpace actionSpace) {
         super(actionSpace);
         this.type=type;
-        this.board=board;
         empty=true;
     }
 
@@ -44,7 +41,7 @@ public class CardDecorator extends AbstractDecorator{
         super.cleanup();
         empty=true;
         try {
-            this.card=board.getCard(type);
+            this.card=getBoard().getCard(type);
             empty=false;
         } catch (Exception e) {
             e.printStackTrace();

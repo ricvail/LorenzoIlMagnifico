@@ -16,7 +16,7 @@ import java.util.Iterator;
 
 public class CardParser {
 
-    public static iCard createCard(JsonNode root){
+    public static iCard createCard(JsonNode root, BoardProvider bp){
 
         iCard c = null;
         try {
@@ -25,7 +25,7 @@ public class CardParser {
             c = new Card(root.get("era").asInt(),
                 root.get("name").asText(),
                 Card.CardType.fromString(root.get("type").asText()),
-                root);
+                root, bp);
 
             //decorate immediate effect
             if (root.has("immediateEffect")) {
@@ -172,7 +172,7 @@ public class CardParser {
         }
     }
 
-
+/*
 
     public static void main(String[] args) {
 
@@ -200,7 +200,7 @@ public class CardParser {
         );
 
 
-            /*iCard c;
+            iCard c;
             c = createCard(json);
             System.out.println(json.isObject());
             ObjectNode obj = (ObjectNode) json;
@@ -213,9 +213,9 @@ public class CardParser {
                 String key = it.next();
                 System.out.println(key);
             }
-            System.out.println(json.get("new property").isArray()); */
+            System.out.println(json.get("new property").isArray());
 
 
-    }
+    }*/
 }
 

@@ -9,11 +9,9 @@ import java.util.Iterator;
 
 public class oneFamilyMemberPerPlayer extends AbstractDecorator{
 
-    private Board board;
 
-    public oneFamilyMemberPerPlayer(iActionSpace actionSpace, Board b) {
+    public oneFamilyMemberPerPlayer(iActionSpace actionSpace) {
         super(actionSpace);
-        board=b;
     }
 
     @Override
@@ -22,7 +20,7 @@ public class oneFamilyMemberPerPlayer extends AbstractDecorator{
             return super.canPlace(familyMember);
         }
 
-        Iterator<iActionSpace> iterator = board.getActionSpaces().iterator();
+        Iterator<iActionSpace> iterator = getBoard().getActionSpaces().iterator();
         while (iterator.hasNext()){
             iActionSpace actionSpace = iterator.next();
             if (actionSpace.getArea()==this.getArea()){

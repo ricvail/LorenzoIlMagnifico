@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
 import it.polimi.ingsw.pc42.Control.ResourceType;
 import it.polimi.ingsw.pc42.Model.Board;
+import it.polimi.ingsw.pc42.Utilities.BoardProvider;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -13,13 +14,15 @@ public class ActionSpace implements iActionSpace {
     private Area area;
     private int ID;
     private int actionValue;
-    Board board;
+    //Board board;
+    BoardProvider boardProvider;
 
-    public ActionSpace(Board board, Area area, int ID, int actionValue){
+    public ActionSpace(BoardProvider boardProvider, Area area, int ID, int actionValue){
         this.area = area;
         this.ID=ID;
         this.actionValue=actionValue;
-        this.board= board;
+        //this.board= board;
+        this.boardProvider=boardProvider;
         this.familyMembers=new ArrayList<>();
     }
 
@@ -82,7 +85,7 @@ public class ActionSpace implements iActionSpace {
 
     @Override
     public Board getBoard() {
-        return board;
+        return boardProvider.getBoard();
     }
 
     public static boolean isFirstInArea(Board board, Area area){

@@ -3,6 +3,7 @@ package it.polimi.ingsw.pc42.Utilities;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import it.polimi.ingsw.pc42.Control.ActionSpace.iActionSpace;
 import it.polimi.ingsw.pc42.Model.Board;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.iCard;
 import it.polimi.ingsw.pc42.Model.Player;
@@ -32,7 +33,7 @@ public class GameInitializer {
     }
 
     public static JsonNode getDefaultActionSpacesJson(){
-        return readFile("src/res/actionsSpaces.json");
+        return readFile("src/res/actionsSpaces.json").get("action_spaces");
     }
 
     public static JsonNode getDefaultCardsJson(){
@@ -84,21 +85,30 @@ public class GameInitializer {
         return b;
     }
 
-    public static ArrayList<iCard> readCards(JsonNode cardList, boolean shuffle){
-        ArrayList<iCard> cards = readCards(cardList);
+    public static ArrayList<iCard> readCards(JsonNode cardList,BoardProvider bp, boolean shuffle){
+        ArrayList<iCard> cards = readCards(cardList, bp);
         if (shuffle){
             Collections.shuffle(cards);
         }
         return cards;
     }
 
+    public static ArrayList<iActionSpace> readActionSpaces(JsonNode spacesList, BoardProvider boardProvider) throws Exception {
+        ArrayList<iActionSpace> actionSpaceList = new ArrayList<>();
+        Iterator<JsonNode> actionSpacesIterator= spacesList.iterator();
+        while (actionSpacesIterator.hasNext()) {
+            ActionSpaceParser.actionSpace(actionSpacesIterator.next(), boardProvider, actionSpaceList);
+        }
+        return actionSpaceList;
+    }
 
-        public static ArrayList<iCard> readCards(JsonNode cardList){
+
+        public static ArrayList<iCard> readCards(JsonNode cardList, BoardProvider bp){
         ArrayList<iCard> cards = new ArrayList<>();
         Iterator<JsonNode> jsonNodeIterator = cardList.get("developmentCards").elements();
         while (jsonNodeIterator.hasNext()){
             iCard c;
-            c = createCard(jsonNodeIterator.next());
+            c = createCard(jsonNodeIterator.next(), bp);
             cards.add(c);
         }
         return cards;
@@ -145,16 +155,19 @@ public class GameInitializer {
      * @return
      */
     public static Board initGame(boolean advanced, JsonNode playerList, JsonNode actionSpaces, JsonNode cards, boolean shuffle) throws Exception {
+        BoardProvider boardProvider = new BoardProvider();
 
         ArrayList<Player> players = initBasicPlayers(playerList, shuffle); //TODO PersonalBonusTiles
-        ArrayList<iCard> cardList = readCards(cards, shuffle);
+        ArrayList<iCard> cardList = readCards(cards,boardProvider,shuffle);
+        ArrayList<iActionSpace> actionSpaceList=readActionSpaces(actionSpaces, boardProvider);
+        int councilID=ActionSpaceParser.getCouncilID(actionSpaces);
 
-        Board b =new Board(players, cardList, shuffle);
+        System.out.print(councilID);
 
-        Iterator<JsonNode> actionSpacesIterator= actionSpaces.get("action_spaces").iterator();
-        while (actionSpacesIterator.hasNext()) {
-            ActionSpaceParser.actionSpace(actionSpacesIterator.next(), b);
-        }
+        Board b =new Board(players, cardList, actionSpaceList, shuffle);
+        b.setCouncilID(councilID);
+        boardProvider.setBoard(b);
+
         b.firstCleanup();
 
         return b;

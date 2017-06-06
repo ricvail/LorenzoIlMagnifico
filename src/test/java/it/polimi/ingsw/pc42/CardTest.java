@@ -8,7 +8,9 @@ import it.polimi.ingsw.pc42.Control.DevelopmentCards.iCard;
 import static it.polimi.ingsw.pc42.Utilities.CardParser.createCard;
 import static org.junit.Assert.*;
 
+import it.polimi.ingsw.pc42.Model.Board;
 import it.polimi.ingsw.pc42.Model.Player;
+import it.polimi.ingsw.pc42.Utilities.BoardProvider;
 import org.junit.Test;
 
 import java.io.File;
@@ -44,7 +46,8 @@ public class CardTest {
         try {
             File file = new File("src/res/test_card.json");
             JsonNode jsonNode = mapper.readTree(file);
-            iCard card = createCard(jsonNode);
+            BoardProvider bp=new BoardProvider();
+            iCard card = createCard(jsonNode, bp);
 
             assertEquals(card.getCardType(), Card.CardType.CHARACTER );
             assertEquals(card.getName(), "Preacher");

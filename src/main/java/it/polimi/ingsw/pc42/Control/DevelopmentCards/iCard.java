@@ -1,6 +1,7 @@
 package it.polimi.ingsw.pc42.Control.DevelopmentCards;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import it.polimi.ingsw.pc42.Model.Board;
 import it.polimi.ingsw.pc42.Model.Player;
 
 public interface iCard {
@@ -18,5 +19,7 @@ public interface iCard {
     String getName();
 
     Card.CardType getCardType();
+
+    Board getBoard();
 
 }

@@ -1,9 +1,18 @@
 package it.polimi.ingsw.pc42.Control.DevelopmentCards;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import it.polimi.ingsw.pc42.Model.Board;
 import it.polimi.ingsw.pc42.Model.Player;
+import it.polimi.ingsw.pc42.Utilities.BoardProvider;
 
 public class Card implements iCard{
+
+    public final int era;
+    public final String name;
+    public final CardType cardType;
+    public final  JsonNode json;
+    private BoardProvider bp;
+
     public int getEra() {
         return era;
     }
@@ -16,16 +25,18 @@ public class Card implements iCard{
         return cardType;
     }
 
-    public final int era;
-    public final String name;
-    public final CardType cardType;
-    public final  JsonNode json;
+    @Override
+    public Board getBoard() {
+        return bp.getBoard();
+    }
 
-    public Card(int era, String name, CardType cardType, JsonNode j){
+
+    public Card(int era, String name, CardType cardType, JsonNode j, BoardProvider bp){
         this.json=j;
         this.era = era;
         this.name = name;
         this.cardType = cardType;
+        this.bp=bp;
     }
 
     public boolean drawRequirementCheck(Player player) {

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.pc42.Control.DevelopmentCards;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import it.polimi.ingsw.pc42.Model.Board;
 import it.polimi.ingsw.pc42.Model.Player;
 
 public abstract class AbstractDecorator implements iCard{
@@ -19,6 +20,11 @@ public abstract class AbstractDecorator implements iCard{
     public JsonNode getJSONDescriptionOfCards() {
         JsonNode json = card.getJSONDescriptionOfCards();
         return json;
+    }
+
+    @Override
+    public Board getBoard() {
+        return card.getBoard();
     }
 
     public void applyDrawEffect(Player player, JsonNode json) {

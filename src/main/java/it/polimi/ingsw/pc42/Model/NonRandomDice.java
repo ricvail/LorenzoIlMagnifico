@@ -1,4 +1,4 @@
-package it.polimi.ingsw.pc42.Control.ActionSpace;
+package it.polimi.ingsw.pc42.Model;
 
 import it.polimi.ingsw.pc42.Model.Dice;
 

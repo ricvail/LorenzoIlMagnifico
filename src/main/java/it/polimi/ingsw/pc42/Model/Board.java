@@ -1,7 +1,6 @@
 package it.polimi.ingsw.pc42.Model;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import it.polimi.ingsw.pc42.Control.ActionSpace.NonRandomDice;
 import it.polimi.ingsw.pc42.Control.ActionSpace.iActionSpace;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.iCard;
@@ -51,9 +50,9 @@ public class Board {
      * @param players
      * @param cards
      */
-    public Board(ArrayList<Player> players,ArrayList<iCard> cards, boolean random){
+    public Board(ArrayList<Player> players,ArrayList<iCard> cards, ArrayList<iActionSpace> spaces,  boolean random){
         //Initialization
-        actionSpaces= new ArrayList<>();
+        actionSpaces= spaces;
         playerArrayList=players;
         this.cards=cards;
         if (random) {
