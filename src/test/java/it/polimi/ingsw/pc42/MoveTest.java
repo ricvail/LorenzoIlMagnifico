@@ -67,13 +67,25 @@ public class MoveTest
         assertEquals(true, fm.isUsed());
 
         //Fine prima mossa--------------------------------------------------------------------------------------------
-        exception=false;
+        /*exception=false;
         try {
             b.makeMove(mosse.get(1)); //turno del giocatore blu, questa mossa non è legale quindi mi aspetto che avvenga un eccezione
         } catch (Exception e){
             exception=true;
+            e.printStackTrace();
         }
         //assertEquals(true, exception);
+        */
+        //fine seconda mossa-------------------------------------------------------------------------------------------
+        exception=false;
+        try{
+            b.makeMove(mosse.get(2));
+        } catch (Exception e){
+            exception=true;
+            e.printStackTrace();
+        }
+        assertEquals(false, exception);
+        assertEquals(8, b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.SERVANT).get());
 
     }
 

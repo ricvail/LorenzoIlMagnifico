@@ -164,7 +164,7 @@
       ]
     },
     {
-      "area": "HARVEST",
+      "area": "PRODUCTION",
       "actionValuePenaltyForSecondPlayer": 3,
       "oneFamilyMemberPerPlayer": true,
       "actionSpaces": [
@@ -174,13 +174,13 @@
           "actionValue": 1,
           "singleFamilyMember": false,
           "immediateResourceEffect": {
-            "effect": "harvest"
+            "effect": "production"
           }
         }
       ]
     },
     {
-      "area": "PRODUCTION",
+      "area": "HARVEST",
       "actionValuePenaltyForSecondPlayer": 3,
       "oneFamilyMemberPerPlayer": true,
       "actionSpaces": [
@@ -190,7 +190,7 @@
           "actionValue": 1,
           "singleFamilyMember": false,
           "immediateResourceEffect": {
-            "effect": "production"
+            "effect": "harvest"
           }
         }
       ]
