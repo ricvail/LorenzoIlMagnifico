@@ -6,6 +6,7 @@ package it.polimi.ingsw.pc42.Control.ActionSpace;
 public class ActionDecorator extends AbstractDecorator{
 
 
+
     public ActionDecorator(ActionType actionType, iActionSpace actionSpace) {
         super(actionSpace);
     }

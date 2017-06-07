@@ -10,6 +10,16 @@ import java.util.ArrayList;
 public abstract class AbstractDecorator implements iActionSpace {
     private iActionSpace actionSpace;
 
+    @Override
+    public int getMinimumActionValue() {
+        return actionSpace.getMinimumActionValue();
+    }
+
+    @Override
+    public int getMinimumNumberOfPlayers() {
+        return actionSpace.getMinimumNumberOfPlayers();
+    }
+
     public AbstractDecorator(iActionSpace actionSpace){
         this.actionSpace = actionSpace;
     }

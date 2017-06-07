@@ -1,6 +1,9 @@
 package it.polimi.ingsw.pc42.Model;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Control.ActionSpace.iActionSpace;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.iCard;
@@ -80,6 +83,11 @@ public class Board {
         while (iterator.hasNext()){
             iterator.next().rollDice();
         }
+        for (Player p: playerArrayList) {
+            for (FamilyMember fm:p.getFamilyMembers()) {
+                fm.setValue(getDiceValue(fm.diceColor));
+            }
+        }
     }
 
     public int getDiceValue (Dice.DiceColor color){
@@ -96,25 +104,113 @@ public class Board {
         endPlayerTurn();
     }
 
-    public void makeMove(Player p, JsonNode move) throws Exception {
-        if (!councilHasBeenSet){
-            throw new Exception("Council ID must be set first");
+    private void getFamilyMemberFromJson(JsonNode move, Player p) throws ActionAbortedException {
+        if (!move.has("familyMember")){
+            throw new ActionAbortedException("familyMember", p.getUnusedFamilyMembersList());
         }
+        FamilyMember fm;
+        try {
+            fm  = p.getFamilyMemberFromColor(move.get("familyMember").asText());
+        } catch (Exception e) {
+            throw new ActionAbortedException(false);
+        }
+        getActionSpaceFromJson(move, fm);
+    }
+
+    private void getActionSpaceFromJson(JsonNode move, FamilyMember fm) throws ActionAbortedException {
+        if (!move.has("slotID")){
+            //TODO generate list of possible action spaces
+            //throw new ActionAbortedException("slotID", b.getPossibleSlotList(fm));
+            throw new ActionAbortedException(false);//temp
+        }
+        iActionSpace space;
+        try {
+            space = getActionSpaceByID(move.get("slotID").asInt());
+        } catch (Exception e) {
+            throw new ActionAbortedException(false);
+        }
+        if (fm.canBePlacedInArea(space.getArea())&&
+                getNumberOfPlayers()>=space.getMinimumNumberOfPlayers()){
+            applyPlayerPermanentBonus(move, fm, space);
+        } else {
+            throw new ActionAbortedException(false);
+        }
+    }
+
+    private void applyPlayerPermanentBonus(JsonNode move, FamilyMember fm, iActionSpace space) throws ActionAbortedException {
+        /**
+         * skipped for the moment
+         *      card must have an "apply Permanent bonus" method (params familyMember and ActionSpace)
+         *          change value of FamilyMember
+         *          Enable resourceWrapper bonus
+         *      Also an undo permanent bonus (for the catch segment)
+         */
+        applyServants(move, fm, space);
+    }
+
+    private void applyServants(JsonNode move, FamilyMember fm, iActionSpace space) throws ActionAbortedException {
+        if (!move.has("servants")){
+            JsonNodeFactory factory=JsonNodeFactory.instance;
+            ArrayNode list=factory.arrayNode();
+            list.add( getRequiredServants(move, fm, space));
+            throw new ActionAbortedException("servants",list);
+        }
+        if (move.get("servants").isInt()){
+            int servants = move.get("servants").asInt();
+            if (fm.owner.getResource(ResourceType.SERVANT).get()>=servants){
+                fm.owner.getResource(ResourceType.SERVANT).add(servants*-1);
+                fm.setValue(fm.getValue()+servants);
+                try {
+                    checkActionValue(move, fm, space);
+                } catch (ActionAbortedException e){
+                    fm.owner.getResource(ResourceType.SERVANT).add(servants);
+                    fm.setValue(fm.getValue()-servants);
+                    throw e;
+                }
+            } else{
+                throw new ActionAbortedException(false);
+            }
+        } else{
+            throw new ActionAbortedException(false);
+        }
+    }
+
+    private void checkActionValue(JsonNode move, FamilyMember fm, iActionSpace space) throws ActionAbortedException {
+        int required = space.getMinimumActionValue();
+        if (fm.getValue()>=required){
+            //----------------temp--------------------------
+            if (space.canPlace(fm)){
+                space.placeFamilyMember(fm, move);
+            }else {
+                throw new ActionAbortedException(false);
+            }
+        } else {
+            throw new ActionAbortedException(false);
+        }
+    }
+
+    private int getRequiredServants(JsonNode move, FamilyMember fm, iActionSpace space){
+        int required = space.getMinimumActionValue();
+        if (fm.getValue()>=required) return 0;
+        else return (required-fm.getValue());
+    }
+
+
+
+    public void makeMove(Player p, JsonNode move) throws Exception {
         if (!isPlayerTurn(p)){
             throw new Exception("it's not this player's turn");
         }
-        //TODO check if move is complete and valid
-        FamilyMember fm = p.getFamilyMemberFromColor(move.get("familyMember").asText());
-        iActionSpace space = getActionSpaceByID(move.get("slotID").asInt());
 
-        //TODO player.applyBonuses (familyMember, move);
-            //TODO player.undoBonuses (for checking)
+        getFamilyMemberFromJson(move, p);
+        /*
         if (space.canPlace(fm)){
             space.placeFamilyMember(fm, move);
         }else {
             throw new Exception("Illegal move of player "+p.getColor().name());
-        }
+        }*/
     }
+
 
     public iActionSpace getActionSpaceByID(int id) throws Exception {
         Iterator<iActionSpace> iterator = actionSpaces.iterator();

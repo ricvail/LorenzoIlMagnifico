@@ -22,7 +22,7 @@ public class Dice {
     }
 
     public enum DiceColor{
-        WHITE (true, "white"), BLACK(true, "black"), ORANGE(true, "orange"), NEUTRAL(true, "neutral");
+        WHITE (true, "white"), BLACK(true, "black"), ORANGE(true, "orange"), NEUTRAL(true, "neutral"), GHOST (false, "ghost");
         public final boolean visible;
         private String diceColor;
         DiceColor (boolean v, String diceColor){

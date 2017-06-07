@@ -16,4 +16,7 @@ public interface iActionSpace {
     int getID();
     int getNumberOfVisibleFamilyMembers();
     Board getBoard();
+    int getMinimumActionValue();
+    int getMinimumNumberOfPlayers();
+
 }

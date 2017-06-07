@@ -88,6 +88,16 @@ public class ActionSpace implements iActionSpace {
         return boardProvider.getBoard();
     }
 
+    @Override
+    public int getMinimumActionValue() {
+        return actionValue;
+    }
+
+    @Override
+    public int getMinimumNumberOfPlayers() {
+        return 0;
+    }
+
     public static boolean isFirstInArea(Board board, Area area){
         Iterator<iActionSpace> iterator = board.getActionSpaces().iterator();
         while (iterator.hasNext()){

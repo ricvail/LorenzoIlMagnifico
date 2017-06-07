@@ -116,7 +116,19 @@ public class Player {
         root.set("ventures", listOfVenturesCards);
         return root;
     }
-    
+
+    public JsonNode getUnusedFamilyMembersList(){
+        JsonNodeFactory factory=JsonNodeFactory.instance;
+        ArrayNode list=factory.arrayNode();
+        for (FamilyMember fm : familyMembers){
+            if (fm.diceColor.visible && !fm.isUsed()){
+                list.add(fm.diceColor.getDiceColorString());
+            }
+        }
+        return list;
+    }
+
+
     public ArrayList<FamilyMember> getFamilyMembers() {
         return familyMembers;
     }
