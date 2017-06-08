@@ -1,8 +1,8 @@
 package it.polimi.ingsw.pc42.Control.ActionSpace;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
-import it.polimi.ingsw.pc42.Control.ResourceType;
 import it.polimi.ingsw.pc42.Model.Board;
 import it.polimi.ingsw.pc42.Utilities.BoardProvider;
 
@@ -21,11 +21,23 @@ public class ActionSpace implements iActionSpace {
         this.area = area;
         this.ID=ID;
         this.actionValue=actionValue;
-        //this.board= board;
         this.boardProvider=boardProvider;
         this.familyMembers=new ArrayList<>();
     }
 
+    @Override
+    public void performAction(JsonNode move, FamilyMember fm) throws ActionAbortedException {
+        if (fm.getValue()<actionValue){
+            throw new ActionAbortedException(false);
+        }
+        if (move.has("checking")&&move.get("checking").asBoolean()){
+            throw new ActionAbortedException(true);
+        }
+        fm.setUsed(true);
+        this.familyMembers.add(fm);
+    }
+
+    /*
     @Override
     public boolean canPlace(FamilyMember familyMember) {
         if (familyMember.getValue()<actionValue){
@@ -43,6 +55,7 @@ public class ActionSpace implements iActionSpace {
         familyMember.setUsed(true);
         this.familyMembers.add(familyMember);
     }
+*/
 
     @Override
     public void cleanup() {
@@ -89,7 +102,7 @@ public class ActionSpace implements iActionSpace {
     }
 
     @Override
-    public int getMinimumActionValue() {
+    public int getMinimumActionValue(FamilyMember fm) {
         return actionValue;
     }
 

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.pc42.Control.ActionSpace;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Model.Board;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
 
@@ -19,6 +20,33 @@ public class ActionValuePenaltyForSecondPlayer extends AbstractDecorator {
     }
 
     @Override
+    public void performAction(JsonNode move, FamilyMember fm) throws ActionAbortedException {
+        if (doesPenaltyApply(fm)){
+            fm.setValue(fm.getValue()-penalty);
+            if (fm.getValue()<1){
+                fm.setValue(fm.getValue()+penalty);
+                throw new ActionAbortedException(false);
+            }
+        }
+        try {
+            super.performAction(move, fm);
+        }catch (ActionAbortedException e){
+            if (doesPenaltyApply(fm)){
+                fm.setValue(fm.getValue()+penalty);
+            }
+            throw e;
+        }
+    }
+
+    @Override
+    public int getMinimumActionValue(FamilyMember fm) {
+        if (doesPenaltyApply(fm)){
+            return super.getMinimumActionValue(fm)+penalty;
+        }else {
+            return super.getMinimumActionValue(fm);
+        }
+    }
+    /*    @Override
     public void placeFamilyMember(FamilyMember familyMember, JsonNode json) {
         if (doesPenaltyApply(familyMember)){
             familyMember.setValue(familyMember.getValue()-penalty);
@@ -37,7 +65,7 @@ public class ActionValuePenaltyForSecondPlayer extends AbstractDecorator {
         } else {
             return super.canPlace(familyMember);
         }
-    }
+    }*/
 
     public boolean doesPenaltyApply(FamilyMember familyMember){
         if (!familyMember.diceColor.visible){

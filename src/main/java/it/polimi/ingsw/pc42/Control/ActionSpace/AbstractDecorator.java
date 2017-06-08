@@ -2,6 +2,7 @@ package it.polimi.ingsw.pc42.Control.ActionSpace;
 
 
 import com.fasterxml.jackson.databind.JsonNode;
+import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Model.Board;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
 
@@ -11,8 +12,8 @@ public abstract class AbstractDecorator implements iActionSpace {
     private iActionSpace actionSpace;
 
     @Override
-    public int getMinimumActionValue() {
-        return actionSpace.getMinimumActionValue();
+    public int getMinimumActionValue(FamilyMember fm) {
+        return actionSpace.getMinimumActionValue(fm);
     }
 
     @Override
@@ -20,23 +21,23 @@ public abstract class AbstractDecorator implements iActionSpace {
         return actionSpace.getMinimumNumberOfPlayers();
     }
 
+    @Override
+    public void performAction(JsonNode move, FamilyMember fm) throws ActionAbortedException {
+        actionSpace.performAction(move, fm);
+    }
+
     public AbstractDecorator(iActionSpace actionSpace){
         this.actionSpace = actionSpace;
     }
-
-    public boolean canPlace(FamilyMember familyMember){
-        return actionSpace.canPlace(familyMember);
-    }
-
-    public void placeFamilyMember(FamilyMember familyMember, JsonNode json){
-        actionSpace.placeFamilyMember(familyMember, json);
-    }
+    @Override
     public void cleanup(){
         actionSpace.cleanup();
     }
+    @Override
     public ArrayList<FamilyMember> getFamilyMembers(){
         return actionSpace.getFamilyMembers();
     }
+    @Override
     public Area getArea(){
         return actionSpace.getArea();
     }

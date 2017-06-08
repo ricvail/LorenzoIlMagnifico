@@ -114,7 +114,11 @@ public class Board {
         } catch (Exception e) {
             throw new ActionAbortedException(false);
         }
-        getActionSpaceFromJson(move, fm);
+        if (fm.isUsed()){
+            throw new ActionAbortedException(false);
+        }else {
+            getActionSpaceFromJson(move, fm);
+        }
     }
 
     private void getActionSpaceFromJson(JsonNode move, FamilyMember fm) throws ActionAbortedException {
@@ -176,21 +180,16 @@ public class Board {
     }
 
     private void checkActionValue(JsonNode move, FamilyMember fm, iActionSpace space) throws ActionAbortedException {
-        int required = space.getMinimumActionValue();
+        int required = space.getMinimumActionValue(fm);
         if (fm.getValue()>=required){
-            //----------------temp--------------------------
-            if (space.canPlace(fm)){
-                space.placeFamilyMember(fm, move);
-            }else {
-                throw new ActionAbortedException(false);
-            }
+            space.performAction(move, fm);
         } else {
             throw new ActionAbortedException(false);
         }
     }
 
     private int getRequiredServants(JsonNode move, FamilyMember fm, iActionSpace space){
-        int required = space.getMinimumActionValue();
+        int required = space.getMinimumActionValue(fm);
         if (fm.getValue()>=required) return 0;
         else return (required-fm.getValue());
     }

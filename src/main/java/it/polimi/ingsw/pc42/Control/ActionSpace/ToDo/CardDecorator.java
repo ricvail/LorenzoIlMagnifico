@@ -1,5 +1,7 @@
-package it.polimi.ingsw.pc42.Control.ActionSpace;
+package it.polimi.ingsw.pc42.Control.ActionSpace.ToDo;
 
+import it.polimi.ingsw.pc42.Control.ActionSpace.AbstractDecorator;
+import it.polimi.ingsw.pc42.Control.ActionSpace.iActionSpace;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.iCard;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
@@ -7,7 +9,7 @@ import it.polimi.ingsw.pc42.Model.FamilyMember;
 /**
  * Created by RICVA on 22/05/2017.
  */
-public class CardDecorator extends AbstractDecorator{
+public class CardDecorator extends AbstractDecorator {
 
     Card.CardType type;
 
@@ -21,7 +23,7 @@ public class CardDecorator extends AbstractDecorator{
         empty=true;
     }
 
-    @Override
+/*    @Override
     public boolean canPlace(FamilyMember familyMember) {
         boolean b= super.canPlace(familyMember);
         if (familyMember.owner.getNumberOfCards(type)>6){
@@ -34,7 +36,7 @@ public class CardDecorator extends AbstractDecorator{
             return false;
         }
         return b;
-    }
+    }*/
 
     @Override
     public void cleanup() {

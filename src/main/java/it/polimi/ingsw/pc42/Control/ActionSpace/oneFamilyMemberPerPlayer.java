@@ -1,6 +1,8 @@
 package it.polimi.ingsw.pc42.Control.ActionSpace;
 
 
+import com.fasterxml.jackson.databind.JsonNode;
+import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Model.Board;
 import it.polimi.ingsw.pc42.Model.Dice;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
@@ -15,11 +17,17 @@ public class oneFamilyMemberPerPlayer extends AbstractDecorator{
     }
 
     @Override
-    public boolean canPlace(FamilyMember familyMember) {
-        if (!familyMember.diceColor.visible||familyMember.diceColor== Dice.DiceColor.NEUTRAL){
-            return super.canPlace(familyMember);
+    public void performAction(JsonNode move, FamilyMember fm) throws ActionAbortedException {
+        if (!canPlace(fm)){
+            throw new ActionAbortedException(false);
         }
+        super.performAction(move, fm);
+    }
 
+    private boolean canPlace(FamilyMember familyMember) {
+        if (!familyMember.diceColor.visible||familyMember.diceColor== Dice.DiceColor.NEUTRAL){
+            return true;
+        }
         Iterator<iActionSpace> iterator = getBoard().getActionSpaces().iterator();
         while (iterator.hasNext()){
             iActionSpace actionSpace = iterator.next();
@@ -35,7 +43,6 @@ public class oneFamilyMemberPerPlayer extends AbstractDecorator{
                 }
             }
         }
-
-        return super.canPlace(familyMember);
+        return true;
     }
 }

@@ -58,7 +58,7 @@ public class MoveTest
         assertEquals(false, exception);
         assertEquals(10 ,b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).get()); //le 5 monete iniziali più le 5 appena prese
 
-        //assertEquals(b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.SERVANT).get(), 2); //3 iniziali meno 1
+        assertEquals(b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.SERVANT).get(), 2); //3 iniziali meno 1
 
         FamilyMember fm= null;
         try {
@@ -70,15 +70,15 @@ public class MoveTest
         assertEquals(true, fm.isUsed());
 
         //Fine prima mossa--------------------------------------------------------------------------------------------
-        /*exception=false;
+        exception=false;
         try {
             b.makeMove(mosse.get(1)); //turno del giocatore blu, questa mossa non è legale quindi mi aspetto che avvenga un eccezione
         } catch (Exception e){
             exception=true;
-            e.printStackTrace();
+            //e.printStackTrace();
         }
-        //assertEquals(true, exception);
-        */
+        assertEquals(true, exception);
+
         //fine seconda mossa-------------------------------------------------------------------------------------------
         exception=false;
         try{

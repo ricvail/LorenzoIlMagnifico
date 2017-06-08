@@ -41,8 +41,6 @@ public class FamilyMember {
         }
         return (allowedAreas.contains(area));
     }
-    //----------------------------------------------------------
-
     public void setValue(int diceValue){
         value=diceValue;
     }

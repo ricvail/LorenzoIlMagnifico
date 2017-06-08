@@ -1,6 +1,7 @@
 package it.polimi.ingsw.pc42.Control.ActionSpace;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
 import it.polimi.ingsw.pc42.Control.ResourceType;
 
@@ -15,6 +16,22 @@ public class ResourceImmediateBonus extends AbstractDecorator {
     }
 
     @Override
+    public void performAction(JsonNode move, FamilyMember fm) throws ActionAbortedException {
+        try {
+            fm.owner.getResource(resourceType).add(q);
+        } catch (IllegalArgumentException e){
+            fm.owner.getResource(resourceType).add(q * -1);
+            throw new ActionAbortedException(false);
+        }
+        try {
+            super.performAction(move, fm);
+        } catch (ActionAbortedException e){
+            fm.owner.getResource(resourceType).add(q * -1);
+            throw e;
+        }
+    }
+
+    /*@Override
     public void placeFamilyMember(FamilyMember familyMember, JsonNode json) {
         super.placeFamilyMember(familyMember, json);
         familyMember.owner.getResource(resourceType).add(q);
@@ -31,5 +48,5 @@ public class ResourceImmediateBonus extends AbstractDecorator {
         boolean b=  super.canPlace(familyMember);
         familyMember.owner.getResource(resourceType).add(q * -1);
         return b;
-    }
+    }*/
 }

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.pc42.Control.ActionSpace;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
 
 public class singleFamilyMemberDecorator extends AbstractDecorator {
@@ -7,12 +9,13 @@ public class singleFamilyMemberDecorator extends AbstractDecorator {
         super(actionSpace);
     }
 
-    @Override
-    public boolean canPlace(FamilyMember familyMember) {
 
-        if (familyMember.diceColor.visible && getNumberOfVisibleFamilyMembers()>=1){
-            return  false;
+    @Override
+    public void performAction(JsonNode move, FamilyMember fm) throws ActionAbortedException {
+        if (fm.diceColor.visible && getNumberOfVisibleFamilyMembers()>=1){
+            throw new ActionAbortedException(false);
         }
-        return super.canPlace(familyMember);
+        super.performAction(move, fm);
     }
+
 }

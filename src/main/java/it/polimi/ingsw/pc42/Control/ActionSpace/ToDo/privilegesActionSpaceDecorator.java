@@ -1,7 +1,9 @@
-package it.polimi.ingsw.pc42.Control.ActionSpace;
+package it.polimi.ingsw.pc42.Control.ActionSpace.ToDo;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import it.polimi.ingsw.pc42.Control.ActionSpace.AbstractDecorator;
+import it.polimi.ingsw.pc42.Control.ActionSpace.iActionSpace;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
 import it.polimi.ingsw.pc42.Control.PrivilegeManager;
 
@@ -26,9 +28,9 @@ public class privilegesActionSpaceDecorator extends AbstractDecorator {
         return (len==quantity);
     }
 
-    @Override
+    /*@Override
     public void placeFamilyMember(FamilyMember familyMember, JsonNode json) {
         PrivilegeManager.applyDifferentPrivileges(familyMember.owner, json.get("privileges"));
         super.placeFamilyMember(familyMember, json);
-    }
+    }*/
 }
