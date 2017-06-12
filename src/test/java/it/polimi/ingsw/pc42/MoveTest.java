@@ -89,7 +89,6 @@ public class MoveTest
         }
         assertEquals(false, exception);
         assertEquals(8, b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.SERVANT).get());
-
     }
 
 }

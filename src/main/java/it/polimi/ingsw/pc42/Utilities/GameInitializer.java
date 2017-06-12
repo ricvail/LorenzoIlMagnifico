@@ -40,6 +40,11 @@ public class GameInitializer {
         return readFile("src/res/developmentCards.json");
     }
 
+
+    private static JsonNode getDefaultPrivileges() {
+        return readFile("src/res/privileges.json").get("privileges");
+    }
+
     public static boolean isBasicPlayerListJsonValid(JsonNode playerList){
         if (!(playerList.has("players")&&playerList.get("players").isArray())){
             return false;
@@ -78,7 +83,7 @@ public class GameInitializer {
                     readFile("src/res/prova_playerInit.json"),
                     getDefaultActionSpacesJson(),
                     getDefaultCardsJson(),
-                    shuffle);
+                    shuffle, getDefaultPrivileges());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -154,7 +159,8 @@ public class GameInitializer {
      * @param actionSpaces
      * @return
      */
-    public static Board initGame(boolean advanced, JsonNode playerList, JsonNode actionSpaces, JsonNode cards, boolean shuffle) throws Exception {
+    public static Board initGame(boolean advanced, JsonNode playerList, JsonNode actionSpaces,
+                                 JsonNode cards, boolean shuffle, JsonNode privileges) throws Exception {
         BoardProvider boardProvider = new BoardProvider();
 
         ArrayList<Player> players = initBasicPlayers(playerList, shuffle); //TODO PersonalBonusTiles
@@ -164,7 +170,7 @@ public class GameInitializer {
 
         System.out.print(councilID);
 
-        Board b =new Board(players, cardList, actionSpaceList, shuffle);
+        Board b =new Board(players, cardList, actionSpaceList, shuffle, privileges);
         b.setCouncilID(councilID);
         boardProvider.setBoard(b);
 

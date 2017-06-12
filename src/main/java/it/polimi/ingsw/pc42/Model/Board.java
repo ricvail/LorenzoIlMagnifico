@@ -7,6 +7,7 @@ import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Control.ActionSpace.iActionSpace;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.iCard;
+import it.polimi.ingsw.pc42.Control.PrivilegeManager;
 import it.polimi.ingsw.pc42.Control.ResourceType;
 
 import java.util.ArrayList;
@@ -26,7 +27,11 @@ public class Board {
     private int councilID;
     private boolean councilHasBeenSet;
     private ArrayList<Dice> dices;
+    private PrivilegeManager privilegesManager;
 
+    public PrivilegeManager getPrivilegeManager(){
+        return privilegesManager;
+    }
 
     public void setCouncilID(int councilID) throws Exception {
         if (!councilHasBeenSet) {
@@ -53,11 +58,13 @@ public class Board {
      * @param players
      * @param cards
      */
-    public Board(ArrayList<Player> players,ArrayList<iCard> cards, ArrayList<iActionSpace> spaces,  boolean random){
+    public Board(ArrayList<Player> players,ArrayList<iCard> cards,
+                 ArrayList<iActionSpace> spaces, boolean random, JsonNode privileges){
         //Initialization
         actionSpaces= spaces;
         playerArrayList=players;
         this.cards=cards;
+        privilegesManager =new PrivilegeManager(privileges);
         if (random) {
             dices = new ArrayList<>();
             dices.add(new Dice(Dice.DiceColor.WHITE));
@@ -78,7 +85,7 @@ public class Board {
                     //cleanUp also rolls dices and causes tower action spaces to receive their first card
     }
 
-    private void rollDices(){
+        private void rollDices(){
         Iterator<Dice> iterator = dices.iterator();
         while (iterator.hasNext()){
             iterator.next().rollDice();
