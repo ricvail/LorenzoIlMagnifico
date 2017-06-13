@@ -18,11 +18,11 @@ public class ImmediateBonusChoice extends AbstractDecorator {
         choices.add(card);
     }
 
-
+/*
     @Override
     public void applyDrawEffect(Player player, JsonNode json) {
         choices.get(json.get("paymentChoice").asInt()).applyDrawEffect(player, json);
 
-    }
+    }*/
 
 }

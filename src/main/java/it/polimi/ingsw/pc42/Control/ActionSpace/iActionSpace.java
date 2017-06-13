@@ -9,8 +9,7 @@ import java.util.ArrayList;
 
 public interface iActionSpace {
 
-    //boolean canPlace(FamilyMember familyMember);
-    //void placeFamilyMember(FamilyMember familyMember, JsonNode json);
+    void undoAction (JsonNode move, FamilyMember fm);
     void performAction(JsonNode move, FamilyMember fm) throws ActionAbortedException;
     void cleanup();
     ArrayList<FamilyMember> getFamilyMembers();

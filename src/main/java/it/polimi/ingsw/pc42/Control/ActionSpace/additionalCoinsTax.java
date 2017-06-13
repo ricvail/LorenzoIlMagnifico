@@ -36,6 +36,14 @@ public class additionalCoinsTax extends AbstractDecorator {
         }
     }
 
+    @Override
+    public void undoAction(JsonNode move, FamilyMember fm) {
+        if (doesTaxApply()){
+            fm.owner.getResource(ResourceType.COIN).add(coins);
+        }
+        super.undoAction(move, fm);
+    }
+
     /*    @Override
     public void placeFamilyMember(FamilyMember familyMember, JsonNode json) {
         if (doesTaxApply()){

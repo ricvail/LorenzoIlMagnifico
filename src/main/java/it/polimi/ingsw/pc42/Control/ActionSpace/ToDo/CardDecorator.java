@@ -11,6 +11,7 @@ import it.polimi.ingsw.pc42.Model.FamilyMember;
  */
 public class CardDecorator extends AbstractDecorator {
 
+
     Card.CardType type;
 
     private iCard card;

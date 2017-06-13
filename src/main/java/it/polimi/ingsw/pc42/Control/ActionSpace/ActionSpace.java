@@ -30,11 +30,14 @@ public class ActionSpace implements iActionSpace {
         if (fm.getValue()<actionValue){
             throw new ActionAbortedException(false);
         }
-        if (move.has("checking")&&move.get("checking").asBoolean()){
-            throw new ActionAbortedException(true);
-        }
         fm.setUsed(true);
         this.familyMembers.add(fm);
+    }
+
+    @Override
+    public void undoAction(JsonNode move, FamilyMember fm) {
+        fm.setUsed(false);
+        this.familyMembers.remove(fm);
     }
 
     /*

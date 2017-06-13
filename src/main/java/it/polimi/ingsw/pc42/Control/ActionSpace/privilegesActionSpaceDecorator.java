@@ -34,4 +34,15 @@ public class privilegesActionSpaceDecorator extends AbstractDecorator {
             throw e;
         }
     }
+
+    @Override
+    public void undoAction(JsonNode move, FamilyMember fm) {
+        try {
+            getBoard().getPrivilegeManager().undoPrivileges(fm.owner, move);
+        } catch (Exception e1) {
+            //this should NOT happen.
+            e1.printStackTrace();
+        }
+        super.undoAction(move, fm);
+    }
 }

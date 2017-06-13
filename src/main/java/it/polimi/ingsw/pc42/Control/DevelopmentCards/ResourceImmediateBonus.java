@@ -13,7 +13,7 @@ public class ResourceImmediateBonus extends AbstractDecorator {
         q= quantity;
         resourceType=rt;
     }
-
+/*
     @Override
     public void applyDrawEffect(Player player, JsonNode json) {
         player.getResource(resourceType).add(q);
@@ -32,6 +32,6 @@ public class ResourceImmediateBonus extends AbstractDecorator {
         boolean b=super.drawRequirementCheck(player);
         player.getResource(resourceType).add(q*-1);
         return b;
-    }
+    }*/
 
 }

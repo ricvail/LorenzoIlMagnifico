@@ -12,6 +12,11 @@ public abstract class AbstractDecorator implements iActionSpace {
     private iActionSpace actionSpace;
 
     @Override
+    public void undoAction(JsonNode move, FamilyMember fm) {
+        actionSpace.undoAction(move, fm);
+    }
+
+    @Override
     public int getMinimumActionValue(FamilyMember fm) {
         return actionSpace.getMinimumActionValue(fm);
     }

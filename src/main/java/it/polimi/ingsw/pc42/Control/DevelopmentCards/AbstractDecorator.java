@@ -1,7 +1,9 @@
 package it.polimi.ingsw.pc42.Control.DevelopmentCards;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Model.Board;
+import it.polimi.ingsw.pc42.Model.FamilyMember;
 import it.polimi.ingsw.pc42.Model.Player;
 
 public abstract class AbstractDecorator implements iCard{
@@ -12,8 +14,9 @@ public abstract class AbstractDecorator implements iCard{
         card=c;
     }
 
-    public boolean drawRequirementCheck(Player player) {
-        return card.drawRequirementCheck(player);
+    @Override
+    public void drawCard(JsonNode move, FamilyMember fm) throws ActionAbortedException {
+        card.drawCard(move, fm);
     }
 
     @Override
@@ -26,23 +29,22 @@ public abstract class AbstractDecorator implements iCard{
     public Board getBoard() {
         return card.getBoard();
     }
-
-    public void applyDrawEffect(Player player, JsonNode json) {
-        card.applyDrawEffect(player, json);
-    }
-
+    @Override
     public void applyEndgameEffect(Player player) {
         card.applyEndgameEffect(player);
     }
 
+    @Override
     public int getEra() {
         return card.getEra();
     }
 
+    @Override
     public String getName() {
         return card.getName();
     }
 
+    @Override
     public Card.CardType getCardType() {
         return card.getCardType();
     }

@@ -39,6 +39,14 @@ public class ActionValuePenaltyForSecondPlayer extends AbstractDecorator {
     }
 
     @Override
+    public void undoAction(JsonNode move, FamilyMember fm) {
+        if (doesPenaltyApply(fm)){
+            fm.setValue(fm.getValue()+penalty);
+        }
+        super.undoAction(move, fm);
+    }
+
+    @Override
     public int getMinimumActionValue(FamilyMember fm) {
         if (doesPenaltyApply(fm)){
             return super.getMinimumActionValue(fm)+penalty;

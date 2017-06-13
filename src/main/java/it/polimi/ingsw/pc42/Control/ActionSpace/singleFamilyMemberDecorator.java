@@ -9,7 +9,6 @@ public class singleFamilyMemberDecorator extends AbstractDecorator {
         super(actionSpace);
     }
 
-
     @Override
     public void performAction(JsonNode move, FamilyMember fm) throws ActionAbortedException {
         if (fm.diceColor.visible && getNumberOfVisibleFamilyMembers()>=1){

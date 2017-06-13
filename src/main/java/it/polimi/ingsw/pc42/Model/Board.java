@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import it.polimi.ingsw.pc42.Control.ActionAbortedException;
+import it.polimi.ingsw.pc42.Control.ActionSpace.MoveManager;
 import it.polimi.ingsw.pc42.Control.ActionSpace.iActionSpace;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.iCard;
@@ -31,6 +32,12 @@ public class Board {
 
     public PrivilegeManager getPrivilegeManager(){
         return privilegesManager;
+    }
+
+
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
     }
 
     public void setCouncilID(int councilID) throws Exception {
@@ -107,114 +114,7 @@ public class Board {
     }
 
     public void makeMove(JsonNode move) throws Exception {
-        makeMove(currentPlayer, move);
-        endPlayerTurn();
-    }
-
-    private void getFamilyMemberFromJson(JsonNode move, Player p) throws ActionAbortedException {
-        if (!move.has("familyMember")){
-            throw new ActionAbortedException("familyMember", p.getUnusedFamilyMembersList());
-        }
-        FamilyMember fm;
-        try {
-            fm  = p.getFamilyMemberFromColor(move.get("familyMember").asText());
-        } catch (Exception e) {
-            throw new ActionAbortedException(false);
-        }
-        if (fm.isUsed()){
-            throw new ActionAbortedException(false);
-        }else {
-            getActionSpaceFromJson(move, fm);
-        }
-    }
-
-    private void getActionSpaceFromJson(JsonNode move, FamilyMember fm) throws ActionAbortedException {
-        if (!move.has("slotID")){
-            //TODO generate list of possible action spaces
-            //throw new ActionAbortedException("slotID", b.getPossibleSlotList(fm));
-            throw new ActionAbortedException(false);//temp
-        }
-        iActionSpace space;
-        try {
-            space = getActionSpaceByID(move.get("slotID").asInt());
-        } catch (Exception e) {
-            throw new ActionAbortedException(false);
-        }
-        if (fm.canBePlacedInArea(space.getArea())&&
-                getNumberOfPlayers()>=space.getMinimumNumberOfPlayers()){
-            applyPlayerPermanentBonus(move, fm, space);
-        } else {
-            throw new ActionAbortedException(false);
-        }
-    }
-
-    private void applyPlayerPermanentBonus(JsonNode move, FamilyMember fm, iActionSpace space) throws ActionAbortedException {
-        /**
-         * skipped for the moment
-         *      card must have an "apply Permanent bonus" method (params familyMember and ActionSpace)
-         *          change value of FamilyMember
-         *          Enable resourceWrapper bonus
-         *      Also an undo permanent bonus (for the catch segment)
-         */
-        applyServants(move, fm, space);
-    }
-
-    private void applyServants(JsonNode move, FamilyMember fm, iActionSpace space) throws ActionAbortedException {
-        if (!move.has("servants")){
-            JsonNodeFactory factory=JsonNodeFactory.instance;
-            ArrayNode list=factory.arrayNode();
-            list.add( getRequiredServants(move, fm, space));
-            throw new ActionAbortedException("servants",list);
-        }
-        if (move.get("servants").isInt()){
-            int servants = move.get("servants").asInt();
-            if (fm.owner.getResource(ResourceType.SERVANT).get()>=servants){
-                fm.owner.getResource(ResourceType.SERVANT).add(servants*-1);
-                fm.setValue(fm.getValue()+servants);
-                try {
-                    checkActionValue(move, fm, space);
-                } catch (ActionAbortedException e){
-                    fm.owner.getResource(ResourceType.SERVANT).add(servants);
-                    fm.setValue(fm.getValue()-servants);
-                    throw e;
-                }
-            } else{
-                throw new ActionAbortedException(false);
-            }
-        } else{
-            throw new ActionAbortedException(false);
-        }
-    }
-
-    private void checkActionValue(JsonNode move, FamilyMember fm, iActionSpace space) throws ActionAbortedException {
-        int required = space.getMinimumActionValue(fm);
-        if (fm.getValue()>=required){
-            space.performAction(move, fm);
-        } else {
-            throw new ActionAbortedException(false);
-        }
-    }
-
-    private int getRequiredServants(JsonNode move, FamilyMember fm, iActionSpace space){
-        int required = space.getMinimumActionValue(fm);
-        if (fm.getValue()>=required) return 0;
-        else return (required-fm.getValue());
-    }
-
-
-
-    public void makeMove(Player p, JsonNode move) throws Exception {
-        if (!isPlayerTurn(p)){
-            throw new Exception("it's not this player's turn");
-        }
-
-        getFamilyMemberFromJson(move, p);
-        /*
-        if (space.canPlace(fm)){
-            space.placeFamilyMember(fm, move);
-        }else {
-            throw new Exception("Illegal move of player "+p.getColor().name());
-        }*/
+        MoveManager.makeMove(this, move);
     }
 
 
@@ -395,18 +295,6 @@ public class Board {
         }
         playerArrayList.get(0).getResource(ResourceType.VICTORYPOINTS).add(5);
         playerArrayList.get(1).getResource(ResourceType.VICTORYPOINTS).add(2);
-        /*
-        Iterate i giocatori
-        aggiungete punti vittoria in base a
-            numero di carte blu possedute
-            numero di territori posseduti
-            punti fede
-            risorse divise per 5
-        poi cercate il giocatore con più punti militari e dategli 5 punti vittoria
-        e il secondo giocatore con più punti militari e dategli 2 punti vittoria
-
-        le carte viola le gestiamo più avanti, per ora lasciatele perdere
-        */
     }
 
 }
