@@ -37,7 +37,8 @@ public class oneFamilyMemberPerPlayer extends AbstractDecorator{
                     FamilyMember fm = fmIterator.next();
                     if (fm.owner==familyMember.owner &&
                             fm.diceColor.visible&&
-                            fm.diceColor!= Dice.DiceColor.NEUTRAL){
+                            fm.diceColor!= Dice.DiceColor.NEUTRAL&&
+                            fm.diceColor!=familyMember.diceColor){
                         return false;
                     }
                 }

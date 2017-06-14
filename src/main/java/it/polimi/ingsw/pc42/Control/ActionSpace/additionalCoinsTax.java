@@ -18,7 +18,7 @@ public class additionalCoinsTax extends AbstractDecorator {
 
     @Override
     public void performAction(JsonNode move, FamilyMember fm) throws ActionAbortedException {
-        if (doesTaxApply()) {
+        if (doesTaxApply(fm)) {
             try {
                 fm.owner.getResource(ResourceType.COIN).add(coins * -1);
             } catch (IllegalArgumentException e) {
@@ -29,7 +29,7 @@ public class additionalCoinsTax extends AbstractDecorator {
         try {
             super.performAction(move, fm);
         }catch (ActionAbortedException e){
-            if (doesTaxApply()){
+            if (doesTaxApply(fm)){
                 fm.owner.getResource(ResourceType.COIN).add(coins);
             }
             throw e;
@@ -38,7 +38,7 @@ public class additionalCoinsTax extends AbstractDecorator {
 
     @Override
     public void undoAction(JsonNode move, FamilyMember fm) {
-        if (doesTaxApply()){
+        if (doesTaxApply(fm)){
             fm.owner.getResource(ResourceType.COIN).add(coins);
         }
         super.undoAction(move, fm);
@@ -71,7 +71,7 @@ public class additionalCoinsTax extends AbstractDecorator {
         }
     }*/
 
-    public boolean doesTaxApply(){
-        return !ActionSpace.isFirstInArea(getBoard(), this.getArea());
+    public boolean doesTaxApply(FamilyMember fm){
+        return !ActionSpace.isFirstInArea(getBoard(), this.getArea(), fm);
     }
 }

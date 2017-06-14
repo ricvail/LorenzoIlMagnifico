@@ -20,6 +20,11 @@ public abstract class AbstractDecorator implements iCard{
     }
 
     @Override
+    public void undoDrawCard(JsonNode move, FamilyMember fm) {
+        card.undoDrawCard(move, fm);
+    }
+
+    @Override
     public JsonNode getJSONDescriptionOfCards() {
         JsonNode json = card.getJSONDescriptionOfCards();
         return json;

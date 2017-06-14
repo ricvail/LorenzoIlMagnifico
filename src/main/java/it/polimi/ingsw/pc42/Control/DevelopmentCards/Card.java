@@ -44,10 +44,16 @@ public class Card implements iCard{
 
 
     @Override
+    public void undoDrawCard(JsonNode move, FamilyMember fm) {
+
+    }
+
+    @Override
     public void drawCard(JsonNode move, FamilyMember fm) throws ActionAbortedException {
 
     }
 
+    @Override
     public void applyEndgameEffect(Player player) {
     }
 

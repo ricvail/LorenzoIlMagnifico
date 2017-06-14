@@ -1,9 +1,10 @@
-package it.polimi.ingsw.pc42.Control.ActionSpace;
+package it.polimi.ingsw.pc42.Control;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import it.polimi.ingsw.pc42.Control.ActionAbortedException;
+import it.polimi.ingsw.pc42.Control.ActionSpace.iActionSpace;
 import it.polimi.ingsw.pc42.Control.ResourceType;
 import it.polimi.ingsw.pc42.Model.Board;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
@@ -34,6 +35,7 @@ public class MoveManager {
         getFamilyMemberFromJson(b, move, p);
         if (move.has("checking")&&move.get("checking").asBoolean()){
             undoMove (b, b.getCurrentPlayer(), move);
+            throw new ActionAbortedException(true);
         }
     }
 
@@ -143,17 +145,36 @@ public class MoveManager {
     }
 
     private static void undoCheckActionValue(JsonNode move, FamilyMember fm, iActionSpace space) throws ActionAbortedException {
-        space.undoAction(move, fm);
+        undoAction(move, fm, space);
     }
 
     private static void checkActionValue(JsonNode move, FamilyMember fm, iActionSpace space) throws ActionAbortedException {
         int required = space.getMinimumActionValue(fm);
         if (fm.getValue()>=required){
-            space.performAction(move, fm);
+            performAction(move, fm, space);
         } else {
             throw new ActionAbortedException(false);
         }
     }
+
+    private static void undoAction(JsonNode move, FamilyMember fm, iActionSpace space) throws ActionAbortedException {
+        fm.setUsed(false);
+        space.getFamilyMembers().remove(fm);
+        space.undoAction(move, fm);
+    }
+
+    private static void performAction(JsonNode move, FamilyMember fm, iActionSpace space) throws ActionAbortedException {
+        fm.setUsed(true);
+        space.getFamilyMembers().add(fm);
+        try {
+            space.performAction(move, fm);
+        } catch (ActionAbortedException e){
+            fm.setUsed(false);
+            space.getFamilyMembers().remove(fm);
+            throw e;
+        }
+    }
+
 
     private static int getRequiredServants(JsonNode move, FamilyMember fm, iActionSpace space){
         int required = space.getMinimumActionValue(fm);

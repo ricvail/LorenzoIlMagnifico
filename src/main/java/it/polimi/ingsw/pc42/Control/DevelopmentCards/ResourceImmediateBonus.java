@@ -1,6 +1,8 @@
 package it.polimi.ingsw.pc42.Control.DevelopmentCards;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import it.polimi.ingsw.pc42.Control.ActionAbortedException;
+import it.polimi.ingsw.pc42.Model.FamilyMember;
 import it.polimi.ingsw.pc42.Model.Player;
 import it.polimi.ingsw.pc42.Control.ResourceType;
 
@@ -13,25 +15,28 @@ public class ResourceImmediateBonus extends AbstractDecorator {
         q= quantity;
         resourceType=rt;
     }
-/*
+
     @Override
-    public void applyDrawEffect(Player player, JsonNode json) {
-        player.getResource(resourceType).add(q);
-        super.applyDrawEffect(player, json);
+    public void drawCard(JsonNode move, FamilyMember fm) throws ActionAbortedException {
+        try{
+            fm.owner.getResource(resourceType).add(q);
+        }
+        catch (IllegalArgumentException e){
+            fm.owner.getResource(resourceType).add(q*-1);
+            throw new ActionAbortedException(false);
+        }
+        try {
+            super.drawCard(move, fm);
+        } catch (ActionAbortedException e){
+            fm.owner.getResource(resourceType).add(q*-1);
+            throw e;
+        }
     }
 
     @Override
-    public boolean drawRequirementCheck (Player player){
-        try{
-            player.getResource(resourceType).add(q);
-        }
-        catch (IllegalArgumentException e){
-            player.getResource(resourceType).add(q*-1);
-            return false;
-        }
-        boolean b=super.drawRequirementCheck(player);
-        player.getResource(resourceType).add(q*-1);
-        return b;
-    }*/
+    public void undoDrawCard(JsonNode move, FamilyMember fm) {
+        fm.owner.getResource(resourceType).add(q*-1);
+        super.undoDrawCard(move, fm);
+    }
 
 }

@@ -30,14 +30,10 @@ public class ActionSpace implements iActionSpace {
         if (fm.getValue()<actionValue){
             throw new ActionAbortedException(false);
         }
-        fm.setUsed(true);
-        this.familyMembers.add(fm);
     }
 
     @Override
     public void undoAction(JsonNode move, FamilyMember fm) {
-        fm.setUsed(false);
-        this.familyMembers.remove(fm);
     }
 
     /*
@@ -85,12 +81,13 @@ public class ActionSpace implements iActionSpace {
     }
 
     @Override
-    public int getNumberOfVisibleFamilyMembers() {
+    public int getNumberOfVisibleFamilyMembers(FamilyMember fmToAdd) {
         int i=0;
         Iterator<FamilyMember> iterator = familyMembers.iterator();
         while (iterator.hasNext()){
             FamilyMember fm = iterator.next();
-            if (fm.diceColor.visible) {
+            if (fm.diceColor.visible&&
+                    (fm.getDiceColor()!=fmToAdd.getDiceColor()||fm.owner.getColor()!=fmToAdd.owner.getColor())) {
                 i++;
             }
 
@@ -114,7 +111,7 @@ public class ActionSpace implements iActionSpace {
         return 0;
     }
 
-    public static boolean isFirstInArea(Board board, Area area){
+    public static boolean isFirstInArea(Board board, Area area, FamilyMember fmToAdd){
         Iterator<iActionSpace> iterator = board.getActionSpaces().iterator();
         while (iterator.hasNext()){
             iActionSpace actionSpace = iterator.next();
@@ -122,7 +119,8 @@ public class ActionSpace implements iActionSpace {
                 Iterator<FamilyMember> fmIterator= actionSpace.getFamilyMembers().iterator();
                 while (fmIterator.hasNext()){
                     FamilyMember fm = fmIterator.next();
-                    if (fm.diceColor.visible){
+                    if (fm.diceColor.visible&&
+                            (fm.getDiceColor()!=fmToAdd.getDiceColor()||fm.owner.getColor()!=fmToAdd.owner.getColor())){
                         return false;
                     }
                 }

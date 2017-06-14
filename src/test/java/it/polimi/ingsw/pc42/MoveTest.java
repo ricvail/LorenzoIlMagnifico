@@ -95,7 +95,7 @@ public class MoveTest
         assertEquals(8, b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.SERVANT).get());
 
         //--------
-        exception=false;
+       exception=false;
         try{
             b.makeMove(mosse.get(5)); // gioca il rosso sul mercato
         } catch (Exception e){
@@ -172,7 +172,7 @@ public class MoveTest
             e.printStackTrace();
         }
         assertEquals(1, b.getEra());
-        assertEquals(2, b.getRound());
+        assertEquals(1, b.getRound());
         assertEquals("blue", b.getPlayerArrayList().get(0).getColor().getPlayerColorString());
         assertEquals("red", b.getPlayerArrayList().get(1).getColor().getPlayerColorString());
     }

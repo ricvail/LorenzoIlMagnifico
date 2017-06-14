@@ -1,10 +1,7 @@
 package it.polimi.ingsw.pc42.Model;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import it.polimi.ingsw.pc42.Control.ActionAbortedException;
-import it.polimi.ingsw.pc42.Control.ActionSpace.MoveManager;
+import it.polimi.ingsw.pc42.Control.MoveManager;
 import it.polimi.ingsw.pc42.Control.ActionSpace.iActionSpace;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.iCard;
@@ -21,7 +18,7 @@ public class Board {
     private int era;
     private int round;
     private Player currentPlayer;
-    //private int currentTurn;
+//private int currentTurn;
     private ArrayList<Player> playerArrayList;
     private ArrayList<iActionSpace> actionSpaces;
     private ArrayList<iCard> cards;

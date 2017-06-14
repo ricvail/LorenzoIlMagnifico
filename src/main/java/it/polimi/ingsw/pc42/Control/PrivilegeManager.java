@@ -66,8 +66,8 @@ public class PrivilegeManager {
 
     private void applyDifferentPrivileges(Player p, JsonNode j) throws Exception {
         int i = 0;
-        while (j.has(i)){
-            applyPrivilege(p, j.get(i).asInt(), getPrivileges());
+        while (j.get("privileges").has(i)){
+            applyPrivilege(p, j.get("privileges").get(i).asInt(), getPrivileges());
             i++;
         }
     }

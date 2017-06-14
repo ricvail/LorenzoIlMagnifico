@@ -197,7 +197,6 @@
     },
     {
       "area": "MARKET",
-      "oneFamilyMemberPerPlayer": true,
       "actionSpaces": [
         {
           "id": 20,

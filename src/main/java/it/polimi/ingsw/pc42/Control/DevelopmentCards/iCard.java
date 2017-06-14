@@ -13,6 +13,8 @@ public interface iCard {
 
     //void applyDrawEffect(Player player, JsonNode json);
 
+    void undoDrawCard(JsonNode move, FamilyMember fm);
+
     void drawCard (JsonNode move, FamilyMember fm) throws ActionAbortedException;
 
     void applyEndgameEffect(Player player);

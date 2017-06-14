@@ -5,16 +5,16 @@
       "wood": 1
     },
     {
-      "servant": 2
+      "servants": 2
     },
     {
-      "coin":2
+      "coins":2
     },
     {
-      "military":2
+      "militaryPoints":2
     },
     {
-      "faith":1
+      "faithPoints":1
     }
   ]
 }

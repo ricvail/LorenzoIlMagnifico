@@ -53,8 +53,8 @@ public abstract class AbstractDecorator implements iActionSpace {
     }
 
     @Override
-    public int getNumberOfVisibleFamilyMembers() {
-        return actionSpace.getNumberOfVisibleFamilyMembers();
+    public int getNumberOfVisibleFamilyMembers(FamilyMember fm) {
+        return actionSpace.getNumberOfVisibleFamilyMembers(fm);
     }
 
     @Override
