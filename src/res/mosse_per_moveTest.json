@@ -24,13 +24,15 @@
       "DESCRIZIONE": "turno giocatore rosso, va a piazzarsi nel consiglio con l'arancione",
       "familyMember": "orange",
       "servants": 0,
-      "slotID": 17
+      "slotID": 17,
+      "privileges": [1]
     },
     {
       "DESCRIZIONE": "va a piazzarsi nel consiglio con il bianco",
       "familyMember": "white",
       "servants": 0,
-      "slotID": 17
+      "slotID": 17,
+      "privileges": [2]
     },
     {
       "DESCRIZIONE": "va a piazzarsi nel mercato con il bianco",

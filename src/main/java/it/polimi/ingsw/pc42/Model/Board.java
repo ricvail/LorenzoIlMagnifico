@@ -297,4 +297,7 @@ public class Board {
         playerArrayList.get(1).getResource(ResourceType.VICTORYPOINTS).add(2);
     }
 
+    public ArrayList<Player> getPlayerArrayList() {
+        return playerArrayList;
+    }
 }
