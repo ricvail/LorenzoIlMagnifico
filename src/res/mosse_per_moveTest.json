@@ -32,13 +32,27 @@
       "familyMember": "white",
       "servants": 0,
       "slotID": 17,
-      "privileges": [2]
+      "privileges": [4]
     },
     {
       "DESCRIZIONE": "va a piazzarsi nel mercato con il bianco",
       "familyMember": "white",
       "servants": 0,
       "slotID": 22
+    },
+    {
+      "DESCRIZIONE": "nell'ultimo slot del mercato dove deve scegliere due pergamente",
+      "familyMember": "black",
+      "servants": 0,
+      "slotID": 23,
+      "privileges": [0,3]
+    },
+    {
+      "DESCRIZIONE": "lo rimete nel consiglio perchè non posso metterlo altrove :D",
+      "familyMember" : "neutral",
+      "servants" : 1,
+      "slotID" : 17,
+      "privileges" : [4]
     }
   ]
 }

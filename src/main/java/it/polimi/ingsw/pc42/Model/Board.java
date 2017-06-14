@@ -300,4 +300,8 @@ public class Board {
     public ArrayList<Player> getPlayerArrayList() {
         return playerArrayList;
     }
+
+    public int getRound() {
+        return round;
+    }
 }

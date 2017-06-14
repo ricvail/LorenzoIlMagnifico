@@ -86,7 +86,7 @@ public class MoveTest
         //fine seconda mossa-------------------------------------------------------------------------------------------
         exception=false;
         try{
-            b.makeMove(mosse.get(2));
+            b.makeMove(mosse.get(2)); //gioca di nuovo il blu e prende 5 servi
         } catch (Exception e){
             exception=true;
             e.printStackTrace();
@@ -97,18 +97,31 @@ public class MoveTest
         //--------
         exception=false;
         try{
-            b.makeMove(mosse.get(3));
-
+            b.makeMove(mosse.get(5)); // gioca il rosso sul mercato
         } catch (Exception e){
             exception=true;
             e.printStackTrace();
         }
         assertEquals(false, exception);
-        assertEquals(11,b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).get());
+        assertEquals(3, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.MILITARYPOINTS).get());
+        assertEquals(12, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).get());
+        //------------
+        exception=false;
+        try{
+            b.makeMove(mosse.get(3)); //gioca il blu sul consiglio e prende due servi
+        } catch (Exception e){
+            exception=true;
+            e.printStackTrace();
+        }
+        assertEquals(false, exception);
+        assertEquals(7,b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.COIN).get());
+        assertEquals(10, b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.SERVANT).get());
+
+        //qui dovrebbero essere 10 i servant
         //-----------
         exception=false;
         try{
-            b.makeMove(mosse.get(3));
+            b.makeMove(mosse.get(3));//gioca il rosso e mette sul secondo consiglio
         } catch (Exception e){
             exception=true;
             e.printStackTrace();
@@ -116,37 +129,52 @@ public class MoveTest
         assertEquals(false, exception);
         assertEquals("blue", b.getPlayerArrayList().get(1).getColor().getPlayerColorString());
         //---------------
+
         exception=false;
         try{
-            b.makeMove(mosse.get(3));
+            b.makeMove(mosse.get(4));// rigioca il blu sul consiglio
         } catch (Exception e){
             exception=true;
             e.printStackTrace();
+        }
+        assertEquals(false, exception);
+        assertEquals(1, b.getEra());
+        assertEquals(1, b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.FAITHPOINTS).get());
+
+        //-----------------------
+
+        try{
+            b.makeMove(mosse.get(6));  //gioca il rosso sull'ultimo consiglio
+        } catch (Exception e){
+            exception=true;
+            e.printStackTrace();
+        }
+        assertEquals(3, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.WOOD).get());
+        assertEquals(3, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.STONE).get());
+        assertEquals(5, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.MILITARYPOINTS).get());
+
+        //------------------------
+
+        try {
+            b.makeMove(mosse.get(0));
+        } catch (Exception e){
+            exception=true;
         }
         assertEquals(true, exception);
-        assertEquals("red", b.getPlayerArrayList().get(0).getColor().getPlayerColorString());
-        //------------
+
+        //-----------------------
+
         exception=false;
-        try{
-            b.makeMove(mosse.get(5));
+        try {
+            b.makeMove(mosse.get(7));
         } catch (Exception e){
             exception=true;
             e.printStackTrace();
         }
-        assertEquals(false, exception);
-        assertEquals(3, b.getCurrentPlayer().getResource(ResourceType.MILITARYPOINTS).get());
-        assertEquals(13, b.getCurrentPlayer().getResource(ResourceType.COIN).get());
-        //------------
-        exception=false;
-        try{
-            b.makeMove(mosse.get(4));
-        } catch (Exception e){
-            exception=true;
-            e.printStackTrace();
-        }
-        assertEquals(false, exception);
-       assertEquals("blue", b.getPlayerArrayList().get(0).getColor().getPlayerColorString());
-       assertEquals("red", b.getPlayerArrayList().get(1).getColor().getPlayerColorString());
+        assertEquals(1, b.getEra());
+        assertEquals(2, b.getRound());
+        assertEquals("blue", b.getPlayerArrayList().get(0).getColor().getPlayerColorString());
+        assertEquals("red", b.getPlayerArrayList().get(1).getColor().getPlayerColorString());
     }
 
 }
