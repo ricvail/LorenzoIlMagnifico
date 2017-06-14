@@ -1,6 +1,7 @@
 package it.polimi.ingsw.pc42;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import it.polimi.ingsw.pc42.Control.DevelopmentCards.iCard;
 import it.polimi.ingsw.pc42.Control.ResourceType;
 import it.polimi.ingsw.pc42.Model.Board;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
@@ -9,6 +10,9 @@ import it.polimi.ingsw.pc42.Utilities.GameInitializer;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Unit test for simple App.
@@ -89,6 +93,60 @@ public class MoveTest
         }
         assertEquals(false, exception);
         assertEquals(8, b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.SERVANT).get());
+
+        //--------
+        exception=false;
+        try{
+            b.makeMove(mosse.get(3));
+
+        } catch (Exception e){
+            exception=true;
+            e.printStackTrace();
+        }
+        assertEquals(false, exception);
+        assertEquals(11,b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).get());
+        //-----------
+        exception=false;
+        try{
+            b.makeMove(mosse.get(3));
+        } catch (Exception e){
+            exception=true;
+            e.printStackTrace();
+        }
+        assertEquals(false, exception);
+        assertEquals("blue", b.getPlayerArrayList().get(1).getColor().getPlayerColorString());
+        //---------------
+        exception=false;
+        try{
+            b.makeMove(mosse.get(3));
+        } catch (Exception e){
+            exception=true;
+            e.printStackTrace();
+        }
+        assertEquals(true, exception);
+        assertEquals("red", b.getPlayerArrayList().get(0).getColor().getPlayerColorString());
+        //------------
+        exception=false;
+        try{
+            b.makeMove(mosse.get(5));
+        } catch (Exception e){
+            exception=true;
+            e.printStackTrace();
+        }
+        assertEquals(false, exception);
+        assertEquals(3, b.getCurrentPlayer().getResource(ResourceType.MILITARYPOINTS).get());
+        assertEquals(13, b.getCurrentPlayer().getResource(ResourceType.COIN).get());
+        //------------
+        exception=false;
+        try{
+            b.makeMove(mosse.get(4));
+        } catch (Exception e){
+            exception=true;
+            e.printStackTrace();
+        }
+        assertEquals(false, exception);
+       assertEquals("blue", b.getPlayerArrayList().get(0).getColor().getPlayerColorString());
+       assertEquals("red", b.getPlayerArrayList().get(1).getColor().getPlayerColorString());
     }
 
 }
