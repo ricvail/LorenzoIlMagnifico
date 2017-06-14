@@ -15,16 +15,38 @@ import it.polimi.ingsw.pc42.Model.Player;
 public class MoveManager {
     public static void makeMove (Board b, JsonNode move) throws Exception {
         makeMove (b, b.getCurrentPlayer(), move);
-        b.endPlayerTurn();
+        if (move.has("checking")&&move.get("checking").asBoolean()){
+            //nothing
+        } else {
+            b.endPlayerTurn();
+        }
+    }
+
+
+    public static void undoMove(Board b, Player p, JsonNode move) throws Exception {
+        undoGetFamilyMemberFromJson(b, move, p);
     }
 
     public static void makeMove(Board b, Player p, JsonNode move) throws Exception {
         if (!b.isPlayerTurn(p)){
             throw new Exception("it's not this player's turn");
         }
-
         getFamilyMemberFromJson(b, move, p);
+        if (move.has("checking")&&move.get("checking").asBoolean()){
+            undoMove (b, b.getCurrentPlayer(), move);
+        }
     }
+
+    private static void undoGetFamilyMemberFromJson(Board b, JsonNode move, Player p) throws ActionAbortedException {
+        FamilyMember fm=null;
+        try {
+            fm  = p.getFamilyMemberFromColor(move.get("familyMember").asText());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        undoGetActionSpaceFromJson(b, move, fm);
+    }
+
     private static void getFamilyMemberFromJson(Board b, JsonNode move, Player p) throws ActionAbortedException {
         if (!move.has("familyMember")){
             throw new ActionAbortedException("familyMember", p.getUnusedFamilyMembersList());
@@ -43,6 +65,15 @@ public class MoveManager {
     }
 
 
+    private static void undoGetActionSpaceFromJson(Board b, JsonNode move, FamilyMember fm) throws ActionAbortedException {
+        iActionSpace space=null;
+        try {
+            space = b.getActionSpaceByID(move.get("slotID").asInt());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        undoApplyPlayerPermanentBonus(move, fm, space);
+    }
     private static void getActionSpaceFromJson(Board b, JsonNode move, FamilyMember fm) throws ActionAbortedException {
         if (!move.has("slotID")){
             //TODO generate list of possible action spaces
@@ -63,6 +94,9 @@ public class MoveManager {
         }
     }
 
+    private static void undoApplyPlayerPermanentBonus(JsonNode move, FamilyMember fm, iActionSpace space) throws ActionAbortedException {
+        undoApplyServants(move, fm, space);
+    }
     private static void applyPlayerPermanentBonus(JsonNode move, FamilyMember fm, iActionSpace space) throws ActionAbortedException {
         /**
          * skipped for the moment
@@ -72,6 +106,13 @@ public class MoveManager {
          *      Also an undo permanent bonus (for the catch segment)
          */
         applyServants(move, fm, space);
+    }
+
+    private static void undoApplyServants(JsonNode move, FamilyMember fm, iActionSpace space) throws ActionAbortedException {
+        int servants = move.get("servants").asInt();
+        fm.owner.getResource(ResourceType.SERVANT).add(servants);
+        fm.setValue(fm.getValue()-servants);
+        undoCheckActionValue(move, fm, space);
     }
 
     private static void applyServants(JsonNode move, FamilyMember fm, iActionSpace space) throws ActionAbortedException {
@@ -99,6 +140,10 @@ public class MoveManager {
         } else{
             throw new ActionAbortedException(false);
         }
+    }
+
+    private static void undoCheckActionValue(JsonNode move, FamilyMember fm, iActionSpace space) throws ActionAbortedException {
+        space.undoAction(move, fm);
     }
 
     private static void checkActionValue(JsonNode move, FamilyMember fm, iActionSpace space) throws ActionAbortedException {
