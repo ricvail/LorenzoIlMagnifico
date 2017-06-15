@@ -1,7 +1,7 @@
 package it.polimi.ingsw.pc42.Utilities;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import it.polimi.ingsw.pc42.Control.ActionSpace.ToDo.CardDecorator;
+import it.polimi.ingsw.pc42.Control.ActionSpace.CardDecorator;
 import it.polimi.ingsw.pc42.Control.ActionSpace.privilegesActionSpaceDecorator;
 import it.polimi.ingsw.pc42.Control.ActionSpace.*;
 import it.polimi.ingsw.pc42.Control.ActionSpace.ToDo.ActionDecorator;

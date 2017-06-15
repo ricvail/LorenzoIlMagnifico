@@ -3,15 +3,13 @@ package it.polimi.ingsw.pc42.Utilities;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import it.polimi.ingsw.pc42.Control.DevelopmentCards.Card;
-import it.polimi.ingsw.pc42.Control.DevelopmentCards.ImmediateBonusChoice;
-import it.polimi.ingsw.pc42.Control.DevelopmentCards.ResourceImmediateBonus;
-import it.polimi.ingsw.pc42.Control.DevelopmentCards.iCard;
+import it.polimi.ingsw.pc42.Control.DevelopmentCards.*;
 import it.polimi.ingsw.pc42.Control.ResourceType;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.Iterator;
 
 public class CardParser {
@@ -66,7 +64,11 @@ public class CardParser {
                 c = applyResource(key, jsonNode.get(key).asInt(), c);
             } catch (IllegalArgumentException e){
                 if (key.equalsIgnoreCase("privileges")){
-
+                    if (jsonNode.get(key).isInt()){
+                        c= new PrivilegeImmediateBonus (jsonNode.get(key).asInt(), c);
+                    } else{
+                        throw new Exception("Invalid privileges field");
+                    }
                 } else if (key.equalsIgnoreCase("card")){
 
                 } else if (key.equalsIgnoreCase("foreach")){
@@ -91,9 +93,16 @@ public class CardParser {
                 c = applyResource(key, jsonNode.get(key).asInt()*-1, c);
             } catch (IllegalArgumentException e){
                 if (key.equalsIgnoreCase("militaryPointsRequired")){
-
+                    if (jsonNode.get(key).isInt()&&
+                            jsonNode.has("militaryPointsSubtracted")&&
+                            jsonNode.get("militaryPointsSubtracted").isInt()){
+                        c=new militaryCost(c, jsonNode.get("militaryPointsRequired").asInt(),
+                                jsonNode.get("militaryPointsSubtracted").asInt());
+                    } else {
+                        throw new Exception("Invalid military cost");
+                    }
                 } else if (key.equalsIgnoreCase("militaryPointsSubtracted")){
-
+                    //ignore, already added above
                 } else {
                     throw new Exception("Invalid cost: "+ key);
                 }
@@ -171,51 +180,5 @@ public class CardParser {
             throw new Exception("wrong type of costs");
         }
     }
-
-/*
-
-    public static void main(String[] args) {
-
-        ArrayList<iCard> cards = new ArrayList<>();
-
-
-        ObjectMapper mapper = new ObjectMapper();
-        //complete path in order to run the json
-        JsonNode json = null;
-        try {
-            json = mapper.readTree(new File("src/res/developmentCards.json"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Iterator<JsonNode> jsonNodeIterator = json.get("developmentCards").elements();
-        while (jsonNodeIterator.hasNext()){
-            iCard c;
-            c = createCard(jsonNodeIterator.next());
-            cards.add(c);
-        }
-
-        System.out.print(
-                cards
-        );
-
-
-            iCard c;
-            c = createCard(json);
-            System.out.println(json.isObject());
-            ObjectNode obj = (ObjectNode) json;
-            JsonNode j = mapper.readTree("[1,2,3]");
-            obj.set("new property", j);
-            json = obj;
-
-            Iterator<String> it = json.fieldNames();
-            while(it.hasNext()){
-                String key = it.next();
-                System.out.println(key);
-            }
-            System.out.println(json.get("new property").isArray());
-
-
-    }*/
 }
 

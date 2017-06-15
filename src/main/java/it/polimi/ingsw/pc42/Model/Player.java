@@ -149,6 +149,9 @@ public class Player {
     public void addCard(iCard card){
         cardsOwned.add(card);
     }
+    public void removeCard(iCard card){
+        cardsOwned.remove(card);
+    }
 
 
 
