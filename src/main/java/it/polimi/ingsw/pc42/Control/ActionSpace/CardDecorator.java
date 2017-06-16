@@ -31,6 +31,10 @@ public class CardDecorator extends AbstractDecorator {
         if (empty || fm.owner.getNumberOfCards(type)>6){
             throw new ActionAbortedException(false);
         }
+        if (card.getCardType()== Card.CardType.TERRITORY&&
+                fm.owner.getNumberOfCards(Card.CardType.TERRITORY)>=fm.owner.getMaxNumberOfTerritories()){
+            throw new ActionAbortedException(false);
+        }
         empty=true;
         fm.owner.addCard(card);
         try {

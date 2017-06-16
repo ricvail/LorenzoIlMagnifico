@@ -72,17 +72,24 @@ public class CardParser {
                 } else if (key.equalsIgnoreCase("card")){
 
                 } else if (key.equalsIgnoreCase("foreach")){
-
-                } else if (key.equalsIgnoreCase("harvest")){
-
-                } else if (key.equalsIgnoreCase("production")){
-
+                    c = applyForeachImmediate(jsonNode.get("foreach"), c);
                 } else {
                     throw new Exception("Invalid immediate effect: "+ key);
                 }
             }
         }
         return c;
+    }
+
+    private static iCard applyForeachImmediate(JsonNode jsonNode, iCard c) throws Exception{
+        ResourceType obtained = ResourceType.fromString(jsonNode.get("left").asText());
+        try {
+            ResourceType toBeCounted = ResourceType.fromString(jsonNode.get("right").asText());
+            return new ForeachImmediate(c, obtained, jsonNode.get("ratio").asInt(), toBeCounted);
+        } catch (Exception e){
+            Card.CardType toBeCounted = Card.CardType.fromString(jsonNode.get("right").asText());
+            return new ForeachImmediate(c, obtained, jsonNode.get("ratio").asInt(), toBeCounted);
+        }
     }
 
     private static iCard singleCostIterator(JsonNode jsonNode, iCard c) throws Exception {

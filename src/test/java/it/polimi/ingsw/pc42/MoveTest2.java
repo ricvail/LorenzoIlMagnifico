@@ -57,7 +57,7 @@ public class MoveTest2
         assertEquals(5, fm.owner.getResource(ResourceType.COIN).get());
         //end first move-----------------------------------------------------------------------------------------------
         exception = false;
-
+        try {
             b.makeMove(mosse.get(1));//Blue piazza fm orange in slot 12, exception
         } catch (ActionAbortedException ae){
             exception = true;
