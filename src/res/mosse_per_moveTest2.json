@@ -1,0 +1,81 @@
+{
+  "moves":[
+    {
+      "DESCRIZIONE":"Turno del giocatore rosso. posiziona il fm bianco(=1) nello slotID 1",
+      "DESCRIZIONE2": "no cost, mossa legale",
+      "familyMember": "white",
+      "servants": 0,
+      "slotID": 1
+    },
+    {
+      "DESCRIZIONE": "Turno del g blue, prova a mettere fm arancio(=3) nello slotID 12",
+      "DESCRIZIONE2": "mossa non legale, mi aspetto ex",
+      "familyMember": "orange",
+      "servants": 0,
+      "slotID": 12
+    },
+    {
+      "DESCRIZIONE": "Ancora turno g blue, mette fm nero(=6) nello slotID 12 con un servant",
+      "familyMember": "black",
+      "servants": 1,
+      "slotID": 12
+    },
+    {
+      "DESCRIZIONE": "Turno g rosso, mette fm nero(=6) nello slotID 7, +1 stone e card, legale",
+      "familyMember": "black",
+      "servants": 0,
+      "slotID": 7
+    },
+    {
+      "DESCRIZIONE": "Blue slotID 13, fm orange, card cost > risorse, fallisce",
+      "familyMember": "orange",
+      "servants": 0,
+      "slotID": 13
+    },
+    {
+      "DESCRIZIONE": "Blue fm white, slotID 14, costo ok, legale",
+      "familyMember": "white",
+      "servants": 2,
+      "slotID": 14
+    },
+    {
+      "DESCRIZIONE": "Turno g rosso, mette fm neutral con 1 servant nello slotID 9, coinTax=3, fallisce",
+      "familyMember": "neutral",
+      "servants": 1,
+      "slotID": 9
+    },
+    {
+      "DESCRIZIONE": "Turno giocatore rosso, setto con cheat i coins per poter effettuare, la mossa precedente",
+      "familyMember": "neutral",
+      "servants": 1,
+      "slotID": 9
+    },
+    {
+      "DESCRIZIONE": "cost 3 stone e 3 cointax, +2 coins bonus actionspace, blue con fm orange in slotID 15 ",
+      "familyMember": "orange",
+      "servants": 2,
+      "slotID": 15,
+      "privileges": [3]
+    },
+    {
+      "DESCRIZIONE": "Rosso tenta di mettere fm orange in slotID 2, già fm red -> exception ",
+      "familyMember": "orange",
+      "servants": 0,
+      "slotID": 2
+    },
+    {
+      "DESCRIZIONE": "  ",
+      "familyMember": "orange",
+      "servants": 0,
+      "slotID":16,
+      "privileges": [0, 4]
+    },
+    {
+      "DESCRIZIONE": " Blue fm neutral slotID 17, council, + 1 servant e privileges 2 coins",
+      "familyMember": "neutral",
+      "servants": 1,
+      "slotID":17,
+      "privileges": [2]
+    }
+  ]
+}
