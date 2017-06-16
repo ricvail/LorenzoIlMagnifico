@@ -53,7 +53,7 @@ public class MoveTest2
         assertEquals(true, fm.isUsed());
         assertEquals(1, fm.owner.getNumberOfCards(Card.CardType.TERRITORY));
         //no cost, 1 coin immediate effect
-        assertEquals(6, fm.owner.getResource(ResourceType.COIN).get());
+        assertEquals(5, fm.owner.getResource(ResourceType.COIN).get());
         //end first move-----------------------------------------------------------------------------------------------
         exception = false;
         try {
@@ -109,12 +109,12 @@ public class MoveTest2
         assertEquals(1, fm.owner.getNumberOfCards(Card.CardType.CHARACTER));
         //+1 stone immediate action space bonus
         assertEquals(3, fm.owner.getResource(ResourceType.STONE).get());
-        // cost 4 coins, 6-4
-        assertEquals(2, fm.owner.getResource(ResourceType.COIN).get());
+        // cost 4 coins, 5-4
+        assertEquals(1, fm.owner.getResource(ResourceType.COIN).get());
         //end third move-----------------------------------------------------------------------------------------------
         exception = false;
         try {
-            b.makeMove(mosse.get(4));//Blue slotID 13, orange, cost carta > resources -> failed
+            b.makeMove(mosse.get(4));//Blue slotID 13, orange, cost carta > resources -> exception
         }catch (ActionAbortedException ae){
             exception = true;
             ae.printStackTrace();
@@ -152,7 +152,7 @@ public class MoveTest2
         //end fourth move----------------------------------------------------------------------------------------------
         exception = false;
         try {
-            b.makeMove(mosse.get(5));//Rosso mette fm neutral con 1 servant nello slotID 9, coinTax=3 -> fallisce (=2)
+            b.makeMove(mosse.get(5));//Rosso mette fm neutral con 1 servant nello slotID 9, coinTax=3 -> fallisce (=1)
         } catch (ActionAbortedException ae){
             exception = true;
             ae.printStackTrace();
@@ -184,8 +184,8 @@ public class MoveTest2
         // 1 servant used
         assertEquals(2, fm.owner.getResource(ResourceType.SERVANT).get());
         assertEquals(1, fm.owner.getNumberOfCards(Card.CardType.BUILDING));
-        //coins 12 -3
-        assertEquals(9, fm.owner.getResource(ResourceType.COIN).get());
+        //coins 11 -3
+        assertEquals(8, fm.owner.getResource(ResourceType.COIN).get());
         // stone 5-3
         assertEquals(2, fm.owner.getResource(ResourceType.STONE).get());
         // wood 2-1
@@ -254,7 +254,7 @@ public class MoveTest2
         assertEquals(true, fm.isUsed());
         //+2 coin bonus, -3 cointax
         assertEquals(1, fm.owner.getNumberOfCards(Card.CardType.VENTURE));
-        assertEquals(8, fm.owner.getResource(ResourceType.COIN).get());
+        assertEquals(7, fm.owner.getResource(ResourceType.COIN).get());
         //2 privileges: 1 faithpoint, 1 stone/wood
         assertEquals(1, fm.owner.getResource(ResourceType.FAITHPOINTS).get());
         //cost 2 stone +1
