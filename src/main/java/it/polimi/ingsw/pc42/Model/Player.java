@@ -175,4 +175,18 @@ public class Player {
 
         public String getPlayerColorString(){return playerColor;}
     }
+
+
+    public int getMaxNumberOfTerritories(){
+        int maxNumberOfTerritories=0;
+        int counter=0;
+        for (int i=2; i<=6; i++){
+            if (this.getResource(ResourceType.MILITARYPOINTS).get()<counter+i+1){
+                maxNumberOfTerritories=i;
+                break;
+            }
+            counter=counter+i+1;
+        }
+        return maxNumberOfTerritories;
+    }
 }

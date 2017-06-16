@@ -61,7 +61,6 @@ public class MoveTest
         }
         assertEquals(false, exception);
         assertEquals(10 ,b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).get()); //le 5 monete iniziali più le 5 appena prese
-
         assertEquals(b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.SERVANT).get(), 2); //3 iniziali meno 1
 
         FamilyMember fm= null;
