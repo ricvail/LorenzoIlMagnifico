@@ -9,13 +9,19 @@
           "id": 1,
           "minPlayers": 2,
           "actionValue": 1,
-          "singleFamilyMember": true
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "effect": "territories"
+          }
         },
         {
           "id": 2,
           "minPlayers": 2,
           "actionValue": 3,
-          "singleFamilyMember": true
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "effect": "territories"
+          }
         },
         {
           "id": 3,
@@ -23,7 +29,8 @@
           "actionValue": 5,
           "singleFamilyMember": true,
           "immediateResourceEffect": {
-            "wood": 1
+            "wood": 1,
+            "effect": "territories"
           }
         },
         {
@@ -32,7 +39,8 @@
           "actionValue": 7,
           "singleFamilyMember": true,
           "immediateResourceEffect": {
-            "wood": 2
+            "wood": 2,
+            "effect": "territories"
           }
         }
       ]
@@ -46,13 +54,19 @@
           "id": 5,
           "minPlayers": 2,
           "actionValue": 1,
-          "singleFamilyMember": true
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "effect": "characters"
+          }
         },
         {
           "id": 6,
           "minPlayers": 2,
           "actionValue": 3,
-          "singleFamilyMember": true
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "effect": "characters"
+          }
         },
         {
           "id": 7,
@@ -60,7 +74,8 @@
           "actionValue": 5,
           "singleFamilyMember": true,
           "immediateResourceEffect": {
-            "stone": 1
+            "stone": 1,
+            "effect": "characters"
           }
         },
         {
@@ -69,7 +84,8 @@
           "actionValue": 7,
           "singleFamilyMember": true,
           "immediateResourceEffect": {
-            "stone": 2
+            "stone": 2,
+            "effect": "characters"
           }
         }
       ]
@@ -83,13 +99,19 @@
           "id": 9,
           "minPlayers": 2,
           "actionValue": 1,
-          "singleFamilyMember": true
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "effect": "buildings"
+          }
         },
         {
           "id": 10,
           "minPlayers": 2,
           "actionValue": 3,
-          "singleFamilyMember": true
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "effect": "buildings"
+          }
         },
         {
           "id": 11,
@@ -97,7 +119,8 @@
           "actionValue": 5,
           "singleFamilyMember": true,
           "immediateResourceEffect": {
-            "militaryPoints": 1
+            "militaryPoints": 1,
+            "effect": "buildings"
           }
         },
         {
@@ -106,7 +129,8 @@
           "actionValue": 7,
           "singleFamilyMember": true,
           "immediateResourceEffect": {
-            "militaryPoints": 2
+            "militaryPoints": 2,
+            "effect": "buildings"
           }
         }
       ]
@@ -120,13 +144,19 @@
           "id": 13,
           "minPlayers": 2,
           "actionValue": 1,
-          "singleFamilyMember": true
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "effect": "ventures"
+          }
         },
         {
           "id": 14,
           "minPlayers": 2,
           "actionValue": 3,
-          "singleFamilyMember": true
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "effect": "ventures"
+          }
         },
         {
           "id": 15,
@@ -134,7 +164,8 @@
           "actionValue": 5,
           "singleFamilyMember": true,
           "immediateResourceEffect": {
-            "coins": 1
+            "coins": 1,
+            "effect": "ventures"
           }
         },
         {
@@ -143,7 +174,8 @@
           "actionValue": 7,
           "singleFamilyMember": true,
           "immediateResourceEffect": {
-            "coins": 2
+            "coins": 2,
+            "effect": "ventures"
           }
         }
       ]

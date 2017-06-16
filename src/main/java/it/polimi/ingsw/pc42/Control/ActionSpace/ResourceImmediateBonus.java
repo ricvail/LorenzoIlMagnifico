@@ -37,22 +37,4 @@ public class ResourceImmediateBonus extends AbstractDecorator {
         super.undoAction(move, fm);
     }
 
-    /*@Override
-    public void placeFamilyMember(FamilyMember familyMember, JsonNode json) {
-        super.placeFamilyMember(familyMember, json);
-        familyMember.owner.getResource(resourceType).add(q);
-    }
-
-    @Override
-    public boolean canPlace(FamilyMember familyMember) {
-        try {
-            familyMember.owner.getResource(resourceType).add(q);
-        } catch (IllegalArgumentException e){
-            familyMember.owner.getResource(resourceType).add(q * -1);
-            return false;
-        }
-        boolean b=  super.canPlace(familyMember);
-        familyMember.owner.getResource(resourceType).add(q * -1);
-        return b;
-    }*/
 }

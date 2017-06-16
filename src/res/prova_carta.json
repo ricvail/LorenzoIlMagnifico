@@ -29,8 +29,6 @@
     "militaryPoints": 5,
     "faithPoints": 5,
     "victoryPoints": 5,
-    "harvest": 4,
-    "production": 2,
     "card": {
       "value": 7,
       "type": "all/territory/building/../harvest/prodution",
