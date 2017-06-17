@@ -25,7 +25,10 @@
       "familyMember": "black",
       "servants": 1,
       "slotID": 8,
-      "privileges": [1]
+      "immediateEffect":
+      {
+        "privileges": [1]
+      }
     },
     {
       "DESCRIZIONE": "Blue slotID 13, fm orange, card cost > risorse, fallisce",
@@ -56,7 +59,10 @@
       "familyMember": "neutral",
       "servants": 5,
       "slotID": 15,
-      "privileges": [3]
+      "immediateEffect":
+      {
+        "privileges": [3]
+      }
     },
     {
       "DESCRIZIONE": "Rosso tenta di mettere fm orange in slotID 2, già fm red -> exception ",
@@ -69,18 +75,24 @@
       "familyMember": "orange",
       "servants": 4,
       "slotID":16,
-      "privileges": [0, 0]
+      "immediateEffect":
+      {
+        "privileges": [0 ,0]
+      }
     },
     {
       "DESCRIZIONE": "Rosso fm orange + 4 servi  in slotID 16, + 2 coin e card, legale",
       "familyMember": "orange",
       "servants": 4,
       "slotID":16,
-      "privileges": [0, 4]
+      "immediateEffect":
+      {
+        "privileges": [0, 4]
+      }
     },
     {
       "DESCRIZIONE": " Blue fm neutral slotID 17, council, + 1 servant e privileges 2 coins",
-      "familyMember": "neutral",
+      "familyMember": "orange",
       "servants": 1,
       "slotID":17,
       "privileges": [2]

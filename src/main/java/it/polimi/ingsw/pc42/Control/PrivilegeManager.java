@@ -30,7 +30,7 @@ public class PrivilegeManager {
         if ((!isPrivilegesChoiceLengthCorrect(move, q))){
             throw new ActionAbortedException("privileges", getListOfUnusedPrivileges(move));
         }
-        if (!areAllPrivilegesDifferent(move)){
+        if (!areAllPrivilegesDifferent(move.get("privileges"))){
             throw new ActionAbortedException(false);
         }
         try {

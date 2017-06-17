@@ -16,12 +16,15 @@ public class PrivilegeImmediateBonus extends AbstractDecorator {
 
     @Override
     public void drawCard(JsonNode move, FamilyMember fm) throws ActionAbortedException {
-        getBoard().getPrivilegeManager().applyPrivileges(fm.owner, move,quantity); //automatically throws exception if something goes wrong
+        if (!move.has("immediateEffect")){
+            throw new ActionAbortedException(false);
+        }
+        getBoard().getPrivilegeManager().applyPrivileges(fm.owner, move.get("immediateEffect"),quantity); //automatically throws exception if something goes wrong
         try {
             super.drawCard(move, fm);
         }catch (ActionAbortedException e){
             try {
-                getBoard().getPrivilegeManager().undoPrivileges(fm.owner, move);
+                getBoard().getPrivilegeManager().undoPrivileges(fm.owner, move.get("immediateEffect"));
             } catch (Exception e1) {
                 //this should NOT happen.
                 e1.printStackTrace();
@@ -33,7 +36,7 @@ public class PrivilegeImmediateBonus extends AbstractDecorator {
     @Override
     public void undoDrawCard(JsonNode move, FamilyMember fm) {
         try {
-            getBoard().getPrivilegeManager().undoPrivileges(fm.owner, move);
+            getBoard().getPrivilegeManager().undoPrivileges(fm.owner, move.get("immediateEffect"));
         } catch (Exception e1) {
             //this should NOT happen.
             e1.printStackTrace();
