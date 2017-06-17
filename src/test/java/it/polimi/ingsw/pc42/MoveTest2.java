@@ -1,6 +1,7 @@
 package it.polimi.ingsw.pc42;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.sun.org.apache.regexp.internal.RE;
 import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.Control.ResourceType;
@@ -162,7 +163,14 @@ public class MoveTest2
         }
         assertEquals(true, exception);
         //check if servant is unused again
-        assertEquals(redServant, fm.owner.getResource(ResourceType.SERVANT).get());
+        FamilyMember redNeutral = null;
+        try{
+            redNeutral = b.getPlayerByColor(Player.PlayerColor.RED).getFamilyMemberFromColor("neutral");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        assertEquals(0, redNeutral.getValue());
+        assertEquals(redServant,  b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.SERVANT).get());
         //re-try-------------------------------------------------------------------------------------------------------
         exception = false;
         try {
@@ -230,7 +238,8 @@ public class MoveTest2
         //CHEAT MODE player RED----------------------------------------------------------------------------------------
         b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.WOOD).add(1); redWood+=1;
         b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.STONE).add(1); redStone+=1;
-        b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.SERVANT).add(3); redServant+=1;
+        b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.SERVANT).add(3); redServant+=3;
+        b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).add(1); redCoin+=1;
         //re-try-------------------------------------------------------------------------------------------------------
         exception = false;
         try {
@@ -241,10 +250,20 @@ public class MoveTest2
             e.printStackTrace();
         }
         assertEquals(true, exception);
+        //check if servant is unused again
+        redNeutral = null;
+        try{
+            redNeutral = b.getPlayerByColor(Player.PlayerColor.RED).getFamilyMemberFromColor("orange");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        assertEquals(3, redNeutral.getValue());
+        assertEquals(redServant,  b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.SERVANT).get());
+
         //re-try-------------------------------------------------------------------------------------------------------
         exception = false;
         try {
-            b.makeMove(mosse.get(11));//Rosso ritenta fm orange in slot 16, 2 privileges -> legale
+            b.makeMove(mosse.get(11));//Rosso ritenta fm orange in slot 16, 3 cointax, 2 privileges -> legale
         } catch (Exception e){
             exception = true;
             e.printStackTrace();
@@ -258,8 +277,8 @@ public class MoveTest2
         }
         assertEquals(true, fm.isUsed());
         assertEquals(1, fm.owner.getNumberOfCards(Card.CardType.VENTURE));
-        //-4 servants, +2 coins bonus, card cost: wood=stone=2, card effect: 2 privileges-> 1 wood=stone, 1 faithpoint
-        redServant-=4; redCoin+=2; redStone-=1; redWood-=1; redFaithPts+=1;
+        //-4 servants, +2-3 coins bonus, card cost: wood=stone=2, card effect: 2 privileges-> 1 wood=stone, 1 faithpoint
+        redServant-=4; redCoin-=1; redStone-=1; redWood-=1; redFaithPts+=1;
         //Resources Test
         assertEquals(redServant, fm.owner.getResource(ResourceType.SERVANT).get());
         assertEquals(redCoin, fm.owner.getResource(ResourceType.COIN).get());
