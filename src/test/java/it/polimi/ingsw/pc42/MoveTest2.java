@@ -1,7 +1,6 @@
 package it.polimi.ingsw.pc42;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.sun.org.apache.regexp.internal.RE;
 import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.Control.ResourceType;
@@ -32,7 +31,7 @@ public class MoveTest2
     }
 
     public void testMove2() {
-/*
+
         JsonNode mosse = GameInitializer.readFile("src/res/mosse_per_moveTest2.json").get("moves");
         Board b = GameInitializer.initBaseGame(false);
         //RED and BLUE playing; servants=3, wood=stone=2, coins=5+i
@@ -197,8 +196,7 @@ public class MoveTest2
         assertEquals(redWood, fm.owner.getResource(ResourceType.WOOD).get());
         assertEquals(redVictoryPts, fm.owner.getResource(ResourceType.VICTORYPOINTS).get());
         //CHEAT MODE Player blue---------------------------------------------------------------------------------------
-        b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.COIN).add(2); blueCoin+=2;
-        // per testare se viene effettivamente prima il bonus dell'actionspace, coin=2
+        b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.COIN).add(3); blueCoin+=3;
         b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.STONE).add(2); blueStone+=2;
         b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.SERVANT).add(6); blueServant+=6;
         //end fifth move-----------------------------------------------------------------------------------------------
@@ -218,7 +216,7 @@ public class MoveTest2
         }
         assertEquals(true, fm.isUsed());
         assertEquals(2, fm.owner.getNumberOfCards(Card.CardType.VENTURE));
-        //-5 servant, +1 coin bonus, -3 cointax, card cost: 3 stone, card effect: 2 military points, 1 privilege -> 2 mlpts
+        //-5 servant, +1-3 coin bonus e tax, card cost: 3 stone, card effect: 2 military points, 1 privilege -> 2 mlpts
         blueServant-=5; blueCoin-=2; blueStone-=3; blueMilitaryPts+=4;
         //Resources Test
         assertEquals(blueServant, fm.owner.getResource(ResourceType.SERVANT).get());
@@ -239,7 +237,7 @@ public class MoveTest2
         b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.WOOD).add(1); redWood+=1;
         b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.STONE).add(1); redStone+=1;
         b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.SERVANT).add(3); redServant+=3;
-        b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).add(1); redCoin+=1;
+        b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).add(3); redCoin+=3;
         //re-try-------------------------------------------------------------------------------------------------------
         exception = false;
         try {
@@ -316,7 +314,6 @@ public class MoveTest2
         boolean redFMUsed = checkFamilyMemberUsed(b.getPlayerByColor(Player.PlayerColor.RED).getFamilyMembers());
         assertEquals(false, redFMUsed);
         //TODO check cards cleanup
-*/
     }
 
     private boolean checkFamilyMemberUsed(ArrayList<FamilyMember> familyMembers){
