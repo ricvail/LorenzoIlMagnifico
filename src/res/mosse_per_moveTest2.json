@@ -23,8 +23,9 @@
     {
       "DESCRIZIONE": "Turno g rosso, mette fm nero(=6) nello slotID 7, +1 stone e card, legale",
       "familyMember": "black",
-      "servants": 0,
-      "slotID": 7
+      "servants": 1,
+      "slotID": 8,
+      "privileges": [1]
     },
     {
       "DESCRIZIONE": "Blue slotID 13, fm orange, card cost > risorse, fallisce",
@@ -39,21 +40,21 @@
       "slotID": 14
     },
     {
-      "DESCRIZIONE": "Turno g rosso, mette fm neutral con 1 servant nello slotID 9, coinTax=3, fallisce",
+      "DESCRIZIONE": "Turno g rosso, mette fm neutral con 1 servant nello slotID 10, fallisce",
+      "familyMember": "neutral",
+      "servants": 1,
+      "slotID": 10
+    },
+    {
+      "DESCRIZIONE": "Turno giocatore rosso, rieffetua la mossa precedente in sloID 9",
       "familyMember": "neutral",
       "servants": 1,
       "slotID": 9
     },
     {
-      "DESCRIZIONE": "Turno giocatore rosso, setto con cheat i coins per poter effettuare, la mossa precedente",
+      "DESCRIZIONE": "cost 3 stone e 3 cointax, +1 coins bonus actionspace, blue con fm orange in slotID 15 ",
       "familyMember": "neutral",
-      "servants": 1,
-      "slotID": 9
-    },
-    {
-      "DESCRIZIONE": "cost 3 stone e 3 cointax, +2 coins bonus actionspace, blue con fm orange in slotID 15 ",
-      "familyMember": "orange",
-      "servants": 2,
+      "servants": 5,
       "slotID": 15,
       "privileges": [3]
     },
@@ -64,9 +65,16 @@
       "slotID": 2
     },
     {
-      "DESCRIZIONE": "  ",
+      "DESCRIZIONE": "Rosso fm orange + 4 servi  in slotID 16, + 2 coin e card, non legale privileges uguali",
       "familyMember": "orange",
-      "servants": 0,
+      "servants": 4,
+      "slotID":16,
+      "privileges": [0, 0]
+    },
+    {
+      "DESCRIZIONE": "Rosso fm orange + 4 servi  in slotID 16, + 2 coin e card, legale",
+      "familyMember": "orange",
+      "servants": 4,
       "slotID":16,
       "privileges": [0, 4]
     },
