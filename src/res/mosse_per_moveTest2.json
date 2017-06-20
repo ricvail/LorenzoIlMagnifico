@@ -96,6 +96,102 @@
       "servants": 1,
       "slotID":17,
       "privileges": [2]
+    },
+    {
+      "DESCRIZIONE": "Blue fm black +1 servant, + 2coins, payment 1 -> fallisce per le resources",
+      "familyMember": "black",
+      "servants":1,
+      "slotID":16,
+      "paymentChoice":1
+    },
+    {
+      "DESCRIZIONE": "Blue fm black +1 servant, + 2coins, payment 0-> legale -2 mpts, 3fpts",
+      "familyMember": "black",
+      "servants":1,
+      "slotID":16,
+      "paymentChoice":0
+    },
+    {
+      "DESCRIZIONE": "RED fm black + 1 servant in slotID 8, -3 coins, prova a prender card slotID 6 -> fallisce cointax",
+      "familyMember": "black",
+      "servants":1,
+      "slotID":8,
+      "immediateEffect":{
+       "slotID": 6,
+        "servants":0
+      }
+    },
+    {
+      "DESCRIZIONE": "RED fm black + 1 servant in slotID 8, -3 coins,extra card slotID 7 (-3 cointax)",
+      "familyMember": "black",
+      "servants":1,
+      "slotID":8,
+      "immediateEffect": {
+        "slotID": 7,
+        "servants": 1
+      }
+    },
+    {
+      "DESCRIZIONE": "Blue tenta fm orange in slotID 7, exception carta già pescata",
+      "familyMember": "orange",
+      "servants":2,
+      "slotID":7
+    },
+    {
+      "DESCRIZIONE": "Blue ghost move",
+      "familyMember": "orange",
+      "servants":0,
+      "slotID":0
+    },
+    {
+      "DESCRIZIONE": "Red ghost move",
+      "familyMember": "orange",
+      "servants":0,
+      "slotID":0
+    },
+    {
+      "DESCRIZIONE": "Blue ghost move",
+      "familyMember": "white",
+      "servants":0,
+      "slotID":0
+    },
+    {
+      "DESCRIZIONE": "Red ghost move",
+      "familyMember": "white",
+      "servants":0,
+      "slotID":0
+    },
+    {
+      "DESCRIZIONE": "Blue ghost move",
+      "familyMember": "neutral",
+      "servants":0,
+      "slotID":0
+    },
+    {
+      "DESCRIZIONE": "Red ghost move",
+      "familyMember": "neutral",
+      "servants":0,
+      "slotID":0
+    },
+    {
+      "DESCRIZIONE": "Blue fm orange slotID 10, card cost 3 wood, legale",
+      "familyMember": "orange",
+      "servants":0,
+      "slotID":10
+    },
+    {
+      "DESCRIZIONE": "RED fm black in slot7 -> pesca slot6-> pesca slot2-> fallisce doveva essere buildings ",
+      "familyMember": "black",
+      "servants":0,
+      "slotID":7,
+      "immediateEffect": {
+        "slotID":6,
+        "servants":0,
+        "immediateEffect":{
+          "slotID":2,
+          "servants":0
+        }
+      }
     }
   ]
 }

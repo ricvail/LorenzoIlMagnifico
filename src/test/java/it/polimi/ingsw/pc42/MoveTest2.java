@@ -30,15 +30,16 @@ public class MoveTest2
         return new TestSuite( MoveTest2.class );
     }
 
+    int blueServant = 3;  int blueStone = 2;  int blueWooD = 2;  int blueCoin = 6;
+    int blueMilitaryPts = 0; int blueFaithPts = 0; int blueVictoryPts = 0;
+    int redServant = 3;  int redStone = 2;  int redWood = 2;  int redCoin = 5;
+    int redMilitaryPts = 0; int redFaithPts = 0; int redVictoryPts = 0;
+
     public void testMove2() {
 
         JsonNode mosse = GameInitializer.readFile("src/res/mosse_per_moveTest2.json").get("moves");
         Board b = GameInitializer.initBaseGame(false);
         //RED and BLUE playing; servants=3, wood=stone=2, coins=5+i
-        int blueServant = 3;  int blueStone = 2;  int blueWooD = 2;  int blueCoin = 6;
-        int blueMilitaryPts = 0; int blueFaithPts = 0; int blueVictoryPts = 0;
-        int redServant = 3;  int redStone = 2;  int redWood = 2;  int redCoin = 5;
-        int redMilitaryPts = 0; int redFaithPts = 0; int redVictoryPts = 0;
         //first move--------------------------------------------------------------------------------------------------
         boolean exception = false;
         try{
@@ -156,7 +157,6 @@ public class MoveTest2
             b.makeMove(mosse.get(6));//Rosso mette fm neutral con 1 servant nello slotID 10-> non legale
         } catch (ActionAbortedException ae){
             exception = true;
-            ae.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -298,8 +298,6 @@ public class MoveTest2
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //assertEquals(true, fm.isUsed());
-
         //1 servant e privilege-> 2 coins
         blueServant-=1; blueCoin+=3;
         //Resources Test
@@ -315,6 +313,189 @@ public class MoveTest2
         boolean redFMUsed = checkFamilyMemberUsed(b.getPlayerByColor(Player.PlayerColor.RED).getFamilyMembers());
         assertEquals(false, redFMUsed);
         //TODO check cards cleanup
+        /*
+        //CHEAT MODE player Blue---------------------------------------------------------------------------------------
+        b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.SERVANT).add(1); blueServant+=1;
+        //START SECOND ROUND-------------------------------------------------------------------------------------------
+        exception = false;
+        try {
+            b.makeMove(mosse.get(13));//Blue fm black +1 servant, + 2coins, payment 1 -> fallisce per le resources
+        } catch (ActionAbortedException ae){
+            exception = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertEquals(true, exception);
+        //undo of immediate bonus
+        assertEquals(blueCoin, b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.COIN).get());
+        //re-try-------------------------------------------------------------------------------------------------------
+        exception = false;
+        try {
+            b.makeMove(mosse.get(14));//Blue fm black +1 servant, + 2coins, payment 0-> legale
+        } catch (Exception e){
+            exception = true;
+            e.printStackTrace();
+        }
+        assertEquals(false, exception);
+        fm= null;
+        try {
+            fm = b.getPlayerByColor(Player.PlayerColor.BLUE).getFamilyMemberFromColor("black");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertEquals(true, fm.isUsed());
+        assertEquals(3, fm.owner.getNumberOfCards(Card.CardType.VENTURE));
+        // +2 immediate bonus coins, -1 servant, card cost: mpts 4 needed -2, effect: 3 fpts
+        blueServant-=1; blueCoin+=2; blueMilitaryPts-=2; blueFaithPts+=3;
+        //Resources Test
+        assertEquals(blueServant, fm.owner.getResource(ResourceType.SERVANT).get());
+        assertEquals(blueCoin, fm.owner.getResource(ResourceType.COIN).get());
+        assertEquals(blueMilitaryPts, fm.owner.getResource(ResourceType.MILITARYPOINTS).get());
+        assertEquals(blueFaithPts, fm.owner.getResource(ResourceType.FAITHPOINTS).get());
+        //CHEAT MODE player RED---------------------------------------------------------------------------------------
+        b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).add(1); redCoin+=1;
+        //end ninth move-----------------------------------------------------------------------------------------------
+        exception = false;
+        try {
+            b.makeMove(mosse.get(15));//RED fm black + 1 servant in slotID 8, -3 coins, extracard slotID 6 -> fail cointax
+        } catch (ActionAbortedException ae){
+            exception = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertEquals(true, exception);
+        assertEquals(redStone, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.STONE).get());
+        //CHEAT MODE player RED---------------------------------------------------------------------------------------
+        b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).add(5); redCoin+=5;
+        //re-try-------------------------------------------------------------------------------------------------------
+        exception = false;
+        try {
+            b.makeMove(mosse.get(16));//RED fm black + 1 servant in slotID 8, -3 coins,extra card slotID 7 (-3 cointax)
+        } catch (Exception e){
+            exception = true;
+            e.printStackTrace();
+        }
+        assertEquals(false, exception);
+        fm= null;
+        try {
+            fm = b.getPlayerByColor(Player.PlayerColor.RED).getFamilyMemberFromColor("black");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertEquals(true, fm.isUsed());
+        assertEquals(3, fm.owner.getNumberOfCards(Card.CardType.CHARACTER));
+        //-2 servants, +3 stone bonus, -8 coins, +5 fpts
+        redServant-=2; redCoin-=8; redStone+=3; redFaithPts+=5;
+        //Resources Test
+        assertEquals(redServant, fm.owner.getResource(ResourceType.SERVANT).get());
+        assertEquals(redCoin, fm.owner.getResource(ResourceType.COIN).get());
+        assertEquals(redStone, fm.owner.getResource(ResourceType.STONE).get());
+        assertEquals(redFaithPts, fm.owner.getResource(ResourceType.FAITHPOINTS).get());
+        //CHEAT MODE player Blue---------------------------------------------------------------------------------------
+        b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.SERVANT).add(2); blueServant+=2;
+        //end of tenth move--------------------------------------------------------------------------------------------
+        exception = false;
+        try {
+            b.makeMove(mosse.get(17));//Blue tenta fm orange in slotID 7, exception carta già pescata
+        } catch (ActionAbortedException ae){
+            exception = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertEquals(true, exception);
+        //re-try-------------------------------------------------------------------------------------------------------
+        exception = false;
+        try {
+            b.makeMove(mosse.get(18));//Blue fm orange ghost move
+        } catch (Exception e){
+            exception = true;
+            e.printStackTrace();
+        }
+        assertEquals(false, exception);
+        //end of 11th move-----------------------------------------------------------------------------------------
+        exception = false;
+        try {
+            b.makeMove(mosse.get(19));//Red fm orange ghost move
+        } catch (Exception e){
+            exception = true;
+            e.printStackTrace();
+        }
+        assertEquals(false, exception);
+        //end of 12th move---------------------------------------------------------------------------------------------
+        exception = false;
+        try {
+            b.makeMove(mosse.get(20));//Blue fm white ghost move
+        } catch (Exception e){
+            exception = true;
+            e.printStackTrace();
+        }
+        assertEquals(false, exception);
+        //end of 13th move---------------------------------------------------------------------------------------------
+        exception = false;
+        try {
+            b.makeMove(mosse.get(21));//Red fm white ghost move
+        } catch (Exception e){
+            exception = true;
+            e.printStackTrace();
+        }
+        assertEquals(false, exception);
+        //end of 14th move---------------------------------------------------------------------------------------------
+        exception = false;
+        try {
+            b.makeMove(mosse.get(22));//Blue fm neutral ghost move
+        } catch (Exception e){
+            exception = true;
+            e.printStackTrace();
+        }
+        assertEquals(false, exception);
+        //end of 15th move---------------------------------------------------------------------------------------------
+        exception = false;
+        try {
+            b.makeMove(mosse.get(23));//Red fm neutral ghost move
+        } catch (Exception e){
+            exception = true;
+            e.printStackTrace();
+        }
+        assertEquals(false, exception);
+        //Clean-Up test------------------------------------------------------------------------------------------------
+         blueTurn = b.isPlayerTurn(Player.fromColorString("blue"));
+        assertEquals(true, blueTurn);
+        //check if all the family members are unused
+        blueFMUsed = checkFamilyMemberUsed(b.getPlayerByColor(Player.PlayerColor.BLUE).getFamilyMembers());
+        assertEquals(false, blueFMUsed);
+        redFMUsed = checkFamilyMemberUsed(b.getPlayerByColor(Player.PlayerColor.RED).getFamilyMembers());
+        assertEquals(false, redFMUsed);
+        assertEquals(2, b.getEra());
+        //END SECOND ROUND---------------------------------------------------------------------------------------------
+        //CHEAT MODE player Blue---------------------------------------------------------------------------------------
+        b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.WOOD).add(2); blueWooD+=3;
+        //START THIRD ROUND--------------------------------------------------------------------------------------------
+        exception = false;
+        try {
+            b.makeMove(mosse.get(24));//Blue fm orange slotID 10, card cost 3 wood, legale
+        } catch (Exception e){
+            exception = true;
+            e.printStackTrace();
+        }
+        assertEquals(false, exception);
+        // cost 3 wood
+        blueWooD-=3;
+        //CHEAT MODE layer RED-----------------------------------------------------------------------------------------
+        b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).add(8); blueCoin+=8;
+        //end 17th move------------------------------------------------------------------------------------------------
+        exception = false;
+        try {
+            b.makeMove(mosse.get(25));//RED fm black in slot7 -> pesca slot6-> pesca slot2-> fallisce doveva essere buildings
+        } catch (Exception e){
+            exception = true;
+            e.printStackTrace();
+        }
+        assertEquals(true, exception);
+        assertEquals(redStone, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.STONE).get());
+        assertEquals(redCoin, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).get());
+        //re-try-------------------------------------------------------------------------------------------------------
+
+        */
     }
 
     private boolean checkFamilyMemberUsed(ArrayList<FamilyMember> familyMembers){
@@ -325,5 +506,24 @@ public class MoveTest2
             }
         }
         return used;
+    }
+
+    private void printStatus(){
+        //BLUE
+        System.out.println("bluecoin:"+blueCoin);
+        System.out.println("blueservant:"+blueServant);
+        System.out.println("blueStone:"+blueStone);
+        System.out.println("blueWooD:"+blueWooD);
+        System.out.println("blueMilitaryPts:"+blueMilitaryPts);
+        System.out.println("blueFaithPts:"+blueFaithPts);
+        System.out.println("blueVictoryPts:"+blueVictoryPts);
+        //RED
+        System.out.println("redCoin:"+redCoin);
+        System.out.println("redServant:"+redServant);
+        System.out.println("redStone:"+redStone);
+        System.out.println("redWood:"+redWood);
+        System.out.println("redMilitaryPts:"+redMilitaryPts);
+        System.out.println("redFaithPts:"+redFaithPts);
+        System.out.println("redVictoryPts:"+redVictoryPts);
     }
 }
