@@ -76,7 +76,7 @@ public class MoveManager {
         }
         undoApplyPlayerPermanentBonus(move, fm, space);
     }
-    private static void getActionSpaceFromJson(Board b, JsonNode move, FamilyMember fm) throws ActionAbortedException {
+    public static void getActionSpaceFromJson(Board b, JsonNode move, FamilyMember fm) throws ActionAbortedException {
         if (!move.has("slotID")){
             //TODO generate list of possible action spaces
             //throw new ActionAbortedException("slotID", b.getPossibleSlotList(fm));
@@ -102,10 +102,10 @@ public class MoveManager {
     private static void applyPlayerPermanentBonus(JsonNode move, FamilyMember fm, iActionSpace space) throws ActionAbortedException {
         /**
          * skipped for the moment
-         *      card must have an "apply Permanent bonus" method (params familyMember and ActionSpace)
+         *      card must have an "apply Permanent CostBonus" method (params familyMember and ActionSpace)
          *          change value of FamilyMember
-         *          Enable resourceWrapper bonus
-         *      Also an undo permanent bonus (for the catch segment)
+         *          Enable resourceWrapper CostBonus
+         *      Also an undo permanent CostBonus (for the catch segment)
          */
         applyServants(move, fm, space);
     }

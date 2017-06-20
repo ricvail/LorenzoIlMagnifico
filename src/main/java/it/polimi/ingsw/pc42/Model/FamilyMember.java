@@ -39,6 +39,9 @@ public class FamilyMember {
         if (diceColor.visible) {
             return true;
         }
+        if (area==Area.NULL){
+            return true;
+        }
         return (allowedAreas.contains(area));
     }
     public void setValue(int diceValue){

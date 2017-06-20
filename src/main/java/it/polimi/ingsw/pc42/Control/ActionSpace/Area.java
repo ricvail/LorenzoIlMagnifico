@@ -3,7 +3,7 @@ package it.polimi.ingsw.pc42.Control.ActionSpace;
 
 public enum Area {
     TERRITORY("territory"), BUILDING("building"), CHARACTER("character"), VENTURE("venture"),
-    COUNCIL("council"), MARKET("market"), HARVEST("harvest"), PRODUCTION("production");
+    COUNCIL("council"), MARKET("market"), HARVEST("harvest"), PRODUCTION("production"), NULL("null");
 
     private String area;
 

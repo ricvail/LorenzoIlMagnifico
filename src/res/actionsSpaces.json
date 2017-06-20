@@ -1,5 +1,16 @@
 {
   "action_spaces": [
+
+    {
+      "area": "NULL",
+      "actionSpaces": [
+        {
+          "id": 0,
+          "minPlayers": 0,
+          "actionValue": -10
+        }
+      ]
+    },
     {
       "area": "TERRITORY",
       "additionalCoinsTax": 3,
