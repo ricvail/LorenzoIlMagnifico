@@ -1,6 +1,7 @@
 package it.polimi.ingsw.pc42;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.sun.org.apache.regexp.internal.RE;
 import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.Control.ResourceType;
@@ -481,7 +482,7 @@ public class MoveTest2
         // cost 3 wood
         blueWooD-=3;
         //CHEAT MODE layer RED-----------------------------------------------------------------------------------------
-        b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).add(8); blueCoin+=8;
+        b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).add(8); redCoin+=9;
         //end 17th move------------------------------------------------------------------------------------------------
         exception = false;
         try {
@@ -494,8 +495,126 @@ public class MoveTest2
         assertEquals(redStone, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.STONE).get());
         assertEquals(redCoin, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).get());
         //re-try-------------------------------------------------------------------------------------------------------
-
-        */
+        //CHEAT MODE layer RED-----------------------------------------------------------------------------------------
+        b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.WOOD).add(3); redWood+=3;
+        exception = false;
+        try {
+            b.makeMove(mosse.get(26));//RED fm black in slot7 -> pesca slot6-> pesca slot11-> fallisce per la coin tax
+        } catch (Exception e){
+            exception = true;
+            e.printStackTrace();
+        }
+        assertEquals(true, exception);
+        assertEquals(redStone, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.STONE).get());
+        assertEquals(redCoin, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).get());
+        assertEquals(redWood, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.WOOD).get());
+        //re-try-------------------------------------------------------------------------------------------------------
+        //CHEAT MODE layer RED-----------------------------------------------------------------------------------------
+        b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.SERVANT).add(1); redServant+=1;
+        exception = false;
+        try {
+            b.makeMove(mosse.get(27));//RED fm black in slot7 -> pesca slot8-> pesca slot14-> fallisce per costo carta
+            // che non viene soddisfatto a perchè si sceglie il privileges[0]
+        } catch (Exception e){
+            exception = true;
+            e.printStackTrace();
+        }
+        assertEquals(true, exception);
+        assertEquals(redStone, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.STONE).get());
+        assertEquals(redCoin, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).get());
+        assertEquals(redWood, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.WOOD).get());
+        assertEquals(redServant, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.SERVANT).get());
+        //re-try-------------------------------------------------------------------------------------------------------
+        exception = false;
+        try {
+            b.makeMove(mosse.get(27));//RED fm black in slot7 -> pesca slot8-> pesca slot14-> funziona
+        } catch (Exception e){
+            exception = true;
+            e.printStackTrace();
+        }
+        fm= null;
+        try {
+            fm = b.getPlayerByColor(Player.PlayerColor.RED).getFamilyMemberFromColor("black");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertEquals(false, exception);
+        assertEquals(true, fm.isUsed());
+        assertEquals(5, fm.owner.getNumberOfCards(Card.CardType.CHARACTER));
+        assertEquals(2, fm.owner.getNumberOfCards(Card.CardType.VENTURE));
+        redServant-=1; redCoin-=8; redStone+=1; redWood-=2; redFaithPts+=2;
+        //Resources Test
+        assertEquals(redServant, fm.owner.getResource(ResourceType.SERVANT).get());
+        assertEquals(redCoin, fm.owner.getResource(ResourceType.COIN).get());
+        assertEquals(redStone, fm.owner.getResource(ResourceType.STONE).get());
+        assertEquals(redWood, fm.owner.getResource(ResourceType.WOOD).get());
+        assertEquals(redFaithPts, fm.owner.getResource(ResourceType.FAITHPOINTS).get());
+        //end 18th move------------------------------------------------------------------------------------------------
+        exception = false;
+        try {
+            b.makeMove(mosse.get(28));//BLUE fm white in slot13
+        } catch (Exception e){
+            exception = true;
+            e.printStackTrace();
+        }
+        fm= null;
+        try {
+            fm = b.getPlayerByColor(Player.PlayerColor.BLUE).getFamilyMemberFromColor("white");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        blueCoin-=4;
+        assertEquals(false, exception);
+        assertEquals(true, fm.isUsed());
+        assertEquals(4, fm.owner.getNumberOfCards(Card.CardType.VENTURE));
+        assertEquals(blueCoin, fm.owner.getResource(ResourceType.COIN));
+        //end 18th move------------------------------------------------------------------------------------------------
+        exception = false;
+        try {
+            b.makeMove(mosse.get(29));//RED fm orange in slot2
+        } catch (Exception e){
+            exception = true;
+            e.printStackTrace();
+        }
+        redServant+=1;
+        assertEquals(false, exception);
+        assertEquals(redServant, fm.owner.getResource(ResourceType.SERVANT));
+        assertEquals(2, fm.owner.getNumberOfCards(Card.CardType.TERRITORY));
+        //end 19th move------------------------------------------------------------------------------------------------
+        exception = false;
+        try {
+            b.makeMove(mosse.get(30));//Blue fm black ghost move
+        } catch (Exception e){
+            exception = true;
+            e.printStackTrace();
+        }
+        assertEquals(false, exception);
+        //end 20th move------------------------------------------------------------------------------------------------
+        exception = false;
+        try {
+            b.makeMove(mosse.get(31));//RED fm neutral in slot1
+        } catch (Exception e){
+            exception = true;
+            e.printStackTrace();
+        }
+        assertEquals(true, exception);
+        assertEquals(redServant, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.SERVANT).get());
+        assertEquals(2,b.getPlayerByColor(Player.PlayerColor.RED).getNumberOfCards(Card.CardType.TERRITORY));
+        //CHEAT MODE layer RED-----------------------------------------------------------------------------------------
+        b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.MILITARYPOINTS).add(1); redServant+=3;
+        //re-try-------------------------------------------------------------------------------------------------------
+        exception = false;
+        try {
+            b.makeMove(mosse.get(32));//RED fm neutral in slot1
+        } catch (Exception e){
+            exception = true;
+            e.printStackTrace();
+        }
+        redServant-=1; redCoin+=1;
+        assertEquals(false, exception);
+        assertEquals(redServant, fm.owner.getResource(ResourceType.SERVANT));
+        assertEquals(3, fm.owner.getNumberOfCards(Card.CardType.TERRITORY));
+        assertEquals(redCoin, fm.owner.getResource(ResourceType.COIN));*/
     }
 
     private boolean checkFamilyMemberUsed(ArrayList<FamilyMember> familyMembers){
