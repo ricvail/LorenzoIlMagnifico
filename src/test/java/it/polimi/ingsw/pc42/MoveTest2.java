@@ -509,7 +509,6 @@ public class MoveTest2
         //CHEAT MODE layer RED-----------------------------------------------------------------------------------------
         b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.SERVANT).add(1); redServant+=1;
         //re-try-------------------------------------------------------------------------------------------------------
-        /*
         exception = false;
         try {
             b.makeMove(mosse.get(27));//RED fm black in slot7 -> pesca slot8-> pesca slot14-> fallisce per costo carta
@@ -526,7 +525,7 @@ public class MoveTest2
         //re-try-------------------------------------------------------------------------------------------------------
         exception = false;
         try {
-            b.makeMove(mosse.get(27));//RED fm black in slot7 -> pesca slot8-> pesca slot14-> legale
+            b.makeMove(mosse.get(28));//RED fm black in slot7 -> pesca slot8-> pesca slot14-> legale
         } catch (Exception e){
             exception = true;
             e.printStackTrace();
@@ -551,9 +550,8 @@ public class MoveTest2
         assertEquals(redFaithPts, fm.owner.getResource(ResourceType.FAITHPOINTS).get());
         //end 18th move------------------------------------------------------------------------------------------------
         exception = false;
-         /*
        try {
-            b.makeMove(mosse.get(28));//BLUE fm white in slot13
+            b.makeMove(mosse.get(29));//BLUE fm white in slot13
         } catch (Exception e){
             exception = true;
             e.printStackTrace();
@@ -572,12 +570,17 @@ public class MoveTest2
         //end 18th move------------------------------------------------------------------------------------------------
         exception = false;
         try {
-            b.makeMove(mosse.get(29));//RED fm orange in slot2
+            b.makeMove(mosse.get(30));//RED fm orange in slot2
         } catch (Exception e){
             exception = true;
             e.printStackTrace();
         }
         assertEquals(false, exception);
+        try {
+            fm = b.getPlayerByColor(Player.PlayerColor.RED).getFamilyMemberFromColor("white");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         assertEquals(2, fm.owner.getNumberOfCards(Card.CardType.TERRITORY));
         //effect: +1 servant
         redServant+=1;
@@ -585,7 +588,7 @@ public class MoveTest2
         //end 19th move------------------------------------------------------------------------------------------------
         exception = false;
         try {
-            b.makeMove(mosse.get(30));//Blue fm black ghost move
+            b.makeMove(mosse.get(31));//Blue fm black ghost move
         } catch (Exception e){
             exception = true;
             e.printStackTrace();
@@ -594,7 +597,7 @@ public class MoveTest2
         //end 20th move------------------------------------------------------------------------------------------------
         exception = false;
         try {
-            b.makeMove(mosse.get(31));//RED fm neutral in slot1 -> exception not enough militaryPoints
+            b.makeMove(mosse.get(32));//RED fm neutral in slot1 -> exception not enough militaryPoints
         } catch (Exception e){
             exception = true;
             e.printStackTrace();
@@ -603,23 +606,25 @@ public class MoveTest2
         assertEquals(redServant, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.SERVANT).get());
         assertEquals(2,b.getPlayerByColor(Player.PlayerColor.RED).getNumberOfCards(Card.CardType.TERRITORY));
         //CHEAT MODE layer RED-----------------------------------------------------------------------------------------
-        b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.MILITARYPOINTS).add(1); redMilitaryPts+=3;
+        b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.MILITARYPOINTS).add(3); redMilitaryPts+=3;
+        b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).add(3); redCoin+=3;
         //re-try-------------------------------------------------------------------------------------------------------
         exception = false;
         try {
-            b.makeMove(mosse.get(32));//RED fm neutral in slot1
+            b.makeMove(mosse.get(33));//RED fm neutral in slot1
         } catch (Exception e){
             exception = true;
             e.printStackTrace();
         }
         assertEquals(false, exception);
         assertEquals(3, fm.owner.getNumberOfCards(Card.CardType.TERRITORY));
-        //-1 servant, effect: +1 coin
-        redServant-=1; redCoin+=1;
+        //-1 servant, effect: +1 coin; -3 coinTax
+        redServant-=1; redCoin-=2;
         //Resources Test
         assertEquals(redServant, fm.owner.getResource(ResourceType.SERVANT).get());
         assertEquals(redCoin, fm.owner.getResource(ResourceType.COIN).get());
-        //end of 21th move---------------------------------------------------------------------------------------------
+                 /*
+//end of 21th move---------------------------------------------------------------------------------------------
         */
     }
 
