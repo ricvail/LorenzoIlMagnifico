@@ -567,7 +567,7 @@ public class MoveTest2
         assertEquals(false, exception);
         assertEquals(true, fm.isUsed());
         assertEquals(4, fm.owner.getNumberOfCards(Card.CardType.VENTURE));
-        assertEquals(blueCoin, fm.owner.getResource(ResourceType.COIN));
+        assertEquals(blueCoin, fm.owner.getResource(ResourceType.COIN).get());
         //end 18th move------------------------------------------------------------------------------------------------
         exception = false;
         try {
@@ -578,7 +578,7 @@ public class MoveTest2
         }
         redServant+=1;
         assertEquals(false, exception);
-        assertEquals(redServant, fm.owner.getResource(ResourceType.SERVANT));
+        assertEquals(redServant, fm.owner.getResource(ResourceType.SERVANT).get());
         assertEquals(2, fm.owner.getNumberOfCards(Card.CardType.TERRITORY));
         //end 19th move------------------------------------------------------------------------------------------------
         exception = false;
@@ -612,9 +612,10 @@ public class MoveTest2
         }
         redServant-=1; redCoin+=1;
         assertEquals(false, exception);
-        assertEquals(redServant, fm.owner.getResource(ResourceType.SERVANT));
+        assertEquals(redServant, fm.owner.getResource(ResourceType.SERVANT).get());
         assertEquals(3, fm.owner.getNumberOfCards(Card.CardType.TERRITORY));
-        assertEquals(redCoin, fm.owner.getResource(ResourceType.COIN));*/
+        assertEquals(redCoin, fm.owner.getResource(ResourceType.COIN).get());
+        */
     }
 
     private boolean checkFamilyMemberUsed(ArrayList<FamilyMember> familyMembers){

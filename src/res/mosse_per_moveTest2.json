@@ -192,6 +192,80 @@
           "servants":0
         }
       }
+    },
+    {
+      "DESCRIZIONE": "RED fm black in slot7 -> pesca slot6-> pesca slot 11-> fallisce per cointax ",
+      "familyMember": "black",
+      "servants": 0,
+      "slotID": 7,
+      "immediateEffect": {
+        "slotID": 6,
+        "servants": 0,
+        "immediateEffect": {
+          "slotID": 11,
+          "servants": 0
+        }
+      }
+    },
+    {
+      "DESCRIZIONE": "RED fm black in slot7 -> pesca slot8, priviliges:0-> pesca slot 14-> fallisce per costo card ",
+      "familyMember": "black",
+      "servants": 0,
+      "slotID": 7,
+      "immediateEffect": {
+        "slotID": 8,
+        "servants": 1,
+        "privileges":[0],
+        "immediateEffect": {
+          "slotID": 14,
+          "servants": 0
+        }
+      }
+    },
+    {
+      "DESCRIZIONE": "RED fm black in slot7 -> pesca slot8, priviliges:2-> pesca slot 14-> legale grazie ai privilegi ",
+      "familyMember": "black",
+      "servants": 0,
+      "slotID": 7,
+      "immediateEffect": {
+        "slotID": 8,
+        "servants": 1,
+        "privileges":[2],
+        "immediateEffect": {
+          "slotID": 14,
+          "servants": 0
+        }
+      }
+    },
+    {
+      "DESCRIZIONE": "Blue fm white in slotID 13, cost 4 coins, no cointax -> legal",
+      "familyMember": "white",
+      "servants":0,
+      "slotID":13
+    },
+    {
+      "DESCRIZIONE": "Red fm orange in slotID 2 -> legal",
+      "familyMember": "orange",
+      "servants":0,
+      "slotID":2
+    },
+    {
+      "DESCRIZIONE": "Blue ghost move",
+      "familyMember": "black",
+      "servants":0,
+      "slotID":0
+    },
+    {
+      "DESCRIZIONE": "Red fm neutral in slotID 1, 1 servant -> exception not enough milpts",
+      "familyMember": "neutral",
+      "servants":1,
+      "slotID":1
+    },
+    {
+      "DESCRIZIONE": "Red fm neutral in slotID 1, 1 servant -> legal",
+      "familyMember": "neutral",
+      "servants":1,
+      "slotID":1
     }
   ]
 }
