@@ -17,6 +17,7 @@ public class Player {
     private PlayerColor color;
     private ArrayList<iCard> cardsOwned;
     private ArrayList<FamilyMember> familyMembers;
+    public ArrayList<ResourceWrapper> resources;
 
     public PlayerColor getColor() {
         return color;
@@ -26,7 +27,6 @@ public class Player {
         this.color = color;
     }
 
-    private ArrayList<ResourceWrapper> resources;
 
     public Player (PlayerColor color){
         this();
@@ -62,24 +62,6 @@ public class Player {
         familyMembers.add(new FamilyMember(this, Dice.DiceColor.NEUTRAL));
     }
 
-    public void addBonuses(int actionID, JsonNode bonuses){
-        Iterator <String> names = bonuses.fieldNames();
-        while (names.hasNext()){
-            String key =names.next();
-            try {
-                ResourceType rt = ResourceType.fromString(key);
-                getResource(rt).addBonus(actionID, bonuses.get(key).asInt());
-            } catch (Exception e ){
-                // nothing
-            }
-        }
-    }
-
-    public void enableBonuses(int actionID){
-        for (ResourceWrapper w : resources){
-            w.enableBonus(actionID);
-        }
-    }
 
     public ResourceWrapper getResource(ResourceType rt){
         for (ResourceWrapper res: resources) {

@@ -1,27 +1,27 @@
 {
   "moves":[
     {
-      "DESCRIZIONE":"Turno del giocatore rosso. posiziona il fm bianco(=1) nello slotID 1",
+      "DESCRIZIONE":"0Turno del giocatore rosso. posiziona il fm bianco(=1) nello slotID 1",
       "DESCRIZIONE2": "no cost, mossa legale",
       "familyMember": "white",
       "servants": 0,
       "slotID": 1
     },
     {
-      "DESCRIZIONE": "Turno del g blue, prova a mettere fm arancio(=3) nello slotID 12",
+      "DESCRIZIONE": "1Turno del g blue, prova a mettere fm arancio(=3) nello slotID 12",
       "DESCRIZIONE2": "mossa non legale, mi aspetto ex",
       "familyMember": "orange",
       "servants": 0,
       "slotID": 12
     },
     {
-      "DESCRIZIONE": "Ancora turno g blue, mette fm nero(=6) nello slotID 12 con un servant",
+      "DESCRIZIONE": "2Ancora turno g blue, mette fm nero(=6) nello slotID 12 con un servant",
       "familyMember": "black",
       "servants": 1,
       "slotID": 12
     },
     {
-      "DESCRIZIONE": "Turno g rosso, mette fm nero(=6) nello slotID 7, +1 stone e card, legale",
+      "DESCRIZIONE": "3Turno g rosso, mette fm nero(=6) nello slotID 7, +1 stone e card, legale",
       "familyMember": "black",
       "servants": 1,
       "slotID": 8,
@@ -31,31 +31,31 @@
       }
     },
     {
-      "DESCRIZIONE": "Blue slotID 13, fm orange, card cost > risorse, fallisce",
+      "DESCRIZIONE": "4Blue slotID 13, fm orange, card cost > risorse, fallisce",
       "familyMember": "orange",
       "servants": 0,
       "slotID": 13
     },
     {
-      "DESCRIZIONE": "Blue fm white, slotID 14, costo ok, legale",
+      "DESCRIZIONE": "5Blue fm white, slotID 14, costo ok, legale",
       "familyMember": "white",
       "servants": 2,
       "slotID": 14
     },
     {
-      "DESCRIZIONE": "Turno g rosso, mette fm neutral con 1 servant nello slotID 10, fallisce",
+      "DESCRIZIONE": "6Turno g rosso, mette fm neutral con 1 servant nello slotID 10, fallisce",
       "familyMember": "neutral",
       "servants": 1,
       "slotID": 10
     },
     {
-      "DESCRIZIONE": "Turno giocatore rosso, rieffetua la mossa precedente in sloID 9",
+      "DESCRIZIONE": "7Turno giocatore rosso, rieffetua la mossa precedente in sloID 9",
       "familyMember": "neutral",
       "servants": 1,
       "slotID": 9
     },
     {
-      "DESCRIZIONE": "cost 3 stone e 3 cointax, +1 coins bonus actionspace, blue con fm orange in slotID 15 ",
+      "DESCRIZIONE": "8cost 3 stone e 3 cointax, +1 coins bonus actionspace, blue con fm orange in slotID 15 ",
       "familyMember": "neutral",
       "servants": 5,
       "slotID": 15,
@@ -65,13 +65,13 @@
       }
     },
     {
-      "DESCRIZIONE": "Rosso tenta di mettere fm orange in slotID 2, già fm red -> exception ",
+      "DESCRIZIONE": "9Rosso tenta di mettere fm orange in slotID 2, già fm red -> exception ",
       "familyMember": "orange",
       "servants": 0,
       "slotID": 2
     },
     {
-      "DESCRIZIONE": "Rosso fm orange + 4 servi  in slotID 16, + 2 coin e card, non legale privileges uguali",
+      "DESCRIZIONE": "10Rosso fm orange + 4 servi  in slotID 16, + 2 coin e card, non legale privileges uguali",
       "familyMember": "orange",
       "servants": 4,
       "slotID":16,
@@ -81,7 +81,7 @@
       }
     },
     {
-      "DESCRIZIONE": "Rosso fm orange + 4 servi  in slotID 16, + 2 coin e card, legale",
+      "DESCRIZIONE": "11Rosso fm orange + 4 servi  in slotID 16, + 2 coin e card, legale",
       "familyMember": "orange",
       "servants": 4,
       "slotID":16,
@@ -91,28 +91,28 @@
       }
     },
     {
-      "DESCRIZIONE": " Blue fm neutral slotID 17, council, + 1 servant e privileges 2 coins",
+      "DESCRIZIONE": " 12Blue fm neutral slotID 17, council, + 1 servant e privileges 2 coins",
       "familyMember": "orange",
       "servants": 1,
       "slotID":17,
       "privileges": [2]
     },
     {
-      "DESCRIZIONE": "Blue fm black +1 servant, + 2coins, payment 1 -> fallisce per le resources",
+      "DESCRIZIONE": "13Blue fm black +1 servant, + 2coins, payment 1 -> fallisce per le resources",
       "familyMember": "black",
       "servants":1,
       "slotID":16,
       "paymentChoice":1
     },
     {
-      "DESCRIZIONE": "Blue fm black +1 servant, + 2coins, payment 0-> legale -2 mpts, 3fpts",
+      "DESCRIZIONE": "14Blue fm black +1 servant, + 2coins, payment 0-> legale -2 mpts, 3fpts",
       "familyMember": "black",
       "servants":1,
       "slotID":16,
       "paymentChoice":0
     },
     {
-      "DESCRIZIONE": "RED fm black + 1 servant in slotID 8, -3 coins, prova a prender card slotID 6 -> fallisce cointax",
+      "DESCRIZIONE": "15RED fm black + 1 servant in slotID 8, -3 coins, prova a prender card slotID 6 -> fallisce cointax",
       "familyMember": "black",
       "servants":1,
       "slotID":8,
@@ -122,7 +122,7 @@
       }
     },
     {
-      "DESCRIZIONE": "RED fm black + 1 servant in slotID 8, -3 coins,extra card slotID 7 (-3 cointax)",
+      "DESCRIZIONE": "16RED fm black + 1 servant in slotID 8, -3 coins,extra card slotID 7 (-3 cointax)",
       "familyMember": "black",
       "servants":1,
       "slotID":8,
@@ -132,55 +132,55 @@
       }
     },
     {
-      "DESCRIZIONE": "Blue tenta fm orange in slotID 7, exception carta già pescata",
+      "DESCRIZIONE": "17Blue tenta fm orange in slotID 7, exception carta già pescata",
       "familyMember": "orange",
       "servants":2,
       "slotID":7
     },
     {
-      "DESCRIZIONE": "Blue ghost move",
+      "DESCRIZIONE": "18Blue ghost move",
       "familyMember": "orange",
       "servants":0,
       "slotID":0
     },
     {
-      "DESCRIZIONE": "Red ghost move",
+      "DESCRIZIONE": "19Red ghost move",
       "familyMember": "orange",
       "servants":0,
       "slotID":0
     },
     {
-      "DESCRIZIONE": "Blue ghost move",
+      "DESCRIZIONE": "20Blue ghost move",
       "familyMember": "white",
       "servants":0,
       "slotID":0
     },
     {
-      "DESCRIZIONE": "Red ghost move",
+      "DESCRIZIONE": "21Red ghost move",
       "familyMember": "white",
       "servants":0,
       "slotID":0
     },
     {
-      "DESCRIZIONE": "Blue ghost move",
+      "DESCRIZIONE": "22Blue ghost move",
       "familyMember": "neutral",
       "servants":0,
       "slotID":0
     },
     {
-      "DESCRIZIONE": "Red ghost move",
+      "DESCRIZIONE": "23Red ghost move",
       "familyMember": "neutral",
       "servants":0,
       "slotID":0
     },
     {
-      "DESCRIZIONE": "Blue fm orange slotID 10, card cost 3 wood, legale",
+      "DESCRIZIONE": "24Blue fm orange slotID 10, card cost 3 wood, legale",
       "familyMember": "orange",
       "servants":0,
       "slotID":10
     },
     {
-      "DESCRIZIONE": "RED fm black in slot7 -> pesca slot6-> pesca slot2-> fallisce doveva essere buildings ",
+      "DESCRIZIONE": "25RED fm black in slot7 -> pesca slot6-> pesca slot2-> fallisce doveva essere buildings ",
       "familyMember": "black",
       "servants":0,
       "slotID":7,
@@ -194,7 +194,7 @@
       }
     },
     {
-      "DESCRIZIONE": "RED fm black in slot7 -> pesca slot6-> pesca slot 11-> fallisce per cointax ",
+      "DESCRIZIONE": "26RED fm black in slot7 -> pesca slot6-> pesca slot 11-> fallisce per cointax ",
       "familyMember": "black",
       "servants": 0,
       "slotID": 7,
@@ -208,15 +208,15 @@
       }
     },
     {
-      "DESCRIZIONE": "RED fm black in slot7 -> pesca slot8, priviliges:0-> pesca slot 14-> fallisce per costo card ",
+      "DESCRIZIONE": "27RED fm black in slot7 -> pesca slot8, priviliges:0-> pesca slot 14-> fallisce per costo card ",
       "familyMember": "black",
       "servants": 0,
       "slotID": 7,
       "immediateEffect": {
         "slotID": 8,
         "servants": 1,
-        "privileges":[0],
         "immediateEffect": {
+          "privileges":[0],
           "slotID": 14,
           "servants": 0
         }
@@ -230,8 +230,8 @@
       "immediateEffect": {
         "slotID": 8,
         "servants": 1,
-        "privileges":[2],
         "immediateEffect": {
+          "privileges":[2],
           "slotID": 14,
           "servants": 0
         }

@@ -313,7 +313,6 @@ public class MoveTest2
         boolean redFMUsed = checkFamilyMemberUsed(b.getPlayerByColor(Player.PlayerColor.RED).getFamilyMembers());
         assertEquals(false, redFMUsed);
         //TODO check cards cleanup
-        /*
         //CHEAT MODE player Blue---------------------------------------------------------------------------------------
         b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.SERVANT).add(1); blueServant+=1;
         //START SECOND ROUND-------------------------------------------------------------------------------------------
@@ -468,7 +467,7 @@ public class MoveTest2
         assertEquals(2, b.getEra());
         //END SECOND ROUND---------------------------------------------------------------------------------------------
         //CHEAT MODE player Blue---------------------------------------------------------------------------------------
-        b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.WOOD).add(2); blueWooD+=3;
+        b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.WOOD).add(3); blueWooD+=3;
         //START THIRD ROUND--------------------------------------------------------------------------------------------
         exception = false;
         try {
@@ -481,14 +480,14 @@ public class MoveTest2
         // cost 3 wood
         blueWooD-=3;
         //CHEAT MODE layer RED-----------------------------------------------------------------------------------------
-        b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).add(8); redCoin+=9;
+        b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).add(8); redCoin+=8;
         //end 17th move------------------------------------------------------------------------------------------------
         exception = false;
         try {
             b.makeMove(mosse.get(25));//RED fm black in slot7 -> pesca slot6-> pesca slot2-> exception needed buildings
         } catch (Exception e){
             exception = true;
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         assertEquals(true, exception);
         assertEquals(redStone, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.STONE).get());
@@ -501,7 +500,7 @@ public class MoveTest2
             b.makeMove(mosse.get(26));//RED fm black in slot7 -> pesca slot6-> pesca slot11-> fallisce per la coin tax
         } catch (Exception e){
             exception = true;
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         assertEquals(true, exception);
         assertEquals(redStone, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.STONE).get());
@@ -510,13 +509,14 @@ public class MoveTest2
         //CHEAT MODE layer RED-----------------------------------------------------------------------------------------
         b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.SERVANT).add(1); redServant+=1;
         //re-try-------------------------------------------------------------------------------------------------------
+        /*
         exception = false;
         try {
             b.makeMove(mosse.get(27));//RED fm black in slot7 -> pesca slot8-> pesca slot14-> fallisce per costo carta
             // che non viene soddisfatto a perchè si sceglie il privileges[0]
         } catch (Exception e){
             exception = true;
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         assertEquals(true, exception);
         assertEquals(redStone, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.STONE).get());
@@ -551,7 +551,8 @@ public class MoveTest2
         assertEquals(redFaithPts, fm.owner.getResource(ResourceType.FAITHPOINTS).get());
         //end 18th move------------------------------------------------------------------------------------------------
         exception = false;
-        try {
+         /*
+       try {
             b.makeMove(mosse.get(28));//BLUE fm white in slot13
         } catch (Exception e){
             exception = true;

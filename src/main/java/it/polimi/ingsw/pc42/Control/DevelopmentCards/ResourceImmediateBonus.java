@@ -19,23 +19,23 @@ public class ResourceImmediateBonus extends AbstractDecorator {
     @Override
     public void drawCard(JsonNode move, FamilyMember fm) throws ActionAbortedException {
         try{
-            fm.owner.getResource(resourceType).add(q);
+            fm.owner.getResource(resourceType).addUsingBonus(q);
         }
         catch (IllegalArgumentException e){
-            fm.owner.getResource(resourceType).add(q*-1);
+            fm.owner.getResource(resourceType).abortAddUsingBonus(q);
             throw new ActionAbortedException(false);
         }
         try {
             super.drawCard(move, fm);
         } catch (ActionAbortedException e){
-            fm.owner.getResource(resourceType).add(q*-1);
+            fm.owner.getResource(resourceType).abortAddUsingBonus(q);
             throw e;
         }
     }
 
     @Override
     public void undoDrawCard(JsonNode move, FamilyMember fm) {
-        fm.owner.getResource(resourceType).add(q*-1);
+        fm.owner.getResource(resourceType).undoAddUsingBonus(q);
         super.undoDrawCard(move, fm);
     }
 

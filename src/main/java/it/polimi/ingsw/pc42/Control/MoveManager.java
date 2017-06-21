@@ -10,6 +10,8 @@ import it.polimi.ingsw.pc42.Model.Board;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
 import it.polimi.ingsw.pc42.Model.Player;
 
+import javax.naming.CompositeName;
+
 /**
  * Created by RICVA on 13/06/2017.
  */
@@ -67,7 +69,7 @@ public class MoveManager {
     }
 
 
-    private static void undoGetActionSpaceFromJson(Board b, JsonNode move, FamilyMember fm) throws ActionAbortedException {
+    public static void undoGetActionSpaceFromJson(Board b, JsonNode move, FamilyMember fm) throws ActionAbortedException {
         iActionSpace space=null;
         try {
             space = b.getActionSpaceByID(move.get("slotID").asInt());
@@ -98,6 +100,9 @@ public class MoveManager {
 
     private static void undoApplyPlayerPermanentBonus(JsonNode move, FamilyMember fm, iActionSpace space) throws ActionAbortedException {
         undoApplyServants(move, fm, space);
+        for (ResourceWrapper w:fm.owner.resources) {
+            w.resetBonus();
+        }
     }
     private static void applyPlayerPermanentBonus(JsonNode move, FamilyMember fm, iActionSpace space) throws ActionAbortedException {
         /**
@@ -107,7 +112,11 @@ public class MoveManager {
          *          Enable resourceWrapper CostBonus
          *      Also an undo permanent CostBonus (for the catch segment)
          */
+
         applyServants(move, fm, space);
+        for (ResourceWrapper w:fm.owner.resources) {
+            w.resetBonus();
+        }
     }
 
     private static void undoApplyServants(JsonNode move, FamilyMember fm, iActionSpace space) throws ActionAbortedException {

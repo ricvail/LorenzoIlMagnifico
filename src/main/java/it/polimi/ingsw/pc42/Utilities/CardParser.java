@@ -3,6 +3,7 @@ package it.polimi.ingsw.pc42.Utilities;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import it.polimi.ingsw.pc42.Control.ActionSpace.Area;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.*;
 import it.polimi.ingsw.pc42.Control.ResourceType;
 
@@ -44,7 +45,7 @@ public class CardParser {
 
         } catch (Exception e){
             System.out.println(root.get("name").asText());
-            //e.printStackTrace();
+            e.printStackTrace();
         }
         return c;
     }
@@ -70,6 +71,7 @@ public class CardParser {
                         throw new Exception("Invalid privileges field");
                     }
                 } else if (key.equalsIgnoreCase("card")){
+                    c = applyExtraCardBonus(c, jsonNode.get("card"));
 
                 } else if (key.equalsIgnoreCase("foreach")){
                     c = applyForeachImmediate(jsonNode.get("foreach"), c);
@@ -79,6 +81,47 @@ public class CardParser {
             }
         }
         return c;
+    }
+
+    private static iCard applyExtraCardBonus(iCard c, JsonNode node) throws Exception {
+        if (!(node.has("value")&&node.has("type"))){
+            throw new Exception("missing value or type");
+        }
+        ArrayList<Area> areas = new ArrayList<>();
+        ArrayList<ExtraCard.bonus> bonuses = new ArrayList<>();
+        int value = 0;
+        Iterator<String> keys = node.fieldNames();
+        while ((keys.hasNext())){
+            String key = keys.next();
+            try {
+                ResourceType rt = ResourceType.fromString(key);
+                bonuses.add(new ExtraCard.bonus(rt, node.get(key).asInt()));
+            } catch (Exception e){
+                if ("value".equalsIgnoreCase(key)){
+                    value=node.get(key).asInt();
+                } else if ("type".equalsIgnoreCase(key)){
+                    String type = node.get(key).asText();
+                    try {
+                        Area a = Area.fromString(type);
+                        areas.add(a);
+                    } catch (Exception ex) {
+                        if ("all".equalsIgnoreCase(type)) {
+                            areas.add(Area.TERRITORY);
+                            areas.add(Area.BUILDING);
+                            areas.add(Area.CHARACTER);
+                            areas.add(Area.VENTURE);
+                        } else if ("harvest".equalsIgnoreCase(type)) {
+                            return c;
+                        } else if ("production".equalsIgnoreCase(type)) {
+                            return c;
+                        } else {
+                            throw new Exception("Not a valid card type: " + type);
+                        }
+                    }
+                }
+            }
+        }
+        return new ExtraCard(c, areas, bonuses, value);
     }
 
     private static iCard applyForeachImmediate(JsonNode jsonNode, iCard c) throws Exception{

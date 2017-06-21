@@ -1,7 +1,5 @@
 package it.polimi.ingsw.pc42.Control;
 
-import java.util.ArrayList;
-
 /**
  * Created by RICVA on 16/05/2017.
  */
@@ -9,52 +7,46 @@ public class ResourceWrapper extends IntWrapper implements iResourceWrapper {
 
     ResourceType type;
 
-    CostBonus active;
+    public CostBonus activeBonus;
 
-    ArrayList<CostBonus> costBonuses;
 
     public ResourceWrapper(ResourceType t, int q){
         super (q);
         type=t;
-        costBonuses=new ArrayList<>();
     }
     public ResourceWrapper(ResourceType t){
         super ();
         type=t;
-        costBonuses=new ArrayList<>();
     }
 
-    public void enableBonus(int actionID){
-        active=getBonus(actionID);
+    public void resetBonus(){
+        activeBonus=new CostBonus(0);
     }
-    public CostBonus getBonus(int actionID){
-        for (CostBonus b : costBonuses){
-            if (b.actionID==actionID){
-                return b;
-            }
+
+    public CostBonus getBonus(){
+        return activeBonus;
+    }
+
+    public void addBonus(int bonus){
+        if (activeBonus ==null){
+            activeBonus =new CostBonus(0);
         }
-        CostBonus b =new CostBonus(0, 0, actionID);
-        costBonuses.add(b);
-        return b;
-    }
-
-    public void addBonus(int actionID, int bonus){
-        CostBonus b = getBonus(actionID);
+        CostBonus b = activeBonus;
         b.initialBonus+= bonus;
         b.remainingBonus+=bonus;
     }
 
     public void addUsingBonus(int q){
-        if (active==null){
-            active=new CostBonus(0, 0, -1);
+        if (activeBonus ==null){
+            activeBonus =new CostBonus(0);
         }
         if (q<0){
             q*=-1;
-            if (active.remainingBonus>q){
-                active.remainingBonus-=q;
+            if (activeBonus.remainingBonus>q){
+                activeBonus.remainingBonus-=q;
             } else {
-                int toSubtract=q-active.remainingBonus;
-                active.remainingBonus=0;
+                int toSubtract=q- activeBonus.remainingBonus;
+                activeBonus.remainingBonus=0;
                 add(toSubtract*-1);
             }
         } else {
@@ -62,21 +54,37 @@ public class ResourceWrapper extends IntWrapper implements iResourceWrapper {
         }
     }
 
-    public void undoAddUsingBonus(int q){
-        if (q<0&&active.remainingBonus<active.initialBonus){
+    public void abortAddUsingBonus(int q){
+        if (q<0&& activeBonus.remainingBonus< activeBonus.initialBonus){
             q*=-1;
-            int bonusUsed=active.initialBonus-active.remainingBonus;
+            int bonusUsed= activeBonus.initialBonus- activeBonus.remainingBonus;
             if (q<=bonusUsed){
-                active.remainingBonus+=q;
+                activeBonus.remainingBonus+=q;
             }else {
-                active.remainingBonus=active.initialBonus;
+                activeBonus.remainingBonus= activeBonus.initialBonus;
                 add(q-bonusUsed);
             }
         } else {
             add(q*-1);
         }
+    }
 
-
+    public void undoAddUsingBonus(int q){
+        if (activeBonus ==null){
+            activeBonus =new CostBonus(0);
+        }
+        if (q<0){
+            q*=-1;
+            if (activeBonus.remainingBonus>q){
+                activeBonus.remainingBonus-=q;
+            } else {
+                int toSubtract=q- activeBonus.remainingBonus;
+                activeBonus.remainingBonus=0;
+                add(toSubtract);
+            }
+        } else {
+            add(q*-1);
+        }
     }
 
     @Override
@@ -92,14 +100,13 @@ public class ResourceWrapper extends IntWrapper implements iResourceWrapper {
         }
     }
 
-    class CostBonus {
-        public CostBonus(int initialBonus, int remainingBonus, int actionID) {
+    public class CostBonus {
+        public CostBonus(int initialBonus) {
             this.initialBonus = initialBonus;
-            this.remainingBonus = remainingBonus;
-            this.actionID = actionID;
+            this.remainingBonus = initialBonus;
         }
 
-        int initialBonus, remainingBonus, actionID;
+        int initialBonus, remainingBonus;
     }
 
 }

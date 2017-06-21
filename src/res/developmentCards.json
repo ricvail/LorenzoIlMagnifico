@@ -1123,7 +1123,7 @@
         "militaryPoints": 2,
         "card": {
           "value": 6,
-          "type": "territories"
+          "type": "territory"
         }
       }
     },
@@ -1140,7 +1140,7 @@
       "immediateEffect": {
         "card": {
           "value": 6,
-          "type": "buildings",
+          "type": "building",
           "wood": 1,
           "stone": 1
         }
@@ -1159,7 +1159,7 @@
       "immediateEffect": {
         "card": {
           "value": 6,
-          "type": "characters",
+          "type": "character",
           "coins": 2
         }
       }
@@ -1178,7 +1178,7 @@
         "privileges": 1,
         "card": {
           "value": 6,
-          "type": "ventures"
+          "type": "venture"
         }
       }
     },
