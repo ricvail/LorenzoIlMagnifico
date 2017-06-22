@@ -318,7 +318,7 @@ public class MoveTest2
         boolean redFMUsed = checkFamilyMemberUsed(b.getPlayerByColor(Player.PlayerColor.RED).getFamilyMembers());
         assertEquals(false, redFMUsed);
         //TODO check cards cleanup
- //CHEAT MODE player Blue---------------------------------------------------------------------------------------
+        //CHEAT MODE player Blue---------------------------------------------------------------------------------------
         b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.SERVANT).add(1); blueServant+=1;
         //START SECOND ROUND-------------------------------------------------------------------------------------------
         exception = false;
@@ -477,22 +477,24 @@ public class MoveTest2
         exception = false;
         try {
             b.makeMove(mosse.get(24));//Blue fm orange slotID 10, card cost 3 wood, legale
-        } catch (Exception e){
+        } catch (ActionAbortedException ae){
             exception = true;
+        } catch (Exception e) {
             e.printStackTrace();
         }
         assertEquals(false, exception);
-        // cost 3 wood
-        blueWooD-=3;
+        // cost 3 wood, effect: 4 vpts
+        blueWooD-=3; blueVictoryPts+=4;
         //CHEAT MODE layer RED-----------------------------------------------------------------------------------------
         b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).add(8); redCoin+=8;
         //end 17th move------------------------------------------------------------------------------------------------
         exception = false;
         try {
             b.makeMove(mosse.get(25));//RED fm black in slot7 -> pesca slot6-> pesca slot2-> exception needed buildings
-        } catch (Exception e){
+        } catch (ActionAbortedException ae){
             exception = true;
-            //e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         assertEquals(true, exception);
         assertEquals(redStone, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.STONE).get());
@@ -503,9 +505,10 @@ public class MoveTest2
         exception = false;
         try {
             b.makeMove(mosse.get(26));//RED fm black in slot7 -> pesca slot6-> pesca slot11-> fallisce per la coin tax
-        } catch (Exception e){
+        } catch (ActionAbortedException ae){
             exception = true;
-            //e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         assertEquals(true, exception);
         assertEquals(redStone, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.STONE).get());
@@ -518,9 +521,10 @@ public class MoveTest2
         try {
             b.makeMove(mosse.get(27));//RED fm black in slot7 -> pesca slot8-> pesca slot14-> fallisce per costo carta
             // che non viene soddisfatto a perchè si sceglie il privileges[0]
-        } catch (Exception e){
+        } catch (ActionAbortedException ae){
             exception = true;
-            //e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         assertEquals(true, exception);
         assertEquals(redStone, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.STONE).get());
@@ -531,8 +535,9 @@ public class MoveTest2
         exception = false;
         try {
             b.makeMove(mosse.get(28));//RED fm black in slot7 -> pesca slot8-> pesca slot14-> legale
-        } catch (Exception e){
+        } catch (ActionAbortedException ae){
             exception = true;
+        } catch (Exception e) {
             e.printStackTrace();
         }
         fm= null;
@@ -557,18 +562,19 @@ public class MoveTest2
         exception = false;
        try {
             b.makeMove(mosse.get(29));//BLUE fm white in slot13
-        } catch (Exception e){
-            exception = true;
-            e.printStackTrace();
-        }
+       } catch (ActionAbortedException ae){
+           exception = true;
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
         fm= null;
         try {
             fm = b.getPlayerByColor(Player.PlayerColor.BLUE).getFamilyMemberFromColor("white");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //card cost: coin -4, effect: +6 mpts
-        blueCoin-=4; blueMilitaryPts+=6;
+        //card cost: coin -6, effect: +6 mpts
+        blueCoin-=6; blueMilitaryPts+=6;
         assertEquals(false, exception);
         assertEquals(true, fm.isUsed());
         assertEquals(4, fm.owner.getNumberOfCards(Card.CardType.VENTURE));
@@ -576,8 +582,9 @@ public class MoveTest2
         exception = false;
         try {
             b.makeMove(mosse.get(30));//RED fm orange in slot2
-        } catch (Exception e){
+        } catch (ActionAbortedException ae){
             exception = true;
+        } catch (Exception e) {
             e.printStackTrace();
         }
         assertEquals(false, exception);
@@ -594,8 +601,7 @@ public class MoveTest2
         exception = false;
         try {
             b.makeMove(mosse.get(31));//Blue fm black ghost move
-        } catch (Exception e){
-            exception = true;
+        } catch (Exception e) {
             e.printStackTrace();
         }
         assertEquals(false, exception);
@@ -603,8 +609,9 @@ public class MoveTest2
         exception = false;
         try {
             b.makeMove(mosse.get(32));//RED fm neutral in slot1 -> exception not enough militaryPoints
-        } catch (Exception e){
+        } catch (ActionAbortedException ae){
             exception = true;
+        } catch (Exception e) {
             e.printStackTrace();
         }
         assertEquals(true, exception);
@@ -617,8 +624,9 @@ public class MoveTest2
         exception = false;
         try {
             b.makeMove(mosse.get(33));//RED fm neutral in slot1
-        } catch (Exception e){
+        } catch (ActionAbortedException ae){
             exception = true;
+        } catch (Exception e) {
             e.printStackTrace();
         }
         assertEquals(false, exception);
@@ -628,9 +636,10 @@ public class MoveTest2
         //Resources Test
         assertEquals(redServant, fm.owner.getResource(ResourceType.SERVANT).get());
         assertEquals(redCoin, fm.owner.getResource(ResourceType.COIN).get());
-                 /*
-//end of 21st move---------------------------------------------------------------------------------------------
-        */
+        //end of 21st move---------------------------------------------------------------------------------------------
+        printResources(b.getPlayerByColor(Player.PlayerColor.RED));
+        printResources(b.getPlayerByColor(Player.PlayerColor.BLUE));
+        printStatus();
     }
 
     private boolean checkFamilyMemberUsed(ArrayList<FamilyMember> familyMembers){
@@ -645,20 +654,31 @@ public class MoveTest2
 
     private void printStatus(){
         //BLUE
-        System.out.println("bluecoin:"+blueCoin);
-        System.out.println("blueservant:"+blueServant);
-        System.out.println("blueStone:"+blueStone);
-        System.out.println("blueWooD:"+blueWooD);
-        System.out.println("blueMilitaryPts:"+blueMilitaryPts);
-        System.out.println("blueFaithPts:"+blueFaithPts);
-        System.out.println("blueVictoryPts:"+blueVictoryPts);
+        System.out.println();
+        System.out.print(" bluecoin:"+blueCoin);
+        System.out.print(" blueservant:"+blueServant);
+        System.out.print(" blueStone:"+blueStone);
+        System.out.print(" blueWooD:"+blueWooD);
+        System.out.print(" blueMilitaryPts:"+blueMilitaryPts);
+        System.out.print(" blueFaithPts:"+blueFaithPts);
+        System.out.print(" blueVictoryPts:"+blueVictoryPts);
         //RED
-        System.out.println("redCoin:"+redCoin);
-        System.out.println("redServant:"+redServant);
-        System.out.println("redStone:"+redStone);
-        System.out.println("redWood:"+redWood);
-        System.out.println("redMilitaryPts:"+redMilitaryPts);
-        System.out.println("redFaithPts:"+redFaithPts);
-        System.out.println("redVictoryPts:"+redVictoryPts);
+        System.out.println();
+        System.out.print(" redCoin:"+redCoin);
+        System.out.print(" redServant:"+redServant);
+        System.out.print(" redStone:"+redStone);
+        System.out.print(" redWood:"+redWood);
+        System.out.print(" redMilitaryPts:"+redMilitaryPts);
+        System.out.print(" redFaithPts:"+redFaithPts);
+        System.out.print(" redVictoryPts:"+redVictoryPts);
+    }
+
+    private void printResources(Player player){
+        System.out.println();
+        for(ResourceType rt : ResourceType.values()){
+            System.out.print(" #"+player.getColor().getPlayerColorString());
+            System.out.print(rt.getString()+":"+player.getResource(rt).get());
+        }
+
     }
 }
