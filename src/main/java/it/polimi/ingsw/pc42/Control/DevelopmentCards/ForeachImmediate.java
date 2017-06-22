@@ -14,7 +14,7 @@ public class ForeachImmediate extends AbstractDecorator {
 
     private counter counter;
     ResourceType resObtained;
-    int ratio;
+    float ratio;
 
     public ForeachImmediate(iCard c, ResourceType resObtained, int ratio, ResourceType resCounted) {
         super(c);

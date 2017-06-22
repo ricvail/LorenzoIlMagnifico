@@ -263,7 +263,6 @@ public class MoveTest2
         }
         assertEquals(3, redNeutral.getValue());
         assertEquals(redServant,  b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.SERVANT).get());
-
         //re-try-------------------------------------------------------------------------------------------------------
         exception = false;
         try {
@@ -319,7 +318,6 @@ public class MoveTest2
         boolean redFMUsed = checkFamilyMemberUsed(b.getPlayerByColor(Player.PlayerColor.RED).getFamilyMembers());
         assertEquals(false, redFMUsed);
         //TODO check cards cleanup
-               /*
  //CHEAT MODE player Blue---------------------------------------------------------------------------------------
         b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.SERVANT).add(1); blueServant+=1;
         //START SECOND ROUND-------------------------------------------------------------------------------------------

@@ -35,7 +35,11 @@ public class ResourceImmediateBonus extends AbstractDecorator {
 
     @Override
     public void undoDrawCard(JsonNode move, FamilyMember fm) {
-        fm.owner.getResource(resourceType).undoAddUsingBonus(q);
+        try {
+            fm.owner.getResource(resourceType).undoAddUsingBonus(q);
+        }catch (IllegalArgumentException e){
+            //nada
+        }
         super.undoDrawCard(move, fm);
     }
 

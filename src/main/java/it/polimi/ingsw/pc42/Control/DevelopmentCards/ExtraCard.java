@@ -85,7 +85,7 @@ public class ExtraCard extends AbstractDecorator{
         super.undoDrawCard(move, fm);
         setNewBonuses(fm);
         try {
-            MoveManager.undoGetActionSpaceFromJson(getBoard(), move, ghost);
+            MoveManager.undoGetActionSpaceFromJson(getBoard(), move.get("immediateEffect"), ghost);
         } catch (ActionAbortedException e) {
             e.printStackTrace();
         }

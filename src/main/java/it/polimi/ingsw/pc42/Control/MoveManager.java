@@ -18,6 +18,7 @@ import javax.naming.CompositeName;
 public class MoveManager {
     public static void makeMove (Board b, JsonNode move) throws Exception {
         makeMove (b, b.getCurrentPlayer(), move);
+
         if (move.has("checking")&&move.get("checking").asBoolean()){
             //nothing
         } else {
@@ -34,6 +35,8 @@ public class MoveManager {
         if (!b.isPlayerTurn(p)){
             throw new Exception("it's not this player's turn");
         }
+        getFamilyMemberFromJson(b, move, p);
+        undoMove (b, b.getCurrentPlayer(), move);
         getFamilyMemberFromJson(b, move, p);
         if (move.has("checking")&&move.get("checking").asBoolean()){
             undoMove (b, b.getCurrentPlayer(), move);
@@ -168,8 +171,8 @@ public class MoveManager {
 
     private static void undoAction(JsonNode move, FamilyMember fm, iActionSpace space) throws ActionAbortedException {
         fm.setUsed(false);
-        space.getFamilyMembers().remove(fm);
         space.undoAction(move, fm);
+        space.getFamilyMembers().remove(fm);
     }
 
     private static void performAction(JsonNode move, FamilyMember fm, iActionSpace space) throws ActionAbortedException {
