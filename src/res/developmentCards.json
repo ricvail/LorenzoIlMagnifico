@@ -455,8 +455,8 @@
       "activationCost": 6,
       "costs": [
         {
-          "wood": 1,
-          "coins": 4
+          "wood": 2,
+          "coins": 2
         }
       ],
       "immediateEffect": {
@@ -480,8 +480,8 @@
       "activationCost": 4,
       "costs": [
         {
-          "wood": 1,
-          "coins": 2
+          "wood": 2,
+          "coins": 1
         }
       ],
       "immediateEffect": {
@@ -579,7 +579,7 @@
         }
       ],
       "immediateEffect": {
-        "victoryPoints": 5
+        "victoryPoints": 3
       },
       "permanentEffects": [
         {
@@ -724,7 +724,7 @@
         }
       ],
       "immediateEffect": {
-        "victoryPoints": 5
+        "victoryPoints": 3
       },
       "permanentEffects": [
         {
@@ -770,7 +770,7 @@
         }
       ],
       "immediateEffect": {
-        "victoryPoints": 5
+        "victoryPoints": 7
       },
       "permanentEffects": [
         {
@@ -1523,7 +1523,7 @@
         }
       ],
       "immediateEffect": {
-        "faithPoints": 5
+        "faithPoints": 2
       },
       "permanentEffects": [
         {
@@ -1567,7 +1567,7 @@
         }
       ],
       "immediateEffect": {
-        "militaryPoints": 5
+        "militaryPoints": 6
       },
       "permanentEffects": [
         {
@@ -1865,7 +1865,7 @@
         }
       ],
       "immediateEffect": {
-        "faithPoints": 5
+        "faithPoints": 4
       },
       "permanentEffects": [
         {
