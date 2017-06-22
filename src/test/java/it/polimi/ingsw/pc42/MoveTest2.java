@@ -85,8 +85,8 @@ public class MoveTest2
         }
         assertEquals(true, fm.isUsed());
         assertEquals(1, fm.owner.getNumberOfCards(Card.CardType.BUILDING));
-        //+2 immediate actionspace bonus, card cost: 1 wood, 4 coins, card bonus: 6 victory points
-        blueServant-= 1; blueMilitaryPts+=2; blueWooD-=1; blueCoin-=4; blueVictoryPts+=6;
+        //+2 immediate actionspace bonus, card cost: 2 wood, 2 coins, card bonus: 6 victory points
+        blueServant-= 1; blueMilitaryPts+=2; blueWooD-=2; blueCoin-=2; blueVictoryPts+=6;
         //Resources Test
         assertEquals(blueServant, fm.owner.getResource(ResourceType.SERVANT).get());
         assertEquals(blueMilitaryPts, fm.owner.getResource(ResourceType.MILITARYPOINTS).get());
@@ -117,6 +117,9 @@ public class MoveTest2
         assertEquals(redStone, fm.owner.getResource(ResourceType.STONE).get());
         assertEquals(redCoin, fm.owner.getResource(ResourceType.COIN).get());
         //end third move-----------------------------------------------------------------------------------------------
+        //CHEAT MODE---------------------------------------------------------------------------------------------------
+        blueCoin-=50;
+        //start 4th turn-----------------------------------------------------------------------------------------------
         exception = false;
         try {
             b.makeMove(mosse.get(4));//Blue slotID 13, orange, cost carta > resources -> exception
