@@ -93,6 +93,11 @@ public class MoveTest2
         assertEquals(blueWooD, fm.owner.getResource(ResourceType.WOOD).get());
         assertEquals(blueCoin, fm.owner.getResource(ResourceType.COIN).get());
         assertEquals(blueVictoryPts, fm.owner.getResource(ResourceType.VICTORYPOINTS).get());
+        //CHEAT MODE player BLUE----------------------------------------------------------------------------------------
+        //prima la carta toglieva 1 wood, ora ne toglie 2 quindi noi ne aggiungiamo artificialmente un altro
+        //in modo da avere lo stesso risultato finale (1 wood in meno)
+        b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.WOOD).add(1); blueWooD+=1;
+        b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.COIN).add(-2); blueCoin-=2;
         //end second move----------------------------------------------------------------------------------------------
         exception = false;
         try {
@@ -116,10 +121,7 @@ public class MoveTest2
         assertEquals(redServant, fm.owner.getResource(ResourceType.SERVANT).get());
         assertEquals(redStone, fm.owner.getResource(ResourceType.STONE).get());
         assertEquals(redCoin, fm.owner.getResource(ResourceType.COIN).get());
-        /*
         //end third move-----------------------------------------------------------------------------------------------
-        //CHEAT MODE---------------------------------------------------------------------------------------------------
-        blueCoin-=2; //HO TOLTO DUE COINS PERCHE' C'ERA UN ERRORE NELLA MOSSA PRECEDENTE CHE GLI FACEVA SPENDERE DUE COINS IN PIU'
         //start 4th turn-----------------------------------------------------------------------------------------------
         exception = false;
         try {
@@ -317,7 +319,8 @@ public class MoveTest2
         boolean redFMUsed = checkFamilyMemberUsed(b.getPlayerByColor(Player.PlayerColor.RED).getFamilyMembers());
         assertEquals(false, redFMUsed);
         //TODO check cards cleanup
-        //CHEAT MODE player Blue---------------------------------------------------------------------------------------
+               /*
+ //CHEAT MODE player Blue---------------------------------------------------------------------------------------
         b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.SERVANT).add(1); blueServant+=1;
         //START SECOND ROUND-------------------------------------------------------------------------------------------
         exception = false;
@@ -628,7 +631,7 @@ public class MoveTest2
         assertEquals(redServant, fm.owner.getResource(ResourceType.SERVANT).get());
         assertEquals(redCoin, fm.owner.getResource(ResourceType.COIN).get());
                  /*
-//end of 21th move---------------------------------------------------------------------------------------------
+//end of 21st move---------------------------------------------------------------------------------------------
         */
     }
 
