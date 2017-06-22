@@ -21,38 +21,54 @@
       "slotID": 21
     },
     {
-      "DESCRIZIONE": "turno giocatore rosso, va a piazzarsi nel consiglio con l'arancione",
+      "DESCRIZIONE": " RED va a piazzarsi nel mercato con il bianco, dovrebbe lanciare exception",
+      "familyMember": "white",
+      "servants": 0,
+      "slotID": 22
+    },
+    {
+      "DESCRIZIONE": "turno giocatore rosso, va a piazzarsi nel consiglio con l'arancione, sceglie 2 servants e 1 coin",
       "familyMember": "orange",
       "servants": 0,
       "slotID": 17,
       "privileges": [1]
     },
     {
-      "DESCRIZIONE": "va a piazzarsi nel consiglio con il bianco",
+      "DESCRIZIONE": "Blue va a piazzarsi nel consiglio con il bianco, sceglie 1 fpts",
       "familyMember": "white",
       "servants": 0,
       "slotID": 17,
       "privileges": [4]
     },
+
     {
-      "DESCRIZIONE": "va a piazzarsi nel mercato con il bianco",
-      "familyMember": "white",
-      "servants": 0,
-      "slotID": 22
-    },
-    {
-      "DESCRIZIONE": "nell'ultimo slot del mercato dove deve scegliere due pergamente",
+      "DESCRIZIONE": "RED nell'ultimo slot del mercato dove deve scegliere due pergamene, exception",
       "familyMember": "black",
       "servants": 0,
       "slotID": 23,
       "privileges": [0,3]
     },
     {
-      "DESCRIZIONE": "lo rimete nel consiglio perchè non posso metterlo altrove :D",
+      "DESCRIZIONE": "RED fm neutral con servant in council, sceglie faithpoints",
       "familyMember" : "neutral",
       "servants" : 1,
       "slotID" : 17,
       "privileges" : [4]
+    },
+    {
+      "DESCRIZIONE": "RED fm white con servant in council, sceglie faithpoints",
+      "familyMember" : "white",
+      "servants" : 0,
+      "slotID" : 17,
+      "privileges" : [4]
+    },
+    {
+      "DESCRIZIONE": "Blue fm orange con servant in council, sceglie coins: +3, ma è solo checking",
+      "familyMember" : "orange",
+      "servants" : 0,
+      "slotID" : 17,
+      "privileges" : [2],
+      "checking": true
     }
   ]
 }

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.pc42;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.iCard;
 import it.polimi.ingsw.pc42.Control.ResourceType;
 import it.polimi.ingsw.pc42.Model.Board;
@@ -55,14 +56,12 @@ public class MoveTest
         boolean exception= false;
         try {
             b.makeMove(mosse.get(0)); //Turno del giocatore rosso, gioca nel market e ottiene 5 monete
+        } catch (ActionAbortedException ae){
+            exception = true;
         } catch (Exception e) {
-            exception=true; //questa parte di codice non dovrebbe venire eseguita
             e.printStackTrace();
         }
         assertEquals(false, exception);
-        assertEquals(10 ,b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).get()); //le 5 monete iniziali più le 5 appena prese
-        assertEquals(b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.SERVANT).get(), 2); //3 iniziali meno 1
-
         FamilyMember fm= null;
         try {
             fm = b.getPlayerByColor(Player.PlayerColor.RED).getFamilyMemberFromColor("neutral");
@@ -71,109 +70,124 @@ public class MoveTest
             e.printStackTrace();
         }
         assertEquals(true, fm.isUsed());
-
-        //Fine prima mossa--------------------------------------------------------------------------------------------
+        //le 5 monete iniziali più le 5 appena prese
+        assertEquals(10 ,fm.owner.getResource(ResourceType.COIN).get());
+        //3 iniziali meno 1
+        assertEquals(2, fm.owner.getResource(ResourceType.SERVANT).get());
+        //end 1st move--------------------------------------------------------------------------------------------
         exception=false;
         try {
-            b.makeMove(mosse.get(1)); //turno del giocatore blu, questa mossa non è legale quindi mi aspetto che avvenga un eccezione
-        } catch (Exception e){
-            exception=true;
-            //e.printStackTrace();
+            b.makeMove(mosse.get(1)); //blue, fm neutral e servant 0 -> exception
+        }catch (ActionAbortedException ae){
+            exception = true;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         assertEquals(true, exception);
-
-        //fine seconda mossa-------------------------------------------------------------------------------------------
+        //re-try---------------------------------------------------------------------------------------------------
         exception=false;
         try{
-            b.makeMove(mosse.get(2)); //gioca di nuovo il blu e prende 5 servi
-        } catch (Exception e){
-            exception=true;
+            b.makeMove(mosse.get(2)); //gioca di nuovo il blu e prende 5 servants nel market
+        } catch (ActionAbortedException ae){
+            exception = true;
+        } catch (Exception e) {
             e.printStackTrace();
         }
         assertEquals(false, exception);
+        //3 +5 servants
         assertEquals(8, b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.SERVANT).get());
-
-        //--------
-       exception=false;
+        //end of 2nd move---------------------------------------------------------------------------------------------
+        /*exception=false;
         try{
-            b.makeMove(mosse.get(5)); // gioca il rosso sul mercato
-        } catch (Exception e){
-            exception=true;
+            b.makeMove(mosse.get(3)); // Red sul mercato, slotID 22 -> exception (2 players)
+        } catch (ActionAbortedException ae){
+            exception = true;
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        assertEquals(false, exception);
-        assertEquals(3, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.MILITARYPOINTS).get());
-        assertEquals(12, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).get());
-        //------------
-        exception=false;
-        try{
-            b.makeMove(mosse.get(3)); //gioca il blu sul consiglio e prende due servi
-        } catch (Exception e){
-            exception=true;
-            e.printStackTrace();
-        }
-        assertEquals(false, exception);
-        assertEquals(7,b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.COIN).get());
-        assertEquals(10, b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.SERVANT).get());
-
-        //qui dovrebbero essere 10 i servant
-        //-----------
-        exception=false;
-        try{
-            b.makeMove(mosse.get(3));//gioca il rosso e mette sul secondo consiglio
-        } catch (Exception e){
-            exception=true;
-            e.printStackTrace();
-        }
-        assertEquals(false, exception);
-        assertEquals("blue", b.getPlayerArrayList().get(1).getColor().getPlayerColorString());
-        //---------------
-
-        exception=false;
-        try{
-            b.makeMove(mosse.get(4));// rigioca il blu sul consiglio
-        } catch (Exception e){
-            exception=true;
-            e.printStackTrace();
-        }
-        assertEquals(false, exception);
-        assertEquals(1, b.getEra());
-        assertEquals(1, b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.FAITHPOINTS).get());
-
-        //-----------------------
-
-        try{
-            b.makeMove(mosse.get(6));  //gioca il rosso sull'ultimo consiglio
-        } catch (Exception e){
-            exception=true;
-            e.printStackTrace();
-        }
-        assertEquals(3, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.WOOD).get());
-        assertEquals(3, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.STONE).get());
-        assertEquals(5, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.MILITARYPOINTS).get());
-
-        //------------------------
-
-        try {
-            b.makeMove(mosse.get(0));
-        } catch (Exception e){
-            exception=true;
         }
         assertEquals(true, exception);
-
-        //-----------------------
-
+        //Resources not added?
+        //assertEquals(0, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.MILITARYPOINTS).get());
+        //assertEquals(10, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).get()); */
+        //re-try-------------------------------------------------------------------------------------------------------
         exception=false;
-        try {
-            b.makeMove(mosse.get(7));
-        } catch (Exception e){
-            exception=true;
+        try{
+            b.makeMove(mosse.get(4));//gioca il rosso e fm orange nel council, sceglie 2 servants e 1 coin
+        } catch (ActionAbortedException ae){
+            exception = true;
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        assertEquals(1, b.getEra());
-        assertEquals(1, b.getRound());
-        assertEquals("blue", b.getPlayerArrayList().get(0).getColor().getPlayerColorString());
-        assertEquals("red", b.getPlayerArrayList().get(1).getColor().getPlayerColorString());
+        assertEquals(false, exception);
+        // +2 servants
+        assertEquals(4, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.SERVANT).get());
+        //+1 coin
+        assertEquals(11, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).get());
+        //end of 3rd move--------------------------------------------------------------------------------------------
+        exception=false;
+        try{
+            b.makeMove(mosse.get(5)); //Blue fm white council, sceglie 1 faithpoint e 1 coin
+        } catch (ActionAbortedException ae){
+            exception = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertEquals(false, exception);
+        //+1 coin
+        assertEquals(7, b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.COIN).get());
+        assertEquals(1, b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.FAITHPOINTS).get());
+        //end of 4th move----------------------------------------------------------------------------------------------
+        /*exception = false;
+        try{
+            b.makeMove(mosse.get(6)); //gioca il rosso slot 23 -> exception
+        }  catch (ActionAbortedException ae){
+            exception = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertEquals(true, exception);
+        //Resources not added
+        assertEquals(2, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.WOOD).get());
+        assertEquals(2, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.STONE).get());
+        assertEquals(0, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.MILITARYPOINTS).get());*/
+        //re-try-------------------------------------------------------------------------------------------------------
+        exception = false;
+        try {
+            b.makeMove(mosse.get(7));//RED, exception neutral is used
+        }  catch (ActionAbortedException ae){
+            exception = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertEquals(true, exception);
+        //Resources not added?
+        assertEquals(0, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.FAITHPOINTS).get());
+        //re-try-------------------------------------------------------------------------------------------------------
+        exception = false;
+        try {
+            b.makeMove(mosse.get(8));//RED fm white council e 1 faithpts e 1 coin
+        }  catch (ActionAbortedException ae){
+            exception = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertEquals(false, exception);
+        //+1 coin e 1 faithpt
+        assertEquals(12, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).get());
+        assertEquals(1, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.FAITHPOINTS).get());
+        //end of 5th move----------------------------------------------------------------------------------------------
+        //undo test
+        exception = false;
+        try {
+            b.makeMove(mosse.get(9));//Blue fm orange con servant in council, sceglie coins: +3, ma è solo checking
+        }  catch (ActionAbortedException ae){
+            exception = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertEquals(true, exception);
+        //Resources not added?
+        assertEquals(7, b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.COIN).get());
     }
 
 }
