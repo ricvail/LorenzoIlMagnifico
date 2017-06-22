@@ -116,9 +116,10 @@ public class MoveTest2
         assertEquals(redServant, fm.owner.getResource(ResourceType.SERVANT).get());
         assertEquals(redStone, fm.owner.getResource(ResourceType.STONE).get());
         assertEquals(redCoin, fm.owner.getResource(ResourceType.COIN).get());
+        /*
         //end third move-----------------------------------------------------------------------------------------------
         //CHEAT MODE---------------------------------------------------------------------------------------------------
-        blueCoin-=50;
+        blueCoin-=2; //HO TOLTO DUE COINS PERCHE' C'ERA UN ERRORE NELLA MOSSA PRECEDENTE CHE GLI FACEVA SPENDERE DUE COINS IN PIU'
         //start 4th turn-----------------------------------------------------------------------------------------------
         exception = false;
         try {
