@@ -77,10 +77,13 @@ public class GameInitializer {
     }
 
     public static Board initBaseGame(boolean shuffle){
+        return initBaseGame(readFile("src/res/prova_playerInit.json"), shuffle);
+    }
+    public static Board initBaseGame(JsonNode players, boolean shuffle){
         Board b=null;
         try {
             b= initGame(false,
-                    readFile("src/res/prova_playerInit.json"),
+                    players,
                     getDefaultActionSpacesJson(),
                     getDefaultCardsJson(),
                     shuffle, getDefaultPrivileges());
