@@ -111,7 +111,8 @@ public class ActionSpaceParser {
         Area area=Area.fromString(root.get("area").asText());
         int id=actionSpaceJson.get("id").asInt();
         int actionValue=actionSpaceJson.get("actionValue").asInt();
-        return new ActionSpace(bp, area, id, actionValue);
+        int minPlayers=actionSpaceJson.get("minPlayers").asInt();
+        return new ActionSpace(bp, area, id, actionValue, minPlayers);
 
     }
 

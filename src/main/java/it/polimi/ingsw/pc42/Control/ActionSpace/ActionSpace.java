@@ -16,13 +16,15 @@ public class ActionSpace implements iActionSpace {
     private int actionValue;
     //Board board;
     BoardProvider boardProvider;
+    private int minPlayers;
 
-    public ActionSpace(BoardProvider boardProvider, Area area, int ID, int actionValue){
+    public ActionSpace(BoardProvider boardProvider, Area area, int ID, int actionValue, int minPlayers){
         this.area = area;
         this.ID=ID;
         this.actionValue=actionValue;
         this.boardProvider=boardProvider;
         this.familyMembers=new ArrayList<>();
+        this.minPlayers=minPlayers;
     }
 
     @Override
@@ -108,7 +110,7 @@ public class ActionSpace implements iActionSpace {
 
     @Override
     public int getMinimumNumberOfPlayers() {
-        return 0;
+        return minPlayers;
     }
 
     public static boolean isFirstInArea(Board board, Area area, FamilyMember fmToAdd){

@@ -97,7 +97,7 @@ public class MoveTest
         //3 +5 servants
         assertEquals(8, b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.SERVANT).get());
         //end of 2nd move---------------------------------------------------------------------------------------------
-        /*exception=false;
+        exception=false;
         try{
             b.makeMove(mosse.get(3)); // Red sul mercato, slotID 22 -> exception (2 players)
         } catch (ActionAbortedException ae){
@@ -108,7 +108,7 @@ public class MoveTest
         assertEquals(true, exception);
         //Resources not added?
         //assertEquals(0, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.MILITARYPOINTS).get());
-        //assertEquals(10, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).get()); */
+        //assertEquals(10, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).get());
         //re-try-------------------------------------------------------------------------------------------------------
         exception=false;
         try{
@@ -137,7 +137,7 @@ public class MoveTest
         assertEquals(7, b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.COIN).get());
         assertEquals(1, b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.FAITHPOINTS).get());
         //end of 4th move----------------------------------------------------------------------------------------------
-        /*exception = false;
+        exception = false;
         try{
             b.makeMove(mosse.get(6)); //gioca il rosso slot 23 -> exception
         }  catch (ActionAbortedException ae){
@@ -149,7 +149,7 @@ public class MoveTest
         //Resources not added
         assertEquals(2, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.WOOD).get());
         assertEquals(2, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.STONE).get());
-        assertEquals(0, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.MILITARYPOINTS).get());*/
+        assertEquals(0, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.MILITARYPOINTS).get());
         //re-try-------------------------------------------------------------------------------------------------------
         exception = false;
         try {
