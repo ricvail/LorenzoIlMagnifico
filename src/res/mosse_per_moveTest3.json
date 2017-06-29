@@ -1,0 +1,83 @@
+{
+  "moves": [
+    {
+      "DESCRIZIONE": "Rosso fm white in slotID 18",
+      "familyMember": "white",
+      "servants": 0,
+      "slotID": 18
+    },
+    {
+      "DESCRIZIONE": "Blue fm orange in slotID 18, fallisce per -3 su action value",
+      "familyMember": "orange",
+      "servants": 0,
+      "slotID": 18
+    },
+    {
+      "DESCRIZIONE": "Blue fm orange in slotID 18 + 1 servants, legal",
+      "familyMember": "orange",
+      "servants": 1,
+      "slotID": 18
+    },
+    {
+      "DESCRIZIONE": "Yellow fm orange in slotID 22, legal",
+      "familyMember": "orange",
+      "servants": 0,
+      "slotID": 22
+    },
+    {
+      "DESCRIZIONE": "Green fm orange in slotID 19, legal",
+      "familyMember": "orange",
+      "servants": 0,
+      "slotID": 19
+    },
+    {
+      "DESCRIZIONE": "Red fm orange slot 18 + 1 servant fallisce, già fm stesso colore",
+      "familyMember": "orange",
+      "servants": 1,
+      "slotID": 18
+    },
+    {
+      "DESCRIZIONE": "Red fm neutral slot 18 + 4 servant, legal",
+      "familyMember": "orange",
+      "servants": 4,
+      "slotID": 18
+    },
+    {
+      "DESCRIZIONE": "Red fm white in slotID 23, 2 privileges-> 2 coins, 2 servant, 1 faithpoint",
+      "familyMember": "white",
+      "servants": 0,
+      "slotID": 23,
+      "privileges": [1, 4]
+    },
+    {
+      "DESCRIZIONE": "Yellow fm black in slotID 19, legal",
+      "familyMember": "black",
+      "servants": 0,
+      "slotID": 19
+    },
+    {
+      "DESCRIZIONE": "Green fm black in slotID 19, exception",
+      "familyMember": "black",
+      "servants": 0,
+      "slotID": 19
+    },
+    {
+      "DESCRIZIONE": "Green fm neutral in slotID 19, legal",
+      "familyMember": "neutral",
+      "servants": 1,
+      "slotID": 19
+    },
+    {
+      "DESCRIZIONE": "Red fm black in slotID 19, legal",
+      "familyMember": "black",
+      "servants": 0,
+      "slotID": 19
+    },
+    {
+      "DESCRIZIONE": "Blue fm black in slotID 19, legal",
+      "familyMember": "black",
+      "servants": 0,
+      "slotID": 19
+    }
+  ]
+}

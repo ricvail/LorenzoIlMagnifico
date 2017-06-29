@@ -1,6 +1,7 @@
 package it.polimi.ingsw.pc42.Model;
 
-import jdk.management.resource.ResourceType;
+
+import it.polimi.ingsw.pc42.Control.ResourceType;
 
 public class PersonalBonusTile {
 

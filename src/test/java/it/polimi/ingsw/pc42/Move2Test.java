@@ -14,38 +14,35 @@ import junit.framework.TestSuite;
 
 import java.util.ArrayList;
 
-/**
- * Unit test for simple App.
- */
-public class MoveTest2
-        extends TestCase
+public class Move2Test extends TestCase
 {
-    public MoveTest2(String testName )
+    public Move2Test(String testName )
     {
         super( testName );
     }
 
     public static Test suite()
     {
-        return new TestSuite( MoveTest2.class );
+        return new TestSuite( Move2Test.class );
     }
 
-    int blueServant = 3;  int blueStone = 2;  int blueWooD = 2;  int blueCoin = 6;
-    int blueMilitaryPts = 0; int blueFaithPts = 0; int blueVictoryPts = 0;
-    int redServant = 3;  int redStone = 2;  int redWood = 2;  int redCoin = 5;
-    int redMilitaryPts = 0; int redFaithPts = 0; int redVictoryPts = 0;
+    private int blueServant = 3;  private int blueStone = 2;  private int blueWooD = 2;  private int blueCoin = 6;
+    private int blueMilitaryPts = 0; private int blueFaithPts = 0; private int blueVictoryPts = 0;
+    private int redServant = 3;  private int redStone = 2;  private int redWood = 2;  private int redCoin = 5;
+    private int redMilitaryPts = 0; private int redFaithPts = 0; private int redVictoryPts = 0;
+
+    JsonNode mosse = GameInitializer.readFile("src/res/mosse_per_moveTest2.json").get("moves");
+    Board b = GameInitializer.initBaseGame(false);
+    //RED and BLUE playing; servants=3, wood=stone=2, coins=5+i
 
     public void testMove2() {
-
-        JsonNode mosse = GameInitializer.readFile("src/res/mosse_per_moveTest2.json").get("moves");
-        Board b = GameInitializer.initBaseGame(false);
-        //RED and BLUE playing; servants=3, wood=stone=2, coins=5+i
         //first move--------------------------------------------------------------------------------------------------
         boolean exception = false;
         try{
             b.makeMove(mosse.get(0)); //Rosso pesca carta territorio slot 1 con fm white
-        } catch (Exception e){
+        }  catch (ActionAbortedException ae){
             exception = true;
+        } catch (Exception e) {
             e.printStackTrace();
         }
         assertEquals(false, exception);

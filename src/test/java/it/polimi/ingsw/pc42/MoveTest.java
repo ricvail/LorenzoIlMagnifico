@@ -2,7 +2,6 @@ package it.polimi.ingsw.pc42;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import it.polimi.ingsw.pc42.Control.ActionAbortedException;
-import it.polimi.ingsw.pc42.Control.DevelopmentCards.iCard;
 import it.polimi.ingsw.pc42.Control.ResourceType;
 import it.polimi.ingsw.pc42.Model.Board;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
@@ -12,12 +11,11 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Unit test for simple App.
  */
+
 public class MoveTest
     extends TestCase
 {
@@ -107,8 +105,8 @@ public class MoveTest
         }
         assertEquals(true, exception);
         //Resources not added?
-        //assertEquals(0, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.MILITARYPOINTS).get());
-        //assertEquals(10, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).get());
+        assertEquals(0, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.MILITARYPOINTS).get());
+        assertEquals(10, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).get());
         //re-try-------------------------------------------------------------------------------------------------------
         exception=false;
         try{
