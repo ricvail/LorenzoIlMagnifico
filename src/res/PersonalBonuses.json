@@ -1,0 +1,11 @@
+{
+  "production": {
+    "militaryPoints": 1,
+    "coins": 2
+  },
+  "harvest": {
+    "stone":1,
+    "wood":1,
+    "servants":1
+  }
+}

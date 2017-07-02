@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import it.polimi.ingsw.pc42.Control.ActionSpace.CardDecorator;
 import it.polimi.ingsw.pc42.Control.ActionSpace.privilegesActionSpaceDecorator;
 import it.polimi.ingsw.pc42.Control.ActionSpace.*;
-import it.polimi.ingsw.pc42.Control.ActionSpace.ToDo.ActionDecorator;
+import it.polimi.ingsw.pc42.Control.ActionSpace.ActionDecorator;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.Control.ResourceType;
 
@@ -58,7 +58,7 @@ public class ActionSpaceParser {
                             int q = actionSpaceJson.get("immediateResourceEffect").get(key).asInt();
                             actionSpace = new privilegesActionSpaceDecorator(q, actionSpace);
                         } else if (key.equalsIgnoreCase("effect")) {
-                            //do nothing
+
                         } else {
                             throw new Exception("Invalid immediateResourceEffect detected: "+key);
                         }

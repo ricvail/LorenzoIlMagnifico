@@ -32,6 +32,10 @@ public class GameInitializer {
         }
     }
 
+    public static JsonNode getDefaultBonusTileJson(){
+        return readFile("src/res/personalBonuses.json");
+    }
+
     public static JsonNode getDefaultActionSpacesJson(){
         return readFile("src/res/actionsSpaces.json").get("action_spaces");
     }
@@ -129,7 +133,7 @@ public class GameInitializer {
         ArrayList<Player> players = new ArrayList<>();
         Iterator<JsonNode> playerIterator =playerList.get("players").iterator();
         while (playerIterator.hasNext()){
-            players.add(Player.fromColorString(playerIterator.next().get("color").asText()));
+            players.add(Player.createPlayer(playerIterator.next().get("color").asText()));
         }
         if (shuffle){
             Collections.shuffle(players);

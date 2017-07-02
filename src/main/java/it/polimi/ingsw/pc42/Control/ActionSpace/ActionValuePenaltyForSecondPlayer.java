@@ -79,6 +79,6 @@ public class ActionValuePenaltyForSecondPlayer extends AbstractDecorator {
         if (!familyMember.diceColor.visible){
             return false;
         }
-        return !ActionSpace.isFirstInArea(board, this.getArea(), familyMember);
+        return !ActionSpace.isFirstInArea(getBoard(), this.getArea(), familyMember);
     }
 }

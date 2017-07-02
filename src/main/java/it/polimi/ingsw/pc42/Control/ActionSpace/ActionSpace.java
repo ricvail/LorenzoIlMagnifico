@@ -14,7 +14,6 @@ public class ActionSpace implements iActionSpace {
     private Area area;
     private int ID;
     private int actionValue;
-    //Board board;
     BoardProvider boardProvider;
     private int minPlayers;
 

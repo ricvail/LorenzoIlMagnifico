@@ -38,7 +38,7 @@
     },
     {
       "DESCRIZIONE": "Red fm neutral slot 18 + 4 servant, legal",
-      "familyMember": "orange",
+      "familyMember": "neutral",
       "servants": 4,
       "slotID": 18
     },
@@ -64,7 +64,7 @@
     {
       "DESCRIZIONE": "Green fm neutral in slotID 19, legal",
       "familyMember": "neutral",
-      "servants": 1,
+      "servants": 4,
       "slotID": 19
     },
     {

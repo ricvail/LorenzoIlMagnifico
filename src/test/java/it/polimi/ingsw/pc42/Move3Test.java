@@ -30,13 +30,13 @@ public class Move3Test extends TestCase
         Board b = GameInitializer.initBaseGame(players, false);
         //RED, BLUE, YELLOW, GREEN playing; servants=3, wood=stone=2, coins=5+i
         //BONUS TILE: 1 militaryPoint, 2 coins | 1 wood, 1 stone, 1 servant
-       /*
         //first move--------------------------------------------------------------------------------------------------
         boolean exception = false;
         try{
             b.makeMove(mosse.get(0)); //Red fm white slot 18, azione production
         }  catch (ActionAbortedException ae){
             exception = true;
+            ae.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -80,17 +80,17 @@ public class Move3Test extends TestCase
         //end of 2nd move----------------------------------------------------------------------------------------------
         exception = false;
         try{
-            b.makeMove(mosse.get(3)); //yellow fm orange in slotID 22, 1 mpts 2 coins
+            b.makeMove(mosse.get(3)); //yellow fm orange in slotID 22, 3 mpts 2 coins
         }  catch (ActionAbortedException ae){
             exception = true;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        assertEquals(true, exception);
+        assertEquals(false, exception);
         Player yellow = b.getPlayerByColor(Player.PlayerColor.YELLOW);
         //Resources Test
         assertEquals(9, yellow.getResource(ResourceType.COIN).get());
-        assertEquals(1, yellow.getResource(ResourceType.MILITARYPOINTS).get());
+        assertEquals(3, yellow.getResource(ResourceType.MILITARYPOINTS).get());
         //end of 3rd move----------------------------------------------------------------------------------------------
         exception = false;
         try{
@@ -125,6 +125,7 @@ public class Move3Test extends TestCase
             b.makeMove(mosse.get(6)); //Red fm neutral slot 18 + 4 servant, legal
         }  catch (ActionAbortedException ae){
             exception = true;
+            ae.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -135,8 +136,9 @@ public class Move3Test extends TestCase
         assertEquals(9, red.getResource(ResourceType.COIN).get());
         //end of 5th move----------------------------------------------------------------------------------------------
         exception = false;
+        int bluecoin = blue.getResource(ResourceType.COIN).get();
         try{
-            b.makeMove(mosse.get(7)); //Blue fm white in slotID 23, 2 privileges-> 2 coins, 2 servant, 1 faithpoint
+            b.makeMove(mosse.get(7)); //Blue fm white in slotID 23, 2 privileges-> 2 servant, 1 faithpoint
         }  catch (ActionAbortedException ae){
             exception = true;
         } catch (Exception e) {
@@ -146,7 +148,7 @@ public class Move3Test extends TestCase
         //Resources Test
         assertEquals(4, blue.getResource(ResourceType.SERVANT).get());
         assertEquals(1, blue.getResource(ResourceType.FAITHPOINTS).get());
-        assertEquals(10, blue.getResource(ResourceType.COIN).get());
+        assertEquals(bluecoin, blue.getResource(ResourceType.COIN).get());
         //end of 6th move----------------------------------------------------------------------------------------------
         exception = false;
         try{
@@ -171,12 +173,15 @@ public class Move3Test extends TestCase
             e.printStackTrace();
         }
         assertEquals(true, exception);
+        //cheat mode: --------------------------
+        green.getResource(ResourceType.SERVANT).add(3);
         //re-try-------------------------------------------------------------------------------------------------------
         exception = false;
         try{
-            b.makeMove(mosse.get(10)); //Green fm neutral + 1 servant in slotID 19, legal
+            b.makeMove(mosse.get(10)); //Green fm neutral + 4 servant in slotID 19, legal
         }  catch (ActionAbortedException ae){
             exception = true;
+            ae.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -186,6 +191,7 @@ public class Move3Test extends TestCase
         assertEquals(4, green.getResource(ResourceType.STONE).get());
         assertEquals(4, green.getResource(ResourceType.WOOD).get());
         //end of 8th move----------------------------------------------------------------------------------------------
+        int redservant= red.getResource(ResourceType.SERVANT).get();
         exception = false;
         try{
             b.makeMove(mosse.get(11)); //Red fm black in slotID 19, legal
@@ -196,9 +202,10 @@ public class Move3Test extends TestCase
         }
         assertEquals(false, exception);
         //Resources Test
-        assertEquals(1, green.getResource(ResourceType.SERVANT).get());
-        assertEquals(3, green.getResource(ResourceType.STONE).get());
-        assertEquals(3, green.getResource(ResourceType.WOOD).get());
+        redservant+=1;
+        assertEquals(redservant, red.getResource(ResourceType.SERVANT).get());
+        assertEquals(3, red.getResource(ResourceType.STONE).get());
+        assertEquals(3, red.getResource(ResourceType.WOOD).get());
         //end of 9th move----------------------------------------------------------------------------------------------
         exception = false;
         try{
@@ -210,10 +217,10 @@ public class Move3Test extends TestCase
         }
         assertEquals(false, exception);
         //Resources Test
-        assertEquals(5, green.getResource(ResourceType.SERVANT).get());
-        assertEquals(3, green.getResource(ResourceType.STONE).get());
-        assertEquals(3, green.getResource(ResourceType.WOOD).get());
+        assertEquals(5, blue.getResource(ResourceType.SERVANT).get());
+        assertEquals(3, blue.getResource(ResourceType.STONE).get());
+        assertEquals(3, blue.getResource(ResourceType.WOOD).get());
         //end of 10th move---------------------------------------------------------------------------------------------
-        */
+        /**/
     }
 }

@@ -9,6 +9,8 @@ import it.polimi.ingsw.pc42.Control.DevelopmentCards.iCard;
 import it.polimi.ingsw.pc42.Control.ResourceType;
 import it.polimi.ingsw.pc42.Control.ResourceWrapper;
 import it.polimi.ingsw.pc42.Control.iResourceWrapper;
+import it.polimi.ingsw.pc42.Utilities.GameInitializer;
+import it.polimi.ingsw.pc42.Utilities.PersonalBonusTileParser;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,6 +20,7 @@ public class Player {
     private ArrayList<iCard> cardsOwned;
     private ArrayList<FamilyMember> familyMembers;
     public ArrayList<ResourceWrapper> resources;
+    public PersonalBonusTile bonusTile;
 
     public PlayerColor getColor() {
         return color;
@@ -28,23 +31,25 @@ public class Player {
     }
 
 
-    public Player (PlayerColor color){
+    private Player (PlayerColor color, PersonalBonusTile bonuses){
         this();
         setColor(color);
+        bonusTile=bonuses;
     }
 
-    public static  Player fromColorString(String color){
+    public static  Player createPlayer(String color){
         PlayerColor col= null;
         try {
             col= PlayerColor.fromString(color);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new Player(col);
+        PersonalBonusTile tile = PersonalBonusTileParser.parse(GameInitializer.getDefaultBonusTileJson());
+        return new Player(col, tile);
     }
 
 
-    public Player() {
+    private Player() {
         resources=new ArrayList<>();
         resources.add(new ResourceWrapper(ResourceType.COIN, 0));
         resources.add(new ResourceWrapper(ResourceType.SERVANT,3));

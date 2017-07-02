@@ -8,7 +8,6 @@ import it.polimi.ingsw.pc42.Control.DevelopmentCards.iCard;
 import static it.polimi.ingsw.pc42.Utilities.CardParser.createCard;
 import static org.junit.Assert.*;
 
-import it.polimi.ingsw.pc42.Model.Board;
 import it.polimi.ingsw.pc42.Model.Player;
 import it.polimi.ingsw.pc42.Utilities.BoardProvider;
 import org.junit.Test;
@@ -42,7 +41,7 @@ public class CardTest {
     @Test
     public void cardFromJSONTest(){
         ObjectMapper mapper = new ObjectMapper();
-        Player player = new Player();
+        Player player =Player.createPlayer("RED");
         try {
             File file = new File("src/res/test_card.json");
             JsonNode jsonNode = mapper.readTree(file);

@@ -311,7 +311,7 @@ public class Move2Test extends TestCase
         assertEquals(blueCoin, fm.owner.getResource(ResourceType.COIN).get());
         //END OF FIRST ROUND-------------------------------------------------------------------------------------------
         //Clean-Up test
-        boolean blueTurn = b.isPlayerTurn(Player.fromColorString("blue"));
+        boolean blueTurn = b.isPlayerTurn(Player.createPlayer("blue"));
         assertEquals(true, blueTurn);
         //check if all the family members are unused
         boolean blueFMUsed = checkFamilyMemberUsed(b.getPlayerByColor(Player.PlayerColor.BLUE).getFamilyMembers());
@@ -463,7 +463,7 @@ public class Move2Test extends TestCase
         }
         assertEquals(false, exception);
         //Clean-Up test------------------------------------------------------------------------------------------------
-         blueTurn = b.isPlayerTurn(Player.fromColorString("blue"));
+         blueTurn = b.isPlayerTurn(Player.createPlayer("blue"));
         assertEquals(true, blueTurn);
         //check if all the family members are unused
         blueFMUsed = checkFamilyMemberUsed(b.getPlayerByColor(Player.PlayerColor.BLUE).getFamilyMembers());
