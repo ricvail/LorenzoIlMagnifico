@@ -1,10 +1,13 @@
 package it.polimi.ingsw.pc42;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.Control.ResourceType;
 import it.polimi.ingsw.pc42.Model.Board;
+import it.polimi.ingsw.pc42.Model.Dice;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
 import it.polimi.ingsw.pc42.Model.Player;
 import it.polimi.ingsw.pc42.Utilities.GameInitializer;
@@ -31,11 +34,12 @@ public class Move2Test extends TestCase
     private int redServant = 3;  private int redStone = 2;  private int redWood = 2;  private int redCoin = 5;
     private int redMilitaryPts = 0; private int redFaithPts = 0; private int redVictoryPts = 0;
 
-    JsonNode mosse = GameInitializer.readFile("src/res/mosse_per_moveTest2.json").get("moves");
-    Board b = GameInitializer.initBaseGame(false);
-    //RED and BLUE playing; servants=3, wood=stone=2, coins=5+i
 
     public void testMove2() {
+        JsonNode mosse = GameInitializer.readFile("src/res/mosse_per_moveTest2.json").get("moves");
+        Board b = GameInitializer.initBaseGame(false);
+        //RED and BLUE playing; servants=3, wood=stone=2, coins=5+i
+
         //first move--------------------------------------------------------------------------------------------------
         boolean exception = false;
         try{
@@ -634,9 +638,89 @@ public class Move2Test extends TestCase
         assertEquals(redServant, fm.owner.getResource(ResourceType.SERVANT).get());
         assertEquals(redCoin, fm.owner.getResource(ResourceType.COIN).get());
         //end of 21st move---------------------------------------------------------------------------------------------
+        doGhostMove(b, "neutral"); // Blue, neutral ghost move
+        doGhostMove(b, "white"); // Red, white ghost move
+        //END OF THIRD ROUND-------------------------------------------------------------------------------------------
+        for (Dice.DiceColor diceColor : Dice.DiceColor.values()){
+            if (!"ghost".equalsIgnoreCase(diceColor.getDiceColorString())){
+                doGhostMove(b, diceColor.getDiceColorString()); //blue
+                doGhostMove(b, diceColor.getDiceColorString()); //red
+            }
+        }
+        //Clean-Up test------------------------------------------------------------------------------------------------
+        assertEquals(3, b.getEra());
+        //END OF FOURTH ROUND------------------------------------------------------------------------------------------
+        //CHEAT MODE player Blue---------------------------------------------------------------------------------------
+        b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.COIN).add(14); blueCoin+=14;
+        //START OF FIFTH ROUND-----------------------------------------------------------------------------------------
+        exception = false;
+        try {
+            b.makeMove(mosse.get(34));//BLUE in slotID 8, black + 1 servant, +2 stone -> legal
+        } catch (ActionAbortedException ae){
+            exception = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertEquals(false, exception);
+        try {
+            fm = b.getPlayerByColor(Player.PlayerColor.BLUE).getFamilyMemberFromColor("black");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertEquals(true, fm.isUsed());
+        assertEquals(1, fm.owner.getNumberOfCards(Card.CardType.CHARACTER));
+        //-1 servant, +2 stone, -6 coins, +8 victorypoints
+        blueServant-=1;  blueStone+=2;  blueCoin-=6;  blueVictoryPts+=8;
+        //Resources Test
+        assertEquals(blueServant, fm.owner.getResource(ResourceType.SERVANT).get());
+        assertEquals(blueStone, fm.owner.getResource(ResourceType.STONE).get());
+        assertEquals(blueCoin, fm.owner.getResource(ResourceType.COIN).get());
+        assertEquals(blueVictoryPts, fm.owner.getResource(ResourceType.VICTORYPOINTS).get());
+        //CHEAT MODE Player Red---------------------------------------------------------------------------------------
+        b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).add(9); redCoin+=9;
+        //end of 33th move---------------------------------------------------------------------------------------------
+        exception = false;
+        try {
+            b.makeMove(mosse.get(35));//Red in slotID 7, fm black, +1 stone, -3 cointax -> legal
+        } catch (ActionAbortedException ae){
+            exception = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertEquals(false, exception);
+        try {
+            fm = b.getPlayerByColor(Player.PlayerColor.RED).getFamilyMemberFromColor("black");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertEquals(true, fm.isUsed());
+        assertEquals(6, fm.owner.getNumberOfCards(Card.CardType.CHARACTER));
+        //+1 stone, -10 coins, +10 victorypoints
+        redStone+=1;  redCoin-=10; redVictoryPts+=10;
+        //Resources Test
+        assertEquals(redStone, fm.owner.getResource(ResourceType.STONE).get());
+        assertEquals(redCoin, fm.owner.getResource(ResourceType.COIN).get());
+        //assertEquals(redVictoryPts, fm.owner.getResource(ResourceType.VICTORYPOINTS).get());
+        //end of 34th move---------------------------------------------------------------------------------------------
         printResources(b.getPlayerByColor(Player.PlayerColor.RED));
         printResources(b.getPlayerByColor(Player.PlayerColor.BLUE));
         printStatus();
+
+    }
+
+    private void doGhostMove(Board b, String familyMember){
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode ghostNode = mapper.createObjectNode();
+        ghostNode.put("familyMember", familyMember);
+        ghostNode.put("servants", 0);
+        ghostNode.put("slotID", 0);
+        try {
+            b.makeMove(ghostNode);
+        }  catch (ActionAbortedException ae){
+            ae.getMessage();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private boolean checkFamilyMemberUsed(ArrayList<FamilyMember> familyMembers){

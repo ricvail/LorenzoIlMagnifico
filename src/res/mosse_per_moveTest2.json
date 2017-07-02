@@ -266,6 +266,18 @@
       "familyMember": "neutral",
       "servants":1,
       "slotID":1
+    },
+    {
+      "DESCRIZIONE": "BLUE in slotID 8, black + 1 servant, +2 stone -> legal",
+      "familyMember": "black",
+      "servants":1,
+      "slotID":8
+    },
+    {
+      "DESCRIZIONE": "Red in slotID 7, fm black, +1 stone, -3 cointax -> legal",
+      "familyMember": "black",
+      "servants":0,
+      "slotID":7
     }
   ]
 }
