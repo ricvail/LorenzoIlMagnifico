@@ -1,6 +1,7 @@
 package it.polimi.ingsw.pc42.Model;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polimi.ingsw.pc42.Control.MoveManager;
 import it.polimi.ingsw.pc42.Control.ActionSpace.iActionSpace;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.Card;
@@ -8,6 +9,7 @@ import it.polimi.ingsw.pc42.Control.DevelopmentCards.iCard;
 import it.polimi.ingsw.pc42.Control.PrivilegeManager;
 import it.polimi.ingsw.pc42.Control.ResourceType;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -293,6 +295,18 @@ public class Board {
         playerArrayList.get(0).getResource(ResourceType.VICTORYPOINTS).add(5);
         playerArrayList.get(1).getResource(ResourceType.VICTORYPOINTS).add(2);
     }
+
+    /*public static int convertFaithToVictoryPoints(Player player){
+        File faithPointsJson = new File("src/res/timeout.json");
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            int faithPoints = mapper.readTree(faithPointsJson).get(player.getResource(ResourceType.FAITHPOINTS).get());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        Iterator<JsonNode> iterator= ;
+        player.getResource(ResourceType.VICTORYPOINTS).add();
+    }*/
 
     public ArrayList<Player> getPlayerArrayList() {
         return playerArrayList;
