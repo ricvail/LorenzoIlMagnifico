@@ -124,10 +124,10 @@ public class CardParser {
         ResourceType obtained = ResourceType.fromString(jsonNode.get("left").asText());
         try {
             ResourceType toBeCounted = ResourceType.fromString(jsonNode.get("right").asText());
-            return new ForeachImmediate(c, obtained, jsonNode.get("ratio").asInt(), toBeCounted);
+            return new ForeachImmediate(c, obtained,(float) jsonNode.get("ratio").asDouble(), toBeCounted);
         } catch (Exception e){
             Card.CardType toBeCounted = Card.CardType.fromString(jsonNode.get("right").asText());
-            return new ForeachImmediate(c, obtained, jsonNode.get("ratio").asInt(), toBeCounted);
+            return new ForeachImmediate(c, obtained,(float) jsonNode.get("ratio").asDouble(), toBeCounted);
         }
     }
 

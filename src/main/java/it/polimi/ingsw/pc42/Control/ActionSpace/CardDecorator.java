@@ -57,8 +57,8 @@ public class CardDecorator extends AbstractDecorator {
     @Override
     public void undoAction(JsonNode move, FamilyMember fm) {
         empty=false;
-        fm.owner.removeCard(card);
         card.undoDrawCard(move, fm);
+        fm.owner.removeCard(card);
         super.undoAction(move, fm);
     }
 
