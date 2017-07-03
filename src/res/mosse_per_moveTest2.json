@@ -289,19 +289,31 @@
       "DESCRIZIONE": "Blue in slotID 5, fm neutral, -1 servant -> legal",
       "familyMember": "neutral",
       "servants":1,
-      "slotID":5
+      "slotID":5,
+      "immediateEffect":{
+        "slotID":19,
+        "servants":0
+      }
     },
     {
       "DESCRIZIONE": "Red fm orange in slot 6 -> exception già 6 carte character",
       "familyMember": "orange",
       "servants":0,
-      "slotID":6
+      "slotID":6,
+      "immediateEffect": {
+        "slotID": 18,
+        "servants":0
+      }
     },
     {
       "DESCRIZIONE": "RED retry fm orange in slotID 14, cost:3 servants, 4 coins -> legal",
       "familyMember": "orange",
-      "servants":3,
-      "slotID":14
+      "servants":0,
+      "slotID":14,
+      "immediateEffect": {
+        "slotID": 18,
+        "servants": 0
+      }
     },
     {
       "DESCRIZIONE": "Blue fm black, in slotID 7, +1 stone -cointax -> legal",

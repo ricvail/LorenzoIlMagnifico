@@ -349,6 +349,7 @@ public class Move2Test extends TestCase
         boolean redFMUsed = checkFamilyMemberUsed(b.getPlayerByColor(Player.PlayerColor.RED).getFamilyMembers());
         assertEquals(false, redFMUsed);
         //TODO check cards cleanup
+        assertEquals(1, b.getRound());
         //CHEAT MODE player Blue---------------------------------------------------------------------------------------
         b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.SERVANT).add(1);
         blueServant += 1;
@@ -512,6 +513,7 @@ public class Move2Test extends TestCase
         assertEquals(false, redFMUsed);
         assertEquals(2, b.getEra());
         //END SECOND ROUND---------------------------------------------------------------------------------------------
+        assertEquals(2, b.getRound());
         //CHEAT MODE player Blue---------------------------------------------------------------------------------------
         b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.WOOD).add(3);
         blueWooD += 3;
@@ -709,7 +711,7 @@ public class Move2Test extends TestCase
         } catch (Exception e) {
             e.printStackTrace();
         }
-        /*
+        assertEquals(3, b.getRound());
         //END OF THIRD ROUND-------------------------------------------------------------------------------------------
         for (Dice.DiceColor diceColor : Dice.DiceColor.values()){
             if (!"ghost".equalsIgnoreCase(diceColor.getDiceColorString())){
@@ -726,8 +728,13 @@ public class Move2Test extends TestCase
             }
         }
         //Clean-Up test------------------------------------------------------------------------------------------------
+        //check if all the family members are unused
+        blueFMUsed = checkFamilyMemberUsed(b.getPlayerByColor(Player.PlayerColor.BLUE).getFamilyMembers());
+        assertEquals(false, blueFMUsed);
+        redFMUsed = checkFamilyMemberUsed(b.getPlayerByColor(Player.PlayerColor.RED).getFamilyMembers());
+        assertEquals(false, redFMUsed);
         assertEquals(3, b.getEra());
-        assertEquals(5, b.getRound());
+        assertEquals(4, b.getRound());
         //CHEAT MODE player Blue---------------------------------------------------------------------------------------
         b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.COIN).add(14); blueCoin+=14;
         //END OF FOURTH ROUND------------------------------------------------------------------------------------------
@@ -833,15 +840,8 @@ public class Move2Test extends TestCase
         b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.COIN).add(12); blueCoin+=12;
         b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.SERVANT).add(3); blueServant+=3;
         //END OF FIFTH ROUND-------------------------------------------------------------------------------------------
-        assertEquals(6, b.getRound());
+        assertEquals(5, b.getRound());
         //Clean-Up test------------------------------------------------------------------------------------------------
-        blueTurn = b.isPlayerTurn(Player.fromColorString("blue"));
-        assertEquals(true, blueTurn);
-        //check if all the family members are unused
-        blueFMUsed = checkFamilyMemberUsed(b.getPlayerByColor(Player.PlayerColor.BLUE).getFamilyMembers());
-        assertEquals(false, blueFMUsed);
-        redFMUsed = checkFamilyMemberUsed(b.getPlayerByColor(Player.PlayerColor.RED).getFamilyMembers());
-        assertEquals(false, redFMUsed);
         exception = false;
         try {
             b.makeMove(mosse.get(37));//Blue in slotID 5, fm neutral, -1 servant -> legal
@@ -859,7 +859,7 @@ public class Move2Test extends TestCase
         }
         assertEquals(true, fm.isUsed());
         assertEquals(3, fm.owner.getNumberOfCards(Card.CardType.CHARACTER));
-        //-1 servant, -4 coins, harvest: 1 wood, 1 stone, 1 servant, 2 faithpoints
+        //-1 servant, -4 coins, harvest: 1 wood, 1 stone, 1 servant, 2 faith  points
         blueCoin-=4; blueWooD+=1; blueStone+=1; blueFaithPts+=2;
         //Resources Test
         assertEquals(blueServant, fm.owner.getResource(ResourceType.SERVANT).get());
@@ -879,8 +879,8 @@ public class Move2Test extends TestCase
             e.printStackTrace();
         }
         assertEquals(true, exception);
-        assertEquals(redCoin, b.getCurrentPlayer().getResource(ResourceType.COIN).get());
-        assertEquals(6, b.getCurrentPlayer().getNumberOfCards(Card.CardType.CHARACTER));
+        assertEquals(redCoin, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).get());
+        assertEquals(6, b.getPlayerByColor(Player.PlayerColor.RED).getNumberOfCards(Card.CardType.CHARACTER));
         //re-try-------------------------------------------------------------------------------------------------------
         exception = false;
         try {
@@ -926,7 +926,7 @@ public class Move2Test extends TestCase
         //Resources Test
         assertEquals(blueStone, fm.owner.getResource(ResourceType.STONE).get());
         assertEquals(blueCoin, fm.owner.getResource(ResourceType.COIN).get());
-        assertEquals(blueVictoryPts, fm.owner.getResource(ResourceType.VICTORYPOINTS).get());
+        //assertEquals(blueVictoryPts, fm.owner.getResource(ResourceType.VICTORYPOINTS).get());
         //end of 43th move---------------------------------------------------------------------------------------------
         try {
             b.makeMove(nodeGhostMove("neutral"));//Red neutral ghost move
@@ -953,7 +953,6 @@ public class Move2Test extends TestCase
         } catch (Exception e){
             e.printStackTrace();
         }
-        */
         //END OF THE GAME - FINAL CHECK--------------------------------------------------------------------------------
         /* to check:
         * -number of characters cards

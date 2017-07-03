@@ -9,6 +9,7 @@ import it.polimi.ingsw.pc42.Control.PrivilegeManager;
 import it.polimi.ingsw.pc42.Control.ResourceType;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 
 /**
@@ -199,6 +200,7 @@ public class Board {
                     era ++;
                     if (era >=4){
                         endGame();
+                        return;
                     }
                 }
                 cleanUp();
@@ -250,15 +252,12 @@ public class Board {
 
     private void endGame(){
         Iterator <Player> playerIterator=playerArrayList.iterator();
-        int counter;
-        ArrayList<Player> playerArrayList=new ArrayList<>();
-        int militaryPoints;
-        for (int i=0; i<=playerArrayList.size(); i++){
+        while (playerIterator.hasNext()){
             Player player = playerIterator.next();
             for (int k=0; k<=player.getNumberOfCards(Card.CardType.CHARACTER); k++){
                 player.getResource(ResourceType.VICTORYPOINTS).add(k);
             }
-            counter=0;
+            int counter=0;
             for (int j=2; j<=player.getNumberOfCards(Card.CardType.TERRITORY); j++){
                 counter=counter+j-2;
                 player.getResource(ResourceType.VICTORYPOINTS).add(counter);
@@ -282,14 +281,8 @@ public class Board {
             counter=player.getResource(ResourceType.WOOD).get()+player.getResource(ResourceType.SERVANT).get()
                     +player.getResource(ResourceType.STONE).get()+player.getResource(ResourceType.COIN).get();
             player.getResource(ResourceType.VICTORYPOINTS).add(counter/5);
-            militaryPoints=player.getResource(ResourceType.MILITARYPOINTS).get();
-            for (int e=0; e<=playerArrayList.size();e++){
-                if (militaryPoints>playerArrayList.get(e).getResource(ResourceType.MILITARYPOINTS).get()){
-                    playerArrayList.add(e, player);
-                    break;
-                }
-            }
         }
+        playerArrayList.sort(Comparator.comparingInt(o -> o.getResource(ResourceType.MILITARYPOINTS).get()));
         playerArrayList.get(0).getResource(ResourceType.VICTORYPOINTS).add(5);
         playerArrayList.get(1).getResource(ResourceType.VICTORYPOINTS).add(2);
     }

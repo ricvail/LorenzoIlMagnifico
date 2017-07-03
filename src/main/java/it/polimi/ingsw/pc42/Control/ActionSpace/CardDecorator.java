@@ -28,7 +28,7 @@ public class CardDecorator extends AbstractDecorator {
 
     @Override
     public void performAction(JsonNode move, FamilyMember fm) throws ActionAbortedException {
-        if (empty || fm.owner.getNumberOfCards(type)>6){
+        if (empty || fm.owner.getNumberOfCards(type)>=6){
             throw new ActionAbortedException(false);
         }
         if (card.getCardType()== Card.CardType.TERRITORY&&
