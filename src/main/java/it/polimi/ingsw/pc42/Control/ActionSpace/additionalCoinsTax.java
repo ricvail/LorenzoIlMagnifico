@@ -23,7 +23,7 @@ public class additionalCoinsTax extends AbstractDecorator {
                 fm.owner.getResource(ResourceType.COIN).add(coins * -1);
             } catch (IllegalArgumentException e) {
                 fm.owner.getResource(ResourceType.COIN).add(coins);
-                throw new ActionAbortedException(false);
+                throw new ActionAbortedException(false, "You don't have enough coins to pay the Tax");
             }
         }
         try {

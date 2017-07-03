@@ -50,7 +50,7 @@ public class MoveManager {
             getFamilyMemberFromJson(b, move, p);
             if (move.has("checking") && move.get("checking").asBoolean()) {
                 undoMove(b, b.getCurrentPlayer(), move);
-                throw new ActionAbortedException(true);
+                throw new ActionAbortedException(true, "checking move");
             } else {
                 b.endPlayerTurn();
 
@@ -64,7 +64,7 @@ public class MoveManager {
                 if (enoughFaithPoints(p, b)){
                     Board.giveUpFaithPoints(p);
                 } else{
-                    throw new ActionAbortedException(false);
+                    throw new ActionAbortedException(false, "You don't have enough faith points to avoid the excommunication");
                 }
             } else {
                 //TODO give Excommunication
@@ -92,10 +92,10 @@ public class MoveManager {
         try {
             fm  = p.getFamilyMemberFromColor(move.get("familyMember").asText());
         } catch (Exception e) {
-            throw new ActionAbortedException(false);
+            throw new ActionAbortedException(false, "Wrong Family Member's Color");
         }
         if (fm.isUsed()){
-            throw new ActionAbortedException(false);
+            throw new ActionAbortedException(false, "This Family Member is used");
         }else {
             getActionSpaceFromJson(b, move, fm);
         }
@@ -121,13 +121,14 @@ public class MoveManager {
         try {
             space = b.getActionSpaceByID(move.get("slotID").asInt());
         } catch (Exception e) {
-            throw new ActionAbortedException(false);
+            throw new ActionAbortedException(false, "This Action Space does not exist or the ID is not an integer ");
         }
         if (fm.canBePlacedInArea(space.getArea())&&
                 b.getNumberOfPlayers()>=space.getMinimumNumberOfPlayers()){
             applyPlayerPermanentBonus(move, fm, space);
         } else {
-            throw new ActionAbortedException(false);
+            throw new ActionAbortedException(false, "Family Member can't be place in this Area"
+                                                    +" or this Action Space is not active in "+b.getNumberOfPlayers()+" players game-mode");
         }
     }
 
@@ -179,10 +180,10 @@ public class MoveManager {
                     throw e;
                 }
             } else{
-                throw new ActionAbortedException(false);
+                throw new ActionAbortedException(false, "Not enough servants");
             }
         } else{
-            throw new ActionAbortedException(false);
+            throw new ActionAbortedException(false, "Servants must be integer");
         }
     }
 
@@ -195,7 +196,7 @@ public class MoveManager {
         if (fm.getValue()>=required){
             performAction(move, fm, space);
         } else {
-            throw new ActionAbortedException(false);
+            throw new ActionAbortedException(false, "Family Member's Action Value lower than requirement");
         }
     }
 

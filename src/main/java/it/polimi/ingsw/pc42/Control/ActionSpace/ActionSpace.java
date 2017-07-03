@@ -29,7 +29,7 @@ public class ActionSpace implements iActionSpace {
     @Override
     public void performAction(JsonNode move, FamilyMember fm) throws ActionAbortedException {
         if (fm.getValue()<actionValue){
-            throw new ActionAbortedException(false);
+            throw new ActionAbortedException(false, "Family Member's Action Value lower than required");
         }
     }
 

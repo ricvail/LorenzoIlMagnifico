@@ -19,7 +19,7 @@ public class oneFamilyMemberPerPlayer extends AbstractDecorator{
     @Override
     public void performAction(JsonNode move, FamilyMember fm) throws ActionAbortedException {
         if (!canPlace(fm)){
-            throw new ActionAbortedException(false);
+            throw new ActionAbortedException(false, "This Area is already occupied by one of your non-neutral Family Member");
         }
         super.performAction(move, fm);
     }
