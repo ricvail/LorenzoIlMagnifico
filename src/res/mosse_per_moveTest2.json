@@ -278,6 +278,37 @@
       "familyMember": "black",
       "servants":0,
       "slotID":7
+    },
+    {
+      "DESCRIZIONE": "Blue in slotID 5, fm neutral, -1 servant, -3 cointax -> legal",
+      "familyMember": "neutral",
+      "servants":1,
+      "slotID":5
+    },
+    {
+      "DESCRIZIONE": "Blue in slotID 5, fm neutral, -1 servant -> legal",
+      "familyMember": "neutral",
+      "servants":1,
+      "slotID":5
+    },
+    {
+      "DESCRIZIONE": "Red fm orange in slot 6 -> exception già 6 carte character",
+      "familyMember": "orange",
+      "servants":0,
+      "slotID":6
+    },
+    {
+      "DESCRIZIONE": "RED retry fm orange in slotID 14, cost:3 servants, 4 coins -> legal",
+      "familyMember": "orange",
+      "servants":3,
+      "slotID":14
+    },
+    {
+      "DESCRIZIONE": "Blue fm black, in slotID 7, +1 stone -cointax -> legal",
+      "familyMember": "black",
+      "servants":0,
+      "slotID":7
     }
+
   ]
 }
