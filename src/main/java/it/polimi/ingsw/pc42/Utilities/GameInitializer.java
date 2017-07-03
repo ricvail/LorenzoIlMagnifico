@@ -138,15 +138,6 @@ public class GameInitializer {
         if (shuffle){
             Collections.shuffle(players);
         }
-        for (int i =0; i<players.size(); i++){
-            Player p = players.get(i);
-            /*
-            p.getResource(ResourceType.WOOD).set(2);
-            p.getResource(ResourceType.STONE).set(2);
-            p.getResource(ResourceType.SERVANT).set(3);
-            */
-            p.getResource(ResourceType.COIN).set(5+i);
-        }
         return players;
     }
 
@@ -168,9 +159,13 @@ public class GameInitializer {
      */
     public static Board initGame(boolean advanced, JsonNode playerList, JsonNode actionSpaces,
                                  JsonNode cards, boolean shuffle, JsonNode privileges) throws Exception {
-        BoardProvider boardProvider = new BoardProvider();
+        ArrayList<Player> players = initBasicPlayers(playerList, shuffle);
 
-        ArrayList<Player> players = initBasicPlayers(playerList, shuffle); //TODO PersonalBonusTiles
+        return initGame(advanced, players, actionSpaces, cards, shuffle,privileges);
+    }
+    public static Board initGame(boolean advanced, ArrayList<Player> players, JsonNode actionSpaces,
+                                 JsonNode cards, boolean shuffle, JsonNode privileges) throws Exception {
+        BoardProvider boardProvider = new BoardProvider();
         ArrayList<iCard> cardList = readCards(cards,boardProvider,shuffle);
         ArrayList<iActionSpace> actionSpaceList=readActionSpaces(actionSpaces, boardProvider);
         int councilID=ActionSpaceParser.getCouncilID(actionSpaces);

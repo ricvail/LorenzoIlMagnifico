@@ -110,10 +110,6 @@ public class CardParser {
                             areas.add(Area.BUILDING);
                             areas.add(Area.CHARACTER);
                             areas.add(Area.VENTURE);
-                        } else if ("harvest".equalsIgnoreCase(type)) {
-                            return c;
-                        } else if ("production".equalsIgnoreCase(type)) {
-                            return c;
                         } else {
                             throw new Exception("Not a valid card type: " + type);
                         }
