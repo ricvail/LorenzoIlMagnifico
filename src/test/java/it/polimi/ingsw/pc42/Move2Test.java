@@ -780,12 +780,12 @@ public class Move2Test extends TestCase
         }
         assertEquals(true, fm.isUsed());
         assertEquals(6, fm.owner.getNumberOfCards(Card.CardType.CHARACTER));
-        //+1 stone, -10 coins, +10 victorypoints
-        redStone+=1;  redCoin-=10; redVictoryPts+=10;
+        //+1 stone, -10 coins, +12 victorypoints
+        redStone+=1;  redCoin-=10; redVictoryPts+=12;
         //Resources Test
         assertEquals(redStone, fm.owner.getResource(ResourceType.STONE).get());
         assertEquals(redCoin, fm.owner.getResource(ResourceType.COIN).get());
-        //assertEquals(redVictoryPts, fm.owner.getResource(ResourceType.VICTORYPOINTS).get());
+        assertEquals(redVictoryPts, fm.owner.getResource(ResourceType.VICTORYPOINTS).get());
         //end of 34th move---------------------------------------------------------------------------------------------
         // teoricamente redvictory = 15
         exception = false;
@@ -809,7 +809,7 @@ public class Move2Test extends TestCase
         //Resources Test
         assertEquals(blueServant, fm.owner.getResource(ResourceType.SERVANT).get());
         assertEquals(blueCoin, fm.owner.getResource(ResourceType.COIN).get());
-        //assertEquals(blueVictoryPts, fm.owner.getResource(ResourceType.VICTORYPOINTS).get());
+        assertEquals(blueVictoryPts, fm.owner.getResource(ResourceType.VICTORYPOINTS).get());
         //end of 35th move---------------------------------------------------------------------------------------------
         try {
             b.makeMove(nodeGhostMove("neutral"));//Red, neutral ghost move
@@ -926,7 +926,7 @@ public class Move2Test extends TestCase
         //Resources Test
         assertEquals(blueStone, fm.owner.getResource(ResourceType.STONE).get());
         assertEquals(blueCoin, fm.owner.getResource(ResourceType.COIN).get());
-        //assertEquals(blueVictoryPts, fm.owner.getResource(ResourceType.VICTORYPOINTS).get());
+        assertEquals(blueVictoryPts, fm.owner.getResource(ResourceType.VICTORYPOINTS).get());
         //end of 43th move---------------------------------------------------------------------------------------------
         try {
             b.makeMove(nodeGhostMove("neutral"));//Red neutral ghost move
@@ -959,28 +959,29 @@ public class Move2Test extends TestCase
         * -number of territories cards
         * -military points for first e second
         * -faith points
-        * -(wood,stone,coins,servant)//5
+        * -(wood,stone,coins,servant)/5
         * -victory points */
         //BLUE check
-        /*
         int finalVictoryPoints = blueVictoryPts;
         finalVictoryPoints+=10; //for char cards
         finalVictoryPoints+=5; //first for military points
+        finalVictoryPoints+=7; //6 faith points
         finalVictoryPoints+=((blueWooD+blueStone+blueServant+blueCoin)/5);
-        assertEquals(finalVictoryPoints, b.getPlayerByColor(Player.PlayerColor.BLUE)
-                .getResource(ResourceType.VICTORYPOINTS).get());
+        assertEquals(finalVictoryPoints, b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.VICTORYPOINTS).get());
+
         //RED check
         finalVictoryPoints = redVictoryPts;
-        finalVictoryPoints+=21; //for char cards
+        finalVictoryPoints+=21; //for 6 char cards
+        finalVictoryPoints+=1; //3 territory cards
         finalVictoryPoints+=2; //second for military points
-        finalVictoryPoints+=((redWood+redStone+redServant+redCoin)/5);
-        assertEquals(finalVictoryPoints, b.getPlayerByColor(Player.PlayerColor.RED)
-                .getResource(ResourceType.VICTORYPOINTS).get());
+        finalVictoryPoints+=11; //8 faith points
+        finalVictoryPoints+=((redWood+redStone+redServant+redCoin)/5); //2
+        assertEquals(finalVictoryPoints, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.VICTORYPOINTS).get());
 
 
-        //printResources(b.getPlayerByColor(Player.PlayerColor.RED));
-        //printResources(b.getPlayerByColor(Player.PlayerColor.BLUE));
-        //printStatus(); */
+        printResources(b.getPlayerByColor(Player.PlayerColor.RED));
+        printResources(b.getPlayerByColor(Player.PlayerColor.BLUE));
+        printStatus();
 
     }
 

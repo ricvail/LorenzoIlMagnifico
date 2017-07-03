@@ -274,7 +274,7 @@ public class Board {
                     +player.getResource(ResourceType.STONE).get()+player.getResource(ResourceType.COIN).get();
             player.getResource(ResourceType.VICTORYPOINTS).add(counter/5);
         }
-        playerArrayList.sort(Comparator.comparingInt(o -> o.getResource(ResourceType.MILITARYPOINTS).get()));
+        playerArrayList.sort(Comparator.comparingInt(o -> o.getResource(ResourceType.MILITARYPOINTS).get()*-1));
         playerArrayList.get(0).getResource(ResourceType.VICTORYPOINTS).add(5);
         playerArrayList.get(1).getResource(ResourceType.VICTORYPOINTS).add(2);
     }
