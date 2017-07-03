@@ -25,7 +25,7 @@ public class ActionValuePenaltyForSecondPlayer extends AbstractDecorator {
             fm.setValue(fm.getValue()-penalty);
             if (fm.getValue()<1){
                 fm.setValue(fm.getValue()+penalty);
-                throw new ActionAbortedException(false);
+                throw new ActionAbortedException(false, "Family Member action value, with the penalty applied, is less than one");
             }
         }
         try {

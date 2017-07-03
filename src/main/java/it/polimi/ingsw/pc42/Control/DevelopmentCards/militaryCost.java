@@ -22,7 +22,7 @@ public class militaryCost extends AbstractDecorator {
     public void drawCard(JsonNode move, FamilyMember fm) throws ActionAbortedException {
         int owned =  fm.owner.getResource(ResourceType.MILITARYPOINTS).get();
         if (owned<required){
-            throw new ActionAbortedException(false);
+            throw new ActionAbortedException(false, "You don't have enough Military Points");
         }
         fm.owner.getResource(ResourceType.MILITARYPOINTS).add(subtracted*-1);
         try {

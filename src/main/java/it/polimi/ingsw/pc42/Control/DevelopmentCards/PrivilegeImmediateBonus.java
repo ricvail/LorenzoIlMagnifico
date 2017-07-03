@@ -17,7 +17,7 @@ public class PrivilegeImmediateBonus extends AbstractDecorator {
     @Override
     public void drawCard(JsonNode move, FamilyMember fm) throws ActionAbortedException {
         if (!move.has("immediateEffect")){
-            throw new ActionAbortedException(false);
+            throw new ActionAbortedException(false, "Missing privileges choices");
         }
         getBoard().getPrivilegeManager().applyPrivileges(fm.owner, move.get("immediateEffect"),quantity); //automatically throws exception if something goes wrong
         try {

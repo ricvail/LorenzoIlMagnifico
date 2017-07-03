@@ -12,7 +12,7 @@ public class singleFamilyMemberDecorator extends AbstractDecorator {
     @Override
     public void performAction(JsonNode move, FamilyMember fm) throws ActionAbortedException {
         if (fm.diceColor.visible && getNumberOfVisibleFamilyMembers(fm)>=1){
-            throw new ActionAbortedException(false);
+            throw new ActionAbortedException(false, "Action Space occupied, you can't place a second Family Member");
         }
         super.performAction(move, fm);
     }
