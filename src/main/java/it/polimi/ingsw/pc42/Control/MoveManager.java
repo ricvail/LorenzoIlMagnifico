@@ -1,6 +1,7 @@
 package it.polimi.ingsw.pc42.Control;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import it.polimi.ingsw.pc42.Control.ActionAbortedException;
@@ -11,6 +12,8 @@ import it.polimi.ingsw.pc42.Model.FamilyMember;
 import it.polimi.ingsw.pc42.Model.Player;
 
 import javax.naming.CompositeName;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by RICVA on 13/06/2017.
@@ -193,5 +196,22 @@ public class MoveManager {
         int required = space.getMinimumActionValue(fm);
         if (fm.getValue()>=required) return 0;
         else return (required-fm.getValue());
+    }
+
+    private static boolean enoughFaithPoints(Player player, Board board){
+        File faithPointsJson = new File("src/res/faithPoints.json");
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode root=null;
+        try {
+            root = mapper.readTree(faithPointsJson);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        JsonNode excommunicationRequests = root.get("excommunicationRequests");
+        int minFaithPoints = excommunicationRequests.get(board.getEra()-1).asInt();
+        if (player.getResource(ResourceType.FAITHPOINTS).get()<minFaithPoints){
+            return false;
+        }
+        return true;
     }
 }
