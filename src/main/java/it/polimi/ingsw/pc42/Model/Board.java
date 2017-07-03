@@ -10,6 +10,7 @@ import it.polimi.ingsw.pc42.Control.PrivilegeManager;
 import it.polimi.ingsw.pc42.Control.ResourceType;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -130,7 +131,7 @@ public class Board {
                 return actionSpace;
             }
         }
-        throw new Exception("Could not find an actionspace with ID "+id);
+        throw new Exception("Could not find an actionSpace with ID "+id);
     }
 
 
@@ -268,25 +269,7 @@ public class Board {
                 counter=counter+j-2;
                 player.getResource(ResourceType.VICTORYPOINTS).add(counter);
             }
-
-            //TODO fare una funzione apposta per i faith points che vengono presi dal json
-
-            counter=0;
-            for (int x=1; x<=player.getResource(ResourceType.FAITHPOINTS).get(); x++ ){
-                if (x<=5){
-                    counter=1;
-                }
-                if (x>5 && x<=12){
-                    counter=2;
-                }
-                if (x>12 && x<=14){
-                    counter=3;
-                }
-                if (x==15){
-                    counter=5;
-                }
-                player.getResource(ResourceType.VICTORYPOINTS).add(counter);
-            }
+            player.getResource(ResourceType.VICTORYPOINTS).add(convertFaithToVictoryPoints(player));
             counter=player.getResource(ResourceType.WOOD).get()+player.getResource(ResourceType.SERVANT).get()
                     +player.getResource(ResourceType.STONE).get()+player.getResource(ResourceType.COIN).get();
             player.getResource(ResourceType.VICTORYPOINTS).add(counter/5);
@@ -296,17 +279,22 @@ public class Board {
         playerArrayList.get(1).getResource(ResourceType.VICTORYPOINTS).add(2);
     }
 
-    /*public static int convertFaithToVictoryPoints(Player player){
-        File faithPointsJson = new File("src/res/timeout.json");
+    public static int convertFaithToVictoryPoints(Player player){
+        File faithPointsJson = new File("src/res/faithPoints.json");
         ObjectMapper mapper = new ObjectMapper();
+        JsonNode victoryPointsFromFaithPoints=null;
         try {
-            int faithPoints = mapper.readTree(faithPointsJson).get(player.getResource(ResourceType.FAITHPOINTS).get());
-        } catch (Exception e){
+            victoryPointsFromFaithPoints = mapper.readTree(faithPointsJson);
+        } catch (IOException e){
             e.printStackTrace();
         }
-        Iterator<JsonNode> iterator= ;
-        player.getResource(ResourceType.VICTORYPOINTS).add();
-    }*/
+        int faith = player.getResource(ResourceType.FAITHPOINTS).get();
+        try {
+            return victoryPointsFromFaithPoints.get("faithPoints").get(faith).asInt();
+        } catch (NullPointerException npe){
+            return (player.getResource(ResourceType.FAITHPOINTS).get()-15)*5+30;
+        }
+    }
 
     public ArrayList<Player> getPlayerArrayList() {
         return playerArrayList;
