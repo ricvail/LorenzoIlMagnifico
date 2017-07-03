@@ -31,6 +31,12 @@ public class Board {
     private ArrayList<Dice> dices;
     private PrivilegeManager privilegesManager;
 
+
+    private boolean vatican;
+
+    public boolean isVatican() {
+        return vatican;
+    }
     public PrivilegeManager getPrivilegeManager(){
         return privilegesManager;
     }
@@ -93,6 +99,7 @@ public class Board {
         }
         currentPlayer=playerArrayList.get(0);
         era = 1;
+        vatican= false;
         //cleanUp();//Council will be empty, so nothing happens to turn order;
                     //cleanUp also rolls dices and causes tower action spaces to receive their first card
     }
@@ -196,6 +203,20 @@ public class Board {
         throw new Exception("No player with such color "+ p.getColor().getPlayerColorString());
     }
 
+    public void endVaticanPlayerTurn(){
+        int index = 0;
+        try{
+            getPlayerIndex(currentPlayer);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        if (index==playerArrayList.size()-1) {
+            vatican=false;
+        }else {
+            currentPlayer= playerArrayList.get(index+1);
+        }
+    }
+
     public void endPlayerTurn(){
         try {
             if (!isEndOfRound()) {
@@ -203,7 +224,8 @@ public class Board {
             } else {
                 round++;
                 if (isEndOfEra()){
-                    //TODO vatican phase
+                    vatican=true;
+                    currentPlayer=playerArrayList.get(0);
                     era ++;
                     if (era >=4){
                         endGame();
@@ -294,6 +316,12 @@ public class Board {
         } catch (NullPointerException npe){
             return (player.getResource(ResourceType.FAITHPOINTS).get()-15)*5+30;
         }
+    }
+
+    public static void giveUpFaithPoints(Player p){
+        int vict = convertFaithToVictoryPoints(p);
+        p.getResource(ResourceType.FAITHPOINTS).set(0);
+        p.getResource(ResourceType.VICTORYPOINTS).add(vict);
     }
 
     public ArrayList<Player> getPlayerArrayList() {

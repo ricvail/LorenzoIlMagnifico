@@ -16,6 +16,7 @@ public class ActionAbortedException extends Exception{
     public ActionAbortedException(boolean isValid){
         this.isComplete=true;
         this.isValid =isValid; //depends on whether the action was aborted by the user or because it was not valid
+
     }
     public ActionAbortedException (String nextMoveField, JsonNode availableChoices){
         this.nextMoveField=nextMoveField;

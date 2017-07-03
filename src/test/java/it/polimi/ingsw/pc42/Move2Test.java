@@ -953,6 +953,7 @@ public class Move2Test extends TestCase
         } catch (Exception e){
             e.printStackTrace();
         }
+
         //END OF THE GAME - FINAL CHECK--------------------------------------------------------------------------------
         /* to check:
         * -number of characters cards
