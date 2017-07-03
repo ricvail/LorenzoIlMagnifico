@@ -2,6 +2,7 @@ package it.polimi.ingsw.pc42.Utilities;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import it.polimi.ingsw.pc42.Control.ActionAbortedException;
+import it.polimi.ingsw.pc42.Control.Game;
 import it.polimi.ingsw.pc42.Control.MoveManager;
 import it.polimi.ingsw.pc42.Model.Board;
 import it.polimi.ingsw.pc42.Model.Player;
@@ -15,6 +16,7 @@ public class ClientHandler implements Runnable {
 
     private Board board;
 
+    private Game game;
     public PrintWriter socketOut;
 
     public void setBoard(Board b) {
@@ -37,6 +39,10 @@ public class ClientHandler implements Runnable {
         this.socket = socket;
     }
 
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
     public void run() {
         try {
             Scanner socketIn = new Scanner(socket.getInputStream());
@@ -47,8 +53,9 @@ public class ClientHandler implements Runnable {
                 try {
                     JsonNode jsonNode = StreamMapper.fromStringToJson(line);
                     if (jsonNode.has("familyMember")) {
-
                         MoveManager.makeMove(board, player, jsonNode);
+                        socketOut.println("Action successful");
+                        game.switchClient();
                     }
                     if (jsonNode.has("getDescription"))
                         socketOut.println(getPlayer().generateJsonDescription().asText());

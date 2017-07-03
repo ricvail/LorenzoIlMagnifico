@@ -1,4 +1,4 @@
-package it.polimi.ingsw.pc42.Utilities;
+package it.polimi.ingsw.pc42.View;
 
 import java.io.IOException;
 import java.io.PrintWriter;

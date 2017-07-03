@@ -1,7 +1,6 @@
 package it.polimi.ingsw.pc42.Utilities;
 
 import it.polimi.ingsw.pc42.Control.Game;
-import it.polimi.ingsw.pc42.Control.LobbyTimer;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -15,9 +14,9 @@ public class Server {
     public static ExecutorService executor = Executors.newCachedThreadPool();
 
     private ArrayList<ClientHandler> clients;
-    private LobbyTimer lobbyTimer;
     private ArrayList<Game> games;
     private int counter=4;
+    private MyTimer timer;
 
     private final static int PORT = 3000;
     public void startServer() throws IOException {
@@ -36,8 +35,8 @@ public class Server {
                 counter--;
                 System.out.println("you are waiting for " + counter+ " players");
                 if (clients.size()==2){
-                    lobbyTimer=new LobbyTimer(this);
-                    lobbyTimer.start();
+                    timer = createTimer();
+                    timer.startTimer();
                 }
                 if (clients.size()==4){
                     this.createGame();
@@ -55,7 +54,7 @@ public class Server {
         games.add(game);
         game.start();
         this.cleanClients();
-        lobbyTimer.stopTimer();
+        timer.stopTimer();
         System.out.print(games.size());
     }
 
@@ -66,6 +65,20 @@ public class Server {
         } catch (Exception e ){
             e.printStackTrace();
         }
+    }
+
+    public MyTimer createTimer(){
+        return new MyTimer(MyTimer.getLobbyTimeout(), new MyTimer.myTimerTask() {
+            @Override
+            public void onUpdate(int secondsLeft) {
+                System.out.println(" seconds to start: "+ secondsLeft);
+            }
+            @Override
+            public void onEnd() {
+                System.out.println("game is starting...");
+                createGame();
+            }
+        });
     }
 
     public static void main(String[] args) {
