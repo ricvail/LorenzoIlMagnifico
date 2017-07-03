@@ -96,6 +96,19 @@ public class GameInitializer {
         }
         return b;
     }
+    public static Board initBaseGame(ArrayList<Player> players, boolean shuffle){
+        Board b=null;
+        try {
+            b= initGame(false,
+                    players,
+                    getDefaultActionSpacesJson(),
+                    getDefaultCardsJson(),
+                    shuffle, getDefaultPrivileges());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return b;
+    }
 
     public static ArrayList<iCard> readCards(JsonNode cardList,BoardProvider bp, boolean shuffle){
         ArrayList<iCard> cards = readCards(cardList, bp);
@@ -170,8 +183,6 @@ public class GameInitializer {
         ArrayList<iActionSpace> actionSpaceList=readActionSpaces(actionSpaces, boardProvider);
         int councilID=ActionSpaceParser.getCouncilID(actionSpaces);
 
-        System.out.print(councilID);
-
         Board b =new Board(players, cardList, actionSpaceList, shuffle, privileges);
         b.setCouncilID(councilID);
         boardProvider.setBoard(b);
@@ -180,7 +191,5 @@ public class GameInitializer {
 
         return b;
     }
-
-
-
+    
 }

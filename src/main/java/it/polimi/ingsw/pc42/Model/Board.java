@@ -266,6 +266,9 @@ public class Board {
                 counter=counter+j-2;
                 player.getResource(ResourceType.VICTORYPOINTS).add(counter);
             }
+
+            //TODO fare una funzione apposta per i faith points che vengono presi dal json
+
             counter=0;
             for (int x=1; x<=player.getResource(ResourceType.FAITHPOINTS).get(); x++ ){
                 if (x<=5){

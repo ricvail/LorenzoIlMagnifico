@@ -52,7 +52,7 @@ public class CardTest {
             assertEquals(card.getName(), "Preacher");
             assertEquals(card.getEra(), 1);
 
-            JsonNode moveNode = mapper.readTree(new File("src/res/test_move.json"));
+//            JsonNode moveNode = mapper.readTree(new File("src/res/test_move.json"));
 
             //card.applyDrawEffect(player, moveNode );
 

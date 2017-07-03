@@ -44,8 +44,11 @@ public class Player {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return createPlayer(col);
+    }
+    public static  Player createPlayer(PlayerColor color){
         PersonalBonusTile tile = PersonalBonusTileParser.parse(GameInitializer.getDefaultBonusTileJson());
-        return new Player(col, tile);
+        return new Player(color, tile);
     }
 
 

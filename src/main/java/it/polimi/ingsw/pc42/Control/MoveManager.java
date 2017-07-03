@@ -22,7 +22,6 @@ public class MoveManager {
         if (move.has("checking")&&move.get("checking").asBoolean()){
             //nothing
         } else {
-            b.endPlayerTurn();
         }
     }
 
@@ -41,6 +40,8 @@ public class MoveManager {
         if (move.has("checking")&&move.get("checking").asBoolean()){
             undoMove (b, b.getCurrentPlayer(), move);
             throw new ActionAbortedException(true);
+        } else {
+            b.endPlayerTurn();
         }
     }
 
@@ -84,8 +85,8 @@ public class MoveManager {
     public static void getActionSpaceFromJson(Board b, JsonNode move, FamilyMember fm) throws ActionAbortedException {
         if (!move.has("slotID")){
             //TODO generate list of possible action spaces
-            //throw new ActionAbortedException("slotID", b.getPossibleSlotList(fm));
-            throw new ActionAbortedException(false);//temp
+            throw new ActionAbortedException("slotID", null);
+            //throw new ActionAbortedException(false);//temp
         }
         iActionSpace space;
         try {
