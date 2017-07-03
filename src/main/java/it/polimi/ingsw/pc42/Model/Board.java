@@ -84,6 +84,10 @@ public class Board {
         //Turn management
         councilHasBeenSet =false;
         round=0;
+        for (int i =0; i<playerArrayList.size(); i++){
+            Player p = playerArrayList.get(i);
+            p.getResource(ResourceType.COIN).set(5+i);
+        }
         currentPlayer=playerArrayList.get(0);
         era = 1;
         //cleanUp();//Council will be empty, so nothing happens to turn order;
