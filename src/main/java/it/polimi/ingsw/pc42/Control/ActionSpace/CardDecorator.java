@@ -29,7 +29,7 @@ public class CardDecorator extends AbstractDecorator {
     @Override
     public void performAction(JsonNode move, FamilyMember fm) throws ActionAbortedException {
         if (empty || fm.owner.getNumberOfCards(type)>=6){
-            throw new ActionAbortedException(false, "You already have 6 "+type.getString()+" cards");
+            throw new ActionAbortedException(false, "You already have 6 "+type.getString()+" cards or the tower's Action Space is empty");
         }
         if (card.getCardType()== Card.CardType.TERRITORY&&
                 fm.owner.getNumberOfCards(Card.CardType.TERRITORY)>=fm.owner.getMaxNumberOfTerritories()){
