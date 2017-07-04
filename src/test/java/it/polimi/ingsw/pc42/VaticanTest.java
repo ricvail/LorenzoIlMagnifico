@@ -1,9 +1,6 @@
 package it.polimi.ingsw.pc42;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.sun.org.apache.regexp.internal.RE;
 import it.polimi.ingsw.pc42.Control.ResourceType;
 import it.polimi.ingsw.pc42.Model.Board;
 import it.polimi.ingsw.pc42.Model.Player;
@@ -11,6 +8,8 @@ import it.polimi.ingsw.pc42.Utilities.GameInitializer;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import static it.polimi.ingsw.pc42.Control.MoveManager.nodeGhostMove;
 
 /**
  * Created by diego on 04/07/2017.
@@ -151,14 +150,5 @@ public class VaticanTest extends TestCase
         assertEquals(false, b.isVatican());
         assertEquals(0, b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.FAITHPOINTS).get());
 
-    }
-    private JsonNode nodeGhostMove(String familyMember){
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode ghostNode = mapper.createObjectNode();
-        ghostNode.put("DESCRIZIONE", "ghost");
-        ghostNode.put("familyMember", familyMember);
-        ghostNode.put("servants", 0);
-        ghostNode.put("slotID", 0);
-        return ghostNode;
     }
 }

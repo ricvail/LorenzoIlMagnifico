@@ -191,7 +191,7 @@ public class MoveTest
             e.printStackTrace();
         }
         assertEquals(true, exception);
-        assertEquals("checking move", message);
+        assertEquals("checking move finished", message);
         //Resources not added?
         assertEquals(7, b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.COIN).get());
     }

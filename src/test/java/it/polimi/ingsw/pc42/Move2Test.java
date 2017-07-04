@@ -1,8 +1,6 @@
 package it.polimi.ingsw.pc42;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.Control.ResourceType;
@@ -16,6 +14,8 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import java.util.ArrayList;
+
+import static it.polimi.ingsw.pc42.Control.MoveManager.nodeGhostMove;
 
 public class Move2Test extends TestCase
 {
@@ -106,6 +106,18 @@ public class Move2Test extends TestCase
         b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.COIN).add(-2);
         blueCoin -= 2;
         //end second move----------------------------------------------------------------------------------------------
+        exception = false;
+        try{
+            b.makeMove(mosse.get(42));//Turno g rosso, mette fm nero(=6) nello slotID 7, +1 stone, missing privileges choice
+        } catch (ActionAbortedException ae) {
+            exception = true;
+            message = ae.getMessage();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertEquals(true, exception);
+        assertEquals("Missing privileges choices", message);
+        //re-try-------------------------------------------------------------------------------------------------------
         exception = false;
         try {
             b.makeMove(mosse.get(3));//Rosso mette fm black(=6) + 1 servant nello slotID 8, +2 stone e card, legal
@@ -995,7 +1007,21 @@ public class Move2Test extends TestCase
         assertEquals(blueStone, fm.owner.getResource(ResourceType.STONE).get());
         assertEquals(blueCoin, fm.owner.getResource(ResourceType.COIN).get());
         assertEquals(blueVictoryPts, fm.owner.getResource(ResourceType.VICTORYPOINTS).get());
+        //CHEAT MODE Player Red---------------------------------------------------------------------------------------
+        b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.SERVANT).add(1); redServant+=1;
         //end of 43th move---------------------------------------------------------------------------------------------
+        exception = false;
+        try {
+            b.makeMove(mosse.get(43));//Red fm neutral + 1 servant in slotID 13, not enough military points -> exception
+        } catch (ActionAbortedException ae){
+            exception = true;
+            message = ae.getMessage();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertEquals(true, exception);
+        assertEquals("You don't have enough Military Points", message);
+        //re-try-------------------------------------------------------------------------------------------------------
         try {
             b.makeMove(nodeGhostMove("neutral"));//Red neutral ghost move
         } catch (Exception e) {
@@ -1022,7 +1048,7 @@ public class Move2Test extends TestCase
             e.printStackTrace();
         }
 
-        //VATICAN PHASE
+        //VATICAN PHASE------------------------------------------------------------------------------------------------
         exception = false;
         try {
             b.makeMove(mosse.get(41));//VATICAN CHOICE BLU
@@ -1042,9 +1068,7 @@ public class Move2Test extends TestCase
         }
         assertEquals(false, exception);
         assertEquals(false, b.isVatican());
-
-        // END VATICAN PHASE
-
+        // END VATICAN PHASE-------------------------------------------------------------------------------------------
         //END OF THE GAME - FINAL CHECK--------------------------------------------------------------------------------
         /* to check:
         * -number of characters cards
@@ -1070,21 +1094,10 @@ public class Move2Test extends TestCase
         finalVictoryPoints+=((redWood+redStone+redServant+redCoin)/5); //2
         assertEquals(finalVictoryPoints, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.VICTORYPOINTS).get());
 
-
         //printResources(b.getPlayerByColor(Player.PlayerColor.RED));
         //printResources(b.getPlayerByColor(Player.PlayerColor.BLUE));
         //printStatus();
 
-    }
-
-    private JsonNode nodeGhostMove(String familyMember){
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode ghostNode = mapper.createObjectNode();
-        ghostNode.put("DESCRIZIONE", "ghost");
-        ghostNode.put("familyMember", familyMember);
-        ghostNode.put("servants", 0);
-        ghostNode.put("slotID", 0);
-        return ghostNode;
     }
 
     private boolean checkFamilyMemberUsed(ArrayList<FamilyMember> familyMembers){

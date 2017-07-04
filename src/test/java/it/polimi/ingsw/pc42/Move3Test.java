@@ -224,6 +224,55 @@ public class Move3Test extends TestCase
         assertEquals(3, blue.getResource(ResourceType.STONE).get());
         assertEquals(3, blue.getResource(ResourceType.WOOD).get());
         //end of 10th move---------------------------------------------------------------------------------------------
+        exception = false;
+        try{
+            b.makeMove(mosse.get(13)); // Yellow fm white in slotID 4 , dovrei mettere 6 servants -> exception
+        }  catch (ActionAbortedException ae){
+            exception = true;
+            message = ae.getMessage();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertEquals(true, exception);
+        assertEquals("Not enough servants", message);
+        //re-try------------------------------------------------------------------------------------------------------
+        exception = false;
+        try{
+            b.makeMove(mosse.get(14)); // Yellow fm white in slotID 57 -> exception
+        }  catch (ActionAbortedException ae){
+            exception = true;
+            message = ae.getMessage();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertEquals(true, exception);
+        assertEquals("This Action Space does not exist or the ID is not an integer", message);
+        //re-try-------------------------------------------------------------------------------------------------------
+        exception = false;
+        try{
+            b.makeMove(mosse.get(15)); // Yellow fm indaco in slotID 1 -> exception
+        }  catch (ActionAbortedException ae){
+            exception = true;
+            message = ae.getMessage();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertEquals(true, exception);
+        assertEquals("Wrong Family Member's Color", message);
+        //re-try-------------------------------------------------------------------------------------------------------
+        exception = false;
+        try{
+            b.makeMove(mosse.get(16)); // Yellow fm white in slotID 22, occupied -> exception
+        }  catch (ActionAbortedException ae){
+            exception = true;
+            message = ae.getMessage();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertEquals(true, exception);
+        assertEquals("Action Space occupied, you can't place a second Family Member", message);
+        //re-try-------------------------------------------------------------------------------------------------------
+
         /**/
     }
 }

@@ -78,6 +78,30 @@
       "familyMember": "black",
       "servants": 0,
       "slotID": 19
+    },
+    {
+      "DESCRIZIONE": "Yellow fm white in slotID 4 , dovrei mettere 6 servants -> exception ",
+      "familyMember": "white",
+      "servants": 6,
+      "slotID": 4
+    },
+    {
+      "DESCRIZIONE": "Yellow fm white in slotID 57 -> exception",
+      "familyMember": "white",
+      "servants": 0,
+      "slotID": 57
+    },
+    {
+      "DESCRIZIONE": "Yellow fm indaco in slotID 1 -> exception",
+      "familyMember": "indaco",
+      "servants": 0,
+      "slotID": 1
+    },
+    {
+      "DESCRIZIONE": "Yellow fm white in slotID 23, occupied -> exception",
+      "familyMember": "white",
+      "servants": 0,
+      "slotID": 22
     }
   ]
 }

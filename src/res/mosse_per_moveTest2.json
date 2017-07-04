@@ -323,7 +323,18 @@
     },
     {
       "vaticanChoice": false
+    },
+    {
+      "DESCRIZIONE": "Turno g rosso, mette fm nero(=6) nello slotID 7, +1 stone e card, missing privileges choice",
+      "familyMember": "black",
+      "servants": 1,
+      "slotID": 8
+    },
+    {
+      "DESCRIZIONE": "Red fm neutral + 1 servant in slotID 13, not enough military points -> exception",
+      "familyMember": "neutral",
+      "servants": 1,
+      "slotID": 13
     }
-
   ]
 }

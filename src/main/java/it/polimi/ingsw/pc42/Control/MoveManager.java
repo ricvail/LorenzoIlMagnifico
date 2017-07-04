@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.polimi.ingsw.pc42.Control.ActionSpace.iActionSpace;
 import it.polimi.ingsw.pc42.Model.Board;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
@@ -44,7 +45,7 @@ public class MoveManager {
             getFamilyMemberFromJson(b, move, p);
             if (move.has("checking") && move.get("checking").asBoolean()) {
                 undoMove(b, b.getCurrentPlayer(), move);
-                throw new ActionAbortedException(true, "checking move");
+                throw new ActionAbortedException(true, "checking move finished");
             } else {
                 b.endPlayerTurn();
 
@@ -115,7 +116,7 @@ public class MoveManager {
         try {
             space = b.getActionSpaceByID(move.get("slotID").asInt());
         } catch (Exception e) {
-            throw new ActionAbortedException(false, "This Action Space does not exist or the ID is not an integer ");
+            throw new ActionAbortedException(false, "This Action Space does not exist or the ID is not an integer");
         }
         if (fm.canBePlacedInArea(space.getArea())&&
                 b.getNumberOfPlayers()>=space.getMinimumNumberOfPlayers()){
@@ -234,5 +235,15 @@ public class MoveManager {
             return false;
         }
         return true;
+    }
+
+    public static JsonNode nodeGhostMove(String familyMember){
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode ghostNode = mapper.createObjectNode();
+        ghostNode.put("DESCRIZIONE", "ghost");
+        ghostNode.put("familyMember", familyMember);
+        ghostNode.put("servants", 0);
+        ghostNode.put("slotID", 0);
+        return ghostNode;
     }
 }
