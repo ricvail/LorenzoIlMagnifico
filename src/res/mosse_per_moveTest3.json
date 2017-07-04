@@ -78,6 +78,9 @@
       "familyMember": "black",
       "servants": 0,
       "slotID": 19
+    },
+    {
+      "vaticanChoice": false
     }
   ]
 }

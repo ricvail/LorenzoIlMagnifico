@@ -206,12 +206,13 @@ public class Board {
     public void endVaticanPlayerTurn(){
         int index = 0;
         try{
-            getPlayerIndex(currentPlayer);
+            index=getPlayerIndex(currentPlayer);
         }catch (Exception e){
             e.printStackTrace();
         }
         if (index==playerArrayList.size()-1) {
             vatican=false;
+            currentPlayer=playerArrayList.get(0);
         }else {
             currentPlayer= playerArrayList.get(index+1);
         }

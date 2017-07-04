@@ -4,19 +4,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Control.ActionSpace.iActionSpace;
-import it.polimi.ingsw.pc42.Control.ResourceType;
 import it.polimi.ingsw.pc42.Model.Board;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
 import it.polimi.ingsw.pc42.Model.Player;
-import it.polimi.ingsw.pc42.Utilities.MyTimer;
 
-import javax.naming.CompositeName;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * Created by RICVA on 13/06/2017.
@@ -41,10 +35,10 @@ public class MoveManager {
         if (!b.isPlayerTurn(p)){
             throw new Exception("it's not this player's turn");
         }
-        /*if (b.isVatican()){
+        if (b.isVatican()){
             makeVaticanChoice(b, p, move);
             b.endVaticanPlayerTurn();
-        } else {*/
+        } else {
             getFamilyMemberFromJson(b, move, p);
             undoMove(b, b.getCurrentPlayer(), move);
             getFamilyMemberFromJson(b, move, p);
@@ -55,7 +49,7 @@ public class MoveManager {
                 b.endPlayerTurn();
 
             }
-        //}
+        }
     }
 
     public static void makeVaticanChoice(Board b, Player p, JsonNode move) throws Exception {

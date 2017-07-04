@@ -514,6 +514,31 @@ public class Move2Test extends TestCase
         assertEquals(2, b.getEra());
         //END SECOND ROUND---------------------------------------------------------------------------------------------
         assertEquals(2, b.getRound());
+
+        //VATICAN PHASE
+        //cheat mode
+        exception = false;
+        try {
+            b.makeMove(mosse.get(41));//VATICAN CHOICE BLU
+        } catch (Exception e) {
+            exception = true;
+            e.printStackTrace();
+        }
+        assertEquals(false, exception);
+        assertEquals(true, b.isVatican());
+
+        exception = false;
+        try {
+            b.makeMove(mosse.get(41));//VATICAN CHOICE RED
+        } catch (Exception e) {
+            exception = true;
+            e.printStackTrace();
+        }
+        assertEquals(false, exception);
+        assertEquals(false, b.isVatican());
+
+
+
         //CHEAT MODE player Blue---------------------------------------------------------------------------------------
         b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.WOOD).add(3);
         blueWooD += 3;
@@ -738,6 +763,30 @@ public class Move2Test extends TestCase
         //CHEAT MODE player Blue---------------------------------------------------------------------------------------
         b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.COIN).add(14); blueCoin+=14;
         //END OF FOURTH ROUND------------------------------------------------------------------------------------------
+
+        //VATICAN PHASE
+        //cheat mode
+        exception = false;
+        try {
+            b.makeMove(mosse.get(41));//VATICAN CHOICE BLU
+        } catch (Exception e) {
+            exception = true;
+            e.printStackTrace();
+        }
+        assertEquals(false, exception);
+        assertEquals(true, b.isVatican());
+
+        exception = false;
+        try {
+            b.makeMove(mosse.get(41));//VATICAN CHOICE RED
+        } catch (Exception e) {
+            exception = true;
+            e.printStackTrace();
+        }
+        assertEquals(false, exception);
+        assertEquals(false, b.isVatican());
+
+        // END VATICAN PHASE
         exception = false;
         try {
             b.makeMove(mosse.get(34));//BLUE in slotID 8, black + 1 servant, +2 stone -> legal

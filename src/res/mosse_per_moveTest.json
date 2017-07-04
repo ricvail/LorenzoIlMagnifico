@@ -69,9 +69,6 @@
       "slotID" : 17,
       "privileges" : [2],
       "checking": true
-    },
-    {
-      "vaticanChoice": false
     }
   ]
 }
