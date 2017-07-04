@@ -39,6 +39,7 @@ public class Move2Test extends TestCase
         JsonNode mosse = GameInitializer.readFile("src/res/mosse_per_moveTest2.json").get("moves");
         Board b = GameInitializer.initBaseGame(false);
         //RED and BLUE playing; servants=3, wood=stone=2, coins=5+i
+        String message = "";
         //first move--------------------------------------------------------------------------------------------------
         boolean exception = false;
         try {
@@ -136,10 +137,12 @@ public class Move2Test extends TestCase
             b.makeMove(mosse.get(4));//Blue slotID 13, orange, cost carta > resources -> exception
         } catch (ActionAbortedException ae) {
             exception = true;
+            message = ae.getMessage();
         } catch (Exception e) {
             e.printStackTrace();
         }
         assertEquals(true, exception);
+        assertEquals("Not enough coins to draw the card", message);
         //re-try-------------------------------------------------------------------------------------------------------
         exception = false;
         try {
@@ -254,12 +257,14 @@ public class Move2Test extends TestCase
         //end sixth move-----------------------------------------------------------------------------------------------
         exception = false;
         try {
-            b.makeMove(mosse.get(9));//Rosso tenta di mettere fm orange in slotID 2, già fm red -> exception
+            b.makeMove(mosse.get(9));//Rosso tenta di mettere fm orange in slotID 2, cointax -> exception
         } catch (ActionAbortedException ae) {
             exception = true;
+            message = ae.getMessage();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        assertEquals("You don't have enough coins to pay the Tax", message);
         assertEquals(true, exception);
         //CHEAT MODE player RED----------------------------------------------------------------------------------------
         b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.WOOD).add(1);
@@ -276,10 +281,12 @@ public class Move2Test extends TestCase
             b.makeMove(mosse.get(10));//Rosso ritenta fm orange in slot 16, 2 privileges-> exception 2 privileges uguali
         } catch (ActionAbortedException ae) {
             exception = true;
+            message = ae.getMessage();
         } catch (Exception e) {
             e.printStackTrace();
         }
         assertEquals(true, exception);
+        assertEquals("You've chosen the same privilege more than once", message);
         //check if servant is unused again
         redNeutral = null;
         try {
@@ -359,10 +366,12 @@ public class Move2Test extends TestCase
             b.makeMove(mosse.get(13));//Blue fm black +1 servant, + 2coins, payment 1 -> fallisce per le resources
         } catch (ActionAbortedException ae) {
             exception = true;
+            message = ae.getMessage();
         } catch (Exception e) {
             e.printStackTrace();
         }
         assertEquals(true, exception);
+        assertEquals("Not enough stone to draw the card", message);
         //undo of immediate bonus
         assertEquals(blueCoin, b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.COIN).get());
         //re-try-------------------------------------------------------------------------------------------------------
@@ -442,13 +451,15 @@ public class Move2Test extends TestCase
         //end of tenth move--------------------------------------------------------------------------------------------
         exception = false;
         try {
-            b.makeMove(mosse.get(17));//Blue tenta fm orange in slotID 7, exception carta già pescata
+            b.makeMove(mosse.get(17));//Blue tenta fm orange in slotID 7, exception carta già pescata (empty)
         } catch (ActionAbortedException ae) {
             exception = true;
+            message =ae.getMessage();
         } catch (Exception e) {
             e.printStackTrace();
         }
         assertEquals(true, exception);
+        assertEquals("You already have 6 characters cards or the tower's Action Space is empty", message);
         //re-try-------------------------------------------------------------------------------------------------------
         exception = false;
         try {
@@ -515,7 +526,7 @@ public class Move2Test extends TestCase
         //END SECOND ROUND---------------------------------------------------------------------------------------------
         assertEquals(2, b.getRound());
 
-        //VATICAN PHASE
+        //VATICAN PHASE------------------------------------------------------------------------------------------------
         //cheat mode
         exception = false;
         try {
@@ -536,8 +547,7 @@ public class Move2Test extends TestCase
         }
         assertEquals(false, exception);
         assertEquals(false, b.isVatican());
-
-
+        //END VATICAN PHASE--------------------------------------------------------------------------------------------
 
         //CHEAT MODE player Blue---------------------------------------------------------------------------------------
         b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.WOOD).add(3);
@@ -564,10 +574,12 @@ public class Move2Test extends TestCase
             b.makeMove(mosse.get(25));//RED fm black in slot7 -> pesca slot6-> pesca slot2-> exception needed buildings
         } catch (ActionAbortedException ae) {
             exception = true;
+            message = ae.getMessage();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        assertEquals(true, exception);
+        //TODO finisce in una exception un po' vaga?
+        assertEquals("Family Member can't be place in this Area or this Action Space is not active in 2 players game-mode", message);
         assertEquals(redStone, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.STONE).get());
         assertEquals(redCoin, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).get());
         //CHEAT MODE player RED-----------------------------------------------------------------------------------------
@@ -593,12 +605,14 @@ public class Move2Test extends TestCase
         exception = false;
         try {
             b.makeMove(mosse.get(27));//RED fm black in slot7 -> pesca slot8-> pesca slot14-> fallisce per costo carta
-            // che non viene soddisfatto a perchè si sceglie il privileges[0]
+            // che non viene soddisfatto perchè si sceglie il privileges[0]
         } catch (ActionAbortedException ae) {
             exception = true;
+            message = ae.getMessage();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        assertEquals("Not enough coins to draw the card", message);
         assertEquals(true, exception);
         assertEquals(redStone, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.STONE).get());
         assertEquals(redCoin, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).get());
@@ -683,23 +697,26 @@ public class Move2Test extends TestCase
             e.printStackTrace();
         }
         assertEquals(false, exception);
+        //CHEAT MODE player RED-----------------------------------------------------------------------------------------
+        b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).add(3);
+        redCoin += 3;
         //end 20th move------------------------------------------------------------------------------------------------
         exception = false;
         try {
             b.makeMove(mosse.get(32));//RED fm neutral in slot1 -> exception not enough militaryPoints
         } catch (ActionAbortedException ae) {
             exception = true;
+            message = ae.getMessage();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        assertEquals("Not enough Military Points to draw this card", message);
         assertEquals(true, exception);
         assertEquals(redServant, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.SERVANT).get());
         assertEquals(2, b.getPlayerByColor(Player.PlayerColor.RED).getNumberOfCards(Card.CardType.TERRITORY));
-        //CHEAT MODE layer RED-----------------------------------------------------------------------------------------
+        //CHEAT MODE player RED-----------------------------------------------------------------------------------------
         b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.MILITARYPOINTS).add(3);
         redMilitaryPts += 3;
-        b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).add(3);
-        redCoin += 3;
         //re-try-------------------------------------------------------------------------------------------------------
         exception = false;
         try {
@@ -764,7 +781,7 @@ public class Move2Test extends TestCase
         b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.COIN).add(14); blueCoin+=14;
         //END OF FOURTH ROUND------------------------------------------------------------------------------------------
 
-        //VATICAN PHASE
+        //VATICAN PHASE------------------------------------------------------------------------------------------------
         exception = false;
         try {
             b.makeMove(mosse.get(41));//VATICAN CHOICE BLU
@@ -784,8 +801,9 @@ public class Move2Test extends TestCase
         }
         assertEquals(false, exception);
         assertEquals(false, b.isVatican());
+        // END VATICAN PHASE------------------------------------------------------------------------------------------
 
-        // END VATICAN PHASE
+        //START OF FIFTH ROUND----------------------------------------------------------------------------------------
         exception = false;
         try {
             b.makeMove(mosse.get(34));//BLUE in slotID 8, black + 1 servant, +2 stone -> legal
@@ -923,9 +941,11 @@ public class Move2Test extends TestCase
             b.makeMove(mosse.get(38));//Red fm orange in slot 6 -> exception già 6 carte character
         } catch (ActionAbortedException ae){
             exception = true;
+            message = ae.getMessage();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        assertEquals("You already have 6 characters cards or the tower's Action Space is empty", message);
         assertEquals(true, exception);
         assertEquals(redCoin, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).get());
         assertEquals(6, b.getPlayerByColor(Player.PlayerColor.RED).getNumberOfCards(Card.CardType.CHARACTER));
@@ -1051,9 +1071,9 @@ public class Move2Test extends TestCase
         assertEquals(finalVictoryPoints, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.VICTORYPOINTS).get());
 
 
-        printResources(b.getPlayerByColor(Player.PlayerColor.RED));
-        printResources(b.getPlayerByColor(Player.PlayerColor.BLUE));
-        printStatus();
+        //printResources(b.getPlayerByColor(Player.PlayerColor.RED));
+        //printResources(b.getPlayerByColor(Player.PlayerColor.BLUE));
+        //printStatus();
 
     }
 

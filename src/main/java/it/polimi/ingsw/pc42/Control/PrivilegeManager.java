@@ -31,7 +31,7 @@ public class PrivilegeManager {
             throw new ActionAbortedException("privileges", getListOfUnusedPrivileges(move));
         }
         if (!areAllPrivilegesDifferent(move.get("privileges"))){
-            throw new ActionAbortedException(false, "The chosen privileges must be all different, from one another");
+            throw new ActionAbortedException(false, "You've chosen the same privilege more than once");
         }
         try {
             applyDifferentPrivileges(p, move);

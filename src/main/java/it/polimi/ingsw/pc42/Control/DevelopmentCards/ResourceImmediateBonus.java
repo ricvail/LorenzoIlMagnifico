@@ -23,7 +23,7 @@ public class ResourceImmediateBonus extends AbstractDecorator {
         }
         catch (IllegalArgumentException e){
             fm.owner.getResource(resourceType).abortAddUsingBonus(q);
-            throw new ActionAbortedException(false, "Not enough "+resourceType.getString());
+            throw new ActionAbortedException(false, "Not enough "+resourceType.getString()+" to draw the card");
         }
         try {
             super.drawCard(move, fm);
