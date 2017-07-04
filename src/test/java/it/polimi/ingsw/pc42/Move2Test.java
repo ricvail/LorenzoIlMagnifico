@@ -608,11 +608,11 @@ public class Move2Test extends TestCase
             // che non viene soddisfatto perchè si sceglie il privileges[0]
         } catch (ActionAbortedException ae) {
             exception = true;
-            ae.getMessage();
+            message = ae.getMessage();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //System.out.println(message);
+        assertEquals("Not enough coins to draw the card", message);
         assertEquals(true, exception);
         assertEquals(redStone, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.STONE).get());
         assertEquals(redCoin, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).get());
