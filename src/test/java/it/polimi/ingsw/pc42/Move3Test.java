@@ -30,6 +30,7 @@ public class Move3Test extends TestCase
         Board b = GameInitializer.initBaseGame(players, false);
         //RED, BLUE, YELLOW, GREEN playing; servants=3, wood=stone=2, coins=5+i
         //BONUS TILE: 1 militaryPoint, 2 coins | 1 wood, 1 stone, 1 servant
+        String message = "";
         //first move--------------------------------------------------------------------------------------------------
         boolean exception = false;
         try{
@@ -109,13 +110,15 @@ public class Move3Test extends TestCase
         //end of 4th move----------------------------------------------------------------------------------------------
         exception = false;
         try{
-            b.makeMove(mosse.get(5)); //Red fm orange slot 18 + 1 servant, fallisce, già fm stesso colore
+            b.makeMove(mosse.get(5)); //Red fm orange slot 18 + 1 servant, exception, già fm stesso colore
         }  catch (ActionAbortedException ae){
             exception = true;
+            message = ae.getMessage();
         } catch (Exception e) {
             e.printStackTrace();
         }
         assertEquals(true, exception);
+        assertEquals("This Area is already occupied by one of your non-neutral Family Member", message);
         assertEquals(3, red.getResource(ResourceType.SERVANT).get());
         //CHEAT MODE player red---------------------------------------------------------------------------------------
         red.getResource(ResourceType.SERVANT).add(1);

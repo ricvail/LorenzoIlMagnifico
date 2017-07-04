@@ -50,7 +50,7 @@ public class MoveTest
          *
          * Il vaticano per ora non esiste, ma il resto (avanzamento di era e fine del gioco) avviene automaticamente
          */
-
+        String message = "";
         boolean exception= false;
         try {
             b.makeMove(mosse.get(0)); //Turno del giocatore rosso, gioca nel market e ottiene 5 monete
@@ -78,10 +78,12 @@ public class MoveTest
             b.makeMove(mosse.get(1)); //blue, fm neutral e servant 0 -> exception
         }catch (ActionAbortedException ae){
             exception = true;
+            message = ae.getMessage();
         } catch (Exception e) {
             e.printStackTrace();
         }
         assertEquals(true, exception);
+        assertEquals("Family Member's Action Value lower than requirement", message);
         //re-try---------------------------------------------------------------------------------------------------
         exception=false;
         try{
@@ -97,9 +99,10 @@ public class MoveTest
         //end of 2nd move---------------------------------------------------------------------------------------------
         exception=false;
         try{
-            b.makeMove(mosse.get(3)); // Red sul mercato, slotID 22 -> exception (2 players)
+            b.makeMove(mosse.get(3)); // Red sul mercato, slotID 22 -> exception (2 players game mode)
         } catch (ActionAbortedException ae){
             exception = true;
+            message = ae.getMessage();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -107,6 +110,7 @@ public class MoveTest
         //Resources not added?
         assertEquals(0, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.MILITARYPOINTS).get());
         assertEquals(10, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).get());
+        assertEquals("Family Member can't be place in this Area or this Action Space is not active in 2 players game-mode", message);
         //re-try-------------------------------------------------------------------------------------------------------
         exception=false;
         try{
@@ -137,7 +141,7 @@ public class MoveTest
         //end of 4th move----------------------------------------------------------------------------------------------
         exception = false;
         try{
-            b.makeMove(mosse.get(6)); //gioca il rosso slot 23 -> exception
+            b.makeMove(mosse.get(6)); //gioca il rosso slot 23 -> exception (2 players game mode)
         }  catch (ActionAbortedException ae){
             exception = true;
         } catch (Exception e) {
@@ -154,10 +158,12 @@ public class MoveTest
             b.makeMove(mosse.get(7));//RED, exception neutral is used
         }  catch (ActionAbortedException ae){
             exception = true;
+            message = ae.getMessage();
         } catch (Exception e) {
             e.printStackTrace();
         }
         assertEquals(true, exception);
+        assertEquals("This Family Member is used", message);
         //Resources not added?
         assertEquals(0, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.FAITHPOINTS).get());
         //re-try-------------------------------------------------------------------------------------------------------
@@ -180,10 +186,12 @@ public class MoveTest
             b.makeMove(mosse.get(9));//Blue fm orange con servant in council, sceglie coins: +3, ma è solo checking
         }  catch (ActionAbortedException ae){
             exception = true;
+            message = ae.getMessage();
         } catch (Exception e) {
             e.printStackTrace();
         }
         assertEquals(true, exception);
+        assertEquals("checking move", message);
         //Resources not added?
         assertEquals(7, b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.COIN).get());
     }
