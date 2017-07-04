@@ -1,9 +1,11 @@
 package it.polimi.ingsw.pc42.Control.ActionSpace;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Model.Board;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
+
 
 import java.util.ArrayList;
 
@@ -19,5 +21,7 @@ public interface iActionSpace {
     Board getBoard();
     int getMinimumActionValue(FamilyMember fm);
     int getMinimumNumberOfPlayers();
+
+    ObjectNode updateDescription (ObjectNode node);
 
 }

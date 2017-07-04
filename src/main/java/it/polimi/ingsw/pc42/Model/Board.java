@@ -2,6 +2,9 @@ package it.polimi.ingsw.pc42.Model;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.polimi.ingsw.pc42.Control.MoveManager;
 import it.polimi.ingsw.pc42.Control.ActionSpace.iActionSpace;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.Card;
@@ -30,6 +33,7 @@ public class Board {
     private boolean councilHasBeenSet;
     private ArrayList<Dice> dices;
     private PrivilegeManager privilegesManager;
+    private ArrayNode spacesDescription;
 
 
     private boolean vatican;
@@ -42,6 +46,26 @@ public class Board {
     }
 
 
+    public JsonNode generateJsonDescription () {
+        JsonNodeFactory factory= JsonNodeFactory.instance;
+        ObjectNode board = factory.objectNode();
+        Iterator<JsonNode> areas = spacesDescription.elements();
+        while (areas.hasNext()){
+            JsonNode areaJson = areas.next();
+            Iterator<JsonNode> spaces= areaJson.get("actionSpaces").elements();
+            while (spaces.hasNext()){
+                ObjectNode spaceJson = (ObjectNode) spaces.next();
+                try {
+                    iActionSpace spaceDecorator = getActionSpaceByID(spaceJson.get("id").asInt());
+                    //--------------------
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return board;
+    }
 
     public Player getCurrentPlayer() {
         return currentPlayer;
@@ -73,11 +97,12 @@ public class Board {
      * @param cards
      */
     public Board(ArrayList<Player> players,ArrayList<iCard> cards,
-                 ArrayList<iActionSpace> spaces, boolean random, JsonNode privileges){
+                 ArrayList<iActionSpace> spaces, ArrayNode spacesDescription, boolean random, JsonNode privileges){
         //Initialization
         actionSpaces= spaces;
         playerArrayList=players;
         this.cards=cards;
+        this.spacesDescription = spacesDescription;
         privilegesManager =new PrivilegeManager(privileges);
         if (random) {
             dices = new ArrayList<>();

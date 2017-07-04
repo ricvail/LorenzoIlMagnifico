@@ -183,7 +183,7 @@ public class GameInitializer {
         ArrayList<iActionSpace> actionSpaceList=readActionSpaces(actionSpaces, boardProvider);
         int councilID=ActionSpaceParser.getCouncilID(actionSpaces);
 
-        Board b =new Board(players, cardList, actionSpaceList, shuffle, privileges);
+        Board b =new Board(players, cardList, actionSpaceList, (ArrayNode) actionSpaces, shuffle, privileges);
         b.setCouncilID(councilID);
         boardProvider.setBoard(b);
 

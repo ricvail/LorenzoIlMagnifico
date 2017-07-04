@@ -1,6 +1,7 @@
 package it.polimi.ingsw.pc42.Control.ActionSpace;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
 import it.polimi.ingsw.pc42.Model.Board;
@@ -37,25 +38,6 @@ public class ActionSpace implements iActionSpace {
     public void undoAction(JsonNode move, FamilyMember fm) {
     }
 
-    /*
-    @Override
-    public boolean canPlace(FamilyMember familyMember) {
-        if (familyMember.getValue()<actionValue){
-            if (familyMember.owner.getResource(ResourceType.SERVANT).get()>=(actionValue-familyMember.getValue())){
-                return true;
-            } else {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public void placeFamilyMember(FamilyMember familyMember, JsonNode json) {
-        familyMember.setUsed(true);
-        this.familyMembers.add(familyMember);
-    }
-*/
 
     @Override
     public void cleanup() {
@@ -111,6 +93,15 @@ public class ActionSpace implements iActionSpace {
     public int getMinimumNumberOfPlayers() {
         return minPlayers;
     }
+
+    @Override
+    public ObjectNode updateDescription(ObjectNode node) {
+        //TODO
+        //node.put();
+
+        return node;
+    }
+
 
     public static boolean isFirstInArea(Board board, Area area, FamilyMember fmToAdd){
         Iterator<iActionSpace> iterator = board.getActionSpaces().iterator();
