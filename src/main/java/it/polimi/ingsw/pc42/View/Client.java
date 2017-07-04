@@ -1,4 +1,4 @@
-package it.polimi.ingsw.pc42.Utilities;
+package it.polimi.ingsw.pc42.View;
 
 import it.polimi.ingsw.pc42.Model.Player;
 
