@@ -48,7 +48,7 @@ public class ExtraCard extends AbstractDecorator{
     @Override
     public void drawCard(JsonNode move, FamilyMember fm) throws ActionAbortedException {
         if (!(move.has("immediateEffect"))){
-            throw new ActionAbortedException("immediateEffect", null);//TODO
+            throw new ActionAbortedException("immediateEffect", null);
         }
         super.drawCard(move, fm);
         setNewBonuses(fm);
@@ -60,6 +60,7 @@ public class ExtraCard extends AbstractDecorator{
         } catch (ActionAbortedException e){
             setOldBonuses(fm);
             super.undoDrawCard(move, fm);
+            e.level++;
             throw e;
         }
     }

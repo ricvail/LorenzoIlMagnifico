@@ -16,6 +16,9 @@ public class Client {
     private final static String IP="127.0.0.1";
     private Player player;
 
+    private Scanner socketIn;
+    private PrintWriter socketOut;
+
     public void setSocket (Socket socket){
         this.socket=socket;
     }
@@ -31,14 +34,33 @@ public class Client {
     public Player getPlayer() {
         return player;
     }
+    boolean continueLoop=true;
 
     public void startClient() throws IOException {
         Socket socket = new Socket(IP, PORT);
         System.out.println("Connection Established");
-        ExecutorService executor = Executors.newFixedThreadPool(4);
-        executor.submit(new ClientInHandler(new Scanner(socket.getInputStream())));
-        executor.submit((new ClientOutHandler(new PrintWriter(socket.getOutputStream()))));
+        socketIn= new Scanner((socket.getInputStream()));
+        socketOut=new PrintWriter(socket.getOutputStream());
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+        executor.submit(userInputHandler);
+        executor.submit(serverResponseHandler);
     }
+    Runnable serverResponseHandler = ()->{
+        while (continueLoop){
+            String line = socketIn.nextLine();
+            System.out.println(line);
+        }
+    };
+    Runnable userInputHandler= ()->{
+        while (continueLoop){
+            Scanner stdin = new Scanner(System.in);
+            while (continueLoop) {
+                String inputLine = stdin.nextLine();
+                socketOut.println(inputLine);
+                socketOut.flush();
+            }
+        }
+    };
 
     public static void main(String[] args) {
         Client client = new Client();

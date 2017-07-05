@@ -13,6 +13,7 @@ public class ActionAbortedException extends Exception{
     public boolean isValid;
     public String nextMoveField;
     public JsonNode availableChoices;
+    public int level;
 
     public ActionAbortedException(boolean isValid, String message) {
         super(message); //detailed message of the cause
@@ -20,16 +21,12 @@ public class ActionAbortedException extends Exception{
         this.isValid = isValid;
     }
 
-    public ActionAbortedException(boolean isValid){
-        this.isComplete=true;
-        this.isValid =isValid; //depends on whether the action was aborted by the user or because it was not valid
-
-    }
     public ActionAbortedException (String nextMoveField, JsonNode availableChoices){
         this.nextMoveField=nextMoveField;
         this.availableChoices = availableChoices;
         isComplete=false;
         isValid=true;
+        level = 0;
     }
 
 

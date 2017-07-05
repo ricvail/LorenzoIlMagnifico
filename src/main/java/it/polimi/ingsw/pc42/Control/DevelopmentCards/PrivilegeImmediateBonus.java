@@ -19,7 +19,12 @@ public class PrivilegeImmediateBonus extends AbstractDecorator {
         if (!move.has("immediateEffect")){
             throw new ActionAbortedException(false, "Missing privileges choices");
         }
-        getBoard().getPrivilegeManager().applyPrivileges(fm.owner, move.get("immediateEffect"),quantity); //automatically throws exception if something goes wrong
+        try {
+            getBoard().getPrivilegeManager().applyPrivileges(fm.owner, move.get("immediateEffect"),quantity); //automatically throws exception if something goes wrong
+        } catch (ActionAbortedException e){
+            e.level++;
+            throw e;
+        }
         try {
             super.drawCard(move, fm);
         }catch (ActionAbortedException e){

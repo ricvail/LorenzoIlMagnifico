@@ -31,6 +31,7 @@ public class Server {
                 Socket socket = serverSocket.accept();
                 ClientHandler client = new ClientHandler(socket);
                 executor.submit(client);
+
                 clients.add(client);
                 counter--;
                 System.out.println("you are waiting for " + counter+ " players");
@@ -41,9 +42,9 @@ public class Server {
                 if (clients.size()==4){
                     this.createGame();
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
-            } catch (NullPointerException npe){npe.printStackTrace();}
+            }
         }
         executor.shutdown();
         serverSocket.close();

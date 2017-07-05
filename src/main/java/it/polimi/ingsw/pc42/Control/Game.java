@@ -38,13 +38,13 @@ public class Game {
         b = GameInitializer.initBaseGame(playerArrayList, false);//TODO shuffle
         for (ClientHandler client:clients){
             client.setBoard(b);
-            client.socketOut.println("Game started! You are player "+ client.getPlayer().getColor().getPlayerColorString());
-            client.socketOut.print("Turn order: ");
+            //client.socketOut.println("Game started! You are player "+ client.getPlayer().getColor().getPlayerColorString());
+            //client.socketOut.print("Turn order: ");
             for (Player p : b.getPlayerArrayList()){
-                client.socketOut.print(p.getColor().getPlayerColorString()+ " ");
+                //client.socketOut.print(p.getColor().getPlayerColorString()+ " ");
             }
-            client.socketOut.println("");
-            client.socketOut.flush();
+            //client.socketOut.println("");
+            //client.socketOut.flush();
         }
         timer = createTimer(b, getClient(b.getCurrentPlayer()));
         timer.startTimer();
@@ -54,8 +54,8 @@ public class Game {
         timer.stopTimer();
         ClientHandler c = getClient(b.getCurrentPlayer());
         timer = createTimer(b, c);
-        c.socketOut.println("It is now your turn");
-        c.socketOut.flush();
+        //c.socketOut.println("It is now your turn");
+        //c.socketOut.flush();
         timer.startTimer();
     }
 
@@ -106,8 +106,8 @@ public class Game {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                client.socketOut.println("Time is up, null move executed");
-                client.socketOut.flush();
+                //client.socketOut.println("Time is up, null move executed");
+                //client.socketOut.flush();
                 switchClient();
             }
         });
