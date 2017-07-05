@@ -1,25 +1,41 @@
 package it.polimi.ingsw.pc42.Model;
 
-
-import it.polimi.ingsw.pc42.Control.ResourceType;
 import it.polimi.ingsw.pc42.Control.ResourceWrapper;
 
 import java.util.ArrayList;
 
 public class PersonalBonusTile {
 
-    public PersonalBonusTile() {
-        this.harvestBonuses = new ArrayList<ResourceWrapper>();
-        this.productionBonuses = new ArrayList<ResourceWrapper>();
-    }
-
     public ArrayList<ResourceWrapper> harvestBonuses, productionBonuses;
 
+    /**
+     * Class constructor. Initializes the harvest and production lists.
+     */
+    public PersonalBonusTile() {
+        this.harvestBonuses = new ArrayList<>();
+        this.productionBonuses = new ArrayList<>();
+    }
+
+    /**
+     * Iterates through the list of bonuses that take as a parameter and add each value to the correct resource of the
+     * player passed.
+     *
+     * @param bonuses list of wrapped bonuses, representing the bonus tile
+     * @param p player owner of the tile
+     */
     public static void applyBonuses(ArrayList<ResourceWrapper> bonuses, Player p){
         for (ResourceWrapper bonus : bonuses){
             p.getResource(bonus.getResourceType()).add(bonus.get());
         }
     }
+
+    /**
+     *Iterates through the list of bonuses that take as a parameter and subtract each value from the correct resource
+     *  of the player passed.
+     *
+     * @param bonuses list of wrapped bonuses, representing the bonus tile
+     * @param p player owner of the tile
+     */
     public static void undoBonuses(ArrayList<ResourceWrapper> bonuses, Player p){
         for (ResourceWrapper bonus : bonuses){
             p.getResource(bonus.getResourceType()).add(bonus.get()*-1);
