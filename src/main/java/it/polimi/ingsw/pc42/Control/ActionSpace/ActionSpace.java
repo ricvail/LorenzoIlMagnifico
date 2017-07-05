@@ -1,6 +1,8 @@
 package it.polimi.ingsw.pc42.Control.ActionSpace;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
@@ -96,8 +98,15 @@ public class ActionSpace implements iActionSpace {
 
     @Override
     public ObjectNode updateDescription(ObjectNode node) {
-        //TODO
-        //node.put();
+        JsonNodeFactory factory=JsonNodeFactory.instance;
+        ArrayNode root= factory.arrayNode();
+        for (FamilyMember fm:familyMembers) {
+            ObjectNode objectNode = new ObjectNode(factory);
+            objectNode.put("color", fm.getDiceColor().getDiceColorString());
+            objectNode.put("playerColor", fm.owner.getColor().getPlayerColorString());
+            root.add(objectNode);
+        }
+        node.set("familyMembers", root);
 
         return node;
     }

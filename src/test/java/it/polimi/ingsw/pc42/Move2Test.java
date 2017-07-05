@@ -1,6 +1,7 @@
 package it.polimi.ingsw.pc42;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.Control.ResourceType;
@@ -9,6 +10,7 @@ import it.polimi.ingsw.pc42.Model.Dice;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
 import it.polimi.ingsw.pc42.Model.Player;
 import it.polimi.ingsw.pc42.Utilities.GameInitializer;
+import it.polimi.ingsw.pc42.View.OutputStringGenerator;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -388,6 +390,7 @@ public class Move2Test extends TestCase
         assertEquals(blueCoin, b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.COIN).get());
         //re-try-------------------------------------------------------------------------------------------------------
         exception = false;
+
         try {
             b.makeMove(mosse.get(14));//Blue fm black +1 servant, + 2coins, payment 0-> legale
         } catch (Exception e) {
@@ -537,6 +540,11 @@ public class Move2Test extends TestCase
         assertEquals(2, b.getEra());
         //END SECOND ROUND---------------------------------------------------------------------------------------------
         assertEquals(2, b.getRound());
+
+
+        JsonNode jsonNodef=b.generateJsonDescription();
+        System.out.print(OutputStringGenerator.ArrayToString(OutputStringGenerator.generateOutputStringOf_A(jsonNodef, "CHARACTER")));
+
 
         //VATICAN PHASE------------------------------------------------------------------------------------------------
         //cheat mode
@@ -909,6 +917,14 @@ public class Move2Test extends TestCase
         } catch (Exception e) {
             e.printStackTrace();
         }
+        JsonNode jsonNode=b.generateJsonDescription();
+        System.out.print(OutputStringGenerator.ArrayToString(OutputStringGenerator.generateOutputStringOf_A(jsonNode, "CHARACTER")));
+        System.out.print(OutputStringGenerator.ArrayToString(OutputStringGenerator.generateOutputStringOf_A(jsonNode, "TERRITORY")));
+        System.out.print(OutputStringGenerator.ArrayToString(OutputStringGenerator.generateOutputStringOf_A(jsonNode, "COUNCIL")));
+        System.out.print(OutputStringGenerator.ArrayToString(OutputStringGenerator.generateOutputStringOf_A(jsonNode, "MARKET")));
+        System.out.print(OutputStringGenerator.ArrayToString(OutputStringGenerator.generateOutputStringOf_A(jsonNode, "VENTURE")));
+        System.out.print(OutputStringGenerator.ArrayToString(OutputStringGenerator.generateOutputStringOf_A(jsonNode, "HARVEST")));
+
         try {
             b.makeMove(nodeGhostMove("orange"));//Red, orange ghost move
         } catch (Exception e) {

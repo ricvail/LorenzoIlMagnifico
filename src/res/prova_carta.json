@@ -31,7 +31,7 @@
     "victoryPoints": 5,
     "card": {
       "value": 7,
-      "type": "all/territory/building/../harvest/prodution",
+      "type": "all/territory/building/../harvest/production",
       "wood": 1,
       "stone": 2,
       "servants": 3,

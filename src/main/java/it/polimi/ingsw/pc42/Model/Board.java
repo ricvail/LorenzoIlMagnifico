@@ -25,6 +25,7 @@ public class Board {
     private int era;
     private int round;
     private Player currentPlayer;
+//private int currentTurn;
     private ArrayList<Player> playerArrayList;
     private ArrayList<iActionSpace> actionSpaces;
     private ArrayList<iCard> cards;
@@ -36,7 +37,6 @@ public class Board {
 
 
     private boolean vatican;
-
 
     public PrivilegeManager getPrivilegeManager(){
         return privilegesManager;
@@ -54,13 +54,32 @@ public class Board {
                 ObjectNode spaceJson = (ObjectNode) spaces.next();
                 try {
                     iActionSpace spaceDecorator = getActionSpaceByID(spaceJson.get("id").asInt());
-                    //--------------------
+                    spaceDecorator.updateDescription(spaceJson);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-        }
 
+        }
+        board.set("spaces", spacesDescription);
+
+        ArrayNode arrayOfDice= factory.arrayNode();
+        for (Dice dice:dices){
+            ObjectNode objectNode=new ObjectNode(factory);
+            objectNode.put("color", dice.getColor().getDiceColorString());
+            objectNode.put("value", dice.getValue());
+            arrayOfDice.add(objectNode);
+        }
+        board.set("dices", arrayOfDice);
+
+        ArrayNode arrayOfPlayers=factory.arrayNode();
+        for (Player player:playerArrayList){
+            arrayOfPlayers.add(player.generateJsonDescription());
+        }
+        board.set("players", arrayOfPlayers);
+
+        board.put("era", era);
+        board.put("round", round+1);
         return board;
     }
 
@@ -68,17 +87,6 @@ public class Board {
         return currentPlayer;
     }
 
-    public int getEra() {
-        return era;
-    }
-
-    public ArrayList<Player> getPlayerArrayList() {
-        return playerArrayList;
-    }
-
-    public int getRound() {
-        return round;
-    }
 
     /**
      * Class constructor. It gets players, cards (must be already shuffled) and action spaces lists to start the
@@ -251,6 +259,9 @@ public class Board {
         return this.actionSpaces;
     }
 
+    public int getEra() {
+        return era;
+    }
     /**
      * Iterates through the list of cards, removes and returns them based on current Era and type. If the list is empty
      * throws an exception.
@@ -491,5 +502,14 @@ public class Board {
         int vict = convertFaithToVictoryPoints(p);
         p.getResource(ResourceType.FAITHPOINTS).set(0);
         p.getResource(ResourceType.VICTORYPOINTS).add(vict);
+    }
+
+
+    public ArrayList<Player> getPlayerArrayList() {
+        return playerArrayList;
+    }
+
+    public int getRound() {
+        return round;
     }
 }
