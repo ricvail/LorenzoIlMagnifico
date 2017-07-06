@@ -309,9 +309,11 @@ public class OutputStringGenerator {
         int counter=1;
         while (playerOrder.hasNext()){
             JsonNode turnOrder=playerOrder.next();
-            out.add("\n\t" + counter +"°: "+ turnOrder.get("color").asText());
+            out.add("\n\t" + counter +"°: "+ turnOrder.get("color").asText()+ " with " +
+            turnOrder.get("victoryPoints").asInt()+ " victory points");
             counter++;
         }
+        out.add("\nGIVE US A 30");
         return out;
     }
 
