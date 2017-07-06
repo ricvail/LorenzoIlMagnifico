@@ -55,7 +55,11 @@ public class MoveBuilder {
             }
             move.put(field, userChoice);
         } else if (field.equalsIgnoreCase("slotID")){
-            move.put(field, userChoice);
+            try {
+                move.put(field, Integer.parseInt(userChoice));
+            } catch (Exception e){
+
+            }
         } else if (field.equalsIgnoreCase("servants")){
             if (userChoice.equalsIgnoreCase("a")){
                 userChoice= serverResponsePayload.get("options").get(0).asText();
