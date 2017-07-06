@@ -198,10 +198,15 @@ public class Client extends MessageSender {
 
     public static void main(String[] args) {
         Client client = new Client();
-        try {
-            client.startClient();
-        } catch (IOException e) {
-            e.printStackTrace();
+        boolean asd = true;
+
+        while (asd){
+            try {
+                client.startClient();
+                asd=false;
+            } catch (IOException e) {
+                //e.printStackTrace();
+            }
         }
     }
 

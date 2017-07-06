@@ -87,7 +87,7 @@ public class Game {
                 ArrayList<FamilyMember> fmList = p.getFamilyMembers();
                 FamilyMember fm = null;
                 int min = 100;
-                for(int i=1; i<fmList.size(); i++){
+                for(int i=0; i<fmList.size(); i++){
                     if (fmList.get(i).getValue()< min &&!fmList.get(i).isUsed()){
                         min = fmList.get(i).getValue();
                         fm = fmList.get(i);

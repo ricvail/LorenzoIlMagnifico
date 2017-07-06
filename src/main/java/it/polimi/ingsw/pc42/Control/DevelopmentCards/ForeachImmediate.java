@@ -46,6 +46,7 @@ public class ForeachImmediate extends AbstractDecorator {
             super.drawCard(move, fm);
         } catch (ActionAbortedException e){
             ForeachManager.applyForeach(fm.owner, resObtained, ratio*-1, counter.getCount(fm.owner));
+            throw e;
         }
     }
 

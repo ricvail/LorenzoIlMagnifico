@@ -12,6 +12,7 @@ import it.polimi.ingsw.pc42.Model.Player;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class ClientHandler extends MessageSender implements Runnable {
@@ -79,7 +80,12 @@ public class ClientHandler extends MessageSender implements Runnable {
     }
 
     public void loopBody(){
-        String line = socketIn.nextLine();
+        String line = "";
+        try {
+            line = socketIn.next();
+        } catch(NoSuchElementException e){
+
+        }
         JsonNode jsonNode = null;
         try {
             jsonNode = StreamMapper.fromStringToJson(line);
@@ -119,7 +125,7 @@ public class ClientHandler extends MessageSender implements Runnable {
             game.switchClient();
             ObjectNode payload = JsonNodeFactory.instance.objectNode();
             payload.put("playerCompleted", player.getColor().getPlayerColorString());
-            game.broadcastUpdate(Strings.MessageTypes.MOVE_SUCCESSFUL);
+            game.broadcastUpdate(Strings.MessageTypes.MOVE_SUCCESSFUL, payload);
             return;
         } catch (ActionAbortedException e){
             if (!e.isValid){
