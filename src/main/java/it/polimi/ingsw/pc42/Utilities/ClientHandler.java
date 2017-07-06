@@ -151,6 +151,9 @@ public class ClientHandler extends MessageSender implements Runnable {
             ObjectNode payload = JsonNodeFactory.instance.objectNode();
             payload.put("playerCompleted", player.getColor().getPlayerColorString());
             game.broadcastUpdate(Strings.MessageTypes.MOVE_SUCCESSFUL, payload);
+            if (board.isGameOver()){
+                game.broadcastUpdate(Strings.MessageTypes.GAME_OVER);
+            }
             return;
         } catch (ActionAbortedException e){
             if (!e.isValid){

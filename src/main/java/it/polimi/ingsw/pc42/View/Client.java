@@ -148,6 +148,12 @@ public class Client extends MessageSender {
             if (type.equalsIgnoreCase(Strings.MessageTypes.UPDATE)){
                 printStatus();
             }
+            if (type.equalsIgnoreCase(Strings.MessageTypes.GAME_OVER)){
+                isInGame=false;
+                isMyTurn=false;
+                continueLoop=false;
+                System.out.println("Game over!");//TODO
+            }
         }
     };
 
