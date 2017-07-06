@@ -105,9 +105,15 @@ public class Client extends MessageSender {
             }
 
             if (type.equalsIgnoreCase(Strings.MessageTypes.MOVE_INCOMPLETE)){
-                printNextFieldInstructions(payload);
-                moveStack.add(0, new moveBuildingState(currentMove.deepCopy(),payload));
-                waitingForResponse=false;
+                if (payload.get("field").asText().equalsIgnoreCase("immediateEffect")){
+                    MoveBuilder.addInner((ObjectNode)currentMove, (ObjectNode)payload);
+                    waitingForResponse = true;
+                    sendMessage(Strings.MoveTypes.MOVE, currentMove);
+                } else {
+                    printNextFieldInstructions(payload);
+                    moveStack.add(0, new moveBuildingState(currentMove.deepCopy(), payload));
+                    waitingForResponse = false;
+                }
             }
             if (type.equalsIgnoreCase(Strings.MessageTypes.MOVE_COMPLETE)){
                 System.out.println("Press E to execute move");
@@ -130,6 +136,11 @@ public class Client extends MessageSender {
                     System.out.println("Player "+ playerCompleted.toUpperCase() + " has completed a move.");
                 }
 
+            }
+
+            if (type.equalsIgnoreCase(Strings.MessageTypes.CRITICAL_ERROR)){
+                System.out.println("Error, invalid input");
+                waitingForResponse=false;
             }
 
             try {

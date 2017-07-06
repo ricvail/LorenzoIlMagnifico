@@ -31,6 +31,13 @@ public class MoveBuilder {
             return (ObjectNode) move.get("immediateEffect");
         }
     }
+    public static void addInner(ObjectNode move, ObjectNode serverResponsePayload){
+        int level  = serverResponsePayload.get("level").asInt();
+        level++;
+        for (int i = 0; i<level; i++){
+            move = inner(move);
+        }
+    }
 
     public static void addField(ObjectNode move, ObjectNode serverResponsePayload, String userChoice){
         //Before calling make sure to have a server response with type == WARNING.
