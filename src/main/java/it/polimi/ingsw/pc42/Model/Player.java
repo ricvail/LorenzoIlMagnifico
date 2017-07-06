@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Player {
+
+
     private PlayerColor color;
     private ArrayList<iCard> cardsOwned;
     private ArrayList<FamilyMember> familyMembers;

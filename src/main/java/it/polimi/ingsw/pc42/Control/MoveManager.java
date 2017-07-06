@@ -271,7 +271,7 @@ public class MoveManager {
             list.add( getRequiredServants(fm, space));
             throw new ActionAbortedException("servants",list);
         }
-        if (move.get("servants").isInt()){
+        if (move.get("servants").isInt()&&move.get("servants").asInt()>=0){
             int servants = move.get("servants").asInt();
             if (fm.owner.getResource(ResourceType.SERVANT).get()>=servants){
                 fm.owner.getResource(ResourceType.SERVANT).add(servants*-1);

@@ -10,6 +10,7 @@ import it.polimi.ingsw.pc42.Utilities.ClientHandler;
 import it.polimi.ingsw.pc42.Utilities.GameInitializer;
 import it.polimi.ingsw.pc42.Utilities.MyTimer;
 import it.polimi.ingsw.pc42.Utilities.Strings;
+import it.polimi.ingsw.pc42.View.Client;
 
 import java.util.ArrayList;
 
@@ -22,7 +23,13 @@ public class Game {
     private ArrayList<ClientHandler> clients;
     private Board b;
 
+    public static int nextID = 0;
+
+    public int id;
+
     public Game(ArrayList<ClientHandler> clients) {
+        this.id = nextID;
+        nextID++;
         this.clients = new ArrayList<ClientHandler>();
         for (ClientHandler c : clients){
             this.clients.add(c);
@@ -41,9 +48,26 @@ public class Game {
         for (ClientHandler client:clients){
             client.setBoard(b);
         }
-        broadcastUpdate(Strings.MessageTypes.GAMESTARTED);
+        ObjectNode node = JsonNodeFactory.instance.objectNode();
+        node.put("id", id);
+        broadcastUpdate(Strings.MessageTypes.GAMESTARTED, node);
         timer = createTimer(b, getClient(b.getCurrentPlayer()));
         timer.startTimer();
+    }
+
+    public void replaceClient(ClientHandler newCli, ClientHandler oldCli){
+        newCli.setPlayer(oldCli.getPlayer());
+        newCli.setGame(this);
+        newCli.setBoard(b);
+        clients.add(newCli);
+        ObjectNode payload = JsonNodeFactory.instance.objectNode();
+        payload.put("id", id);
+        payload.set("board", b.generateJsonDescription());
+        payload.put("color", newCli.getPlayer().getColor().getPlayerColorString());
+        if (newCli.getPlayer().getColor()==b.getCurrentPlayer().getColor()){
+            payload.put("yourTurn", true);
+        } else payload.put("yourTurn", false);
+        newCli.sendMessage(Strings.MessageTypes.GAMESTARTED, payload);
     }
 
     public void switchClient(){
@@ -54,8 +78,12 @@ public class Game {
     }
 
     public ClientHandler getClient (Player p){
+        return getClient(p.getColor());
+    }
+
+    public ClientHandler getClient (Player.PlayerColor color){
         for (ClientHandler c : clients){
-            if (c.getPlayer().getColor()== p.getColor()) {
+            if (c.getPlayer().getColor()== color) {
                 return c;
             }
         }

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.pc42.View;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.polimi.ingsw.pc42.Model.Player;
@@ -79,10 +80,16 @@ public class Client extends MessageSender {
             }
 
             if (type.equalsIgnoreCase(Strings.MessageTypes.GAMESTARTED)){
-                System.out.println("Game started. You are player "+payload.get("color").asText().toUpperCase() + ". Press H for a list of commands");
+                System.out.println("Game started. ID: "+payload.get("id").asInt()+"\nYou are player "+payload.get("color").asText().toUpperCase() + ". Press H for a list of commands");
                 isInGame=true;
                 waitingForResponse=false;
                 moveStack=new ArrayList<moveBuildingState>();
+            }
+            if (type.equalsIgnoreCase(Strings.MessageTypes.GAME_NOT_FOUND)){
+                System.out.println("Can't join this game");
+                System.out.println("Write N to join a new game or R to reconnect to a previous one");
+                isInGame=false;
+                waitingForResponse=false;
             }
 
             if (type.equalsIgnoreCase(Strings.MessageTypes.MOVE_TIMEOUT)){
@@ -159,10 +166,32 @@ public class Client extends MessageSender {
                         sendMessage(Strings.MoveTypes.NEWGAME, payload);
                         waitingForResponse=true;
                     } else if (inputLine.equalsIgnoreCase("r")) {
-                        //read id
-                        //read color
-                        //send
-                        //wait for response
+                        boolean flag = true;
+                        int id=0;
+                        while (flag){
+                            try {
+                                System.out.println("Please insert the game ID: ");
+                                id = Integer.parseInt(stdin.next());
+                                flag=false;
+                            } catch (Exception e){
+
+                            }
+                        }
+                        flag=true;
+                        String color= "";
+                        while (flag){
+                            try {
+                                System.out.println("Please insert the player color: ");
+                                color = stdin.next();
+                                flag=false;
+                            } catch (Exception e){
+                            }
+                        }
+                        ObjectNode node = JsonNodeFactory.instance.objectNode();
+                        node.put("id", id);
+                        node.put("color", color);
+                        waitingForResponse=true;
+                        sendMessage(Strings.MoveTypes.JOINGAME, node);
                     } else{
                         System.out.println("Unable to parse input. Please retry.");
                     }

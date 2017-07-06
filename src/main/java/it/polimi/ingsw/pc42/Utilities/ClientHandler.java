@@ -19,6 +19,8 @@ public class ClientHandler extends MessageSender implements Runnable {
 
     private Board board;
 
+    private boolean isConnected;
+
 
     private boolean isInGame;
     private Game game;
@@ -43,6 +45,12 @@ public class ClientHandler extends MessageSender implements Runnable {
         this.server=server;
         this.socket = socket;
         isInGame=false;
+        isConnected=true;
+    }
+
+    @Override
+    public void sendMessage(String type, JsonNode payload) {
+        if (isConnected) super.sendMessage(type, payload);
     }
 
     public void setGame(Game game) {
@@ -56,6 +64,8 @@ public class ClientHandler extends MessageSender implements Runnable {
             socketOut = new PrintWriter(socket.getOutputStream());
         } catch (IOException e) {
             e.printStackTrace();
+            isConnected=false;
+            return;
         }
         boolean continueLoop = true;
 
@@ -68,6 +78,7 @@ public class ClientHandler extends MessageSender implements Runnable {
                 e.printStackTrace();
                 sendCriticalErrorMessage();
             }
+            if (!isConnected) continueLoop=false;
         }
         //END MAIN LOOP____________________________________________________________________
         try {
@@ -84,7 +95,8 @@ public class ClientHandler extends MessageSender implements Runnable {
         try {
             line = socketIn.next();
         } catch(NoSuchElementException e){
-
+            isConnected=false;
+            return;
         }
         JsonNode jsonNode = null;
         try {
@@ -96,11 +108,22 @@ public class ClientHandler extends MessageSender implements Runnable {
         }
         if (jsonNode.has("type")) {
             String type = jsonNode.get("type").asText();
-            if (type.equalsIgnoreCase(Strings.MoveTypes.NEWGAME)){
+            if (type.equalsIgnoreCase(Strings.MoveTypes.NEWGAME)&&!isInGame){
                 server.addClientToLobby(this);
                 return;
-            } else if (type.equalsIgnoreCase(Strings.MoveTypes.JOINGAME)){
-                //TODO
+            } else if (type.equalsIgnoreCase(Strings.MoveTypes.JOINGAME)&&!isInGame){
+                try {
+                    Game g= server.getGame(jsonNode.get("payload").get("id").asInt());
+                    ClientHandler cli =g.getClient(Player.PlayerColor.fromString(jsonNode.get("payload").get("color").asText()));
+                    if (cli.isConnected){
+                        throw new Exception();
+                    } else {
+                        g.replaceClient(this, cli);
+                    }
+                } catch (Exception e) {
+                    ObjectNode p = JsonNodeFactory.instance.objectNode();
+                    sendMessage(Strings.MessageTypes.GAME_NOT_FOUND, p);
+                }
             } else if (type.equalsIgnoreCase(Strings.MoveTypes.MOVE)){
                 if (isInGame){
                     parseMoveType(jsonNode);

@@ -61,6 +61,13 @@ public class Server {
         }
     }
 
+    public Game getGame(int id) throws Exception {
+        for (Game g: games){
+            if (g.id==id) return g;
+        }
+        throw new Exception();
+    }
+
     public void createGame(){
         Game game=new Game(clients);
         games.add(game);
