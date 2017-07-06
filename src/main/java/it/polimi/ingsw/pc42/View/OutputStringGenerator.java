@@ -22,7 +22,12 @@ public class OutputStringGenerator {
 
     public static ArrayList<String> generateOutputStringOf_B(JsonNode board){
         ArrayList<String> out = new ArrayList<>();
-
+        Iterator<JsonNode> dice = board.get("dices").elements();
+        out.add("DICE:");
+        while (dice.hasNext()){
+            JsonNode die = dice.next();
+            out.add("\n\t" + die.get("color").asText()+" dice has value " +die.get("value").asInt());
+        }
         Iterator<JsonNode> areas= board.get("spaces").elements();
         while (areas.hasNext()){
             JsonNode area = areas.next();
@@ -245,12 +250,13 @@ public class OutputStringGenerator {
         if (card.asText().equalsIgnoreCase("none")){
             out.add("\n\tCard: None");
         } else {
-            out.add("\n\tCard: " + card.get("name").asText() + "\n\t\t" + "Type: " + card.get("type").asText());
+            out.add("\n\tCard: " + card.get("name").asText());
+            out.add("\n\t\t" + "Type: " + card.get("type").asText());
             if (card.has("activationCost")) {
                 out.add("\n\t\t" + "Activation cost: " + card.get("activationCost").asText());
             }
             if (card.has("costs")) {
-                costParser(card);
+                out.addAll(costParser(card));
             }
             if (card.has("immediateEffect")) {
                 JsonNode immediateEffect = card.get("immediateEffect");
