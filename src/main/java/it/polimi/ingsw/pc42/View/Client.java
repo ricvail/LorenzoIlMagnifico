@@ -152,7 +152,7 @@ public class Client extends MessageSender {
                 isInGame=false;
                 isMyTurn=false;
                 continueLoop=false;
-                System.out.println("Game over!");//TODO
+                System.out.println(OutputStringGenerator.ArrayToString(OutputStringGenerator.theWinnerIs(board)));
             }
         }
     };
