@@ -132,7 +132,9 @@ public class ClientHandler extends MessageSender implements Runnable {
                 }
                 return;
             } else if (type.equalsIgnoreCase(Strings.MoveTypes.QUERY)){
-                sendMessage(Strings.MessageTypes.UPDATE, board.generateJsonDescription());
+                ObjectNode payload = JsonNodeFactory.instance.objectNode();
+                payload.set("board", board.generateJsonDescription());
+                sendMessage(Strings.MessageTypes.UPDATE, payload);
             }else{
                 sendCriticalErrorMessage();
             }

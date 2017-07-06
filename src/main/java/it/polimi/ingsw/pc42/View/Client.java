@@ -4,8 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import it.polimi.ingsw.pc42.Control.PrivilegeManager;
-import it.polimi.ingsw.pc42.Model.Player;
 import it.polimi.ingsw.pc42.Utilities.GameInitializer;
 import it.polimi.ingsw.pc42.Utilities.MessageSender;
 import it.polimi.ingsw.pc42.Utilities.StreamMapper;
@@ -13,7 +11,6 @@ import it.polimi.ingsw.pc42.Utilities.Strings;
 
 import java.io.*;
 import java.net.Socket;
-import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -43,6 +40,7 @@ public class Client extends MessageSender {
     boolean isInGame;
     boolean isMyTurn;
     boolean moveComplete;
+    String userQuery;
     JsonNode currentMove;
     ArrayList<moveBuildingState> moveStack;
     public void startClient() throws IOException {
@@ -147,9 +145,109 @@ public class Client extends MessageSender {
             }catch (Exception e){
 
             }
-
+            if (type.equalsIgnoreCase(Strings.MessageTypes.UPDATE)){
+                printStatus();
+            }
         }
     };
+
+    public void printStatus(){
+        waitingForResponse=false;
+        ArrayList<String> gen= new ArrayList<>();
+        if (userQuery.equalsIgnoreCase("B")){
+            gen=OutputStringGenerator.generateOutputStringOf_B(board);
+        }
+        if (userQuery.equalsIgnoreCase("TT")){
+            try {
+                gen=OutputStringGenerator.generateOutputStringOf_A(board, "TERRITORY");
+            }catch (Exception e){
+                return;
+            }
+        }
+        if (userQuery.equalsIgnoreCase("CT")){
+            try {
+                gen = OutputStringGenerator.generateOutputStringOf_A(board, "CHARACTER");
+            }catch (Exception e){
+                return;
+            }
+        }
+        if (userQuery.equalsIgnoreCase("BT")){
+            try {
+                gen=OutputStringGenerator.generateOutputStringOf_A(board, "BUILDING");
+            }catch (Exception e){
+                return;
+            }
+        }
+        if (userQuery.equalsIgnoreCase("VT")){
+            try {
+                gen=OutputStringGenerator.generateOutputStringOf_A(board, "VENTURE");
+            }catch (Exception e){
+                return;
+            }
+        }
+        if (userQuery.equalsIgnoreCase("C")){
+            try {
+                gen=OutputStringGenerator.generateOutputStringOf_A(board, "COUNCIL");
+            }catch (Exception e){
+                return;
+            }
+        }
+        if (userQuery.equalsIgnoreCase("P")){
+            try {
+                gen=OutputStringGenerator.generateOutputStringOf_A(board, "PRODUCTION");
+            }catch (Exception e){
+                return;
+            }
+        }
+        if (userQuery.equalsIgnoreCase("H")){
+            try {
+                gen=OutputStringGenerator.generateOutputStringOf_A(board, "HARVEST");
+            }catch (Exception e){
+                return;
+            }
+        }
+        if (userQuery.equalsIgnoreCase("M")){
+            try {
+                gen=OutputStringGenerator.generateOutputStringOf_A(board, "MARKET");
+            }catch (Exception e){
+                return;
+            }
+        }
+        if (userQuery.equalsIgnoreCase("RP")){
+            try {
+                gen=OutputStringGenerator.getPlayerStatus(board, "red");
+            }catch (Exception e){
+                System.out.println("Red player doesn't exist");
+                return;
+            }
+        }
+        if (userQuery.equalsIgnoreCase("BP")){
+            try {
+                gen=OutputStringGenerator.getPlayerStatus(board, "blue");
+            }catch (Exception e){
+                System.out.println("Blue player doesn't exist");
+                return;
+            }
+        }
+        if (userQuery.equalsIgnoreCase("YP")){
+            try {
+                gen=OutputStringGenerator.getPlayerStatus(board, "yellow");
+            }catch (Exception e){
+                System.out.println("Yellow player doesn't exist");
+                return;
+            }
+        }
+        if (userQuery.equalsIgnoreCase("GP")){
+            try {
+                gen=OutputStringGenerator.getPlayerStatus(board, "green");
+            }catch (Exception e){
+                System.out.println("Green player doesn't exist");
+                return;
+            }
+        }
+        System.out.print(OutputStringGenerator.ArrayToString(gen));
+
+    }
 
     public void printNextFieldInstructions(JsonNode payload){
         String field = payload.get("field").asText();
@@ -272,8 +370,20 @@ public class Client extends MessageSender {
             } else {
                 System.out.println("Your move is not yet complete");
             }
-        }  else if(moveStack.size()>0){
-            MoveBuilder.addFiled((ObjectNode)currentMove, (ObjectNode)moveStack.get(0).serverResponse, in);waitingForResponse = true;
+        }  else if (in.equalsIgnoreCase("B")||in.equalsIgnoreCase("TT")||
+                in.equalsIgnoreCase("CT")||in.equalsIgnoreCase("BT")||
+                in.equalsIgnoreCase("VT")||in.equalsIgnoreCase("C")||
+                in.equalsIgnoreCase("P")||in.equalsIgnoreCase("H")||
+                in.equalsIgnoreCase("M")||in.equalsIgnoreCase("RP")||
+                in.equalsIgnoreCase("BP")|| in.equalsIgnoreCase("YP")||
+                in.equalsIgnoreCase("GP")){
+            userQuery=in;
+            ObjectNode node = JsonNodeFactory.instance.objectNode();
+            waitingForResponse=true;
+            sendMessage(Strings.MoveTypes.QUERY, node);
+        }
+        else if(moveStack.size()>0){
+            MoveBuilder.addField((ObjectNode)currentMove, (ObjectNode)moveStack.get(0).serverResponse, in);waitingForResponse = true;
             sendMessage(Strings.MoveTypes.MOVE, currentMove);
             waitingForResponse= true;
         }

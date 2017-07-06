@@ -32,7 +32,7 @@ public class MoveBuilder {
         }
     }
 
-    public static void addFiled(ObjectNode move, ObjectNode serverResponsePayload, String userChoice){
+    public static void addField(ObjectNode move, ObjectNode serverResponsePayload, String userChoice){
         //Before calling make sure to have a server response with type == WARNING.
         //This function does not expect the whole server response, only the parsed payload
         int level  = serverResponsePayload.get("level").asInt();
@@ -84,5 +84,5 @@ public class MoveBuilder {
             }
         }
     }
-
+    
 }
