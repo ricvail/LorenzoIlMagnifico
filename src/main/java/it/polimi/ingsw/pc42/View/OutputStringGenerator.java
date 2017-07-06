@@ -54,6 +54,7 @@ public class OutputStringGenerator {
                 }
             }
         }
+        out.add("\n");
         return out;
     }
 
@@ -65,22 +66,22 @@ public class OutputStringGenerator {
             JsonNode area = areas.next();
             if (area.get("area").asText().equalsIgnoreCase(inputArea)) {
                 Iterator<JsonNode> spaces = area.get("actionSpaces").elements();
-                while (spaces.hasNext()){
+                while (spaces.hasNext()) {
                     JsonNode space = spaces.next();
-                    out.add("\nID: "+ space.get("id").asInt()+"\tAction value: "+space.get("actionValue").asInt());
-                    if (space.get("familyMembers").size()>0){
-                        out.add("\tNumber of family members: "+space.get("familyMembers").size());
+                    out.add("\nID: " + space.get("id").asInt() + "\tAction value: " + space.get("actionValue").asInt());
+                    if (space.get("familyMembers").size() > 0) {
+                        out.add("\tNumber of family members: " + space.get("familyMembers").size());
                     }
                     Iterator<JsonNode> immediateEffects = space.get("immediateResourceEffect").elements();
-                    if (space.has("immediateResourceEffect")){
+                    if (space.has("immediateResourceEffect")) {
                         JsonNode immediateEffect = space.get("immediateResourceEffect");
-                        ArrayList<String> effects =parseResources(immediateEffect);
-                        if (effects.size()>0) {
+                        ArrayList<String> effects = parseResources(immediateEffect);
+                        if (effects.size() > 0) {
                             out.add("\n\tImmediate bonus effect: ");
                             out.addAll(effects);
                         }
                     }
-                    if (space.has("card")){
+                    if (space.has("card")) {
                         JsonNode card = space.get("card");
                         out.addAll(cardParser(card));
                     }/*
@@ -105,6 +106,7 @@ public class OutputStringGenerator {
                     }*/
                     out.add("\n");
                 }
+                out.add("\n");
                 return out;
             }
         }throw new ActionAbortedException(false, "No such area");
@@ -149,6 +151,7 @@ public class OutputStringGenerator {
                 }
             }
         }
+        out.add("\n");
         return out;
     }
     public static ArrayList<String> parseResourcesIgnoringCards(JsonNode node){
@@ -213,7 +216,7 @@ public class OutputStringGenerator {
         }
     }
 
-    public static ArrayList<String> getPlayerStatus (JsonNode board, String playerName) throws ActionAbortedException{
+    public static ArrayList<String> getPlayerStatus (JsonNode board, String playerName) throws Exception {
         ArrayList<String> out = new ArrayList<>();
         Iterator<JsonNode> players= board.get("players").elements();
         while (players.hasNext()){
@@ -257,10 +260,11 @@ public class OutputStringGenerator {
                     JsonNode territory = territories.next();
                     out.addAll(cardParser(territory));
                 }
+                out.add("\n");
+                return out;
             }
-
         }
-        return out;
+        throw new Exception();
     }
 
     public static ArrayList<String> cardParser (JsonNode card){

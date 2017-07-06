@@ -121,7 +121,7 @@ public class Client extends MessageSender {
                 waitingForResponse=false;
             }
             if (type.equalsIgnoreCase(Strings.MessageTypes.MOVE_INVALID)){
-                System.out.println("Invalid move");
+                System.out.println("Invalid move: "+payload.get("message"));
                 moveComplete=false;
                 waitingForResponse=false;
             }
@@ -223,7 +223,7 @@ public class Client extends MessageSender {
                 return;
             }
         }
-        if (userQuery.equalsIgnoreCase("M")){
+        if (userQuery.equalsIgnoreCase("MK")){
             try {
                 gen=OutputStringGenerator.generateOutputStringOf_A(board, "MARKET");
             }catch (Exception e){
@@ -277,7 +277,18 @@ public class Client extends MessageSender {
             int counter;
             for (counter=0; counter<options.size(); counter++) {
                 out+=counter;
-                out+=" for "+options.get(counter).asText();
+                out+=" for "+options.get(counter).asText() + " (value: ";
+                if ("neutral".equalsIgnoreCase(options.get(counter).asText())){
+                    out+="0)";
+                } else {
+                    Iterator<JsonNode> dies = board.get("dices").elements();
+                    while (dies.hasNext()) {
+                        JsonNode die = dies.next();
+                        if (die.get("color").asText().equalsIgnoreCase(options.get(counter).asText())) {
+                            out += die.get("value").asInt() + ")";
+                        }
+                    }
+                }
                 if (counter<options.size()-1){
                     out+=", ";
                 }
@@ -295,12 +306,12 @@ public class Client extends MessageSender {
             out="Chose your privilege \n\t";
             Iterator<JsonNode> privilegeList = option.elements();
             JsonNode privileges= GameInitializer.getDefaultPrivileges();
-            int counter=1;
+            int counter=0;
             while (privilegeList.hasNext()){
                 int privilege = privilegeList.next().asInt();
                 JsonNode privilegeDetails=privileges.get(privilege);
                 out+=counter+" --> ";
-                out+=OutputStringGenerator.ArrayToString(OutputStringGenerator.parseResources(privilegeDetails))+"\n\t";
+                out+=OutputStringGenerator.ArrayToString(OutputStringGenerator.parseResources(privilegeDetails))+"\t";
                 counter++;
             }
         }
@@ -391,7 +402,7 @@ public class Client extends MessageSender {
                 in.equalsIgnoreCase("CT")||in.equalsIgnoreCase("BT")||
                 in.equalsIgnoreCase("VT")||in.equalsIgnoreCase("C")||
                 in.equalsIgnoreCase("P")||in.equalsIgnoreCase("H")||
-                in.equalsIgnoreCase("M")||in.equalsIgnoreCase("RP")||
+                in.equalsIgnoreCase("MK")||in.equalsIgnoreCase("RP")||
                 in.equalsIgnoreCase("BP")|| in.equalsIgnoreCase("YP")||
                 in.equalsIgnoreCase("GP")){
             userQuery=in;

@@ -13,6 +13,7 @@ import it.polimi.ingsw.pc42.Utilities.Strings;
 import it.polimi.ingsw.pc42.View.Client;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by diego on 01/07/2017.
@@ -37,6 +38,7 @@ public class Game {
     }
     public void start(){
         playerArrayList = new ArrayList<Player>();
+        Collections.shuffle(clients);
         for (int i=0; i<clients.size(); i++){
             String color =Player.PlayerColor.values()[i].getPlayerColorString();
             Player player= Player.createPlayer(color);
@@ -44,7 +46,8 @@ public class Game {
             clients.get(i).setPlayer(player);
             clients.get(i).setGame(this);
         }
-        b = GameInitializer.initBaseGame(playerArrayList, false);//TODO shuffle
+        Collections.shuffle(playerArrayList);
+        b = GameInitializer.initBaseGame(playerArrayList, true);//TODO shuffle
         for (ClientHandler client:clients){
             client.setBoard(b);
         }
