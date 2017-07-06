@@ -2,7 +2,7 @@ package it.polimi.ingsw.pc42.View;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import it.polimi.ingsw.pc42.Control.ActionAbortedException;
-import it.polimi.ingsw.pc42.Control.DevelopmentCards.ExtraCard;
+import it.polimi.ingsw.pc42.Model.Board;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -23,10 +23,18 @@ public class OutputStringGenerator {
     public static ArrayList<String> generateOutputStringOf_B(JsonNode board){
         ArrayList<String> out = new ArrayList<>();
         Iterator<JsonNode> dice = board.get("dices").elements();
-        out.add("DICE:");
+        out.add("DICE");
         while (dice.hasNext()){
             JsonNode die = dice.next();
             out.add("\n\t" + die.get("color").asText()+" dice has value " +die.get("value").asInt());
+        }
+        Iterator<JsonNode> playerOrder = board.get("players").elements();
+        out.add(("\n\nTURN ORDER"));
+        int counter=1;
+        while (playerOrder.hasNext()){
+            JsonNode turnOrder=playerOrder.next();
+            out.add("\n\t" + counter +"°: "+ turnOrder.get("color").asText());
+            counter++;
         }
         Iterator<JsonNode> areas= board.get("spaces").elements();
         while (areas.hasNext()){
@@ -215,6 +223,16 @@ public class OutputStringGenerator {
                 out.add("Color: " + playerInfo.get("color").asText()+"\n\t");
                 ArrayList<String> resources = parseResourcesIgnoringCards(playerInfo);
                 out.addAll(resources);
+                Iterator<JsonNode> fmsJson = playerInfo.get("familyMembers").elements();
+                out.add("Family members: ");
+                while (fmsJson.hasNext()){
+                    JsonNode fm = fmsJson.next();
+                    if (fm.get("isUsed").asBoolean()) {
+                        out.add("\n\t\t" + fm.get("familyMemberColor").asText() + " is used");
+                    } else{
+                        out.add("\n\t\t" + fm.get("familyMemberColor").asText() + " is  available");
+                    }
+                }
                 Iterator<JsonNode> territories = playerInfo.get("territories").elements();
                 out.add("\n\nTerritory cards:\n\t");
                 while (territories.hasNext()) {
@@ -280,6 +298,19 @@ public class OutputStringGenerator {
                 JsonNode costchoice = costs.next();
                 out.addAll(parseResources(costchoice));
             }
+        }
+        return out;
+    }
+
+    public static ArrayList<String> theWinnerIs(JsonNode board){
+        ArrayList<String> out= new ArrayList<>();
+        Iterator<JsonNode> playerOrder = board.get("players").elements();
+        out.add(("\n\nFINAL RANK"));
+        int counter=1;
+        while (playerOrder.hasNext()){
+            JsonNode turnOrder=playerOrder.next();
+            out.add("\n\t" + counter +"°: "+ turnOrder.get("color").asText());
+            counter++;
         }
         return out;
     }

@@ -48,7 +48,7 @@ public class GameInitializer {
      *
      * @return root node for the list of action spaces
      */
-    private static JsonNode getDefaultActionSpacesJson(){
+    public static JsonNode getDefaultActionSpacesJson(){
         return readFile("src/res/actionsSpaces.json").get("action_spaces");
     }
 
@@ -66,7 +66,7 @@ public class GameInitializer {
      *
      * @return root node for the list of privileges
      */
-    private static JsonNode getDefaultPrivileges() {
+    public static JsonNode getDefaultPrivileges() {
         return readFile("src/res/privileges.json").get("privileges");
     }
 

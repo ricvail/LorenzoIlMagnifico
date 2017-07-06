@@ -168,6 +168,7 @@ public class Player {
             fmObjectNode.put("isUsed", fm.isUsed());
             listOfFamilyMembers.add(fmObjectNode);
         }
+        root.set("familyMembers", listOfFamilyMembers);
         root.set("territories", listOfTerritoriesCards);
         root.set("characters", listOfCharacterCards);
         root.set("buildings", listOfBuildingsCards);

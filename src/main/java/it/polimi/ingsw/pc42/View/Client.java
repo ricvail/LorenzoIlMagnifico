@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import it.polimi.ingsw.pc42.Control.PrivilegeManager;
 import it.polimi.ingsw.pc42.Model.Player;
+import it.polimi.ingsw.pc42.Utilities.GameInitializer;
 import it.polimi.ingsw.pc42.Utilities.MessageSender;
 import it.polimi.ingsw.pc42.Utilities.StreamMapper;
 import it.polimi.ingsw.pc42.Utilities.Strings;
@@ -13,6 +15,7 @@ import java.io.*;
 import java.net.Socket;
 import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -104,7 +107,7 @@ public class Client extends MessageSender {
             }
 
             if (type.equalsIgnoreCase(Strings.MessageTypes.MOVE_INCOMPLETE)){
-                System.out.println(payload.get("field").asText());//TODO
+                printNextFieldInstructions(payload);
                 moveStack.add(0, new moveBuildingState(currentMove.deepCopy(),payload));
                 waitingForResponse=false;
             }
@@ -148,6 +151,53 @@ public class Client extends MessageSender {
 
         }
     };
+
+    public void printNextFieldInstructions(JsonNode payload){
+        String field = payload.get("field").asText();
+        //ArrayNode options = (ArrayNode) payload.get("options");
+        String out=field;
+        if ("familyMember".equalsIgnoreCase(field)) {
+            ArrayNode options = (ArrayNode) payload.get("options");
+            out="Chose which family member you want use. Press ";
+            //System.out.print(options.toString());
+            int counter;
+            for (counter=0; counter<options.size(); counter++) {
+                out+=counter;
+                out+=" for "+options.get(counter).asText();
+                if (counter<options.size()-1){
+                    out+=", ";
+                }
+            }
+        }
+        if ("slotID".equalsIgnoreCase(field)){
+            out="Chose the slot ID in which you want put your family member";
+        }
+        if ("servants".equalsIgnoreCase(field)){
+            out="Chose how many servants you want to use. " +
+                    "Press A to select the minimum number of servants necessary to complete your move";
+        }
+        if ("privileges".equalsIgnoreCase(field)){
+            ArrayNode option = (ArrayNode) payload.get("options");
+            out="Chose your privilege \n\t";
+            Iterator<JsonNode> privilegeList = option.elements();
+            JsonNode privileges= GameInitializer.getDefaultPrivileges();
+            int counter=1;
+            while (privilegeList.hasNext()){
+                int privilege = privilegeList.next().asInt();
+                JsonNode privilegeDetails=privileges.get(privilege);
+                out+=counter+" --> ";
+                out+=OutputStringGenerator.ArrayToString(OutputStringGenerator.parseResources(privilegeDetails))+"\n\t";
+                counter++;
+            }
+        }
+        if ("paymentChoice".equalsIgnoreCase(field)){
+            out="Chose a payment option: 0 for the first, 1 for the second";
+        }
+        if ("vaticanChoice".equalsIgnoreCase(field)){
+            out="Write Y to support vatican oe N to keep your faith points";
+        }
+        System.out.println(out);
+    }
 
     public void resetMove(){
         moveComplete=false;

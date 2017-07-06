@@ -472,6 +472,8 @@ public class Board {
         playerArrayList.sort(Comparator.comparingInt(o -> o.getResource(ResourceType.MILITARYPOINTS).get()*-1));
         playerArrayList.get(0).getResource(ResourceType.VICTORYPOINTS).add(5);
         playerArrayList.get(1).getResource(ResourceType.VICTORYPOINTS).add(2);
+        playerArrayList.sort(Comparator.comparingInt(o -> o.getResource(ResourceType.VICTORYPOINTS).get()*-1));
+
     }
 
     /**

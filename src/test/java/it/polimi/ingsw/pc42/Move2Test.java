@@ -1067,28 +1067,6 @@ public class Move2Test extends TestCase
         } catch (Exception e){
             e.printStackTrace();
         }
-
-        //VATICAN PHASE------------------------------------------------------------------------------------------------
-        exception = false;
-        try {
-            b.makeMove(mosse.get(41));//VATICAN CHOICE BLU
-        } catch (Exception e) {
-            exception = true;
-            e.printStackTrace();
-        }
-        assertEquals(false, exception);
-        assertEquals(true, b.isVatican());
-
-        exception = false;
-        try {
-            b.makeMove(mosse.get(41));//VATICAN CHOICE RED
-        } catch (Exception e) {
-            exception = true;
-            e.printStackTrace();
-        }
-        assertEquals(false, exception);
-        assertEquals(false, b.isVatican());
-        // END VATICAN PHASE-------------------------------------------------------------------------------------------
         //END OF THE GAME - FINAL CHECK--------------------------------------------------------------------------------
         /* to check:
         * -number of characters cards
