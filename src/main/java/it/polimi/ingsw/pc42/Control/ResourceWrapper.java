@@ -1,32 +1,49 @@
 package it.polimi.ingsw.pc42.Control;
 
-/**
- * Created by RICVA on 16/05/2017.
- */
+
 public class ResourceWrapper extends IntWrapper implements iResourceWrapper {
 
     ResourceType type;
-
     public CostBonus activeBonus;
 
-
-    public ResourceWrapper(ResourceType t, int q){
-        super (q);
-        type=t;
-    }
-    public ResourceWrapper(ResourceType t){
-        super ();
-        type=t;
-    }
-
-    public void resetBonus(){
-        activeBonus=new CostBonus(0);
-    }
 
     public CostBonus getBonus(){
         return activeBonus;
     }
 
+    /**
+     * Class constructor. Takes a resources type, creates a wrapper around it with an attribute for quantity that can
+     * be modified flexibly.
+     * @param t resource type to wrap
+     * @param q quantity to be set
+     */
+    public ResourceWrapper(ResourceType t, int q){
+        super (q);
+        type=t;
+    }
+
+    /**
+     * Class constructor. Takes a resources type and creates a wrapper around it.
+     *
+     * @param t resource type to wrap
+     */
+    public ResourceWrapper(ResourceType t){
+        super ();
+        type=t;
+    }
+
+    /**
+     * Sets the attribute to zero, passing it to the constructor of this one.
+     */
+    public void resetBonus(){
+        activeBonus=new CostBonus(0);
+    }
+
+    /**
+     * Adds a quantity to the bonus attribute.
+     *
+     * @param bonus quantity to be added
+     */
     public void addBonus(int bonus){
         if (activeBonus ==null){
             activeBonus =new CostBonus(0);
@@ -36,6 +53,10 @@ public class ResourceWrapper extends IntWrapper implements iResourceWrapper {
         b.remainingBonus+=bonus;
     }
 
+    /**
+     *
+     * @param q
+     */
     public void addUsingBonus(int q){
         if (activeBonus ==null){
             activeBonus =new CostBonus(0);
@@ -54,6 +75,10 @@ public class ResourceWrapper extends IntWrapper implements iResourceWrapper {
         }
     }
 
+    /**
+     *
+     * @param q
+     */
     public void abortAddUsingBonus(int q){
         if (q<0&& activeBonus.remainingBonus< activeBonus.initialBonus){
             q*=-1;
@@ -69,6 +94,10 @@ public class ResourceWrapper extends IntWrapper implements iResourceWrapper {
         }
     }
 
+    /**
+     *
+     * @param q
+     */
     public void undoAddUsingBonus(int q){
         if (activeBonus ==null){
             activeBonus =new CostBonus(0);
@@ -101,12 +130,18 @@ public class ResourceWrapper extends IntWrapper implements iResourceWrapper {
     }
 
     public class CostBonus {
+
+        int initialBonus, remainingBonus;
+
+        /**
+         * Class constructor. Takes a quantity and set equally an initial and remaining bonus attributes.
+         *
+         * @param initialBonus quantity to set
+         */
         public CostBonus(int initialBonus) {
             this.initialBonus = initialBonus;
             this.remainingBonus = initialBonus;
         }
-
-        int initialBonus, remainingBonus;
     }
 
 }

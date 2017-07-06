@@ -228,43 +228,6 @@ public class Player {
     }
 
     /**
-     * The permissible colors for the players.
-     */
-    public enum PlayerColor {
-        RED("red"), GREEN("green"), BLUE("blue"), YELLOW("yellow");
-
-        private String playerColor;
-
-        /**
-         * Enum constructor. Set the player color String given by the parameter.
-         *
-         * @param playerColor string of the player color
-         */
-        PlayerColor(String playerColor){
-            this.playerColor=playerColor;
-        }
-
-        /**
-         * Returns a player color value, if it finds a match for the color string passed as a parameter,
-         * iterating over the Enum values.
-         *
-         * @param color player's color string
-         * @return a player color if matches the parameter
-         * @throws Exception if it doesn't find a match in the player color Enum values
-         */
-        public static PlayerColor fromString(String color) throws Exception {
-            for (PlayerColor pc : PlayerColor.values()) {
-                if (pc.getPlayerColorString().equalsIgnoreCase(color)) {
-                    return pc;
-                }
-            }
-            throw new Exception("Invalid player color: "+ color);
-        }
-
-        public String getPlayerColorString(){return playerColor;}
-    }
-
-    /**
      * Returns the max number of cards of type territories that the player on which is called the method can own,
      * checking his military points.
      *
@@ -281,5 +244,42 @@ public class Player {
             counter=counter+i+1;
         }
         return maxNumberOfTerritories;
+    }
+
+    /**
+     * The permissible colors for the players.
+     */
+    public enum PlayerColor {
+        RED("red"), GREEN("green"), BLUE("blue"), YELLOW("yellow");
+
+        private String playerColor;
+
+        public String getPlayerColorString(){return playerColor;}
+
+        /**
+         * Enum constructor. Set the string attribute according to the parameter.
+         *
+         * @param playerColor string of the player color
+         */
+        PlayerColor(String playerColor){
+            this.playerColor=playerColor;
+        }
+
+        /**
+         * Returns a player color, if it finds a match for the color string passed as parameter,
+         * iterating over the Enum values.
+         *
+         * @param color player's color string
+         * @return a player color if matches the parameter
+         * @throws Exception if it doesn't find a match in the player color Enum values
+         */
+        public static PlayerColor fromString(String color) throws Exception {
+            for (PlayerColor pc : PlayerColor.values()) {
+                if (pc.getPlayerColorString().equalsIgnoreCase(color)) {
+                    return pc;
+                }
+            }
+            throw new Exception("Invalid player color: "+ color);
+        }
     }
 }

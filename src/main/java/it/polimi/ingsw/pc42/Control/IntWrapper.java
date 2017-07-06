@@ -4,14 +4,20 @@ public class IntWrapper implements iIntWrapper{
 
     protected int myInt;
 
+    /**
+     * Class constructor. Sets the attribute for the quantity equal to the parameter passed.
+     * @param i quantity to be set
+     */
     public IntWrapper(int i){
         myInt=i;
     }
 
+    /**
+     * Class constructor. Sets the attribute for the quantity to zero.
+     */
     public IntWrapper(){
         myInt=0;
     }
-
 
     @Override
     public int get() {

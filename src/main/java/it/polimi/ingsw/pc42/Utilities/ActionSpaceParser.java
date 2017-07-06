@@ -15,6 +15,8 @@ import java.util.Iterator;
 public class ActionSpaceParser {
 
     /**
+     *Factory method that adds the action space, tied to a board, to the spaces list, delegating the decoration and
+     * loading the needed data from a JSON file.
      *
      * @param root is the highest node of a single action space object in the JSON file
      * @param bp  is a wrapper for a board object
@@ -96,6 +98,13 @@ public class ActionSpaceParser {
         }
     }
 
+    /**
+     * Iterates through the JSON file of the action spaces until it finds a set council, otherwise throws an exception.
+     *
+     * @param areaList is the highest node of a single action space object in the JSON file, that contains info for area ...
+     * @return the index of the council, if it exist
+     * @throws Exception if it doesn't find any council, after reaching the end of the list of action spaces
+     */
     public static int getCouncilID(JsonNode areaList) throws Exception {
 
         Iterator<JsonNode> roots = areaList.iterator();
@@ -113,7 +122,14 @@ public class ActionSpaceParser {
         throw new Exception("Council not found");
     }
 
-
+    /**
+     *  Checks in the JSON file for the base fields of the action space and it initializes one.
+     *
+     * @param root is the highest node of a single action space object in the JSON file, that contains info for area ...
+     * @param actionSpaceJson is the sub-node that contains specific data like ID, min value ...
+     * @param bp is a wrapper for a board object
+     * @return an object that implements the action space interface, with the base values
+     */
     private static iActionSpace buildBaseActionSpace(JsonNode root, JsonNode actionSpaceJson, BoardProvider bp){
         Area area=Area.fromString(root.get("area").asText());
         int id=actionSpaceJson.get("id").asInt();
@@ -123,6 +139,13 @@ public class ActionSpaceParser {
 
     }
 
+    /**
+     * Does a basic check on the JSON file fields needed to initialize the action space, returns the success (or
+     * not) of the control as <code>boolean</code>.
+     *
+     * @param root is the highest node of a single action space object in the JSON file
+     * @return <code>false</code> if a basic field is missing
+     */
     private static boolean isJsonValid(JsonNode root){
         if (!(root.has("area")&&
             root.has("actionSpaces")&&
@@ -139,6 +162,7 @@ public class ActionSpaceParser {
         }
         return true;
     }
+
 
     public static JsonNode getActionSpaceJSONByArea(JsonNode jsonNode, String area)  throws Exception {
         Iterator<JsonNode> nodeIterator = jsonNode.elements();
