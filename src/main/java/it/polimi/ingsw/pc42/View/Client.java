@@ -142,7 +142,6 @@ public class Client extends MessageSender {
                     if (!isMyTurn){
                         isMyTurn=true;
                         System.out.println("It's your turn. Press M to begin a new move");
-
                     }
                 }
             }catch (Exception e){
@@ -259,6 +258,12 @@ public class Client extends MessageSender {
             currentMove=MoveBuilder.createBlankMove(true);
             waitingForResponse = true;
             sendMessage(Strings.MoveTypes.MOVE, currentMove);
+        } else if (in.equalsIgnoreCase("U")){
+            if (moveStack.size()>1){
+                moveStack.remove(0);
+                currentMove=moveStack.get(0).move.deepCopy();
+                printNextFieldInstructions(moveStack.get(0).serverResponse);
+            }
         } else if (in.equalsIgnoreCase("E")){
             if (moveComplete){
                 waitingForResponse = true;
