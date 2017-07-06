@@ -7,25 +7,25 @@ import it.polimi.ingsw.pc42.Control.ResourceType;
 import it.polimi.ingsw.pc42.Model.Board;
 import it.polimi.ingsw.pc42.Model.Player;
 
+import java.io.IOException;
+
 
 /**
  * Created by diego on 28/06/2017.
  */
 public class StreamMapper {
-    public static JsonNode fromStringToJson(String message) {
 
-        ObjectMapper mapper = new ObjectMapper();
+    static ObjectMapper mapper;
+
+    public static JsonNode fromStringToJson(String message) throws IOException {
+
+        if (mapper==null) mapper = new ObjectMapper();
         JsonNode node = null;
-        try {
             node = mapper.readTree(message);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         return node;
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         String message = "{\n" +
                 "      \"DESCRIZIONE\": \"turno giocatore rosso, va a piazzarsi nel consiglio con l'arancione, sceglie 2 servants e 1 coin\",\n" +
                 "      \"familyMember\": \"orange\",\n" +
@@ -46,5 +46,5 @@ public class StreamMapper {
         System.out.println(b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.SERVANT).get());
 
 
-    }
+    }*/
 }

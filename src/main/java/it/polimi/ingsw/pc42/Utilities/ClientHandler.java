@@ -14,13 +14,14 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class ClientHandler implements Runnable {
+public class ClientHandler extends MessageSender implements Runnable {
 
     private Board board;
 
-    private Game game;
-    private PrintWriter socketOut;
 
+    private boolean isInGame;
+    private Game game;
+    private Server server;
     public void setBoard(Board b) {
         this.board = b;
     }
@@ -37,12 +38,15 @@ public class ClientHandler implements Runnable {
 
     private Socket socket;
     Scanner socketIn;
-    public ClientHandler(Socket socket) {
+    public ClientHandler(Socket socket, Server server) {
+        this.server=server;
         this.socket = socket;
+        isInGame=false;
     }
 
     public void setGame(Game game) {
         this.game = game;
+        isInGame = true;
     }
 
     public void run() {
@@ -53,55 +57,15 @@ public class ClientHandler implements Runnable {
             e.printStackTrace();
         }
         boolean continueLoop = true;
+
         //BEGIN MAIN LOOP____________________________________________________________________
         while (continueLoop) {
             try {
-                String line = socketIn.nextLine();
-                JsonNode jsonNode = null;
-                try {
-                    jsonNode = StreamMapper.fromStringToJson(line);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    sendMessageToClient(Strings.MessageTypes.CRITICAL_ERROR, "Unable to parse your move, please retry");
-                    continue;
-                }
-                if (jsonNode.has("type")) {
-                    String type = jsonNode.get("type").asText();
-                    if (type.equalsIgnoreCase(Strings.MoveTypes.MOVE)){
-                        try {
-                            MoveManager.makeMove(board, player, jsonNode);
-                            sendMessageToClient(Strings.MessageTypes.CONFIRM, "Your move was successful");
-                            game.switchClient();
-                            continue;
-                        } catch (ActionAbortedException e){
-                            if (!e.isValid){
-                                sendMessageToClient(Strings.MessageTypes.ERROR, "Invalid move: "+
-                                e.getMessage());
-                                continue;
-                            } else {
-                                if (e.isComplete){
-                                    sendMessageToClient(Strings.MessageTypes.CONFIRM, "Your move is valid");
-                                } else {
-                                    ObjectNode payload = JsonNodeFactory.instance.objectNode();
-                                    payload.put("field", e.nextMoveField);
-                                    payload.put("level", e.level);
-                                    payload.set("options", e.availableChoices);
-                                    sendMessageToClient(Strings.MessageTypes.WARNING, payload);
-                                }
-                                continue;
-                            }
-                        } catch (Exception e){
-                            sendMessageToClient(Strings.MessageTypes.CRITICAL_ERROR, "Unable to parse your move, please retry");
-                        }
-                    }// end of MOVE type
-                } else {
-                    sendMessageToClient(Strings.MessageTypes.CRITICAL_ERROR, "Unable to parse your move, please retry");
-                }
-
+                loopBody();
             } catch (Exception e){
                 //Unhandled Exception
                 e.printStackTrace();
-                sendMessageToClient(Strings.MessageTypes.CRITICAL_ERROR, "Something went wrong, please repeat your move");
+                sendCriticalErrorMessage();
             }
         }
         //END MAIN LOOP____________________________________________________________________
@@ -114,15 +78,76 @@ public class ClientHandler implements Runnable {
         }
     }
 
-    public void sendMessageToClient(String type, String payload){
-        JsonNodeFactory factory= JsonNodeFactory.instance;
-        ObjectNode message = factory.objectNode();
-        message.put("type", type);
-        message.put("payload", payload);
-        socketOut.print(message.toString());
-        socketOut.flush();
+    public void loopBody(){
+        String line = socketIn.nextLine();
+        JsonNode jsonNode = null;
+        try {
+            jsonNode = StreamMapper.fromStringToJson(line);
+        } catch (Exception e) {
+            e.printStackTrace();
+            sendCriticalErrorMessage();
+            return;
+        }
+        if (jsonNode.has("type")) {
+            String type = jsonNode.get("type").asText();
+            if (type.equalsIgnoreCase(Strings.MoveTypes.NEWGAME)){
+                server.addClientToLobby(this);
+                return;
+            } else if (type.equalsIgnoreCase(Strings.MoveTypes.JOINGAME)){
+                //TODO
+            } else if (type.equalsIgnoreCase(Strings.MoveTypes.MOVE)){
+                if (isInGame){
+                    parseMoveType(jsonNode);
+                } else {
+                    sendCriticalErrorMessage();
+                }
+                return;
+            } else if (type.equalsIgnoreCase(Strings.MoveTypes.QUERY)){
+                sendMessage(Strings.MessageTypes.UPDATE, board.generateJsonDescription());
+            }else{
+                sendCriticalErrorMessage();
+            }
+        } else {
+            sendCriticalErrorMessage();
+        }
     }
-    public void sendMessageToClient(String type, JsonNode payload){
-        sendMessageToClient(type, payload.toString());
+
+
+    public void parseMoveType(JsonNode jsonNode){
+        try {
+            MoveManager.makeMove(board, player, jsonNode.get("payload"));
+            game.switchClient();
+            ObjectNode payload = JsonNodeFactory.instance.objectNode();
+            payload.put("playerCompleted", player.getColor().getPlayerColorString());
+            game.broadcastUpdate(Strings.MessageTypes.MOVE_SUCCESSFUL);
+            return;
+        } catch (ActionAbortedException e){
+            if (!e.isValid){
+                ObjectNode payload = JsonNodeFactory.instance.objectNode();
+                payload.put("message", e.getMessage());
+                sendMessage(Strings.MessageTypes.MOVE_INVALID, payload);
+                return;
+            } else {
+                if (e.isComplete){
+                    ObjectNode payload = JsonNodeFactory.instance.objectNode();
+                    sendMessage(Strings.MessageTypes.MOVE_COMPLETE, payload);
+                } else {
+                    ObjectNode payload = JsonNodeFactory.instance.objectNode();
+                    payload.put("field", e.nextMoveField);
+                    payload.put("level", e.level);
+                    payload.set("options", e.availableChoices);
+                    sendMessage(Strings.MessageTypes.MOVE_INCOMPLETE, payload);
+                }
+                return;
+            }
+        } catch (Exception e){
+            sendCriticalErrorMessage();
+        }
+    }
+
+    public void sendCriticalErrorMessage(){
+
+        ObjectNode payload = JsonNodeFactory.instance.objectNode();
+        sendMessage(Strings.MessageTypes.CRITICAL_ERROR, payload);
     }
 }

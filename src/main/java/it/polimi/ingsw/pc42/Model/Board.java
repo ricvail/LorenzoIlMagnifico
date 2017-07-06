@@ -34,7 +34,7 @@ public class Board {
     private ArrayList<Dice> dices;
     private PrivilegeManager privilegesManager;
     private ArrayNode spacesDescription;
-
+    private boolean isGameOver;
 
     private boolean vatican;
 
@@ -45,6 +45,10 @@ public class Board {
         return privilegesManager;
     }
 
+
+    public boolean isGameOver(){
+        return isGameOver;
+    }
 
     public JsonNode generateJsonDescription () {
         JsonNodeFactory factory= JsonNodeFactory.instance;
@@ -99,6 +103,7 @@ public class Board {
     public Board(ArrayList<Player> players,ArrayList<iCard> cards,
                  ArrayList<iActionSpace> spaces, ArrayNode spacesDescription, boolean random, JsonNode privileges){
         //Initialization
+        isGameOver=false;
         actionSpaces= spaces;
         playerArrayList=players;
         this.cards=cards;
@@ -255,6 +260,7 @@ public class Board {
                     era ++;
                     if (era >=4){
                         endGame();
+                        isGameOver=true;
                         return;
                     }
                 }

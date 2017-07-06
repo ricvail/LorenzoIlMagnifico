@@ -22,6 +22,6 @@ public enum Area {
                 return area;
             }
         }
-        throw new IllegalArgumentException();//TODO throw more specific exception
+        throw new IllegalArgumentException();
     }
 }

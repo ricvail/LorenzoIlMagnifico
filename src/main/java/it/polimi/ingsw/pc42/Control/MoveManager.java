@@ -45,6 +45,7 @@ public class MoveManager {
             getFamilyMemberFromJson(b, move, p);
             if (move.has("checking") && move.get("checking").asBoolean()) {
                 undoMove(b, b.getCurrentPlayer(), move);
+                System.out.print("checking");
                 throw new ActionAbortedException(true, "checking move finished");
             } else {
                 b.endPlayerTurn();

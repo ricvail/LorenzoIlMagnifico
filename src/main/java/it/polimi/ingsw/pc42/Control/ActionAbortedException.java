@@ -17,7 +17,7 @@ public class ActionAbortedException extends Exception{
 
     public ActionAbortedException(boolean isValid, String message) {
         super(message); //detailed message of the cause
-        this.isComplete = true;
+        this.isComplete = isValid;
         this.isValid = isValid;
     }
 

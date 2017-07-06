@@ -1,6 +1,7 @@
 package it.polimi.ingsw.pc42.Control;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.polimi.ingsw.pc42.Model.Board;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
@@ -8,6 +9,7 @@ import it.polimi.ingsw.pc42.Model.Player;
 import it.polimi.ingsw.pc42.Utilities.ClientHandler;
 import it.polimi.ingsw.pc42.Utilities.GameInitializer;
 import it.polimi.ingsw.pc42.Utilities.MyTimer;
+import it.polimi.ingsw.pc42.Utilities.Strings;
 
 import java.util.ArrayList;
 
@@ -38,14 +40,8 @@ public class Game {
         b = GameInitializer.initBaseGame(playerArrayList, false);//TODO shuffle
         for (ClientHandler client:clients){
             client.setBoard(b);
-            //client.socketOut.println("Game started! You are player "+ client.getPlayer().getColor().getPlayerColorString());
-            //client.socketOut.print("Turn order: ");
-            for (Player p : b.getPlayerArrayList()){
-                //client.socketOut.print(p.getColor().getPlayerColorString()+ " ");
-            }
-            //client.socketOut.println("");
-            //client.socketOut.flush();
         }
+        broadcastUpdate(Strings.MessageTypes.GAMESTARTED);
         timer = createTimer(b, getClient(b.getCurrentPlayer()));
         timer.startTimer();
     }
@@ -54,8 +50,6 @@ public class Game {
         timer.stopTimer();
         ClientHandler c = getClient(b.getCurrentPlayer());
         timer = createTimer(b, c);
-        //c.socketOut.println("It is now your turn");
-        //c.socketOut.flush();
         timer.startTimer();
     }
 
@@ -80,22 +74,21 @@ public class Game {
         return new MyTimer(MyTimer.getMoveTimeout(), new MyTimer.myTimerTask() {
             @Override
             public void onUpdate(int secondsLeft) {
-                if (secondsLeft==5){
-                    //client.socketOut.println("Five seconds left!");
-                    //client.socketOut.flush();
-                }
+
             }
             @Override
             public void onEnd() {
+                String timedOutPlayer = b.getCurrentPlayer().getColor().toString();
                 ObjectMapper mapper = new ObjectMapper();
                 ObjectNode ghostNode = mapper.createObjectNode();
                 ghostNode.put("servants", 0);
                 ghostNode.put("slotID", 0);
+                ghostNode.put("vatican", false);
                 ArrayList<FamilyMember> fmList = p.getFamilyMembers();
-                FamilyMember fm = fmList.get(0);
-                int min = fmList.get(0).getValue();
+                FamilyMember fm = null;
+                int min = 100;
                 for(int i=1; i<fmList.size(); i++){
-                    if (fmList.get(i).getValue()< min){
+                    if (fmList.get(i).getValue()< min &&!fmList.get(i).isUsed()){
                         min = fmList.get(i).getValue();
                         fm = fmList.get(i);
                     }
@@ -106,11 +99,26 @@ public class Game {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                //client.socketOut.println("Time is up, null move executed");
-                //client.socketOut.flush();
+                ObjectNode payload =JsonNodeFactory.instance.objectNode();
+                payload.put("timedOutPlayer", timedOutPlayer);
+                broadcastUpdate(Strings.MessageTypes.MOVE_TIMEOUT, payload);
                 switchClient();
             }
         });
+    }
+    public void broadcastUpdate(String messageType){
+        broadcastUpdate(messageType, JsonNodeFactory.instance.objectNode());
+    }
+
+    public void broadcastUpdate(String messageType, ObjectNode payload){
+        for (ClientHandler client:clients){
+            payload.set("board", b.generateJsonDescription());
+            payload.put("color", client.getPlayer().getColor().getPlayerColorString());
+            if (client.getPlayer().getColor()==b.getCurrentPlayer().getColor()){
+                payload.put("yourTurn", true);
+            } else payload.put("yourTurn", false);
+            client.sendMessage(messageType, payload);
+        }
     }
 }
 

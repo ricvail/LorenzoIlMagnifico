@@ -30,7 +30,7 @@ public class ImmediateBonusChoice extends AbstractDecorator {
         } else{
             JsonNodeFactory factory=JsonNodeFactory.instance;
             ArrayNode list=factory.arrayNode();
-            //TODO list of available choices
+            list.add(choices.size());
             throw new ActionAbortedException("paymentChoice", list);
         }
 

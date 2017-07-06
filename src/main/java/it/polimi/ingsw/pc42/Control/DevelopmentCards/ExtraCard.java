@@ -14,7 +14,6 @@ import java.util.ArrayList;
 public class ExtraCard extends AbstractDecorator{
 
     /**
-     * TODO
      * first complete this card's actions (super)
      * apply bonuses
      * place family member

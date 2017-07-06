@@ -18,7 +18,7 @@ public enum ResourceType{
                 return resourceType;
             }
         }
-        throw new IllegalArgumentException();//TODO throw more specific exception
+        throw new IllegalArgumentException();
     }
 
 }

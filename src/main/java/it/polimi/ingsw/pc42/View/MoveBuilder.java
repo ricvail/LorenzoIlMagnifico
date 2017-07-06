@@ -1,5 +1,6 @@
 package it.polimi.ingsw.pc42.View;
 
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -7,6 +8,10 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
  * Created by RICVA on 04/07/2017.
  */
 public class MoveBuilder {
+
+
+
+
     public static ObjectNode createBlankMove(boolean checking){
         ObjectNode o = JsonNodeFactory.instance.objectNode();
         o.put("type", "MOVE");
@@ -48,10 +53,35 @@ public class MoveBuilder {
             if (userChoice.equalsIgnoreCase("a")){
                 userChoice= serverResponsePayload.get("options").get(0).asText();
             }
-            move.put(field, userChoice);
-        }else if (field.equalsIgnoreCase("servants")){
+            try {
+                move.put(field, Integer.parseInt(userChoice));
+            } catch (Exception e){
+                move.put(field, (userChoice));
+            }
+        }else if (field.equalsIgnoreCase("privileges")){
+            try {
+                if (move.has(field)){
+                    ((ArrayNode)move.get(field)).add(Integer.parseInt(userChoice));
+                } else {
+                    ArrayNode node = JsonNodeFactory.instance.arrayNode();
+                    node.add(Integer.parseInt(userChoice));
+                    move.set(field, node);
+                }
+            }catch (Exception e){
 
+            }
+        }else if (field.equalsIgnoreCase("paymentChoice")){
+            try {
+                move.put(field, Integer.parseInt(userChoice));
+            } catch (Exception e){
 
+            }
+        }else if (field.equalsIgnoreCase("vaticanChoice")){
+            if (userChoice.equalsIgnoreCase("y")){
+                move.put(field, true);
+            }else if (userChoice.equalsIgnoreCase("n")){
+                move.put(field, false);
+            }
         }
     }
 

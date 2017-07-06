@@ -1,5 +1,7 @@
 package it.polimi.ingsw.pc42.Utilities;
 
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.polimi.ingsw.pc42.Control.Game;
 
 import java.io.IOException;
@@ -29,25 +31,34 @@ public class Server {
         while (!end) {
             try {
                 Socket socket = serverSocket.accept();
-                ClientHandler client = new ClientHandler(socket);
+                ClientHandler client = new ClientHandler(socket, this);
                 executor.submit(client);
-
-                clients.add(client);
-                counter--;
-                System.out.println("you are waiting for " + counter+ " players");
-                if (clients.size()==2){
-                    timer = createTimer();
-                    timer.startTimer();
-                }
-                if (clients.size()==4){
-                    this.createGame();
-                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         executor.shutdown();
         serverSocket.close();
+    }
+
+    public void addClientToLobby(ClientHandler client){
+        counter--;
+        ObjectNode payload = JsonNodeFactory.instance.objectNode();
+        payload.put("counter", counter);
+        client.sendMessage(Strings.MessageTypes.ADDED_TO_LOBBY, payload);
+        for (ClientHandler cli: clients){
+            payload.put("counter", counter);
+            cli.sendMessage(Strings.MessageTypes.OTHER_PLAYER_JOINED_LOBBY, payload);
+        }
+        clients.add(client);
+        System.out.println("Waiting for " + counter+ " players");
+        if (clients.size()==2){
+            timer = createTimer();
+            timer.startTimer();
+        }
+        if (clients.size()==4){
+            this.createGame();
+        }
     }
 
     public void createGame(){
