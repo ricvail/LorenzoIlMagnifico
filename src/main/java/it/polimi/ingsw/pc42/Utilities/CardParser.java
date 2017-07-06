@@ -1,20 +1,24 @@
 package it.polimi.ingsw.pc42.Utilities;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import it.polimi.ingsw.pc42.Control.ActionSpace.Area;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.*;
 import it.polimi.ingsw.pc42.Control.ResourceType;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.EmptyStackException;
 import java.util.Iterator;
 
 public class CardParser {
 
+    /**
+     * Acts as factory method for the initialization of a card and then delegates the decoration of costs and
+     * effects.
+     *
+     * @param root is the highest node of a single card object in the JSON file
+     * @param bp is a wrapper for a board object
+     * @return an object of card interface, already decorated
+     */
     public static iCard createCard(JsonNode root, BoardProvider bp){
 
         iCard c = null;
@@ -50,13 +54,15 @@ public class CardParser {
         return c;
     }
 
-    static iCard applyResource(String s, int q, iCard c){
-        ResourceType rt = ResourceType.fromString(s);
-        c = new ResourceImmediateBonus(rt, q, c);
-        return c;
-
-    }
-
+    /**
+     *Takes the base card and decorates around it the immediate effect, throws exception if one of the effect's
+     * specification in the JSON file is not valid.
+     *
+     * @param jsonNode   is the immediate effect node of a card object in the JSON file
+     * @param c is the basic card, initialized in the caller
+     * @return an object that implements the card interface, decorated with the immediate effect
+     * @throws Exception if a field has an invalid specification of part of the effect to be decorated
+     */
     private static iCard immediateEffectIterator(JsonNode jsonNode, iCard c) throws Exception {
         Iterator<String> it = jsonNode.fieldNames();
         while (it.hasNext()) {
@@ -66,7 +72,7 @@ public class CardParser {
             } catch (IllegalArgumentException e){
                 if (key.equalsIgnoreCase("privileges")){
                     if (jsonNode.get(key).isInt()){
-                        c= new PrivilegeImmediateBonus (jsonNode.get(key).asInt(), c);
+                        c = new PrivilegeImmediateBonus(jsonNode.get(key).asInt(), c);
                     } else{
                         throw new Exception("Invalid privileges field");
                     }
@@ -83,6 +89,32 @@ public class CardParser {
         return c;
     }
 
+    /**
+     * Initializes the resource type based on the parameter passed and delegates the decoration of the resource
+     * immediate bonus (both effect and cost) around the card.
+     *
+     * @param s resource to be decorated
+     * @param q quantity of the resource
+     * @param c an object that implements the card interface, already initialized
+     * @return an object that implements the card interface, decorated with a resource immediate bonus
+     */
+    private static iCard applyResource(String s, int q, iCard c){
+        ResourceType rt = ResourceType.fromString(s);
+        c = new ResourceImmediateBonus(rt, q, c);
+        return c;
+
+    }
+
+    /**
+     * Checks the <code>JsonNode</code> of the immediate effect for the extra card bonus to be decorated, delegating
+     * the actual decoration. Throws exception if a needed field is missing or the correspondent specification is
+     * not valid.
+     *
+     * @param c an object that implements the card interface, already initialized
+     * @param node the extra card node of a card in the JSON file
+     * @return an object that implements the card interface, decorated with a extra card bonus
+     * @throws Exception if a needed field is missing or is not a valid card type
+     */
     private static iCard applyExtraCardBonus(iCard c, JsonNode node) throws Exception {
         if (!(node.has("value")&&node.has("type"))){
             throw new Exception("missing value or type");
@@ -120,6 +152,17 @@ public class CardParser {
         return new ExtraCard(c, areas, bonuses, value);
     }
 
+    /**
+     *Checks the <code>JsonNode</code> of the immediate effect for the "for each" bonus to be decorated( ex.: 1 victory
+     *  points every 2 military points), delegating the actual decoration. It takes, from file, a resource to be add,
+     *  a resource or a card type to be counted and ratio for the two values. Re-throws the exception from the for each
+     *  decorator if even the card type is not correct.
+     *
+     * @param jsonNode the "for each" node of a card in the JSON file
+     * @param c an object that implements the card interface, already initialized
+     * @return an object that implements the card interface, decorated with a "for each" bonus
+     * @throws Exception  from the for each decorator if even the card type is not correct
+     */
     private static iCard applyForeachImmediate(JsonNode jsonNode, iCard c) throws Exception{
         ResourceType obtained = ResourceType.fromString(jsonNode.get("left").asText());
         try {
@@ -131,6 +174,35 @@ public class CardParser {
         }
     }
 
+    /**
+     * Takes the card already decorated with immediate effect and decorates around it the cost, checking if is single
+     * cost or a choice cost in the cost node. Re-throws exception from the decorator.
+     *
+     * @param jsonNode is the cost node of a card object in the JSON file
+     * @param c an object that implements the card interface, already decorated with the immediate effect
+     * @return an object that implements the card interface, decorated with the cost bonus
+     * @throws Exception from the decorator
+     */
+    private static iCard costIterator(JsonNode jsonNode, iCard c) throws Exception {
+        if (jsonNode.size()>1){
+            c = choiceIterator(jsonNode, c);
+        } else {
+            c = singleCostIterator(jsonNode.get(0), c);
+        }
+        return c;
+    }
+
+    /**
+     * Checks the <code>JsonNode</code> of the card cost for the cost bonus to be decorated, delegating
+     * the actual decoration, it could be a simple resource cost or a military points cost, with required and
+     * subtracted values, in this case it delegates another decorator. Throws exception if the cost specification
+     * in the JSON file is not valid.
+     *
+     * @param jsonNode is the cost node of a card object in the JSON file
+     * @param c an object that implements the card interface, already decorated with the immediate effect
+     * @return an object that implements the card interface, decorated with the single cost bonus
+     * @throws Exception if encounter an invalid military cost specification, or resource cost in general
+     */
     private static iCard singleCostIterator(JsonNode jsonNode, iCard c) throws Exception {
         Iterator<String> it = jsonNode.fieldNames();
         while (it.hasNext()) {
@@ -157,44 +229,33 @@ public class CardParser {
         return c;
     }
 
-    private static iCard costIterator(JsonNode jsonNode, iCard c) throws Exception {
-        if (jsonNode.size()>1){
-            c = choiceIterator(jsonNode, c);
-        } else {
-            c = singleCostIterator(jsonNode.get(0), c);
-        }
-        return c;
-    }
 
-
-
+    /**
+     * Checks the <code>JsonNode</code> of the card cost for the choice cost bonus to be decorated, delegating
+     * the actual decoration. It creates a set of single cost bonuses. Re-throws the <code>singleCostIterator</code>
+     * exception.
+     *
+     * @param jsonNode is the cost node of a card object in the JSON file
+     * @param c an object that implements the card interface, already decorated with the immediate effect
+     * @return an object that implements the card interface, decorated with the choice cost bonus
+     * @throws Exception
+     */
     private static iCard choiceIterator(JsonNode jsonNode, iCard c) throws Exception {
         ImmediateBonusChoice choiceDec = new ImmediateBonusChoice(c);
         for (int i = 0; i<jsonNode.size(); i++){
             choiceDec.addChoice();
             choiceDec.choices.set(i, singleCostIterator(jsonNode.get(i), choiceDec.choices.get(i)));
         }
-        /*int choiceCounter = 0;
-        for (JsonNode arrayNode : jsonNode) {
-            choiceDec.addChoice();
-            Iterator<String> it = arrayNode.fieldNames();
-            while (it.hasNext()) {
-                String key = it.next();
-                try {
-                    ResourceType rt = ResourceType.fromString(key);
-                    c = new ResourceImmediateBonus(rt,
-                            arrayNode.get(key).asInt(),
-                            choiceDec.choices.get(choiceCounter));
-                    choiceDec.choices.set(choiceCounter, c);
-                } catch (IllegalArgumentException e){
-                    //something wrong with resource type
-                }
-            }
-            choiceCounter++;
-        } */
         return choiceDec;
     }
 
+    /**
+     *Iterates through the nodes of <code>JsonNode</code> the card object and checks if all the basic fields
+     * for each type of card are present, else throws an exception.
+     *
+     * @param root is the highest node of a single card object in the JSON file
+     * @throws Exception if a basic field is missing in the card
+     */
     private static void isJsonValid(JsonNode root) throws Exception{
         if (!(root.has("era")&&root.get("era").isInt()&&
             root.has("name")&&

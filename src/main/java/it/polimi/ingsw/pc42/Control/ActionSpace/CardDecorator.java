@@ -1,6 +1,8 @@
 package it.polimi.ingsw.pc42.Control.ActionSpace;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Control.ActionSpace.AbstractDecorator;
 import it.polimi.ingsw.pc42.Control.ActionSpace.iActionSpace;
@@ -24,6 +26,16 @@ public class CardDecorator extends AbstractDecorator {
         super(actionSpace);
         this.type=type;
         empty=true;
+    }
+
+    @Override
+    public ObjectNode updateDescription(ObjectNode node) {
+        if(!empty){
+            node.set("card", card.getJSONDescriptionOfCards());
+        } else {
+            node.put("card", "None");
+        }
+        return super.updateDescription(node);
     }
 
     @Override

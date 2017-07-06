@@ -14,6 +14,13 @@ import java.util.Iterator;
 
 public class ActionSpaceParser {
 
+    /**
+     *
+     * @param root is the highest node of a single action space object in the JSON file
+     * @param bp  is a wrapper for a board object
+     * @param spaces list of objects that implement the action space interface
+     * @throws Exception if the JSON object for the action space, or the effect specification, is not valid
+     */
     public static void actionSpace(JsonNode root, BoardProvider bp, ArrayList<iActionSpace> spaces) throws Exception {
 
         if (!isJsonValid(root)){
@@ -126,10 +133,7 @@ public class ActionSpaceParser {
         while (iterator.hasNext()){
             JsonNode actionSpace= iterator.next();
             if (!(actionSpace.has("id")&&
-                actionSpace.has("actionValue")/*&&
-                actionSpace.has("immediateResourceEffect")&&
-                actionSpace.get("immediateResourceEffect").isObject()*/
-            )){
+                actionSpace.has("actionValue"))){
                 return false;
             }
         }

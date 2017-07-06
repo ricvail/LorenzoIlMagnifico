@@ -1,0 +1,915 @@
+{
+  "spaces": [
+    {
+      "area": "NULL",
+      "actionSpaces": [
+        {
+          "id": 0,
+          "minPlayers": 0,
+          "actionValue": -10,
+          "familyMembers": [
+            {
+              "color": "orange",
+              "playerColor": "blue"
+            },
+            {
+              "color": "orange",
+              "playerColor": "red"
+            },
+            {
+              "color": "white",
+              "playerColor": "blue"
+            },
+            {
+              "color": "white",
+              "playerColor": "red"
+            },
+            {
+              "color": "neutral",
+              "playerColor": "blue"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "area": "TERRITORY",
+      "additionalCoinsTax": 3,
+      "oneFamilyMemberPerPlayer": true,
+      "actionSpaces": [
+        {
+          "id": 1,
+          "minPlayers": 2,
+          "actionValue": 1,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "effect": "territories"
+          },
+          "card": {
+            "id": 5,
+            "name": "forest",
+            "era": 1,
+            "type": "territories",
+            "activationCost": 5,
+            "immediateEffect": {
+              "wood": 1
+            },
+            "permanentEffects": [
+              {
+                "wood": 3
+              }
+            ]
+          },
+          "familyMembers": []
+        },
+        {
+          "id": 2,
+          "minPlayers": 2,
+          "actionValue": 3,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "effect": "territories"
+          },
+          "card": {
+            "id": 6,
+            "name": "Monastery",
+            "era": 1,
+            "type": "territories",
+            "activationCost": 6,
+            "immediateEffect": {
+              "servants": 1,
+              "militaryPoints": 2
+            },
+            "permanentEffects": [
+              {
+                "stone": 1,
+                "faithPoints": 1
+              }
+            ]
+          },
+          "familyMembers": []
+        },
+        {
+          "id": 3,
+          "minPlayers": 2,
+          "actionValue": 5,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "wood": 1,
+            "effect": "territories"
+          },
+          "card": {
+            "id": 7,
+            "name": "citadel",
+            "era": 1,
+            "type": "territories",
+            "activationCost": 5,
+            "permanentEffects": [
+              {
+                "stone": 1,
+                "militaryPoints": 2
+              }
+            ]
+          },
+          "familyMembers": []
+        },
+        {
+          "id": 4,
+          "minPlayers": 2,
+          "actionValue": 7,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "wood": 2,
+            "effect": "territories"
+          },
+          "card": {
+            "id": 8,
+            "name": "City",
+            "era": 1,
+            "type": "territories",
+            "activationCost": 6,
+            "immediateEffect": {
+              "coins": 3
+            },
+            "permanentEffects": [
+              {
+                "privileges": 1
+              }
+            ]
+          },
+          "familyMembers": []
+        }
+      ]
+    },
+    {
+      "area": "CHARACTER",
+      "additionalCoinsTax": 3,
+      "oneFamilyMemberPerPlayer": true,
+      "actionSpaces": [
+        {
+          "id": 5,
+          "minPlayers": 2,
+          "actionValue": 1,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "effect": "characters"
+          },
+          "card": {
+            "id": 53,
+            "name": "Farmer",
+            "era": 1,
+            "type": "characters",
+            "costs": [
+              {
+                "coins": 3
+              }
+            ],
+            "permanentEffects": [
+              {
+                "addValueToDice": {
+                  "value": 2,
+                  "type": "harvest"
+                }
+              }
+            ]
+          },
+          "familyMembers": []
+        },
+        {
+          "id": 6,
+          "minPlayers": 2,
+          "actionValue": 3,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "effect": "characters"
+          },
+          "card": {
+            "id": 54,
+            "name": "Artisan",
+            "era": 1,
+            "type": "characters",
+            "costs": [
+              {
+                "coins": 3
+              }
+            ],
+            "permanentEffects": [
+              {
+                "addValueToDice": {
+                  "value": 2,
+                  "type": "production"
+                }
+              }
+            ]
+          },
+          "familyMembers": []
+        },
+        {
+          "id": 7,
+          "minPlayers": 2,
+          "actionValue": 5,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "stone": 1,
+            "effect": "characters"
+          },
+          "card": {
+            "id": 55,
+            "name": "Preacher",
+            "era": 1,
+            "type": "characters",
+            "costs": [
+              {
+                "coins": 2
+              }
+            ],
+            "immediateEffect": {
+              "faithPoints": 4
+            },
+            "permanentEffects": [
+              {
+                "disableImmediateBonus": true
+              }
+            ]
+          },
+          "familyMembers": [
+            {
+              "color": "ghost",
+              "playerColor": "red"
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "minPlayers": 2,
+          "actionValue": 7,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "stone": 2,
+            "effect": "characters"
+          },
+          "card": {
+            "id": 56,
+            "name": "Abbess",
+            "era": 1,
+            "type": "characters",
+            "costs": [
+              {
+                "coins": 3
+              }
+            ],
+            "immediateEffect": {
+              "faithPoints": 1,
+              "card": {
+                "value": 4,
+                "type": "all"
+              }
+            }
+          },
+          "familyMembers": [
+            {
+              "color": "black",
+              "playerColor": "red"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "area": "BUILDING",
+      "additionalCoinsTax": 3,
+      "oneFamilyMemberPerPlayer": true,
+      "actionSpaces": [
+        {
+          "id": 9,
+          "minPlayers": 2,
+          "actionValue": 1,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "effect": "buildings"
+          },
+          "card": {
+            "id": 29,
+            "name": "Carpenter's Shop",
+            "era": 1,
+            "type": "buildings",
+            "activationCost": 4,
+            "costs": [
+              {
+                "wood": 2,
+                "coins": 1
+              }
+            ],
+            "immediateEffect": {
+              "victoryPoints": 3
+            },
+            "permanentEffects": [
+              {
+                "wood": -1,
+                "coins": 3
+              },
+              {
+                "wood": -2,
+                "coins": 5
+              }
+            ]
+          },
+          "familyMembers": []
+        },
+        {
+          "id": 10,
+          "minPlayers": 2,
+          "actionValue": 3,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "effect": "buildings"
+          },
+          "card": {
+            "id": 30,
+            "name": "Stonemason's Shop",
+            "era": 1,
+            "type": "buildings",
+            "activationCost": 3,
+            "costs": [
+              {
+                "stone": 2,
+                "coins": 1
+              }
+            ],
+            "immediateEffect": {
+              "victoryPoints": 2
+            },
+            "permanentEffects": [
+              {
+                "stone": -1,
+                "coins": 3
+              },
+              {
+                "stone": -2,
+                "coins": 5
+              }
+            ]
+          },
+          "familyMembers": []
+        },
+        {
+          "id": 11,
+          "minPlayers": 2,
+          "actionValue": 5,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "militaryPoints": 1,
+            "effect": "buildings"
+          },
+          "card": {
+            "id": 31,
+            "name": "Chapel",
+            "era": 1,
+            "type": "buildings",
+            "activationCost": 2,
+            "costs": [
+              {
+                "wood": 2
+              }
+            ],
+            "immediateEffect": {
+              "faithPoints": 1
+            },
+            "permanentEffects": [
+              {
+                "coins": -1,
+                "faithPoints": 1
+              }
+            ]
+          },
+          "familyMembers": []
+        },
+        {
+          "id": 12,
+          "minPlayers": 2,
+          "actionValue": 7,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "militaryPoints": 2,
+            "effect": "buildings"
+          },
+          "card": {
+            "id": 32,
+            "name": "Residence",
+            "era": 1,
+            "type": "buildings",
+            "activationCost": 1,
+            "costs": [
+              {
+                "stone": 2
+              }
+            ],
+            "immediateEffect": {
+              "victoryPoints": 1
+            },
+            "permanentEffects": [
+              {
+                "coins": -1,
+                "privileges": 1
+              }
+            ]
+          },
+          "familyMembers": []
+        }
+      ]
+    },
+    {
+      "area": "VENTURE",
+      "additionalCoinsTax": 3,
+      "oneFamilyMemberPerPlayer": true,
+      "actionSpaces": [
+        {
+          "id": 13,
+          "minPlayers": 2,
+          "actionValue": 1,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "effect": "ventures"
+          },
+          "card": {
+            "id": 77,
+            "name": "Military Campaign",
+            "era": 1,
+            "type": "ventures",
+            "costs": [
+              {
+                "militaryPointsRequired": 3,
+                "militaryPointsSubtracted": 2
+              }
+            ],
+            "immediateEffect": {
+              "coins": 3
+            },
+            "permanentEffects": [
+              {
+                "finalVictoryPoint": 5
+              }
+            ]
+          },
+          "familyMembers": []
+        },
+        {
+          "id": 14,
+          "minPlayers": 2,
+          "actionValue": 3,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "effect": "ventures"
+          },
+          "card": {
+            "id": 78,
+            "name": "Hosting Panhandlers",
+            "era": 1,
+            "type": "ventures",
+            "costs": [
+              {
+                "wood": 3
+              }
+            ],
+            "immediateEffect": {
+              "servants": 4
+            },
+            "permanentEffects": [
+              {
+                "finalVictoryPoint": 4
+              }
+            ]
+          },
+          "familyMembers": []
+        },
+        {
+          "id": 15,
+          "minPlayers": 2,
+          "actionValue": 5,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "coins": 1,
+            "effect": "ventures"
+          },
+          "card": {
+            "id": 79,
+            "name": "Fighting Heresies",
+            "era": 1,
+            "type": "ventures",
+            "costs": [
+              {
+                "militaryPointsRequired": 5,
+                "militaryPointsSubtracted": 3
+              }
+            ],
+            "immediateEffect": {
+              "faithPoints": 2
+            },
+            "permanentEffects": [
+              {
+                "finalVictoryPoint": 5
+              }
+            ]
+          },
+          "familyMembers": []
+        },
+        {
+          "id": 16,
+          "minPlayers": 2,
+          "actionValue": 7,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "coins": 2,
+            "effect": "ventures"
+          },
+          "card": {
+            "id": 80,
+            "name": "Support to the Bishop",
+            "era": 1,
+            "type": "ventures",
+            "costs": [
+              {
+                "militaryPointsRequired": 4,
+                "militaryPointsSubtracted": 2
+              },
+              {
+                "wood": 1,
+                "stone": 1,
+                "coins": 2
+              }
+            ],
+            "immediateEffect": {
+              "faithPoints": 3
+            },
+            "permanentEffects": [
+              {
+                "finalVictoryPoint": 1
+              }
+            ]
+          },
+          "familyMembers": [
+            {
+              "color": "black",
+              "playerColor": "blue"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "area": "COUNCIL",
+      "actionSpaces": [
+        {
+          "id": 17,
+          "minPlayers": 2,
+          "actionValue": 1,
+          "turnOrderModifier": true,
+          "immediateResourceEffect": {
+            "coins": 1,
+            "privileges": 1
+          },
+          "familyMembers": []
+        }
+      ]
+    },
+    {
+      "area": "PRODUCTION",
+      "actionValuePenaltyForSecondPlayer": 3,
+      "oneFamilyMemberPerPlayer": true,
+      "actionSpaces": [
+        {
+          "id": 18,
+          "minPlayers": 2,
+          "actionValue": 1,
+          "singleFamilyMember": false,
+          "immediateResourceEffect": {
+            "effect": "production"
+          },
+          "familyMembers": []
+        }
+      ]
+    },
+    {
+      "area": "HARVEST",
+      "actionValuePenaltyForSecondPlayer": 3,
+      "oneFamilyMemberPerPlayer": true,
+      "actionSpaces": [
+        {
+          "id": 19,
+          "minPlayers": 2,
+          "actionValue": 1,
+          "singleFamilyMember": false,
+          "immediateResourceEffect": {
+            "effect": "harvest"
+          },
+          "familyMembers": []
+        }
+      ]
+    },
+    {
+      "area": "MARKET",
+      "actionSpaces": [
+        {
+          "id": 20,
+          "minPlayers": 2,
+          "actionValue": 1,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "coins": 5
+          },
+          "familyMembers": []
+        },
+        {
+          "id": 21,
+          "minPlayers": 2,
+          "actionValue": 1,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "servants": 5
+          },
+          "familyMembers": []
+        },
+        {
+          "id": 22,
+          "minPlayers": 4,
+          "actionValue": 1,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "coins": 2,
+            "militaryPoints": 3
+          },
+          "familyMembers": []
+        },
+        {
+          "id": 23,
+          "minPlayers": 4,
+          "actionValue": 1,
+          "singleFamilyMember": true,
+          "immediateResourceEffect": {
+            "privileges": 2
+          },
+          "familyMembers": []
+        }
+      ]
+    }
+  ],
+  "dices": [
+    {
+      "color": "white",
+      "value": 1
+    },
+    {
+      "color": "orange",
+      "value": 3
+    },
+    {
+      "color": "black",
+      "value": 6
+    }
+  ],
+  "players": [
+    {
+      "color": "blue",
+      "coins": 7,
+      "servants": 2,
+      "stone": 0,
+      "wood": 0,
+      "faithPoints": 4,
+      "militaryPoints": 4,
+      "victoryPoints": 6,
+      "territories": [],
+      "characters": [],
+      "buildings": [
+        {
+          "id": 28,
+          "name": "Theater",
+          "era": 1,
+          "type": "buildings",
+          "activationCost": 6,
+          "costs": [
+            {
+              "wood": 2,
+              "coins": 2
+            }
+          ],
+          "immediateEffect": {
+            "victoryPoints": 6
+          },
+          "permanentEffects": [
+            {
+              "forEach": {
+                "left": "victoryPoints",
+                "right": "characters",
+                "ratio": 1
+              }
+            }
+          ]
+        }
+      ],
+      "ventures": [
+        {
+          "id": 74,
+          "name": "Repairing the Church",
+          "era": 1,
+          "type": "ventures",
+          "costs": [
+            {
+              "wood": 1,
+              "stone": 1,
+              "coins": 1
+            }
+          ],
+          "immediateEffect": {
+            "faithPoints": 1
+          },
+          "permanentEffects": [
+            {
+              "finalVictoryPoint": 5
+            }
+          ]
+        },
+        {
+          "id": 75,
+          "name": "Building the Walls",
+          "era": 1,
+          "type": "ventures",
+          "costs": [
+            {
+              "stone": 3
+            }
+          ],
+          "immediateEffect": {
+            "privileges": 1,
+            "militaryPoints": 2
+          },
+          "permanentEffects": [
+            {
+              "finalVictoryPoint": 3
+            }
+          ]
+        },
+        {
+          "id": 80,
+          "name": "Support to the Bishop",
+          "era": 1,
+          "type": "ventures",
+          "costs": [
+            {
+              "militaryPointsRequired": 4,
+              "militaryPointsSubtracted": 2
+            },
+            {
+              "wood": 1,
+              "stone": 1,
+              "coins": 2
+            }
+          ],
+          "immediateEffect": {
+            "faithPoints": 3
+          },
+          "permanentEffects": [
+            {
+              "finalVictoryPoint": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "color": "red",
+      "coins": 0,
+      "servants": 0,
+      "stone": 4,
+      "wood": 1,
+      "faithPoints": 6,
+      "militaryPoints": 0,
+      "victoryPoints": 5,
+      "territories": [
+        {
+          "id": 1,
+          "name": "commercial hub",
+          "era": 1,
+          "type": "territories",
+          "activationCost": 1,
+          "permanentEffects": [
+            {
+              "coins": 1
+            }
+          ]
+        }
+      ],
+      "characters": [
+        {
+          "id": 52,
+          "name": "Knight",
+          "era": 1,
+          "type": "characters",
+          "costs": [
+            {
+              "coins": 2
+            }
+          ],
+          "immediateEffect": {
+            "privileges": 1
+          },
+          "permanentEffects": [
+            {
+              "addValueToDice": {
+                "value": 2,
+                "type": "ventures"
+              }
+            }
+          ]
+        },
+        {
+          "id": 56,
+          "name": "Abbess",
+          "era": 1,
+          "type": "characters",
+          "costs": [
+            {
+              "coins": 3
+            }
+          ],
+          "immediateEffect": {
+            "faithPoints": 1,
+            "card": {
+              "value": 4,
+              "type": "all"
+            }
+          }
+        },
+        {
+          "id": 55,
+          "name": "Preacher",
+          "era": 1,
+          "type": "characters",
+          "costs": [
+            {
+              "coins": 2
+            }
+          ],
+          "immediateEffect": {
+            "faithPoints": 4
+          },
+          "permanentEffects": [
+            {
+              "disableImmediateBonus": true
+            }
+          ]
+        }
+      ],
+      "buildings": [
+        {
+          "id": 25,
+          "name": "Mint",
+          "era": 1,
+          "type": "buildings",
+          "activationCost": 5,
+          "costs": [
+            {
+              "wood": 1,
+              "stone": 3
+            }
+          ],
+          "immediateEffect": {
+            "victoryPoints": 5
+          },
+          "permanentEffects": [
+            {
+              "forEach": {
+                "left": "coins",
+                "right": "buildings",
+                "ratio": 1
+              }
+            }
+          ]
+        }
+      ],
+      "ventures": [
+        {
+          "id": 76,
+          "name": "Raising a Statue",
+          "era": 1,
+          "type": "ventures",
+          "costs": [
+            {
+              "wood": 2,
+              "stone": 2
+            }
+          ],
+          "immediateEffect": {
+            "privileges": 2
+          },
+          "permanentEffects": [
+            {
+              "finalVictoryPoint": 4
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "era": 1,
+  "round": 2
+}
