@@ -26,11 +26,19 @@ public class OutputStringGenerator {
         Iterator<JsonNode> areas= board.get("spaces").elements();
         while (areas.hasNext()){
             JsonNode area = areas.next();
-            out.add(area.get("area").asText());
+            out.add("\n\n"+area.get("area").asText());
             Iterator<JsonNode> spaces = area.get("actionSpaces").elements();
             while (spaces.hasNext()){
                 JsonNode space = spaces.next();
-                out.add("\tID: "+ space.get("id").asInt()+", Action Value: "+ space.get("actionValue").asInt());
+                out.add("\n\tID: "+ space.get("id").asInt()+"\n\tAction Value: "+ space.get("actionValue").asInt());
+                if (space.get("familyMembers").size()>0){
+                    Iterator<JsonNode> fms = space.get("familyMembers").elements();
+                    while (fms.hasNext()){
+                        JsonNode fm = fms.next();
+                        out.add("\n\t\tFamily member color: "+ fm.get("color").asText()+
+                                "\n\t\tFamily member owner: "+ fm.get("playerColor").asText());
+                    }
+                }
             }
         }
         return out;
@@ -61,33 +69,7 @@ public class OutputStringGenerator {
                     }
                     if (space.has("card")){
                         JsonNode card = space.get("card");
-                        if (card.asText().equalsIgnoreCase("none")){
-                            out.add("\n\tCard: None");
-                        } else {
-                            out.add("\n\tCard: " + card.get("name").asText() + "\n\t\t" + "Type: " + card.get("type").asText());
-                            if (card.has("activationCost")) {
-                                out.add("\n\t\t" + "Activation cost: " + card.get("activationCost").asText());
-                            }
-                            if (card.has("costs")) {
-                                if (card.get("costs").size() == 1) {
-                                    JsonNode cost = card.get("costs").get(0);
-                                    out.add("\n\t\tCard cost: ");
-                                    out.addAll(parseResources(cost));
-                                } else {
-                                    Iterator<JsonNode> costs = card.get("costs").elements();
-                                    while (costs.hasNext()) {
-                                        out.add("\n\t\tPayment option: ");
-                                        JsonNode costchoice = costs.next();
-                                        out.addAll(parseResources(costchoice));
-                                    }
-                                }
-                            }
-                            if (card.has("immediateEffect")) {
-                                JsonNode immediateEffect = card.get("immediateEffect");
-                                out.add("\n\t\tImmediate card's effect: ");
-                                out.addAll(parseResources(immediateEffect));
-                            }
-                        }
+                        out.addAll(cardParser(card));
                     }/*
                     Iterator<JsonNode> cards = space.get("card").elements();
                     while (cards.hasNext()){
@@ -156,6 +138,20 @@ public class OutputStringGenerator {
         }
         return out;
     }
+    public static ArrayList<String> parseResourcesIgnoringCards(JsonNode node){
+        ArrayList<String> out = new ArrayList<>();
+        Iterator<String> fields = node.fieldNames();
+        while (fields.hasNext()){
+            String field = fields.next();
+            try {
+                boolean plur = node.get(field).asInt()>1;
+                out.add(getResourceNameIgnoringCards(field, plur)+": "+ node.get(field).asInt()+ "\n\t");
+            } catch (Exception e) {
+
+            }
+        }
+        return out;
+    }
 
     public static String getResourceNameIgnoringCards(String field, boolean plural) throws Exception {
 
@@ -187,21 +183,99 @@ public class OutputStringGenerator {
     }
 
 
-        public static String getResourceName(String field, boolean plural) throws Exception {
-        try {
-            return getResourceNameIgnoringCards(field, plural);
-        }catch (Exception e) {
-            if ("territories".equalsIgnoreCase(field)) {
-                return (plural ? "Territories" : "Territory");
-            } else if ("buildings".equalsIgnoreCase(field)) {
-                return "Building" + (plural ? "s" : "");
-            } else if ("ventures".equalsIgnoreCase(field)) {
-                return "Venture" + (plural ? "s" : "");
-            } else if ("characters".equalsIgnoreCase(field)) {
-                return "Character" + (plural ? "s" : "");
-            }
-            throw new Exception();
+    public static String getResourceName(String field, boolean plural) throws Exception {
+    try {
+        return getResourceNameIgnoringCards(field, plural);
+    }catch (Exception e) {
+        if ("territories".equalsIgnoreCase(field)) {
+            return (plural ? "Territories" : "Territory");
+        } else if ("buildings".equalsIgnoreCase(field)) {
+            return "Building" + (plural ? "s" : "");
+        } else if ("ventures".equalsIgnoreCase(field)) {
+            return "Venture" + (plural ? "s" : "");
+        } else if ("characters".equalsIgnoreCase(field)) {
+            return "Character" + (plural ? "s" : "");
         }
+        throw new Exception();
+        }
+    }
+
+    public static ArrayList<String> getPlayerStatus (JsonNode board, String playerName) throws ActionAbortedException{
+        ArrayList<String> out = new ArrayList<>();
+        Iterator<JsonNode> players= board.get("players").elements();
+        while (players.hasNext()){
+            JsonNode player = players.next();
+            if (playerName.equalsIgnoreCase(player.get("color").asText())){
+                JsonNode playerInfo = player;
+                out.add("Color: " + playerInfo.get("color").asText()+"\n\t");
+                ArrayList<String> resources = parseResourcesIgnoringCards(playerInfo);
+                out.addAll(resources);
+                Iterator<JsonNode> territories = playerInfo.get("territories").elements();
+                out.add("\n\nTerritory cards:\n\t");
+                while (territories.hasNext()) {
+                    JsonNode territory = territories.next();
+                    out.addAll(cardParser(territory));
+                }
+                territories = playerInfo.get("buildings").elements();
+                out.add("\n\nBuilding cards:\n\t");
+                while (territories.hasNext()) {
+                    JsonNode territory = territories.next();
+                    out.addAll(cardParser(territory));
+                }
+                territories = playerInfo.get("characters").elements();
+                out.add("\n\nCharacter cards:\n\t");
+                while (territories.hasNext()) {
+                    JsonNode territory = territories.next();
+                    out.addAll(cardParser(territory));
+                }
+                territories = playerInfo.get("ventures").elements();
+                out.add("\n\nVenture cards:\n\t");
+                while (territories.hasNext()) {
+                    JsonNode territory = territories.next();
+                    out.addAll(cardParser(territory));
+                }
+            }
+
+        }
+        return out;
+    }
+
+    public static ArrayList<String> cardParser (JsonNode card){
+        ArrayList<String> out = new ArrayList<>();
+        if (card.asText().equalsIgnoreCase("none")){
+            out.add("\n\tCard: None");
+        } else {
+            out.add("\n\tCard: " + card.get("name").asText() + "\n\t\t" + "Type: " + card.get("type").asText());
+            if (card.has("activationCost")) {
+                out.add("\n\t\t" + "Activation cost: " + card.get("activationCost").asText());
+            }
+            if (card.has("costs")) {
+                costParser(card);
+            }
+            if (card.has("immediateEffect")) {
+                JsonNode immediateEffect = card.get("immediateEffect");
+                out.add("\n\t\tImmediate card's effect: ");
+                out.addAll(parseResources(immediateEffect));
+            }
+        }
+        return out;
+    }
+
+    public static ArrayList<String> costParser(JsonNode card){
+        ArrayList<String> out= new ArrayList<>();
+        if (card.get("costs").size() == 1) {
+            JsonNode cost = card.get("costs").get(0);
+            out.add("\n\t\tCard cost: ");
+            out.addAll(parseResources(cost));
+        } else {
+            Iterator<JsonNode> costs = card.get("costs").elements();
+            while (costs.hasNext()) {
+                out.add("\n\t\tPayment option: ");
+                JsonNode costchoice = costs.next();
+                out.addAll(parseResources(costchoice));
+            }
+        }
+        return out;
     }
 
 }

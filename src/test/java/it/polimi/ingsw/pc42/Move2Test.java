@@ -542,8 +542,9 @@ public class Move2Test extends TestCase
         assertEquals(2, b.getRound());
 
 
-        JsonNode jsonNodef=b.generateJsonDescription();
-        System.out.print(OutputStringGenerator.ArrayToString(OutputStringGenerator.generateOutputStringOf_A(jsonNodef, "CHARACTER")));
+        //JsonNode jsonNodef=b.generateJsonDescription();
+        //System.out.print(OutputStringGenerator.ArrayToString(OutputStringGenerator.generateOutputStringOf_A(jsonNodef, "CHARACTER")));
+        //System.out.print(OutputStringGenerator.ArrayToString(OutputStringGenerator.getPlayerStatus(jsonNodef, "red")));
 
 
         //VATICAN PHASE------------------------------------------------------------------------------------------------
@@ -918,12 +919,15 @@ public class Move2Test extends TestCase
             e.printStackTrace();
         }
         JsonNode jsonNode=b.generateJsonDescription();
-        System.out.print(OutputStringGenerator.ArrayToString(OutputStringGenerator.generateOutputStringOf_A(jsonNode, "CHARACTER")));
-        System.out.print(OutputStringGenerator.ArrayToString(OutputStringGenerator.generateOutputStringOf_A(jsonNode, "TERRITORY")));
-        System.out.print(OutputStringGenerator.ArrayToString(OutputStringGenerator.generateOutputStringOf_A(jsonNode, "COUNCIL")));
-        System.out.print(OutputStringGenerator.ArrayToString(OutputStringGenerator.generateOutputStringOf_A(jsonNode, "MARKET")));
-        System.out.print(OutputStringGenerator.ArrayToString(OutputStringGenerator.generateOutputStringOf_A(jsonNode, "VENTURE")));
-        System.out.print(OutputStringGenerator.ArrayToString(OutputStringGenerator.generateOutputStringOf_A(jsonNode, "HARVEST")));
+        //System.out.print(OutputStringGenerator.ArrayToString(OutputStringGenerator.generateOutputStringOf_A(jsonNode, "CHARACTER")));
+        //System.out.print(OutputStringGenerator.ArrayToString(OutputStringGenerator.generateOutputStringOf_A(jsonNode, "TERRITORY")));
+        //System.out.print(OutputStringGenerator.ArrayToString(OutputStringGenerator.generateOutputStringOf_A(jsonNode, "COUNCIL")));
+        //System.out.print(OutputStringGenerator.ArrayToString(OutputStringGenerator.generateOutputStringOf_A(jsonNode, "MARKET")));
+        //System.out.print(OutputStringGenerator.ArrayToString(OutputStringGenerator.generateOutputStringOf_A(jsonNode, "VENTURE")));
+        //System.out.print(OutputStringGenerator.ArrayToString(OutputStringGenerator.generateOutputStringOf_A(jsonNode, "HARVEST")));
+        //System.out.print(OutputStringGenerator.ArrayToString(OutputStringGenerator.getPlayerStatus(jsonNode, "red")));
+        System.out.print(OutputStringGenerator.ArrayToString(OutputStringGenerator.generateOutputStringOf_B(jsonNode)));
+
 
         try {
             b.makeMove(nodeGhostMove("orange"));//Red, orange ghost move
