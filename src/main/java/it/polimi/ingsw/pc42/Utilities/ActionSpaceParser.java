@@ -162,18 +162,5 @@ public class ActionSpaceParser {
         }
         return true;
     }
-
-
-    public static JsonNode getActionSpaceJSONByArea(JsonNode jsonNode, String area)  throws Exception {
-        Iterator<JsonNode> nodeIterator = jsonNode.elements();
-
-        while (nodeIterator.hasNext()) {
-            JsonNode arrNode = nodeIterator.next();
-            if (arrNode.has("area") && area.equalsIgnoreCase(arrNode.get("area").asText())) {
-                return arrNode;
-            }
-        }
-        throw new Exception("invalid area string:" + area);
-    }
 }
 

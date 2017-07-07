@@ -54,7 +54,7 @@ public class ResourceWrapper extends IntWrapper implements iResourceWrapper {
     }
 
     /**
-     *
+     * TODO javadoc1
      * @param q
      */
     public void addUsingBonus(int q){
@@ -76,7 +76,7 @@ public class ResourceWrapper extends IntWrapper implements iResourceWrapper {
     }
 
     /**
-     *
+     *TODO javadoc2
      * @param q
      */
     public void abortAddUsingBonus(int q){
@@ -95,7 +95,7 @@ public class ResourceWrapper extends IntWrapper implements iResourceWrapper {
     }
 
     /**
-     *
+     *TODO javadoc3
      * @param q
      */
     public void undoAddUsingBonus(int q){

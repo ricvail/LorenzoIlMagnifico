@@ -14,7 +14,7 @@ public enum ResourceType{
     /**
      * Enum constructor. Set the string attribute according to the parameter.
      *
-     * @param resourceType resource type string that need the "check"
+     * @param resourceType resource type string that needs the "check"
      */
     ResourceType(String resourceType){
         this.resourceType = resourceType;
@@ -24,7 +24,7 @@ public enum ResourceType{
      * Returns a resource type, if it finds a match for the string passed as parameter,
      * iterating over the Enum values.
      *
-     * @param rt resource type string that need the "check"
+     * @param rt resource type string that needs the "check"
      * @return a resource type value, if matches the parameter
      */
     public static ResourceType fromString(String rt) {

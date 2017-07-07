@@ -1,13 +1,7 @@
 package it.polimi.ingsw.pc42.Control;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import it.polimi.ingsw.pc42.Control.ActionSpace.ActionSpace;
 
-import java.util.ArrayList;
-
-/**
- * Created by RICVA on 06/06/2017.
- */
 public class ActionAbortedException extends Exception{
     public boolean isComplete;
     public boolean isValid;
@@ -15,12 +9,23 @@ public class ActionAbortedException extends Exception{
     public JsonNode availableChoices;
     public int level;
 
+    /**
+     * Class constructor. The <code>boolean</code> parameter indicates if the action that aborts is completed.
+     *
+     * @param isValid
+     * @param message
+     */
     public ActionAbortedException(boolean isValid, String message) {
         super(message); //detailed message of the cause
         this.isComplete = isValid;
         this.isValid = isValid;
     }
 
+    /**
+     *TODO javadoc4
+     * @param nextMoveField
+     * @param availableChoices
+     */
     public ActionAbortedException (String nextMoveField, JsonNode availableChoices){
         this.nextMoveField=nextMoveField;
         this.availableChoices = availableChoices;

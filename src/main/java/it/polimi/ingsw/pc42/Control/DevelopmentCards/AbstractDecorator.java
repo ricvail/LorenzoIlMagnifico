@@ -10,6 +10,11 @@ public abstract class AbstractDecorator implements iCard{
 
     protected iCard card;
 
+    /**
+     * Class constructor. It is needed to initialize the card field, from a subclass, before every other operation.
+     *
+     * @param c card to be decorated
+     */
     public AbstractDecorator(iCard c){
         card=c;
     }

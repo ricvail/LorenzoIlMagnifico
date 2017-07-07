@@ -13,16 +13,27 @@ import java.util.ArrayList;
 
 public class ExtraCard extends AbstractDecorator{
 
-    /**
+    /*
      * first complete this card's actions (super)
      * apply bonuses
      * place family member
-     * @param c
      */
 
     int extraActionValue;
     ArrayList<bonus> bonuses;
     FamilyMember ghost;
+    ArrayList<Area> allowedAreas;
+
+    /**
+     * Class constructor. Decorates a card for the effect that allows you to draw an extra card, specifying from what
+     * action value you start, from in which areas you can draw the card and the discount of certain resources for
+     * the cost of the extra card.
+     *
+     * @param c card to be decorated
+     * @param allowedAreas allowed areas from which draw the extra card
+     * @param bonuses given discount of certain resources for the cost of the extra card
+     * @param actionValue action value from which you start trying to draw the new card (can be incremented w/ servants)
+     */
     public ExtraCard(iCard c, ArrayList<Area> allowedAreas, ArrayList<bonus>bonuses, int actionValue) {
         super(c);
         this.allowedAreas = allowedAreas;
@@ -30,13 +41,17 @@ public class ExtraCard extends AbstractDecorator{
         this.bonuses=bonuses;
     }
 
-    ArrayList<Area> allowedAreas;
-
+    /**
+     * Checks for existing bonuses of a certain type and returns it or sets a new one to zero, if it doesn't exist.
+     *
+     * @param res resource type that requests
+     * @return a bonus if already exists or a new one, saved, set to zero
+     */
     public bonus findBonusByType(ResourceType res){
-        for (bonus b:bonuses) {
-            if (b.res==res)return b;
+        for (bonus b : bonuses) {
+            if (b.res == res)return b;
         }
-        bonus b=new bonus(res, 0);
+        bonus b = new bonus(res, 0);
         bonuses.add(b);
         return b;
     }
@@ -64,6 +79,12 @@ public class ExtraCard extends AbstractDecorator{
         }
     }
 
+    /**
+     * TODO javadoc5
+     * Iterates through resource types and set the active bonuses equal to the previous ones.
+     *
+     * @param fm family member of the player to be accessed
+     */
     public void setOldBonuses(FamilyMember fm){
         for (ResourceWrapper rw:fm.owner.resources){
             bonus b=findBonusByType(rw.getResourceType());
@@ -71,6 +92,12 @@ public class ExtraCard extends AbstractDecorator{
         }
     }
 
+    /**
+     * TODO javadoc6
+     * Iterates through resource types and creates new bonuses.
+     *
+     * @param fm family member of the player to be accessed
+     */
     public void setNewBonuses(FamilyMember fm){
         for (ResourceWrapper rw:fm.owner.resources){
             bonus b=findBonusByType(rw.getResourceType());
@@ -92,14 +119,25 @@ public class ExtraCard extends AbstractDecorator{
         setOldBonuses(fm);
     }
 
+    /**
+     * Class that make a bonus composed.
+     */
     public static class bonus {
+
+        public ResourceType res;
+        public int bonusToAdd;
+        public ResourceWrapper.CostBonus previousBonus;
+
+        /**
+         * Class constructor. Takes a resource type and a value of a bonus discount to add and tied them together.
+         *
+         * @param res resource type of the discount
+         * @param bonusToAdd value to add as bonus discount
+         */
         public bonus(ResourceType res, int bonusToAdd) {
             this.res = res;
             this.bonusToAdd = bonusToAdd;
         }
-        public ResourceType res;
-        public int bonusToAdd;
-        public ResourceWrapper.CostBonus previousBonus;
     }
 }
 

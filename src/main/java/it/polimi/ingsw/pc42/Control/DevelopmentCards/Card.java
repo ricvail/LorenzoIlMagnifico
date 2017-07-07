@@ -33,7 +33,15 @@ public class Card implements iCard{
         return bp.getBoard();
     }
 
-
+    /**
+     * Class constructor. Initializes the base card that needs to be decorated.
+     *
+     * @param era card era
+     * @param name card name
+     * @param cardType type of the card (Enum value)
+     * @param j higher node of the single card object in the JSON file
+     * @param bp board provider, a wrapper for a board object
+     */
     public Card(int era, String name, CardType cardType, JsonNode j, BoardProvider bp){
         this.json=j;
         this.era = era;
@@ -63,17 +71,32 @@ public class Card implements iCard{
     }
 
     public enum CardType {
+
         TERRITORY("territories"), CHARACTER("characters"), BUILDING("buildings"), VENTURE("ventures");
 
         private String cardType;
-        CardType(String cardType){
-            this.cardType = cardType;
-        }
 
         public String getString(){
             return cardType;
         }
 
+        /**
+         *  Enum constructor. Set the string attribute according to the parameter.
+         *
+         * @param cardType card type string that needs the "check"
+         */
+        CardType(String cardType){
+            this.cardType = cardType;
+        }
+
+        /**
+         * Returns a card type, if it finds a match for the string passed as parameter,
+         * iterating over the Enum values, else throws exception.
+         *
+         * @param s card type string that needs the "check"
+         * @return a card type value, if matches the parameter
+         * @throws Exception if the string passed represent an invalid card type
+         */
         public static CardType fromString(String s) throws Exception {
             for (CardType cardType : CardType.values()) {
                 if (cardType.getString().equalsIgnoreCase(s)) {
