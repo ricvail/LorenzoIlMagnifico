@@ -23,6 +23,7 @@ public class OutputStringGenerator {
         }
         return s;
     }
+    //ciao paolo
 
     /**
      * Generates the list of all inputs, that could be sent by the user during the game, with their meaning.
