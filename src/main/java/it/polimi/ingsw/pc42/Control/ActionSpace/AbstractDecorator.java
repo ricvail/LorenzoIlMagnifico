@@ -12,6 +12,14 @@ import java.util.ArrayList;
 public abstract class AbstractDecorator implements iActionSpace {
     private iActionSpace actionSpace;
 
+    /**
+     * Class constructor. It is needed to initialize the action space field, from a subclass, before every other decoration.
+     * @param actionSpace
+     */
+    public AbstractDecorator(iActionSpace actionSpace){
+        this.actionSpace = actionSpace;
+    }
+
     @Override
     public void undoAction(JsonNode move, FamilyMember fm) {
         actionSpace.undoAction(move, fm);
@@ -36,9 +44,6 @@ public abstract class AbstractDecorator implements iActionSpace {
         return actionSpace.updateDescription(node);
     }
 
-    public AbstractDecorator(iActionSpace actionSpace){
-        this.actionSpace = actionSpace;
-    }
     @Override
     public void cleanup(){
         actionSpace.cleanup();
