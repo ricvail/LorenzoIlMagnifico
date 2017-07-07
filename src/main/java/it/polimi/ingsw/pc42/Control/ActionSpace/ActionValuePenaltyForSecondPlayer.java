@@ -12,7 +12,6 @@ import it.polimi.ingsw.pc42.Model.Player;
  * Created by RICVA on 21/05/2017.
  */
 public class ActionValuePenaltyForSecondPlayer extends AbstractDecorator {
-
     Board board;
     int penalty;
     FamilyMember dummyOne, dummyTwo;
