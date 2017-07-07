@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import it.polimi.ingsw.pc42.Control.ActionAbortedException;
+import it.polimi.ingsw.pc42.Control.ActionSpace.ActionDecorator;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.iCard;
 import it.polimi.ingsw.pc42.Control.ResourceType;
@@ -102,6 +104,21 @@ public class Player {
         familyMembers.add(new FamilyMember(this, Dice.DiceColor.WHITE));
         familyMembers.add(new FamilyMember(this, Dice.DiceColor.BLACK));
         familyMembers.add(new FamilyMember(this, Dice.DiceColor.NEUTRAL));
+    }
+
+    public void performHarvest (JsonNode move, FamilyMember fm)throws ActionAbortedException {
+        PersonalBonusTile.applyBonuses(bonusTile.harvestBonuses, this);
+    }
+
+    public void undoHarvest(JsonNode move, FamilyMember fm) {
+        PersonalBonusTile.undoBonuses(bonusTile.harvestBonuses, this);
+    }
+    public void performProduction (JsonNode move, FamilyMember fm)throws ActionAbortedException {
+        PersonalBonusTile.applyBonuses(bonusTile.productionBonuses, this);
+    }
+
+    public void undoProduction(JsonNode move, FamilyMember fm) {
+        PersonalBonusTile.undoBonuses(bonusTile.productionBonuses, this);
     }
 
     /**
