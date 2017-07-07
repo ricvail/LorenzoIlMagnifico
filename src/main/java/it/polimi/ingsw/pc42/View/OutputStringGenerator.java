@@ -18,6 +18,7 @@ public class OutputStringGenerator {
         }
         return s;
     }
+    //ciao paolo
 
     public static ArrayList<String> generateMenuCommands(){
         ArrayList<String> out = new ArrayList<>();
