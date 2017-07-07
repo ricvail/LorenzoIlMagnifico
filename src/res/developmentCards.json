@@ -488,6 +488,7 @@
         "victoryPoints": 3
       },
       "permanentEffects": [
+        {},
         {
           "wood": -1,
           "coins": 3
@@ -514,6 +515,7 @@
         "victoryPoints": 2
       },
       "permanentEffects": [
+        {},
         {
           "stone": -1,
           "coins": 3
@@ -539,6 +541,7 @@
         "faithPoints": 1
       },
       "permanentEffects": [
+        {},
         {
           "coins": -1,
           "faithPoints": 1
@@ -560,6 +563,7 @@
         "victoryPoints": 1
       },
       "permanentEffects": [
+        {},
         {
           "coins": -1,
           "privileges": 1
@@ -582,6 +586,7 @@
         "victoryPoints": 3
       },
       "permanentEffects": [
+        {},
         {
           "wood": 2,
           "stone": 2,
@@ -604,6 +609,7 @@
         "victoryPoints": 4
       },
       "permanentEffects": [
+        {},
         {
           "coins": -1,
           "victoryPoints": 3
@@ -629,6 +635,7 @@
         "victoryPoints": 5
       },
       "permanentEffects": [
+        {},
         {
           "wood": -1,
           "victoryPoints": 3
@@ -654,6 +661,7 @@
         "victoryPoints": 6
       },
       "permanentEffects": [
+        {},
         {
           "stone": -1,
           "victoryPoints": 3
@@ -680,6 +688,7 @@
         "victoryPoints": 4
       },
       "permanentEffects": [
+        {},
         {
           "wood": -1,
           "stone": -1,
@@ -704,6 +713,7 @@
         "victoryPoints": 2
       },
       "permanentEffects": [
+        {},
         {
           "coins": 2,
           "faithPoints": -1,
@@ -727,6 +737,7 @@
         "victoryPoints": 3
       },
       "permanentEffects": [
+        {},
         {
           "servants": -1,
           "militaryPoints": 3
@@ -794,6 +805,7 @@
         "victoryPoints": 8
       },
       "permanentEffects": [
+        {},
         {
           "wood": 3,
           "stone": 3,
@@ -863,6 +875,7 @@
         "victoryPoints": 9
       },
       "permanentEffects": [
+        {},
         {
           "servants": 2,
           "coins": -1,
@@ -887,6 +900,7 @@
         "victoryPoints": 5
       },
       "permanentEffects": [
+        {},
         {
           "wood": -1,
           "faithPoints": 2

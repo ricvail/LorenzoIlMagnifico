@@ -161,8 +161,8 @@ public class GameInitializer {
      * @param shuffle <code>true</code> for shuffled development cards
      * @return list of objects that implement the card interface (already decorated)
      */
-    private static ArrayList<iCard> readCards(JsonNode cardList,BoardProvider bp, boolean shuffle){
-        ArrayList<iCard> cards = readCards(cardList, bp);
+    private static ArrayList<iCard> readCards(JsonNode cardList,BoardProvider bp, boolean shuffle, boolean advanced){
+        ArrayList<iCard> cards = readCards(cardList, bp, advanced);
         if (shuffle){
             Collections.shuffle(cards);
         }
@@ -193,12 +193,12 @@ public class GameInitializer {
      * @param bp a wrapper for a board object
      * @return list of objects that implement the card interface
      */
-    private static ArrayList<iCard> readCards(JsonNode cardList, BoardProvider bp){
+    private static ArrayList<iCard> readCards(JsonNode cardList, BoardProvider bp, boolean advanced){
         ArrayList<iCard> cards = new ArrayList<>();
         Iterator<JsonNode> jsonNodeIterator = cardList.get("developmentCards").elements();
         while (jsonNodeIterator.hasNext()){
             iCard c;
-            c = createCard(jsonNodeIterator.next(), bp);
+            c = createCard(jsonNodeIterator.next(), bp, advanced);
             cards.add(c);
         }
         return cards;
@@ -278,7 +278,7 @@ public class GameInitializer {
                                  JsonNode cards, boolean shuffle, JsonNode privileges) throws Exception {
 
         BoardProvider boardProvider = new BoardProvider();
-        ArrayList<iCard> cardList = readCards(cards,boardProvider,shuffle);
+        ArrayList<iCard> cardList = readCards(cards,boardProvider,shuffle, advanced);
         ArrayList<iActionSpace> actionSpaceList=readActionSpaces(actionSpaces, boardProvider);
         int councilID=ActionSpaceParser.getCouncilID(actionSpaces);
         Board b =new Board(players, cardList, actionSpaceList, (ArrayNode) actionSpaces, shuffle, privileges);

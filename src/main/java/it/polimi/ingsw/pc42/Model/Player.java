@@ -37,6 +37,12 @@ public class Player {
         return familyMembers;
     }
 
+    public void applyEndGameEffects (){
+        for (iCard c : cardsOwned){
+            c.applyEndgameEffect(this);
+        }
+    }
+
     /**
      * Factory method that delegates the initialization of a player and returns it, given his color string,
      * if it matches a PlayerColor Enum value.

@@ -456,6 +456,7 @@ public class Board {
         Iterator <Player> playerIterator=playerArrayList.iterator();
         while (playerIterator.hasNext()){
             Player player = playerIterator.next();
+            player.applyEndGameEffects();
             for (int k=0; k<=player.getNumberOfCards(Card.CardType.CHARACTER); k++){
                 player.getResource(ResourceType.VICTORYPOINTS).add(k);
             }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import it.polimi.ingsw.pc42.Control.ActionSpace.Area;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.*;
+import it.polimi.ingsw.pc42.Control.DevelopmentCards.Permanent.endGameVictoryPoints;
 import it.polimi.ingsw.pc42.Control.ResourceType;
 
 import java.util.ArrayList;
@@ -11,6 +12,9 @@ import java.util.Iterator;
 
 public class CardParser {
 
+    public static iCard createCard(JsonNode root, BoardProvider bp){
+        return createCard(root, bp, false);
+    }
     /**
      * Acts as factory method for the initialization of a card and then delegates the decoration of costs and
      * effects.
@@ -19,16 +23,16 @@ public class CardParser {
      * @param bp is a wrapper for a board object
      * @return an object of card interface, already decorated
      */
-    public static iCard createCard(JsonNode root, BoardProvider bp){
+    public static iCard createCard(JsonNode root, BoardProvider bp, boolean advanced){
 
         iCard c = null;
         try {
             isJsonValid(root);
 
             c = new Card(root.get("era").asInt(),
-                root.get("name").asText(),
-                Card.CardType.fromString(root.get("type").asText()),
-                root, bp);
+                    root.get("name").asText(),
+                    Card.CardType.fromString(root.get("type").asText()),
+                    root, bp);
 
             //decorate immediate effect
             if (root.has("immediateEffect")) {
@@ -36,9 +40,13 @@ public class CardParser {
                 c = immediateEffectIterator(immediateEffectNode, c);
             }
 
-            if (root.has("permanentEffects")) {
+            if (root.has("permanentEffects")&&advanced) {
                 JsonNode permanentEffectNode = root.get("permanentEffects");
-                //c = permanentEffectIterator(permanentEffectNode, c);
+                if (permanentEffectNode.size()>1){
+                    //apply as array
+                } else {
+                    c = permanentEffectIterator(permanentEffectNode.get(0), c);
+                }
             }
 
             //decorate costs
@@ -50,6 +58,39 @@ public class CardParser {
         } catch (Exception e){
             System.out.println(root.get("name").asText());
             e.printStackTrace();
+        }
+        return c;
+    }
+
+    private static iCard permanentEffectIterator(JsonNode jsonNode, iCard c) throws Exception {
+        Iterator<String> it = jsonNode.fieldNames();
+        while (it.hasNext()) {
+            String key = it.next();
+            if (key.equalsIgnoreCase("finalVictoryPoint")){
+                if (jsonNode.get(key).isInt()){
+                    c = new endGameVictoryPoints(jsonNode.get(key).asInt(), c);
+                } else{
+                    throw new Exception("Invalid finalVictoryPoint field");
+                }
+            }
+            /*try {
+                c = applyResource(key, jsonNode.get(key).asInt(), c);
+            } catch (IllegalArgumentException e){
+                if (key.equalsIgnoreCase("privileges")){
+                    if (jsonNode.get(key).isInt()){
+                        c = new PrivilegeImmediateBonus(jsonNode.get(key).asInt(), c);
+                    } else{
+                        throw new Exception("Invalid privileges field");
+                    }
+                } else if (key.equalsIgnoreCase("card")){
+                    c = applyExtraCardBonus(c, jsonNode.get("card"));
+
+                } else if (key.equalsIgnoreCase("foreach")){
+                    c = applyForeachImmediate(jsonNode.get("foreach"), c);
+                } else {
+                    throw new Exception("Invalid immediate effect: "+ key);
+                }
+            }*/
         }
         return c;
     }
@@ -258,9 +299,9 @@ public class CardParser {
      */
     private static void isJsonValid(JsonNode root) throws Exception{
         if (!(root.has("era")&&root.get("era").isInt()&&
-            root.has("name")&&
-            root.has("type")
-            //&& root.has("id")&&root.get("id").isInt()
+                root.has("name")&&
+                root.has("type")
+                //&& root.has("id")&&root.get("id").isInt()
         )){
             throw new Exception("missing base field");
         }
@@ -273,7 +314,7 @@ public class CardParser {
         }
 
         if (root.has("immediateEffect")&&
-            !root.get("immediateEffect").isObject()) {
+                !root.get("immediateEffect").isObject()) {
             throw new Exception("wrong type of immediateEffect");
         }
 
@@ -283,7 +324,7 @@ public class CardParser {
         }
 
         if (root.has("costs")&&
-            !root.get("costs").isArray()) {
+                !root.get("costs").isArray()) {
             throw new Exception("wrong type of costs");
         }
     }
