@@ -165,9 +165,22 @@ public class OutputStringGenerator {
                         System.out.println("invalid input");
                     }
                 }
+                if ("addValueToDice".equalsIgnoreCase(field)){
+                    int value=node.get(field).get("value").asInt();
+                    String type=node.get(field).get("type").asText();
+                    out.add("Add +" + value +" to the value of your family member when you put it in "+ type+" area.\n");
+                    if (node.get(field).has("wood")||node.get(field).has("stone")||
+                            node.get(field).has("coins")){
+                        out.add("\t\t\tThen you earn a discount of: ");
+                        out.addAll(parseResources(node.get(field)));
+                    }
+                }
+                if ("disableImmediateBonus".equalsIgnoreCase(field)){
+                    out.add("Makes lose all immediate effects of the acton spaces in towers");
+                }
             }
         }
-        out.add("\n");
+        //out.add("\n");
         return out;
     }
     public static ArrayList<String> parseResourcesIgnoringCards(JsonNode node){
@@ -211,7 +224,9 @@ public class OutputStringGenerator {
             return "Harvest";
         }else if ("production".equalsIgnoreCase(field)){
             return "Production";
-        } else throw new Exception();
+        }else if ("finalVictoryPoint".equalsIgnoreCase(field)) {
+            return "finalVictoryPoints";
+        }else throw new Exception();
     }
 
 
@@ -301,6 +316,37 @@ public class OutputStringGenerator {
                 out.add("\n\t\tImmediate card's effect: ");
                 out.addAll(parseResources(immediateEffect));
             }
+            if (card.has("permanentEffects")){
+                out.add("\n\t\tPermanent card's effect: ");
+                JsonNode permanentEffects = card.get("permanentEffects");
+                if (permanentEffects.size()==1){
+                    JsonNode permanentEffect = permanentEffects.get(0);
+                    out.addAll(parseResources(permanentEffect));
+                } else {
+                    for (int i = 0; i<permanentEffects.size(); i++) {
+                        out.add("\n\t\t\tChoice "+ i+ ": ");
+                        JsonNode permanentEffect = permanentEffects.get(i);
+                        out.addAll(parseResources(permanentEffect));
+                    }
+                }/*if (permanentEffects.size()==2){
+                    out.add("\n\t\t\tFirst choice: ");
+                    JsonNode permanentEffect1 = permanentEffects.get(0);
+                    out.addAll(parseResources(permanentEffect1));
+                    out.add("\t\t\tSecond choice: ");
+                    JsonNode permanentEffect2 = permanentEffects.get(1);
+                    out.addAll(parseResources(permanentEffect2));
+                }else if (permanentEffects.size()==3) {
+                    out.add("\n\t\t\tFirst choice: ");
+                    JsonNode permanentEffect1 = permanentEffects.get(0);
+                    out.addAll(parseResources(permanentEffect1));
+                    out.add("\t\t\tSecond choice: ");
+                    JsonNode permanentEffect2 = permanentEffects.get(1);
+                    out.addAll(parseResources(permanentEffect2));
+                    out.add("\t\t\tThird choice: ");
+                    JsonNode permanentEffect3 = permanentEffects.get(2);
+                    out.addAll(parseResources(permanentEffect3));
+                }*/
+            }
         }
         return out;
     }
@@ -313,11 +359,12 @@ public class OutputStringGenerator {
             out.addAll(parseResources(cost));
         } else {
             Iterator<JsonNode> costs = card.get("costs").elements();
-            out.add("\n");
+            int counter=0;
             while (costs.hasNext()) {
-                out.add("\t\tPayment option: ");
+                out.add("\n\t\tPayment option "+counter+": ");
                 JsonNode costchoice = costs.next();
                 out.addAll(parseResources(costchoice));
+                counter ++;
             }
         }
         return out;

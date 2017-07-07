@@ -178,6 +178,7 @@ public class Client extends MessageSender {
             try {
                 gen=OutputStringGenerator.generateOutputStringOf_A(board, "TERRITORY");
             }catch (Exception e){
+                e.printStackTrace();
                 return;
             }
         }

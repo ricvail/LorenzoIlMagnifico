@@ -389,7 +389,7 @@
       },
       "permanentEffects": [
         {
-          "forEach": {
+          "foreach": {
             "left": "coins",
             "right": "buildings",
             "ratio": 1
@@ -414,7 +414,7 @@
       },
       "permanentEffects": [
         {
-          "forEach": {
+          "foreach": {
             "left": "coins",
             "right": "territories",
             "ratio": 1
@@ -439,7 +439,7 @@
       },
       "permanentEffects": [
         {
-          "forEach": {
+          "foreach": {
             "left": "victoryPoints",
             "right": "ventures",
             "ratio": 1
@@ -464,7 +464,7 @@
       },
       "permanentEffects": [
         {
-          "forEach": {
+          "foreach": {
             "left": "victoryPoints",
             "right": "characters",
             "ratio": 1
