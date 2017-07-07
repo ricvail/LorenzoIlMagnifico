@@ -81,7 +81,7 @@ public class Client extends MessageSender {
             }
 
             if (type.equalsIgnoreCase(Strings.MessageTypes.GAMESTARTED)){
-                System.out.println("Game started. ID: "+payload.get("id").asInt()+"\nYou are player "+payload.get("color").asText().toUpperCase() + ". Press Y for a list of commands");
+                System.out.println("Game started. ID: "+payload.get("id").asInt()+"\nYou are player "+payload.get("color").asText().toUpperCase() + ". Press H for a list of commands");
                 isInGame=true;
                 waitingForResponse=false;
                 moveStack=new ArrayList<moveBuildingState>();
@@ -174,9 +174,6 @@ public class Client extends MessageSender {
         if (userQuery.equalsIgnoreCase("B")){
             gen=OutputStringGenerator.generateOutputStringOf_B(board);
         }
-        if (userQuery.equalsIgnoreCase("Y")){
-            gen=OutputStringGenerator.generateMenuCommands();
-        }
         if (userQuery.equalsIgnoreCase("TT")){
             try {
                 gen=OutputStringGenerator.generateOutputStringOf_A(board, "TERRITORY");
@@ -219,7 +216,7 @@ public class Client extends MessageSender {
                 return;
             }
         }
-        if (userQuery.equalsIgnoreCase("H")){
+        if (userQuery.equalsIgnoreCase("HV")){
             try {
                 gen=OutputStringGenerator.generateOutputStringOf_A(board, "HARVEST");
             }catch (Exception e){
@@ -383,11 +380,15 @@ public class Client extends MessageSender {
 
 
     public void gameMoveLoop(String in){
-        if (in.equalsIgnoreCase("M")){
+        if(in.equalsIgnoreCase("H")) {
+            ArrayList<String> gen=OutputStringGenerator.generateMenuCommands();
+            System.out.print(OutputStringGenerator.ArrayToString(gen));
+        }
+        else if (in.equalsIgnoreCase("M")){
             currentMove=MoveBuilder.createBlankMove(true);
             waitingForResponse = true;
             sendMessage(Strings.MoveTypes.MOVE, currentMove);
-        } else if (in.equalsIgnoreCase("U")){
+        }else if (in.equalsIgnoreCase("U")){
             if (moveStack.size()>1){
                 moveStack.remove(0);
                 currentMove=moveStack.get(0).move.deepCopy();
@@ -404,10 +405,10 @@ public class Client extends MessageSender {
         }  else if (in.equalsIgnoreCase("B")||in.equalsIgnoreCase("TT")||
                 in.equalsIgnoreCase("CT")||in.equalsIgnoreCase("BT")||
                 in.equalsIgnoreCase("VT")||in.equalsIgnoreCase("C")||
-                in.equalsIgnoreCase("P")||in.equalsIgnoreCase("H")||
+                in.equalsIgnoreCase("P")||in.equalsIgnoreCase("HV")||
                 in.equalsIgnoreCase("MK")||in.equalsIgnoreCase("RP")||
                 in.equalsIgnoreCase("BP")|| in.equalsIgnoreCase("YP")||
-                in.equalsIgnoreCase("GP")||in.equalsIgnoreCase("Y")){
+                in.equalsIgnoreCase("GP")){
             userQuery=in;
             ObjectNode node = JsonNodeFactory.instance.objectNode();
             waitingForResponse=true;

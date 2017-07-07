@@ -2,7 +2,6 @@ package it.polimi.ingsw.pc42.View;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import it.polimi.ingsw.pc42.Control.ActionAbortedException;
-import it.polimi.ingsw.pc42.Model.Board;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -24,8 +23,8 @@ public class OutputStringGenerator {
         ArrayList<String> out = new ArrayList<>();
         out.add("B: board status\nTT: territory tower description\nCT: character tower description\n" +
                 "BT: building tower description\nVT: venture tower description\nC: council status\n" +
-                "P: production status\nH: harvest status\nM: market description\nRP: red player status\n" +
-                "BP: blue player status\nYP: yellow player status\nGP: green player status");
+                "P: production status\nH: harvest status\nMK: market description\nRP: red player status\n" +
+                "BP: blue player status\nYP: yellow player status\nGP: green player status\n");
         return out;
     }
 
@@ -77,7 +76,7 @@ public class OutputStringGenerator {
                 Iterator<JsonNode> spaces = area.get("actionSpaces").elements();
                 while (spaces.hasNext()) {
                     JsonNode space = spaces.next();
-                    if (space.get("locked").asBoolean()&&space.has("locked")){
+                    if (space.has("locked")&&space.get("locked").asBoolean()){
                         out.add("\nID: "+ space.get("id").asInt()+ "[LOCKED]\n");
                     }else {
                         out.add("\nID: " + space.get("id").asInt() + "\tAction value: " + space.get("actionValue").asInt());
