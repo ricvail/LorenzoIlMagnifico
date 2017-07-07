@@ -81,7 +81,7 @@ public class Client extends MessageSender {
             }
 
             if (type.equalsIgnoreCase(Strings.MessageTypes.GAMESTARTED)){
-                System.out.println("Game started. ID: "+payload.get("id").asInt()+"\nYou are player "+payload.get("color").asText().toUpperCase() + ". Press H for a list of commands");
+                System.out.println("Game started. ID: "+payload.get("id").asInt()+"\nYou are player "+payload.get("color").asText().toUpperCase() + ". Press Y for a list of commands");
                 isInGame=true;
                 waitingForResponse=false;
                 moveStack=new ArrayList<moveBuildingState>();
@@ -173,6 +173,9 @@ public class Client extends MessageSender {
         ArrayList<String> gen= new ArrayList<>();
         if (userQuery.equalsIgnoreCase("B")){
             gen=OutputStringGenerator.generateOutputStringOf_B(board);
+        }
+        if (userQuery.equalsIgnoreCase("Y")){
+            gen=OutputStringGenerator.generateMenuCommands();
         }
         if (userQuery.equalsIgnoreCase("TT")){
             try {
@@ -404,7 +407,7 @@ public class Client extends MessageSender {
                 in.equalsIgnoreCase("P")||in.equalsIgnoreCase("H")||
                 in.equalsIgnoreCase("MK")||in.equalsIgnoreCase("RP")||
                 in.equalsIgnoreCase("BP")|| in.equalsIgnoreCase("YP")||
-                in.equalsIgnoreCase("GP")){
+                in.equalsIgnoreCase("GP")||in.equalsIgnoreCase("Y")){
             userQuery=in;
             ObjectNode node = JsonNodeFactory.instance.objectNode();
             waitingForResponse=true;
@@ -438,5 +441,9 @@ public class Client extends MessageSender {
             this.serverResponse = serverResponse;
         }
         public JsonNode move, serverResponse;
+    }
+
+    public void printCommandsMenu(){
+
     }
 }

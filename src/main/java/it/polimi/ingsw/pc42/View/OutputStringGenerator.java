@@ -20,6 +20,15 @@ public class OutputStringGenerator {
         return s;
     }
 
+    public static ArrayList<String> generateMenuCommands(){
+        ArrayList<String> out = new ArrayList<>();
+        out.add("B: board status\nTT: territory tower description\nCT: character tower description\n" +
+                "BT: building tower description\nVT: venture tower description\nC: council status\n" +
+                "P: production status\nH: harvest status\nM: market description\nRP: red player status\n" +
+                "BP: blue player status\nYP: yellow player status\nGP: green player status");
+        return out;
+    }
+
     public static ArrayList<String> generateOutputStringOf_B(JsonNode board){
         ArrayList<String> out = new ArrayList<>();
         Iterator<JsonNode> dice = board.get("dices").elements();
@@ -68,42 +77,50 @@ public class OutputStringGenerator {
                 Iterator<JsonNode> spaces = area.get("actionSpaces").elements();
                 while (spaces.hasNext()) {
                     JsonNode space = spaces.next();
-                    out.add("\nID: " + space.get("id").asInt() + "\tAction value: " + space.get("actionValue").asInt());
-                    if (space.get("familyMembers").size() > 0) {
-                        out.add("\tNumber of family members: " + space.get("familyMembers").size());
-                    }
-                    Iterator<JsonNode> immediateEffects = space.get("immediateResourceEffect").elements();
-                    if (space.has("immediateResourceEffect")) {
-                        JsonNode immediateEffect = space.get("immediateResourceEffect");
-                        ArrayList<String> effects = parseResources(immediateEffect);
-                        if (effects.size() > 0) {
-                            out.add("\n\tImmediate bonus effect: ");
-                            out.addAll(effects);
+                    if (space.get("locked").asBoolean()&&space.has("locked")){
+                        out.add("\nID: "+ space.get("id").asInt()+ "[LOCKED]\n");
+                    }else {
+                        out.add("\nID: " + space.get("id").asInt() + "\tAction value: " + space.get("actionValue").asInt());
+                        if (space.get("familyMembers").size() > 0) {
+                            out.add("\tNumber of family members: " + space.get("familyMembers").size());
                         }
-                    }
-                    if (space.has("card")) {
-                        JsonNode card = space.get("card");
-                        out.addAll(cardParser(card));
-                    }/*
-                    Iterator<JsonNode> cards = space.get("card").elements();
-                    while (cards.hasNext()){
-                        JsonNode card = cards.next();
-                        out.add("Card: " + card.get("name").asText()+ "\n\t" +"Type: "+ card.get("type").asText()+
-                                "\n\t" + "Activation cost: "+ card.get("activationCost").asText());
-                        if (card.get("costs").size()==1){
-                            JsonNode cost = card.get("costs").get(0);
-                            out.addAll(parseResources(cost));
-                        } else {
-                            out.add("Payment options: ");
-                            Iterator<JsonNode> costs = card.get("costs").elements();
-                            while (costs.hasNext()){
-                                JsonNode costchoice = costs.next();
-                                out.addAll(parseResources(costchoice));
+                        Iterator<JsonNode> immediateEffects = space.get("immediateResourceEffect").elements();
+                        if (space.has("immediateResourceEffect")) {
+                            if (space.get("immediateResourceEffect").size() == 1 &&
+                                    space.get("immediateResourceEffect").has("effect")) {
+                            } else {
+                                JsonNode immediateEffect = space.get("immediateResourceEffect");
+                                ArrayList<String> effects = parseResources(immediateEffect);
+                                if (effects.size() > 0) {
+                                    out.add("\n\tImmediate bonus effect: ");
+                                    out.addAll(effects);
+                                }
                             }
                         }
-                        JsonNode immediateEffect = card.get("immediateEffect");
-                        out.addAll(parseResources(immediateEffect));
-                    }*/
+                        if (space.has("card")) {
+                            JsonNode card = space.get("card");
+                            out.addAll(cardParser(card));
+                        }/*
+                        Iterator<JsonNode> cards = space.get("card").elements();
+                        while (cards.hasNext()){
+                            JsonNode card = cards.next();
+                            out.add("Card: " + card.get("name").asText()+ "\n\t" +"Type: "+ card.get("type").asText()+
+                                    "\n\t" + "Activation cost: "+ card.get("activationCost").asText());
+                            if (card.get("costs").size()==1){
+                                JsonNode cost = card.get("costs").get(0);
+                                out.addAll(parseResources(cost));
+                            } else {
+                                out.add("Payment options: ");
+                                Iterator<JsonNode> costs = card.get("costs").elements();
+                                while (costs.hasNext()){
+                                    JsonNode costchoice = costs.next();
+                                    out.addAll(parseResources(costchoice));
+                                }
+                            }
+                            JsonNode immediateEffect = card.get("immediateEffect");
+                            out.addAll(parseResources(immediateEffect));
+                        }*/
+                    }
                     out.add("\n");
                 }
                 out.add("\n");
@@ -297,8 +314,9 @@ public class OutputStringGenerator {
             out.addAll(parseResources(cost));
         } else {
             Iterator<JsonNode> costs = card.get("costs").elements();
+            out.add("\n");
             while (costs.hasNext()) {
-                out.add("\n\t\tPayment option: ");
+                out.add("\t\tPayment option: ");
                 JsonNode costchoice = costs.next();
                 out.addAll(parseResources(costchoice));
             }
@@ -320,5 +338,6 @@ public class OutputStringGenerator {
         out.add("\nGIVE US A 30");
         return out;
     }
+
 
 }
