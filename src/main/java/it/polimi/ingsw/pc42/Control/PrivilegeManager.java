@@ -30,7 +30,7 @@ public class PrivilegeManager {
      *
      * @param p player to whom apply the privileges
      * @param move node of an array of privileges in a move
-     * @param q  value to compare to the array length
+     * @param q  value to be compared to the array length
      * @throws ActionAbortedException if the array length is not correct and if there are two privileges that are equal
      */
     public void applyPrivileges(Player p, JsonNode move, int q) throws ActionAbortedException {

@@ -5,14 +5,16 @@ import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
 import it.polimi.ingsw.pc42.Model.PersonalBonusTile;
 
-/**
- * Created by RICVA on 22/05/2017.
- */
 public class ActionDecorator extends AbstractDecorator {
 
     private ActionType actionType;
 
-
+    /**
+     * Class constructor. Decorates an action space with the harvest or production action.
+     *
+     * @param actionType specify if harvest or production
+     * @param actionSpace action space to be decorated
+     */
     public ActionDecorator(ActionType actionType, iActionSpace actionSpace) {
         super(actionSpace);
         this.actionType = actionType;

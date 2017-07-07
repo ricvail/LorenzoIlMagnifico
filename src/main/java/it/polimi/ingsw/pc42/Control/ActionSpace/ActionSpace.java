@@ -20,6 +20,15 @@ public class ActionSpace implements iActionSpace {
     BoardProvider boardProvider;
     private int minPlayers;
 
+    /**
+     * Class constructor. Initializes the base action space that needs to be decorated.
+     *
+     * @param boardProvider a wrapper of a board object
+     * @param area area to which it belongs
+     * @param ID identifier number
+     * @param actionValue min action value to place a family member
+     * @param minPlayers actual number of players in the game (to chose which action spaces lock)
+     */
     public ActionSpace(BoardProvider boardProvider, Area area, int ID, int actionValue, int minPlayers){
         this.area = area;
         this.ID=ID;
@@ -116,6 +125,16 @@ public class ActionSpace implements iActionSpace {
     }
 
 
+    /**
+     * Checks if the family member to place is visible, if is not already placed in that area or there is already a
+     * family member of the same player in that area.
+     *
+     * @param board board of the current game
+     * @param area area in which place a family member
+     * @param fmToAdd family member to be placed
+     * @return <code>true</code> if the family member to be placed is not already be added or if it is the first of a
+     * particular player in that area
+     */
     public static boolean isFirstInArea(Board board, Area area, FamilyMember fmToAdd){
         Iterator<iActionSpace> iterator = board.getActionSpaces().iterator();
         while (iterator.hasNext()){

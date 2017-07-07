@@ -26,7 +26,7 @@ public class ExtraCard extends AbstractDecorator{
 
     /**
      * Class constructor. Decorates a card for the effect that allows you to draw an extra card, specifying from what
-     * action value you start, from in which areas you can draw the card and the discount of certain resources for
+     * action value you start, from which areas you can draw the card and the discount of certain resources for
      * the cost of the extra card.
      *
      * @param c card to be decorated
