@@ -1,9 +1,12 @@
 package it.polimi.ingsw.pc42.Control.ActionSpace;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Model.Board;
+import it.polimi.ingsw.pc42.Model.Dice;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
+import it.polimi.ingsw.pc42.Model.Player;
 
 /**
  * Created by RICVA on 21/05/2017.
@@ -12,16 +15,22 @@ public class ActionValuePenaltyForSecondPlayer extends AbstractDecorator {
 
     Board board;
     int penalty;
+    FamilyMember dummyOne, dummyTwo;
 
 
     public ActionValuePenaltyForSecondPlayer(int penalty, iActionSpace actionSpace) {
         super(actionSpace);
         this.penalty=penalty;
+        dummyOne= new FamilyMember(Player.createPlayer(Player.PlayerColor.RED), Dice.DiceColor.ORANGE);
+        dummyTwo= new FamilyMember(Player.createPlayer(Player.PlayerColor.GREEN), Dice.DiceColor.WHITE);
     }
 
     @Override
     public void performAction(JsonNode move, FamilyMember fm) throws ActionAbortedException {
         if (doesPenaltyApply(fm)){
+            if (getBoard().getPlayerArrayList().size()<3){
+                throw new ActionAbortedException(false, "Unable to perform this move if there are less than 3 players.");
+            }
             fm.setValue(fm.getValue()-penalty);
             if (fm.getValue()<1){
                 fm.setValue(fm.getValue()+penalty);
@@ -54,6 +63,17 @@ public class ActionValuePenaltyForSecondPlayer extends AbstractDecorator {
             return super.getMinimumActionValue(fm);
         }
     }
+
+    @Override
+    public ObjectNode updateDescription(ObjectNode node) {
+        if (doesPenaltyApply(dummyOne)||doesPenaltyApply(dummyTwo)){
+            node.put("locked", true);
+        } else {
+            node.put("locked", false);
+        }
+        return super.updateDescription(node);
+    }
+
     /*    @Override
     public void placeFamilyMember(FamilyMember familyMember, JsonNode json) {
         if (doesPenaltyApply(familyMember)){
