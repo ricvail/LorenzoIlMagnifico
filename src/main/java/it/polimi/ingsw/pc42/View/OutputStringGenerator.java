@@ -120,7 +120,6 @@ public class OutputStringGenerator {
                             out.addAll(parseResources(immediateEffect));
                         }*/
                     }
-                    out.add("\n");
                 }
                 out.add("\n");
                 return out;
