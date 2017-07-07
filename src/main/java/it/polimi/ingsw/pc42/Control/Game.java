@@ -19,7 +19,6 @@ import java.util.Collections;
  * Created by diego on 01/07/2017.
  */
 public class Game {
-    private int ID;
     private ArrayList<Player> playerArrayList;
     private ArrayList<ClientHandler> clients;
     private Board b;
