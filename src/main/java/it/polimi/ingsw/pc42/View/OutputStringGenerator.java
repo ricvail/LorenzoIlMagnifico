@@ -11,6 +11,11 @@ import java.util.Iterator;
  */
 public class OutputStringGenerator {
 
+    /**
+     * Converts an ArrayList of strings in a string.
+     * @param a ArrayList of be converted
+     * @return resulted string
+     */
     public static String ArrayToString(ArrayList<String> a){
         String s= "";
         for (String e: a){
@@ -19,6 +24,10 @@ public class OutputStringGenerator {
         return s;
     }
 
+    /**
+     * Generates the list of all inputs, that could be sent by the user during the game, with their meaning.
+     * @return the arrayList of the commands
+     */
     public static ArrayList<String> generateMenuCommands(){
         ArrayList<String> out = new ArrayList<>();
         out.add("B: board status\nTT: territory tower description\nCT: character tower description\n" +
@@ -28,6 +37,13 @@ public class OutputStringGenerator {
         return out;
     }
 
+    /**
+     * Generate an ArrayList of strings about the value of dice, the turn order and the current status
+     * of the board specifying if the action spaces are empty and, if they aren't, the attributes
+     * of the family member placed there
+     * @param board json of the board
+     * @return  an arrayList with the description
+     */
     public static ArrayList<String> generateOutputStringOf_B(JsonNode board){
         ArrayList<String> out = new ArrayList<>();
         Iterator<JsonNode> dice = board.get("dices").elements();
@@ -66,6 +82,15 @@ public class OutputStringGenerator {
         return out;
     }
 
+    /**
+     * Generates an arrayList of strings that describes the status of a specific area and of the actions spaces
+     * place there. For each action spaces specifies all details and, if them contain a card, all the specifications
+     * about that card.
+     * @param board json of the board
+     * @param inputArea area of which generate the description
+     * @return an arrayList with the description
+     * @throws ActionAbortedException
+     */
     public static ArrayList<String>  generateOutputStringOf_A(JsonNode board, String inputArea) throws ActionAbortedException {
         ArrayList<String> out = new ArrayList<>();
 
@@ -127,6 +152,12 @@ public class OutputStringGenerator {
         }throw new ActionAbortedException(false, "No such area");
     }
 
+    /**
+     * Generate an ArrayList of strings that parse all immediate effects of the cards generating a description
+     * about their functions and values.
+     * @param node jsonNode of the card's effects
+     * @return an arrayList with the description
+     */
     public static ArrayList<String> parseResources(JsonNode node){
         ArrayList<String> out = new ArrayList<>();
         Iterator<String> fields = node.fieldNames();
@@ -169,6 +200,8 @@ public class OutputStringGenerator {
         out.add("\n");
         return out;
     }
+
+
     public static ArrayList<String> parseResourcesIgnoringCards(JsonNode node){
         ArrayList<String> out = new ArrayList<>();
         Iterator<String> fields = node.fieldNames();
@@ -184,6 +217,13 @@ public class OutputStringGenerator {
         return out;
     }
 
+    /**
+     * Create a string of a resource name that could be singular or plural
+     * @param field resource of which needs to take the string's name
+     * @param plural plural
+     * @return a string of the name
+     * @throws Exception if doesn't enter in any check
+     */
     public static String getResourceNameIgnoringCards(String field, boolean plural) throws Exception {
 
         if ("stone".equalsIgnoreCase(field)||"stones".equalsIgnoreCase(field)){
@@ -213,7 +253,13 @@ public class OutputStringGenerator {
         } else throw new Exception();
     }
 
-
+    /**
+     * Creates a string with the name of a tower that could be singular or plural
+     * @param field tower of which needs to take the string's name
+     * @param plural plural
+     * @return a string of the name
+     * @throws Exception if doesn't enter in any check
+     */
     public static String getResourceName(String field, boolean plural) throws Exception {
     try {
         return getResourceNameIgnoringCards(field, plural);
@@ -231,12 +277,20 @@ public class OutputStringGenerator {
         }
     }
 
-    public static ArrayList<String> getPlayerStatus (JsonNode board, String playerName) throws Exception {
+    /**
+     * Generates an ArrayList of strings that describe all information about the state of the player,
+     * his points, his resources and his cards.
+     * @param board json of board
+     * @param playerColor color of the player
+     * @return  an arrayList with the description
+     * @throws Exception
+     */
+    public static ArrayList<String> getPlayerStatus (JsonNode board, String playerColor) throws Exception {
         ArrayList<String> out = new ArrayList<>();
         Iterator<JsonNode> players= board.get("players").elements();
         while (players.hasNext()){
             JsonNode player = players.next();
-            if (playerName.equalsIgnoreCase(player.get("color").asText())){
+            if (playerColor.equalsIgnoreCase(player.get("color").asText())){
                 JsonNode playerInfo = player;
                 out.add("Color: " + playerInfo.get("color").asText()+"\n\t");
                 ArrayList<String> resources = parseResourcesIgnoringCards(playerInfo);
@@ -282,6 +336,11 @@ public class OutputStringGenerator {
         throw new Exception();
     }
 
+    /**
+     * Generates the description about all information of a specific card.
+     * @param card json of the card of which generate the description
+     * @return an arrayList with the description
+     */
     public static ArrayList<String> cardParser (JsonNode card){
         ArrayList<String> out = new ArrayList<>();
         if (card.asText().equalsIgnoreCase("none")){
@@ -304,6 +363,11 @@ public class OutputStringGenerator {
         return out;
     }
 
+    /**
+     * Parses the costs of a card and generate their description.
+     * @param card json of the card of which generate the cost's description
+     * @return an arrayList with the description
+     */
     public static ArrayList<String> costParser(JsonNode card){
         ArrayList<String> out= new ArrayList<>();
         if (card.get("costs").size() == 1) {
@@ -322,6 +386,11 @@ public class OutputStringGenerator {
         return out;
     }
 
+    /**
+     * Generates an ArrayList of strings with the message about the final rank and the end of the game.
+     * @param board json of the board
+     * @return an arrayList with the message's strings
+     */
     public static ArrayList<String> theWinnerIs(JsonNode board){
         ArrayList<String> out= new ArrayList<>();
         Iterator<JsonNode> playerOrder = board.get("players").elements();

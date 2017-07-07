@@ -8,15 +8,17 @@ import it.polimi.ingsw.pc42.Model.Dice;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
 import it.polimi.ingsw.pc42.Model.Player;
 
-/**
- * Created by RICVA on 21/05/2017.
- */
 public class ActionValuePenaltyForSecondPlayer extends AbstractDecorator {
     Board board;
     int penalty;
     FamilyMember dummyOne, dummyTwo;
 
-
+    /**
+     * Class constructor. Decorates an action space with an action value penalty for the second family member placed.
+     * TODO dummy one e two?
+     * @param penalty value of the penalty
+     * @param actionSpace action space on which this penalty will be added
+     */
     public ActionValuePenaltyForSecondPlayer(int penalty, iActionSpace actionSpace) {
         super(actionSpace);
         this.penalty=penalty;
@@ -73,6 +75,7 @@ public class ActionValuePenaltyForSecondPlayer extends AbstractDecorator {
         return super.updateDescription(node);
     }
 
+    //TODO cancellare?
     /*    @Override
     public void placeFamilyMember(FamilyMember familyMember, JsonNode json) {
         if (doesPenaltyApply(familyMember)){
@@ -94,6 +97,12 @@ public class ActionValuePenaltyForSecondPlayer extends AbstractDecorator {
         }
     }*/
 
+    /**
+     * Checks if the penalty has to be applied to the family member that will be placed.
+     *
+     * @param familyMember family member to be placed
+     * @return <code>true</code> if the penalty applies
+     */
     public boolean doesPenaltyApply(FamilyMember familyMember){
         if (!familyMember.diceColor.visible){
             return false;

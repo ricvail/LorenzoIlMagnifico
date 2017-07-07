@@ -53,6 +53,12 @@ public interface iActionSpace {
 
     Board getBoard();
 
+    /**
+     * Gets the minimum action value to place a family member, with or without a penalty.
+     *
+     * @param fm family member to be placed
+     * @return the value of the minimum action value
+     */
     int getMinimumActionValue(FamilyMember fm);
 
     int getMinimumNumberOfPlayers();
