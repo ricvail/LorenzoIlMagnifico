@@ -107,7 +107,11 @@ public class ActionSpace implements iActionSpace {
             root.add(objectNode);
         }
         node.set("familyMembers", root);
-
+        if (getBoard().getPlayerArrayList().size()<minPlayers){
+            node.put("locked", true);
+        } else {
+            node.put("locked", false);
+        }
         return node;
     }
 
