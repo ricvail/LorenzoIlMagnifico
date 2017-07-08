@@ -231,6 +231,7 @@ public class Player {
         root.set("characters", listOfCharacterCards);
         root.set("buildings", listOfBuildingsCards);
         root.set("ventures", listOfVenturesCards);
+        root.set("bonusTiles", bonusTile.json);
         return root;
     }
 

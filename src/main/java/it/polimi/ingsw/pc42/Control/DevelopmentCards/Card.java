@@ -90,6 +90,26 @@ public class Card implements iCard{
 
     }
 
+    @Override
+    public void onProduction(JsonNode move, FamilyMember fm) throws ActionAbortedException {
+
+    }
+
+    @Override
+    public void undoOnProduction(JsonNode move, FamilyMember fm) throws ActionAbortedException {
+
+    }
+
+    @Override
+    public void onAction(JsonNode move, FamilyMember fm) throws ActionAbortedException {
+
+    }
+
+    @Override
+    public void undoOnAction(JsonNode move, FamilyMember fm) throws ActionAbortedException {
+
+    }
+
     public enum CardType {
 
         TERRITORY("territories"), CHARACTER("characters"), BUILDING("buildings"), VENTURE("ventures");
