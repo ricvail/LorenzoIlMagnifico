@@ -1,12 +1,9 @@
 package it.polimi.ingsw.pc42.Control.ActionSpace;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
+
 import it.polimi.ingsw.pc42.Control.ActionAbortedException;
-import it.polimi.ingsw.pc42.Control.ActionSpace.AbstractDecorator;
-import it.polimi.ingsw.pc42.Control.ActionSpace.iActionSpace;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
-import it.polimi.ingsw.pc42.Control.PrivilegeManager;
 
 
 
@@ -14,6 +11,12 @@ public class privilegesActionSpaceDecorator extends AbstractDecorator {
 
     private int quantity;
 
+    /**
+     * Class constructor.  Decorates an action space (council) with a privileges bonus.
+     *
+     * @param q quantity of privileges that the action space gives
+     * @param actionSpace action space to be decorated
+     */
     public privilegesActionSpaceDecorator(int q, iActionSpace actionSpace) {
         super(actionSpace);
         this.quantity=q;

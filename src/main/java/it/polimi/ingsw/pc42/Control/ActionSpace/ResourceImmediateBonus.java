@@ -6,9 +6,17 @@ import it.polimi.ingsw.pc42.Model.FamilyMember;
 import it.polimi.ingsw.pc42.Control.ResourceType;
 
 public class ResourceImmediateBonus extends AbstractDecorator {
+
     private ResourceType resourceType;
     private int q;
 
+    /**
+     * Class constructor. Decorates an action space with a resource immediate bonus.
+     *
+     * @param rt resource type of the bonus
+     * @param quantity quantity of resource to add
+     * @param actionSpace action space to be decorated
+     */
     public ResourceImmediateBonus(ResourceType rt, int quantity, iActionSpace actionSpace){
         super(actionSpace);
         q= quantity;

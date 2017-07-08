@@ -5,6 +5,12 @@ import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
 
 public class singleFamilyMemberDecorator extends AbstractDecorator {
+
+    /**
+     * Class constructor. Decorates an action space if you can't put two family member on it.
+     *
+     * @param actionSpace action space to be decorated
+     */
     public singleFamilyMemberDecorator(iActionSpace actionSpace) {
         super(actionSpace);
     }

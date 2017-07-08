@@ -3,7 +3,6 @@ package it.polimi.ingsw.pc42.Control.ActionSpace;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import it.polimi.ingsw.pc42.Control.ActionAbortedException;
-import it.polimi.ingsw.pc42.Model.Board;
 import it.polimi.ingsw.pc42.Model.Dice;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
 
@@ -11,7 +10,12 @@ import java.util.Iterator;
 
 public class oneFamilyMemberPerPlayer extends AbstractDecorator{
 
-
+    /**
+     * Class constructor.  Decorates an action space if it belongs to an area in which you can't put two family
+     * member of the same player, except neutral.
+     *
+     * @param actionSpace action space to be decorated
+     */
     public oneFamilyMemberPerPlayer(iActionSpace actionSpace) {
         super(actionSpace);
     }
@@ -24,6 +28,12 @@ public class oneFamilyMemberPerPlayer extends AbstractDecorator{
         super.performAction(move, fm);
     }
 
+    /**
+     *Execute the controls to decide if a family member can be placed in that area.
+     *
+     * @param familyMember family member that has to be placed
+     * @return <code>true</code> if can be placed
+     */
     private boolean canPlace(FamilyMember familyMember) {
         if (!familyMember.diceColor.visible||familyMember.diceColor== Dice.DiceColor.NEUTRAL){
             return true;
