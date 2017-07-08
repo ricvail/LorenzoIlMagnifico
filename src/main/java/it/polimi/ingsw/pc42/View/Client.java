@@ -192,6 +192,7 @@ public class Client extends MessageSender {
             try {
                 gen = OutputStringGenerator.generateOutputStringOf_A(board, "CHARACTER");
             }catch (Exception e){
+                e.printStackTrace();
                 return;
             }
         }
@@ -199,6 +200,7 @@ public class Client extends MessageSender {
             try {
                 gen=OutputStringGenerator.generateOutputStringOf_A(board, "BUILDING");
             }catch (Exception e){
+                e.printStackTrace();
                 return;
             }
         }
@@ -206,6 +208,7 @@ public class Client extends MessageSender {
             try {
                 gen=OutputStringGenerator.generateOutputStringOf_A(board, "VENTURE");
             }catch (Exception e){
+                e.printStackTrace();
                 return;
             }
         }
@@ -213,6 +216,7 @@ public class Client extends MessageSender {
             try {
                 gen=OutputStringGenerator.generateOutputStringOf_A(board, "COUNCIL");
             }catch (Exception e){
+                e.printStackTrace();
                 return;
             }
         }
@@ -220,6 +224,7 @@ public class Client extends MessageSender {
             try {
                 gen=OutputStringGenerator.generateOutputStringOf_A(board, "PRODUCTION");
             }catch (Exception e){
+                e.printStackTrace();
                 return;
             }
         }
@@ -227,6 +232,7 @@ public class Client extends MessageSender {
             try {
                 gen=OutputStringGenerator.generateOutputStringOf_A(board, "HARVEST");
             }catch (Exception e){
+                e.printStackTrace();
                 return;
             }
         }
@@ -234,6 +240,7 @@ public class Client extends MessageSender {
             try {
                 gen=OutputStringGenerator.generateOutputStringOf_A(board, "MARKET");
             }catch (Exception e){
+                e.printStackTrace();
                 return;
             }
         }
@@ -241,6 +248,7 @@ public class Client extends MessageSender {
             try {
                 gen=OutputStringGenerator.getPlayerStatus(board, "red");
             }catch (Exception e){
+                e.printStackTrace();
                 System.out.println("Red player doesn't exist");
                 return;
             }
@@ -249,6 +257,7 @@ public class Client extends MessageSender {
             try {
                 gen=OutputStringGenerator.getPlayerStatus(board, "blue");
             }catch (Exception e){
+                e.printStackTrace();
                 System.out.println("Blue player doesn't exist");
                 return;
             }
@@ -257,6 +266,7 @@ public class Client extends MessageSender {
             try {
                 gen=OutputStringGenerator.getPlayerStatus(board, "yellow");
             }catch (Exception e){
+                e.printStackTrace();
                 System.out.println("Yellow player doesn't exist");
                 return;
             }
@@ -265,6 +275,7 @@ public class Client extends MessageSender {
             try {
                 gen=OutputStringGenerator.getPlayerStatus(board, "green");
             }catch (Exception e){
+                e.printStackTrace();
                 System.out.println("Green player doesn't exist");
                 return;
             }

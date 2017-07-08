@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import it.polimi.ingsw.pc42.Control.ActionSpace.Area;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.*;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.Permanent.endGameVictoryPoints;
+import it.polimi.ingsw.pc42.Control.DevelopmentCards.Permanent.harvestPrivileges;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.Permanent.harvestResource;
 import it.polimi.ingsw.pc42.Control.ResourceType;
 
@@ -40,6 +41,7 @@ public class CardParser {
             if (root.has("activationCost")){
                 card.setActionValue(root.get("activationCost").asInt());
             }
+            c=card;
 
             //decorate immediate effect
             if (root.has("immediateEffect")) {
@@ -77,7 +79,9 @@ public class CardParser {
                 try {
                     c = new harvestResource(ResourceType.fromString(key), jsonNode.get(key).asInt(), c);
                 } catch (IllegalArgumentException e){
-                    //privileges?
+                    if ("privileges".equalsIgnoreCase(key)){
+                        c= new harvestPrivileges(jsonNode.get(key).asInt(), c);
+                    }
                 }
             }
             if (key.equalsIgnoreCase("finalVictoryPoint")){
