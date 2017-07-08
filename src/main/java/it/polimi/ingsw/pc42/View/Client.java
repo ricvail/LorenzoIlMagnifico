@@ -337,7 +337,11 @@ public class Client extends MessageSender {
             out="Chose a payment option: 0 for the first, 1 for the second";
         }
         if ("optionToActivate".equalsIgnoreCase(field)){
-            out="Chose a trade option: 0 for the first, 1 for the second, 2 for the third";
+            try {
+                out= OutputStringGenerator.ArrayToString(OutputStringGenerator.getProducionChoice(board, playerColor, payload.get("card").asInt()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         if ("vaticanChoice".equalsIgnoreCase(field)){
             out="Write Y to support vatican oe N to keep your faith points";
@@ -395,7 +399,7 @@ public class Client extends MessageSender {
                     gameMoveLoop(inputLine);
                 }
             }
-        }
+        }                                                                
     };
 
 
