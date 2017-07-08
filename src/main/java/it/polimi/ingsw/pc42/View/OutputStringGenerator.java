@@ -321,20 +321,28 @@ public class OutputStringGenerator {
                         out.add("\n\t\t" + fm.get("familyMemberColor").asText() + " is  available");
                     }
                 }
+                JsonNode bonusTiles = playerInfo.get("bonusTiles").get("harvest");
+                ArrayList<String> bonusBonusTiles = parseResources(bonusTiles);
+                out.add("Bonus tiles: ");
+                out.addAll(bonusBonusTiles);
                 Iterator<JsonNode> territories = playerInfo.get("territories").elements();
                 out.add("\n\nTerritory cards:\n\t");
                 while (territories.hasNext()) {
                     JsonNode territory = territories.next();
                     out.addAll(cardParser(territory));
                 }
-                territories = playerInfo.get("buildings").elements();
-                out.add("\n\nBuilding cards:\n\t");
+                territories = playerInfo.get("characters").elements();
+                out.add("\n\nCharacter cards:\n\t");
                 while (territories.hasNext()) {
                     JsonNode territory = territories.next();
                     out.addAll(cardParser(territory));
                 }
-                territories = playerInfo.get("characters").elements();
-                out.add("\n\nCharacter cards:\n\t");
+                JsonNode bonusTiles2 = playerInfo.get("bonusTiles").get("production");
+                ArrayList<String> bonusBonusTiles2 = parseResources(bonusTiles);
+                out.add("Bonus tiles: ");
+                out.addAll(bonusBonusTiles);
+                territories = playerInfo.get("buildings").elements();
+                out.add("\n\nBuilding cards:\n\t");
                 while (territories.hasNext()) {
                     JsonNode territory = territories.next();
                     out.addAll(cardParser(territory));

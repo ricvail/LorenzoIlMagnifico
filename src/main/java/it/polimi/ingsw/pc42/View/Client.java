@@ -323,6 +323,9 @@ public class Client extends MessageSender {
         if ("paymentChoice".equalsIgnoreCase(field)){
             out="Chose a payment option: 0 for the first, 1 for the second";
         }
+        if ("optionToActivate".equalsIgnoreCase(field)){
+            out="Chose a trade option: 0 for the first, 1 for the second, 2 for the third";
+        }
         if ("vaticanChoice".equalsIgnoreCase(field)){
             out="Write Y to support vatican oe N to keep your faith points";
         }
