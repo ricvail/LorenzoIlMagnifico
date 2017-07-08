@@ -70,6 +70,16 @@ public class Card implements iCard{
         return json;
     }
 
+    @Override
+    public void onHarvest(JsonNode move, FamilyMember fm) throws ActionAbortedException {
+
+    }
+
+    @Override
+    public void undoOnHarvest(JsonNode move, FamilyMember fm) throws ActionAbortedException {
+
+    }
+
     public enum CardType {
 
         TERRITORY("territories"), CHARACTER("characters"), BUILDING("buildings"), VENTURE("ventures");

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import it.polimi.ingsw.pc42.Control.ActionSpace.Area;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.*;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.Permanent.endGameVictoryPoints;
+import it.polimi.ingsw.pc42.Control.DevelopmentCards.Permanent.harvestResource;
 import it.polimi.ingsw.pc42.Control.ResourceType;
 
 import java.util.ArrayList;
@@ -66,6 +67,13 @@ public class CardParser {
         Iterator<String> it = jsonNode.fieldNames();
         while (it.hasNext()) {
             String key = it.next();
+            if (c.getCardType()== Card.CardType.TERRITORY){
+                try {
+                    c = new harvestResource(ResourceType.fromString(key), jsonNode.get(key).asInt(), c);
+                } catch (IllegalArgumentException e){
+                    //privileges?
+                }
+            }
             if (key.equalsIgnoreCase("finalVictoryPoint")){
                 if (jsonNode.get(key).isInt()){
                     c = new endGameVictoryPoints(jsonNode.get(key).asInt(), c);
@@ -73,24 +81,6 @@ public class CardParser {
                     throw new Exception("Invalid finalVictoryPoint field");
                 }
             }
-            /*try {
-                c = applyResource(key, jsonNode.get(key).asInt(), c);
-            } catch (IllegalArgumentException e){
-                if (key.equalsIgnoreCase("privileges")){
-                    if (jsonNode.get(key).isInt()){
-                        c = new PrivilegeImmediateBonus(jsonNode.get(key).asInt(), c);
-                    } else{
-                        throw new Exception("Invalid privileges field");
-                    }
-                } else if (key.equalsIgnoreCase("card")){
-                    c = applyExtraCardBonus(c, jsonNode.get("card"));
-
-                } else if (key.equalsIgnoreCase("foreach")){
-                    c = applyForeachImmediate(jsonNode.get("foreach"), c);
-                } else {
-                    throw new Exception("Invalid immediate effect: "+ key);
-                }
-            }*/
         }
         return c;
     }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.pc42.Model;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import it.polimi.ingsw.pc42.Control.ResourceWrapper;
 
 import java.util.ArrayList;
@@ -7,13 +8,15 @@ import java.util.ArrayList;
 public class PersonalBonusTile {
 
     public ArrayList<ResourceWrapper> harvestBonuses, productionBonuses;
+    public JsonNode json;
 
     /**
      * Class constructor. Initializes the harvest and production lists.
      */
-    public PersonalBonusTile() {
+    public PersonalBonusTile(JsonNode json) {
         this.harvestBonuses = new ArrayList<>();
         this.productionBonuses = new ArrayList<>();
+        this.json=json;
     }
 
     /**

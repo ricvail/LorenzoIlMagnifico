@@ -46,7 +46,7 @@ public class Game {
             clients.get(i).setGame(this);
         }
         Collections.shuffle(playerArrayList);
-        b = GameInitializer.initBaseGame(playerArrayList, true);//TODO shuffle
+        b = GameInitializer.initBaseGame(playerArrayList, true, true);
         for (ClientHandler client:clients){
             client.setBoard(b);
         }

@@ -45,6 +45,10 @@ public interface iCard {
      */
     JsonNode getJSONDescriptionOfCards();
 
+    void onHarvest (JsonNode move, FamilyMember fm) throws ActionAbortedException;
+
+    void undoOnHarvest (JsonNode move, FamilyMember fm) throws ActionAbortedException;
+
     int getEra();
 
     String getName();

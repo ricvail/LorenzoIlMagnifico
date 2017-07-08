@@ -13,7 +13,7 @@ import java.util.Iterator;
  */
 public class PersonalBonusTileParser {
     public static PersonalBonusTile parse(JsonNode json){
-        PersonalBonusTile tile=new PersonalBonusTile();
+        PersonalBonusTile tile=new PersonalBonusTile(json);
 
         addBonuses(json.get("harvest"), tile.harvestBonuses);
         addBonuses(json.get("production"), tile.productionBonuses);

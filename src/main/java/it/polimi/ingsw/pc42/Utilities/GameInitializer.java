@@ -140,9 +140,13 @@ public class GameInitializer {
      * @return reference a to board ready to start a game
      */
     public static Board initBaseGame(ArrayList<Player> players, boolean shuffle){
+        return initBaseGame(players, shuffle, false);
+    }
+
+    public static Board initBaseGame(ArrayList<Player> players, boolean shuffle, boolean advanced){
         Board b=null;
         try {
-            b= initGame(false,
+            b= initGame(advanced,
                     players,
                     getDefaultActionSpacesJson(),
                     getDefaultCardsJson(),
@@ -277,6 +281,11 @@ public class GameInitializer {
     private static Board initGame(boolean advanced, ArrayList<Player> players, JsonNode actionSpaces,
                                  JsonNode cards, boolean shuffle, JsonNode privileges) throws Exception {
 
+        if (advanced){
+            for (Player p : players){
+                p.enableAdvanced();
+            }
+        }
         BoardProvider boardProvider = new BoardProvider();
         ArrayList<iCard> cardList = readCards(cards,boardProvider,shuffle, advanced);
         ArrayList<iActionSpace> actionSpaceList=readActionSpaces(actionSpaces, boardProvider);

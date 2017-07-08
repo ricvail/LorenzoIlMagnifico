@@ -39,13 +39,26 @@ public class MoveBuilder {
         }
     }
 
+    public static void addCardChoice(ObjectNode move, ObjectNode serverResponsePayload){
+        int level  = serverResponsePayload.get("level").asInt();
+        for (int i = 0; i<level; i++){
+            move = inner(move);
+        }
+        if (!move.has("cardChoices")){
+            move.set("cardChoices", JsonNodeFactory.instance.arrayNode());
+        }
+        ((ArrayNode) move.get("cardChoices")).add(JsonNodeFactory.instance.objectNode());
+    }
+
     public static void addField(ObjectNode move, ObjectNode serverResponsePayload, String userChoice){
-        //Before calling make sure to have a server response with type == WARNING.
         //This function does not expect the whole server response, only the parsed payload
         int level  = serverResponsePayload.get("level").asInt();
         String field = serverResponsePayload.get("field").asText();
         for (int i = 0; i<level; i++){
             move = inner(move);
+        }
+        if (serverResponsePayload.get("isCardChoice").asBoolean()){
+            move = (ObjectNode) move.get("cardChoices").get(serverResponsePayload.get("card").asInt());
         }
         if (field.equalsIgnoreCase("familyMember")){
             try {

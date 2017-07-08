@@ -8,6 +8,8 @@ public class ActionAbortedException extends Exception{
     public String nextMoveField;
     public JsonNode availableChoices;
     public int level;
+    public boolean isCardChoice;
+    public int card;
 
     /**
      * Class constructor. The <code>boolean</code> parameter indicates if the action that aborts is completed.
@@ -19,6 +21,7 @@ public class ActionAbortedException extends Exception{
         super(message); //detailed message of the cause
         this.isComplete = isValid;
         this.isValid = isValid;
+        isCardChoice=false;
     }
 
     /**
@@ -32,6 +35,7 @@ public class ActionAbortedException extends Exception{
         isComplete=false;
         isValid=true;
         level = 0;
+        isCardChoice=false;
     }
 
 

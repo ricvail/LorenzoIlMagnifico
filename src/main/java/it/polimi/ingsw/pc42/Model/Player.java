@@ -25,7 +25,11 @@ public class Player {
     private ArrayList<FamilyMember> familyMembers;
     public ArrayList<ResourceWrapper> resources;
     public PersonalBonusTile bonusTile;
+    private boolean isAdvanced;
 
+    public void enableAdvanced(){
+        isAdvanced=true;
+    }
 
     public PlayerColor getColor() {
         return color;
@@ -89,6 +93,7 @@ public class Player {
      * Private class constructor. Create the class Player that will hold resources, family member and cards owned.
      */
     private Player() {
+        isAdvanced=false;
         resources=new ArrayList<>();
         resources.add(new ResourceWrapper(ResourceType.COIN, 0));
         resources.add(new ResourceWrapper(ResourceType.SERVANT,3));
@@ -108,10 +113,39 @@ public class Player {
 
     public void performHarvest (JsonNode move, FamilyMember fm)throws ActionAbortedException {
         PersonalBonusTile.applyBonuses(bonusTile.harvestBonuses, this);
+        if (!isAdvanced) return;
+        for (int i = 0; i<cardsOwned.size(); i++){
+            try {
+                if (!(move.has("cardChoices")&&move.get("cardChoices").size()>i)){
+                    throw new ActionAbortedException("cardChoices", JsonNodeFactory.instance.arrayNode());
+                }
+                cardsOwned.get(i).onHarvest(move.get("cardChoices").get(i), fm);
+            } catch (ActionAbortedException e){
+                PersonalBonusTile.undoBonuses(bonusTile.harvestBonuses, this);
+                for (int j = i - 1; j >= 0; j--) {
+                    try {
+                        cardsOwned.get(j).undoOnHarvest(move.get("cardChoices").get(i), fm);
+                    } catch (ActionAbortedException ex) {
+                        ex.printStackTrace(); //this is not expected to happen
+                    }
+                }
+                e.isCardChoice=true;
+                e.card=i;
+                throw e;
+            }
+        }
     }
 
     public void undoHarvest(JsonNode move, FamilyMember fm) {
         PersonalBonusTile.undoBonuses(bonusTile.harvestBonuses, this);
+        if (!isAdvanced) return;
+        for (int i = 0; i<cardsOwned.size(); i++){
+            try {
+                cardsOwned.get(i).undoOnHarvest(move.get("cardChoices").get(i), fm);
+            } catch (ActionAbortedException e){
+                e.printStackTrace();
+            }
+        }
     }
     public void performProduction (JsonNode move, FamilyMember fm)throws ActionAbortedException {
         PersonalBonusTile.applyBonuses(bonusTile.productionBonuses, this);

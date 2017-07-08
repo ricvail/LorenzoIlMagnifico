@@ -109,6 +109,10 @@ public class Client extends MessageSender {
                     MoveBuilder.addInner((ObjectNode)currentMove, (ObjectNode)payload);
                     waitingForResponse = true;
                     sendMessage(Strings.MoveTypes.MOVE, currentMove);
+                } else if (payload.get("field").asText().equalsIgnoreCase("cardChoices")){
+                    MoveBuilder.addCardChoice((ObjectNode)currentMove, (ObjectNode)payload);
+                    waitingForResponse = true;
+                    sendMessage(Strings.MoveTypes.MOVE, currentMove);
                 } else {
                     printNextFieldInstructions(payload);
                     moveStack.add(0, new moveBuildingState(currentMove.deepCopy(), payload));

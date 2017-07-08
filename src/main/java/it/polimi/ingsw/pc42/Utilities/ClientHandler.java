@@ -169,6 +169,8 @@ public class ClientHandler extends MessageSender implements Runnable {
                     ObjectNode payload = JsonNodeFactory.instance.objectNode();
                     payload.put("field", e.nextMoveField);
                     payload.put("level", e.level);
+                    payload.put("isCardChoice", e.isCardChoice);
+                    if (e.isCardChoice) payload.put("card", e.card);
                     payload.set("options", e.availableChoices);
                     sendMessage(Strings.MessageTypes.MOVE_INCOMPLETE, payload);
                 }
