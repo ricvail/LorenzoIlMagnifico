@@ -125,26 +125,7 @@ public class OutputStringGenerator {
                         if (space.has("card")) {
                             JsonNode card = space.get("card");
                             out.addAll(cardParser(card));
-                        }/*
-                        Iterator<JsonNode> cards = space.get("card").elements();
-                        while (cards.hasNext()){
-                            JsonNode card = cards.next();
-                            out.add("Card: " + card.get("name").asText()+ "\n\t" +"Type: "+ card.get("type").asText()+
-                                    "\n\t" + "Activation cost: "+ card.get("activationCost").asText());
-                            if (card.get("costs").size()==1){
-                                JsonNode cost = card.get("costs").get(0);
-                                out.addAll(parseResources(cost));
-                            } else {
-                                out.add("Payment options: ");
-                                Iterator<JsonNode> costs = card.get("costs").elements();
-                                while (costs.hasNext()){
-                                    JsonNode costchoice = costs.next();
-                                    out.addAll(parseResources(costchoice));
-                                }
-                            }
-                            JsonNode immediateEffect = card.get("immediateEffect");
-                            out.addAll(parseResources(immediateEffect));
-                        }*/
+                        }
                     }
                 }
                 out.add("\n");
@@ -207,7 +188,7 @@ public class OutputStringGenerator {
                     }
                 }
                 if ("disableImmediateBonus".equalsIgnoreCase(field)){
-                    out.add("Makes lose all immediate effects of the acton spaces in towers");
+                    out.add("Makes lose all immediate effects of the acton spaces in towers during all game");
                 }
             }
         }
@@ -323,10 +304,10 @@ public class OutputStringGenerator {
                 }
                 JsonNode bonusTiles = playerInfo.get("bonusTiles").get("harvest");
                 ArrayList<String> bonusBonusTiles = parseResources(bonusTiles);
-                out.add("Bonus tiles: ");
+                out.add("\n\nHarvest bonus tiles: ");
                 out.addAll(bonusBonusTiles);
                 Iterator<JsonNode> territories = playerInfo.get("territories").elements();
-                out.add("\n\nTerritory cards:\n\t");
+                out.add("\nTerritory cards:\n\t");
                 while (territories.hasNext()) {
                     JsonNode territory = territories.next();
                     out.addAll(cardParser(territory));
@@ -338,11 +319,11 @@ public class OutputStringGenerator {
                     out.addAll(cardParser(territory));
                 }
                 JsonNode bonusTiles2 = playerInfo.get("bonusTiles").get("production");
-                ArrayList<String> bonusBonusTiles2 = parseResources(bonusTiles);
-                out.add("Bonus tiles: ");
-                out.addAll(bonusBonusTiles);
+                ArrayList<String> bonusBonusTiles2 = parseResources(bonusTiles2);
+                out.add("\n\nProduction bonus tiles: ");
+                out.addAll(bonusBonusTiles2);
                 territories = playerInfo.get("buildings").elements();
-                out.add("\n\nBuilding cards:\n\t");
+                out.add("\nBuilding cards:\n\t");
                 while (territories.hasNext()) {
                     JsonNode territory = territories.next();
                     out.addAll(cardParser(territory));
@@ -359,6 +340,27 @@ public class OutputStringGenerator {
         }
         throw new Exception();
     }
+
+    public static ArrayList<String> getProducionChoice (JsonNode board, String playerColor, int index) throws Exception {
+        ArrayList<String> out = new ArrayList<>();
+        Iterator<JsonNode> players = board.get("players").elements();
+        while (players.hasNext()) {
+            JsonNode player = players.next();
+            if (playerColor.equalsIgnoreCase(player.get("color").asText())) {
+                JsonNode buildings = player.get("buildings");
+                out.add("\nBuilding card:\n\t");
+                JsonNode permanentEffect = buildings.get(index).get("permanentEffects");
+                out.add("Press 0 to refuse the activation");
+                for (int i=1; i<permanentEffect.size(); i++){
+                    JsonNode choice = permanentEffect.get(i);
+                    out.add("\nFor this choice:"+choice.asText()+"press"+i);
+                }
+            }
+        }
+        return out;
+    }
+
+
 
     /**
      * Generates the description about all information of a specific card.
@@ -395,24 +397,7 @@ public class OutputStringGenerator {
                         JsonNode permanentEffect = permanentEffects.get(i);
                         out.addAll(parseResources(permanentEffect));
                     }
-                }/*if (permanentEffects.size()==2){
-                    out.add("\n\t\t\tFirst choice: ");
-                    JsonNode permanentEffect1 = permanentEffects.get(0);
-                    out.addAll(parseResources(permanentEffect1));
-                    out.add("\t\t\tSecond choice: ");
-                    JsonNode permanentEffect2 = permanentEffects.get(1);
-                    out.addAll(parseResources(permanentEffect2));
-                }else if (permanentEffects.size()==3) {
-                    out.add("\n\t\t\tFirst choice: ");
-                    JsonNode permanentEffect1 = permanentEffects.get(0);
-                    out.addAll(parseResources(permanentEffect1));
-                    out.add("\t\t\tSecond choice: ");
-                    JsonNode permanentEffect2 = permanentEffects.get(1);
-                    out.addAll(parseResources(permanentEffect2));
-                    out.add("\t\t\tThird choice: ");
-                    JsonNode permanentEffect3 = permanentEffects.get(2);
-                    out.addAll(parseResources(permanentEffect3));
-                }*/
+                }
             }
         }
         return out;

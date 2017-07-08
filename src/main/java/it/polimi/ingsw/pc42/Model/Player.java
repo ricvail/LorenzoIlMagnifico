@@ -199,6 +199,7 @@ public class Player {
         for (iResourceWrapper rw:resources){
             root.put(rw.getResourceType().getString(), rw.get());
         }
+        root.set("bonusTiles", bonusTile.json);
         ArrayNode listOfTerritoriesCards=factory.arrayNode();
         ArrayNode listOfCharacterCards=factory.arrayNode();
         ArrayNode listOfBuildingsCards=factory.arrayNode();
