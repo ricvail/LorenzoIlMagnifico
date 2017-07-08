@@ -35,6 +35,11 @@ public abstract class AbstractDecorator implements iCard{
     }
 
     @Override
+    public int getActionValue() {
+        return card.getActionValue();
+    }
+
+    @Override
     public void undoOnHarvest(JsonNode move, FamilyMember fm) throws ActionAbortedException {
         card.undoOnHarvest(move, fm);
     }

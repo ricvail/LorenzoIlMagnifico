@@ -57,4 +57,7 @@ public interface iCard {
 
     Board getBoard();
 
+    int getActionValue();
+
+
 }

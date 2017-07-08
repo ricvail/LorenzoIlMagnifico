@@ -43,6 +43,7 @@ public class Client extends MessageSender {
     String userQuery;
     JsonNode currentMove;
     ArrayList<moveBuildingState> moveStack;
+    public String playerColor;
     public void startClient() throws IOException {
         Socket socket = new Socket(IP, PORT);
         System.out.println("Connection Established");
@@ -82,6 +83,7 @@ public class Client extends MessageSender {
 
             if (type.equalsIgnoreCase(Strings.MessageTypes.GAMESTARTED)){
                 System.out.println("Game started. ID: "+payload.get("id").asInt()+"\nYou are player "+payload.get("color").asText().toUpperCase() + ". Press H for a list of commands");
+                playerColor=payload.get("color").asText().toUpperCase();
                 isInGame=true;
                 waitingForResponse=false;
                 moveStack=new ArrayList<moveBuildingState>();

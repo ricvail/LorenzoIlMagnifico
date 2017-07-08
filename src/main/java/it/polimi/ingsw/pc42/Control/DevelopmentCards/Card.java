@@ -15,6 +15,7 @@ public class Card implements iCard{
     public final CardType cardType;
     public final  JsonNode json;
     private BoardProvider bp;
+    private int actionValue;
 
     public int getEra() {
         return era;
@@ -33,6 +34,14 @@ public class Card implements iCard{
         return bp.getBoard();
     }
 
+    @Override
+    public int getActionValue() {
+        return actionValue;
+    }
+    public void setActionValue(int i){
+        actionValue=i;
+    }
+
     /**
      * Class constructor. Initializes the base card that needs to be decorated.
      *
@@ -48,6 +57,7 @@ public class Card implements iCard{
         this.name = name;
         this.cardType = cardType;
         this.bp=bp;
+        actionValue=0;
     }
 
 

@@ -22,27 +22,31 @@ public class harvestResource extends AbstractDecorator {
 
     @Override
     public void onHarvest(JsonNode move, FamilyMember fm) throws ActionAbortedException {
-        try {
-            fm.owner.getResource(resourceType).add(q);
-        } catch (IllegalArgumentException e){
-            fm.owner.getResource(resourceType).add(q * -1);
-            throw new ActionAbortedException(false, "Not enough resources");
-        }
-        try {
-            super.onHarvest(move, fm);
-        } catch (ActionAbortedException e){
-            fm.owner.getResource(resourceType).add(q * -1);
-            throw e;
+        if (fm.getValue()>=getActionValue()) {
+            try {
+                fm.owner.getResource(resourceType).add(q);
+            } catch (IllegalArgumentException e) {
+                fm.owner.getResource(resourceType).add(q * -1);
+                throw new ActionAbortedException(false, "Not enough resources");
+            }
+            try {
+                super.onHarvest(move, fm);
+            } catch (ActionAbortedException e) {
+                fm.owner.getResource(resourceType).add(q * -1);
+                throw e;
+            }
         }
     }
 
     @Override
     public void undoOnHarvest(JsonNode move, FamilyMember fm) throws ActionAbortedException {
-        try {
-            fm.owner.getResource(resourceType).add(q * -1);
-        } catch (Exception e){
-            e.printStackTrace();
+        if (fm.getValue()>=getActionValue()) {
+            try {
+                fm.owner.getResource(resourceType).add(q * -1);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            super.undoOnHarvest(move, fm);
         }
-        super.undoOnHarvest(move, fm);
     }
 }

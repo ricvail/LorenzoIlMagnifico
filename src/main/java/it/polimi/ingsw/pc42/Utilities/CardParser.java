@@ -30,10 +30,16 @@ public class CardParser {
         try {
             isJsonValid(root);
 
-            c = new Card(root.get("era").asInt(),
+            Card card;
+
+            card = new Card(root.get("era").asInt(),
                     root.get("name").asText(),
                     Card.CardType.fromString(root.get("type").asText()),
                     root, bp);
+
+            if (root.has("activationCost")){
+                card.setActionValue(root.get("activationCost").asInt());
+            }
 
             //decorate immediate effect
             if (root.has("immediateEffect")) {
