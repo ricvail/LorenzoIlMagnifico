@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
-import it.polimi.ingsw.pc42.Model.Player;
 
 import java.util.ArrayList;
 
@@ -13,11 +12,19 @@ public class ImmediateBonusChoice extends AbstractDecorator {
 
     public final ArrayList<iCard> choices;
 
+    /**
+     * Class constructor. Decorates a card if it has a payment choice between two or more different costs.
+     *
+     * @param c card to be decorated
+     */
     public ImmediateBonusChoice(iCard c) {
         super(c);
         choices=new ArrayList<>();
     }
 
+    /**
+     * Adds a card to the list of choices.
+     */
     public void addChoice(){
         choices.add(card);
     }

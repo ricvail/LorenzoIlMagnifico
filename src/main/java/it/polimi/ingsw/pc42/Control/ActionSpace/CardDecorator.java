@@ -1,27 +1,25 @@
 package it.polimi.ingsw.pc42.Control.ActionSpace;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.polimi.ingsw.pc42.Control.ActionAbortedException;
-import it.polimi.ingsw.pc42.Control.ActionSpace.AbstractDecorator;
-import it.polimi.ingsw.pc42.Control.ActionSpace.iActionSpace;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.iCard;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
 
-/**
- * Created by RICVA on 22/05/2017.
- */
 public class CardDecorator extends AbstractDecorator {
 
 
     Card.CardType type;
-
     private iCard card;
-
     private boolean empty;
 
+    /**
+     * Class constructor. Decorates an action space with card that can be drew.
+     *
+     * @param type type of the card
+     * @param actionSpace action space to be decorated
+     */
     public CardDecorator(Card.CardType type, iActionSpace actionSpace) {
         super(actionSpace);
         this.type=type;
