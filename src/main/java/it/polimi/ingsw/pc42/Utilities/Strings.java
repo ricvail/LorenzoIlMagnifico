@@ -5,7 +5,7 @@ package it.polimi.ingsw.pc42.Utilities;
  */
 public class Strings {
     public static class MessageTypes {
-        public static String GAMEJOINED = "GAMEJOINED", ADDED_TO_LOBBY = "ADDED_TO_LOBBY",
+        public static final String GAMEJOINED = "GAMEJOINED", ADDED_TO_LOBBY = "ADDED_TO_LOBBY",
                 OTHER_PLAYER_JOINED_LOBBY="OTHER_PLAYER_JOINED_LOBBY", GAMESTARTED= "GAMESTARTED",
                 GAME_NOT_FOUND= "GAME_NOT_FOUND",
                 MOVE_TIMEOUT="MOVE_TIMEOUT", MOVE_INVALID ="MOVE_INVALID", MOVE_SUCCESSFUL= "MOVE_SUCCESSFUL",
@@ -14,6 +14,6 @@ public class Strings {
         public static String CRITICAL_ERROR = "CRITICAL_ERROR", UPDATE="UPDATE";
     }
     public static class MoveTypes{
-        public static String MOVE = "MOVE", NEWGAME = "NEWGAME", JOINGAME = "JOINGAME", QUERY="QUERY";
+        public static final String MOVE = "MOVE", NEWGAME = "NEWGAME", JOINGAME = "JOINGAME", QUERY="QUERY";
     }
 }

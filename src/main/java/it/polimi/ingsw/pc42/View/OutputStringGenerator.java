@@ -182,13 +182,13 @@ public class OutputStringGenerator {
                     String right= node.get("foreach").get("right").asText();
                     double ratio= node.get("foreach").get("ratio").asDouble();
                     try {
-                        if (ratio==0.5){
+                        if (Math.abs(ratio -0.5) < 0.01){
                             out.add("Earn 1 " + getResourceName(right, false)+" for every 2 "+ getResourceName(left, true));
                         }
-                        if (ratio==1){
+                        if (Math.abs(ratio -1.0) < 0.01){
                             out.add("Earn 1 " + getResourceName(right, false) + " for each "+ getResourceName(left, false));
                         }
-                        if (ratio==2){
+                        if (Math.abs(ratio -2.0) < 0.01){
                             out.add("Earn 2 " + getResourceName(right, true) + " for each "+ getResourceName(left, false));
                         }
                     } catch (Exception x){
