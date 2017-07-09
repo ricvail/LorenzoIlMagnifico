@@ -3,11 +3,14 @@ package it.polimi.ingsw.pc42.View;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Created by RICVA on 04/07/2017.
  */
 public class MoveBuilder {
+    private static Logger logger= LogManager.getLogger();
 
 
 
@@ -47,29 +50,31 @@ public class MoveBuilder {
         for (int i = 0; i<level; i++){
             move = inner(move);
         }
-        if (field.equalsIgnoreCase("familyMember")){
+        if ("familyMember".equalsIgnoreCase(field)){
             try {
                 int i = Integer.parseInt(userChoice);
                 userChoice= serverResponsePayload.get("options").get(i).asText();
             } catch (Exception e) {
+                logger.error(e);
             }
             move.put(field, userChoice);
-        } else if (field.equalsIgnoreCase("slotID")){
+        } else if ("slotID".equalsIgnoreCase(field)){
             try {
                 move.put(field, Integer.parseInt(userChoice));
             } catch (Exception e){
-
+                logger.error(e);
             }
-        } else if (field.equalsIgnoreCase("servants")){
-            if (userChoice.equalsIgnoreCase("a")){
+        } else if ("servants".equalsIgnoreCase(field)){
+            if ("a".equalsIgnoreCase(userChoice)){
                 userChoice= serverResponsePayload.get("options").get(0).asText();
             }
             try {
                 move.put(field, Integer.parseInt(userChoice));
             } catch (Exception e){
                 move.put(field, (userChoice));
+                logger.error(e);
             }
-        }else if (field.equalsIgnoreCase("privileges")){
+        }else if ("privileges".equalsIgnoreCase(field)){
             try {
                 if (move.has(field)){
                     ((ArrayNode)move.get(field)).add(Integer.parseInt(userChoice));
@@ -79,18 +84,18 @@ public class MoveBuilder {
                     move.set(field, node);
                 }
             }catch (Exception e){
-
+                logger.error(e);
             }
-        }else if (field.equalsIgnoreCase("paymentChoice")){
+        }else if ("paymentChoice".equalsIgnoreCase(field)){
             try {
                 move.put(field, Integer.parseInt(userChoice));
             } catch (Exception e){
-
+                logger.error(e);
             }
-        }else if (field.equalsIgnoreCase("vaticanChoice")){
-            if (userChoice.equalsIgnoreCase("y")){
+        }else if ("vaticanChoice".equalsIgnoreCase(field)){
+            if ("y".equalsIgnoreCase(userChoice)){
                 move.put(field, true);
-            }else if (userChoice.equalsIgnoreCase("n")){
+            }else if ("n".equalsIgnoreCase(userChoice)){
                 move.put(field, false);
             }
         }

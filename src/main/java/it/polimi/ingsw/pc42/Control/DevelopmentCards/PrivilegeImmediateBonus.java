@@ -6,10 +6,13 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class PrivilegeImmediateBonus extends AbstractDecorator {
 
     private int quantity;
+    private Logger logger;
 
     /**
      * Class constructor. Decorates a card that has an effect that gives one or more privileges bonus.
@@ -20,6 +23,7 @@ public class PrivilegeImmediateBonus extends AbstractDecorator {
     public PrivilegeImmediateBonus(int quantity, iCard c) {
         super(c);
         this.quantity=quantity;
+        logger= LogManager.getLogger();
     }
 
     @Override
@@ -40,8 +44,7 @@ public class PrivilegeImmediateBonus extends AbstractDecorator {
             try {
                 getBoard().getPrivilegeManager().undoPrivileges(fm.owner, move.get("immediateEffect"));
             } catch (Exception e1) {
-                //this should NOT happen.
-                e1.printStackTrace();
+                logger.error(e1);
             }
             throw e;
         }
@@ -52,8 +55,7 @@ public class PrivilegeImmediateBonus extends AbstractDecorator {
         try {
             getBoard().getPrivilegeManager().undoPrivileges(fm.owner, move.get("immediateEffect"));
         } catch (Exception e1) {
-            //this should NOT happen.
-            e1.printStackTrace();
+            logger.error(e1);
         }
         super.undoDrawCard(move, fm);
     }

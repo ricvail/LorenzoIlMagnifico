@@ -1,4 +1,4 @@
 {
-  "moveTimeoutSeconds": 600,
+  "moveTimeoutSeconds": 180,
   "lobbyTimeoutSeconds": 10
 }

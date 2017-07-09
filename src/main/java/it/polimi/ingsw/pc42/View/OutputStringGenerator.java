@@ -2,6 +2,8 @@ package it.polimi.ingsw.pc42.View;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import it.polimi.ingsw.pc42.Control.ActionAbortedException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -10,6 +12,7 @@ import java.util.Iterator;
  * Created by diego on 04/07/2017.
  */
 public class OutputStringGenerator {
+    private static Logger logger= LogManager.getLogger();
 
     /**
      * Converts an ArrayList of strings in a string.
@@ -109,7 +112,6 @@ public class OutputStringGenerator {
                         if (space.get("familyMembers").size() > 0) {
                             out.add("\tNumber of family members: " + space.get("familyMembers").size());
                         }
-                        Iterator<JsonNode> immediateEffects = space.get("immediateResourceEffect").elements();
                         if (space.has("immediateResourceEffect")) {
                             if (space.get("immediateResourceEffect").size() == 1 &&
                                     space.get("immediateResourceEffect").has("effect")) {
@@ -177,23 +179,25 @@ public class OutputStringGenerator {
                         out.add("\n\t\t\tPrice discount: ");
                         out.addAll(parseResources(node.get(field)));
                     }
+                    logger.info(e);
                 }
                 if ("foreach".equalsIgnoreCase(field)){
                     String left=node.get("foreach").get("left").asText();
                     String right= node.get("foreach").get("right").asText();
-                    float ratio= (float) node.get("foreach").get("ratio").asDouble();
+                    double ratio= node.get("foreach").get("ratio").asDouble();
                     try {
-                        if (ratio==0.5){
+                        if (Math.abs(ratio -0.5) < 0.01){
                             out.add("Earn 1 " + getResourceName(right, false)+" for every 2 "+ getResourceName(left, true));
                         }
-                        if (ratio==1){
+                        if (Math.abs(ratio -1.0) < 0.01){
                             out.add("Earn 1 " + getResourceName(right, false) + " for each "+ getResourceName(left, false));
                         }
-                        if (ratio==2){
+                        if (Math.abs(ratio -2.0) < 0.01){
                             out.add("Earn 2 " + getResourceName(right, true) + " for each "+ getResourceName(left, false));
                         }
                     } catch (Exception x){
                         System.out.println("invalid input");
+                        logger.info(x);
                     }
                 }
             }
@@ -212,7 +216,7 @@ public class OutputStringGenerator {
                 boolean plur = node.get(field).asInt()>1;
                 out.add(getResourceNameIgnoringCards(field, plur)+": "+ node.get(field).asInt()+ "\n\t");
             } catch (Exception e) {
-
+                logger.error(e);
             }
         }
         return out;
@@ -265,6 +269,7 @@ public class OutputStringGenerator {
     try {
         return getResourceNameIgnoringCards(field, plural);
     }catch (Exception e) {
+        logger.info(e);
         if ("territories".equalsIgnoreCase(field)) {
             return (plural ? "Territories" : "Territory");
         } else if ("buildings".equalsIgnoreCase(field)) {
@@ -344,7 +349,7 @@ public class OutputStringGenerator {
      */
     public static ArrayList<String> cardParser (JsonNode card){
         ArrayList<String> out = new ArrayList<>();
-        if (card.asText().equalsIgnoreCase("none")){
+        if ("none".equalsIgnoreCase(card.asText())){
             out.add("\n\tCard: None");
         } else {
             out.add("\n\tCard: " + card.get("name").asText());
@@ -395,7 +400,7 @@ public class OutputStringGenerator {
     public static ArrayList<String> theWinnerIs(JsonNode board){
         ArrayList<String> out= new ArrayList<>();
         Iterator<JsonNode> playerOrder = board.get("players").elements();
-        out.add(("\n\nFINAL RANK"));
+        out.add("\n\nFINAL RANK");
         int counter=1;
         while (playerOrder.hasNext()){
             JsonNode turnOrder=playerOrder.next();

@@ -5,11 +5,15 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import it.polimi.ingsw.pc42.Control.ActionSpace.Area;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.*;
 import it.polimi.ingsw.pc42.Control.ResourceType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class CardParser {
+
+    private static Logger logger= LogManager.getLogger();
 
     /**
      * Acts as factory method for the initialization of a card and then delegates the decoration of costs and
@@ -36,11 +40,6 @@ public class CardParser {
                 c = immediateEffectIterator(immediateEffectNode, c);
             }
 
-            if (root.has("permanentEffects")) {
-                JsonNode permanentEffectNode = root.get("permanentEffects");
-                //c = permanentEffectIterator(permanentEffectNode, c);
-            }
-
             //decorate costs
             if (root.has("costs")) {
                 ArrayNode costsNode = (ArrayNode) root.get("costs");
@@ -49,7 +48,7 @@ public class CardParser {
 
         } catch (Exception e){
             System.out.println(root.get("name").asText());
-            e.printStackTrace();
+            logger.info(e);
         }
         return c;
     }
@@ -70,20 +69,21 @@ public class CardParser {
             try {
                 c = applyResource(key, jsonNode.get(key).asInt(), c);
             } catch (IllegalArgumentException e){
-                if (key.equalsIgnoreCase("privileges")){
+                if ("privileges".equalsIgnoreCase(key)){
                     if (jsonNode.get(key).isInt()){
                         c = new PrivilegeImmediateBonus(jsonNode.get(key).asInt(), c);
                     } else{
                         throw new Exception("Invalid privileges field");
                     }
-                } else if (key.equalsIgnoreCase("card")){
+                } else if ("card".equalsIgnoreCase(key)){
                     c = applyExtraCardBonus(c, jsonNode.get("card"));
 
-                } else if (key.equalsIgnoreCase("foreach")){
+                } else if ("foreach".equalsIgnoreCase(key)){
                     c = applyForeachImmediate(jsonNode.get("foreach"), c);
                 } else {
                     throw new Exception("Invalid immediate effect: "+ key);
                 }
+                logger.info(e);
             }
         }
         return c;
@@ -129,6 +129,7 @@ public class CardParser {
                 ResourceType rt = ResourceType.fromString(key);
                 bonuses.add(new ExtraCard.bonus(rt, node.get(key).asInt()));
             } catch (Exception e){
+                logger.info(e);
                 if ("value".equalsIgnoreCase(key)){
                     value=node.get(key).asInt();
                 } else if ("type".equalsIgnoreCase(key)){
@@ -137,11 +138,13 @@ public class CardParser {
                         Area a = Area.fromString(type);
                         areas.add(a);
                     } catch (Exception ex) {
+                        logger.info(e);
                         if ("all".equalsIgnoreCase(type)) {
                             areas.add(Area.TERRITORY);
                             areas.add(Area.BUILDING);
                             areas.add(Area.CHARACTER);
                             areas.add(Area.VENTURE);
+                            logger.info(e);
                         } else {
                             throw new Exception("Not a valid card type: " + type);
                         }
@@ -169,6 +172,7 @@ public class CardParser {
             ResourceType toBeCounted = ResourceType.fromString(jsonNode.get("right").asText());
             return new ForeachImmediate(c, obtained,(float) jsonNode.get("ratio").asDouble(), toBeCounted);
         } catch (Exception e){
+            logger.info(e);
             Card.CardType toBeCounted = Card.CardType.fromString(jsonNode.get("right").asText());
             return new ForeachImmediate(c, obtained,(float) jsonNode.get("ratio").asDouble(), toBeCounted);
         }
@@ -210,7 +214,8 @@ public class CardParser {
             try {
                 c = applyResource(key, jsonNode.get(key).asInt()*-1, c);
             } catch (IllegalArgumentException e){
-                if (key.equalsIgnoreCase("militaryPointsRequired")){
+                logger.info(e);
+                if ("militaryPointsRequired".equalsIgnoreCase(key)){
                     if (jsonNode.get(key).isInt()&&
                             jsonNode.has("militaryPointsSubtracted")&&
                             jsonNode.get("militaryPointsSubtracted").isInt()){
@@ -219,7 +224,7 @@ public class CardParser {
                     } else {
                         throw new Exception("Invalid military cost");
                     }
-                } else if (key.equalsIgnoreCase("militaryPointsSubtracted")){
+                } else if ("militaryPointsSubtracted".equalsIgnoreCase(key)){
                     //ignore, already added above
                 } else {
                     throw new Exception("Invalid cost: "+ key);
