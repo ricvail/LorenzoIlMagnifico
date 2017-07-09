@@ -5,11 +5,15 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import it.polimi.ingsw.pc42.Control.ActionSpace.Area;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.*;
 import it.polimi.ingsw.pc42.Control.ResourceType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class CardParser {
+
+    private static Logger logger= LogManager.getLogger();
 
     /**
      * Acts as factory method for the initialization of a card and then delegates the decoration of costs and
@@ -44,8 +48,7 @@ public class CardParser {
 
         } catch (Exception e){
             System.out.println(root.get("name").asText());
-            e.printStackTrace();
-            new RuntimeException(e);
+            logger.info(e);
         }
         return c;
     }
@@ -80,7 +83,7 @@ public class CardParser {
                 } else {
                     throw new Exception("Invalid immediate effect: "+ key);
                 }
-                new RuntimeException(e);
+                logger.info(e);
             }
         }
         return c;
@@ -126,6 +129,7 @@ public class CardParser {
                 ResourceType rt = ResourceType.fromString(key);
                 bonuses.add(new ExtraCard.bonus(rt, node.get(key).asInt()));
             } catch (Exception e){
+                logger.info(e);
                 if ("value".equalsIgnoreCase(key)){
                     value=node.get(key).asInt();
                 } else if ("type".equalsIgnoreCase(key)){
@@ -134,18 +138,18 @@ public class CardParser {
                         Area a = Area.fromString(type);
                         areas.add(a);
                     } catch (Exception ex) {
-                        new RuntimeException(e);
+                        logger.info(e);
                         if ("all".equalsIgnoreCase(type)) {
                             areas.add(Area.TERRITORY);
                             areas.add(Area.BUILDING);
                             areas.add(Area.CHARACTER);
                             areas.add(Area.VENTURE);
+                            logger.info(e);
                         } else {
                             throw new Exception("Not a valid card type: " + type);
                         }
                     }
                 }
-                new RuntimeException(e);
             }
         }
         return new ExtraCard(c, areas, bonuses, value);
@@ -168,7 +172,7 @@ public class CardParser {
             ResourceType toBeCounted = ResourceType.fromString(jsonNode.get("right").asText());
             return new ForeachImmediate(c, obtained,(float) jsonNode.get("ratio").asDouble(), toBeCounted);
         } catch (Exception e){
-            new RuntimeException(e);
+            logger.info(e);
             Card.CardType toBeCounted = Card.CardType.fromString(jsonNode.get("right").asText());
             return new ForeachImmediate(c, obtained,(float) jsonNode.get("ratio").asDouble(), toBeCounted);
         }
@@ -210,6 +214,7 @@ public class CardParser {
             try {
                 c = applyResource(key, jsonNode.get(key).asInt()*-1, c);
             } catch (IllegalArgumentException e){
+                logger.info(e);
                 if ("militaryPointsRequired".equalsIgnoreCase(key)){
                     if (jsonNode.get(key).isInt()&&
                             jsonNode.has("militaryPointsSubtracted")&&
@@ -224,8 +229,6 @@ public class CardParser {
                 } else {
                     throw new Exception("Invalid cost: "+ key);
                 }
-                new RuntimeException(e);
-
             }
         }
         return c;

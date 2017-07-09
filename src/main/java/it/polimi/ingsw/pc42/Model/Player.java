@@ -11,6 +11,8 @@ import it.polimi.ingsw.pc42.Control.ResourceWrapper;
 import it.polimi.ingsw.pc42.Control.iResourceWrapper;
 import it.polimi.ingsw.pc42.Utilities.GameInitializer;
 import it.polimi.ingsw.pc42.Utilities.PersonalBonusTileParser;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -23,6 +25,7 @@ public class Player {
     private ArrayList<FamilyMember> familyMembers;
     public ArrayList<ResourceWrapper> resources;
     public PersonalBonusTile bonusTile;
+    private static Logger logger=LogManager.getLogger();
 
 
     public PlayerColor getColor() {
@@ -49,7 +52,7 @@ public class Player {
         try {
             col= PlayerColor.fromString(color);
         } catch (Exception e) {
-            new RuntimeException(e);
+            logger.error(e);
         }
         return createPlayer(col);
     }
@@ -75,6 +78,7 @@ public class Player {
         this();
         setColor(color);
         bonusTile=bonuses;
+        logger= LogManager.getLogger();
     }
 
     /**

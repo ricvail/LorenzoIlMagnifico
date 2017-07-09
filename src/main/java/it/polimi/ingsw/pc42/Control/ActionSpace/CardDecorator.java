@@ -6,14 +6,15 @@ import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.iCard;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 public class CardDecorator extends AbstractDecorator {
 
 
     Card.CardType type;
     private iCard card;
     private boolean empty;
-
+    private Logger logger;
     /**
      * Class constructor. Decorates an action space with card that can be drew.
      *
@@ -24,6 +25,7 @@ public class CardDecorator extends AbstractDecorator {
         super(actionSpace);
         this.type=type;
         empty=true;
+        logger= LogManager.getLogger();
     }
 
     @Override
@@ -80,7 +82,7 @@ public class CardDecorator extends AbstractDecorator {
             this.card=getBoard().getCard(type);
             empty=false;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("string",e);
         }
     }
 }

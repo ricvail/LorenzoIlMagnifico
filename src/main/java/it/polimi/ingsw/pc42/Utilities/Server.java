@@ -1,4 +1,6 @@
 package it.polimi.ingsw.pc42.Utilities;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -10,7 +12,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.logging.Logger;
 
 public class Server {
 
@@ -20,8 +21,8 @@ public class Server {
     private ArrayList<Game> games;
     private int counter=4;
     private MyTimer timer;
+    private static Logger logger= LogManager.getLogger();
     private final static int PORT = 3000;
-
     public void startServer() throws IOException {
         ServerSocket serverSocket = new ServerSocket(PORT);
         System.out.println("Server socket ready on port: " + PORT);
@@ -35,7 +36,7 @@ public class Server {
                 ClientHandler client = new ClientHandler(socket, this);
                 executor.submit(client);
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                logger.error(e);
             }
         }
         executor.shutdown();
@@ -83,7 +84,7 @@ public class Server {
             clients.clear();
             counter = 4;
         } catch (Exception e ){
-            throw new RuntimeException(e);
+            logger.error(e);
         }
     }
 
@@ -106,7 +107,7 @@ public class Server {
         try {
             server.startServer();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            logger.error(e);
         }
     }
 }

@@ -11,6 +11,8 @@ import it.polimi.ingsw.pc42.Control.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.iCard;
 import it.polimi.ingsw.pc42.Control.PrivilegeManager;
 import it.polimi.ingsw.pc42.Control.ResourceType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,6 +24,7 @@ import java.util.Iterator;
  * Created by diego on 28/05/2017.
  */
 public class Board {
+    private static Logger logger;
     private int era;
     private int round;
     private Player currentPlayer;
@@ -59,7 +62,7 @@ public class Board {
                     iActionSpace spaceDecorator = getActionSpaceByID(spaceJson.get("id").asInt());
                     spaceDecorator.updateDescription(spaceJson);
                 } catch (Exception e) {
-                    new RuntimeException(e);
+                    logger.error(e);
                 }
             }
 
@@ -106,6 +109,7 @@ public class Board {
     public Board(ArrayList<Player> players,ArrayList<iCard> cards,
                  ArrayList<iActionSpace> spaces, ArrayNode spacesDescription, boolean random, JsonNode privileges){
         //Initialization
+        logger= LogManager.getLogger();
         isGameOver=false;
         actionSpaces= spaces;
         playerArrayList=players;
@@ -348,7 +352,7 @@ public class Board {
         try{
             index=getPlayerIndex(currentPlayer);
         }catch (Exception e){
-            new RuntimeException(e);
+            logger.error(e);
         }
         if (index==playerArrayList.size()-1) {
             vatican=false;
@@ -382,7 +386,7 @@ public class Board {
                 cleanUp();
             }
         } catch (Exception e) {
-            new RuntimeException(e);
+            logger.error(e);
         }
     }
 
@@ -406,7 +410,7 @@ public class Board {
         try {
             changeTurnOrder(getActionSpaceByID(councilID)); //this must happen before council.cleanup is called
         } catch (Exception e) {
-            new RuntimeException(e);
+            logger.error(e);
         }
         Iterator<iActionSpace> iterator = actionSpaces.iterator();
         while (iterator.hasNext()){
@@ -428,7 +432,7 @@ public class Board {
             try {
                 j = getPlayerIndex(player);
             } catch (Exception e) {
-                new RuntimeException(e);
+                logger.error(e);
             }
             playerArrayList.add(0,playerArrayList.remove(j));
         }
@@ -490,13 +494,13 @@ public class Board {
         try {
             victoryPointsFromFaithPoints = mapper.readTree(faithPointsJson);
         } catch (IOException e){
-            new RuntimeException(e);
+            logger.error(e);
         }
         int faith = player.getResource(ResourceType.FAITHPOINTS).get();
         try {
             victoryPoints = victoryPointsFromFaithPoints.get("faithPoints").get(faith).asInt();
         } catch (NullPointerException npe){
-            new RuntimeException(npe);
+            logger.error(npe);
             victoryPoints= (player.getResource(ResourceType.FAITHPOINTS).get()-15)*5+30;
         }
         return victoryPoints;

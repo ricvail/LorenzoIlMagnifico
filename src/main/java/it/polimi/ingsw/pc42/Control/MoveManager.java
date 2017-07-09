@@ -9,12 +9,15 @@ import it.polimi.ingsw.pc42.Control.ActionSpace.iActionSpace;
 import it.polimi.ingsw.pc42.Model.Board;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
 import it.polimi.ingsw.pc42.Model.Player;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
 
 public class MoveManager {
 
+    private static Logger logger= LogManager.getLogger();
     /**
      *  Starts the process to execute the move, taking the current player and delegating the rest.
      *
@@ -113,7 +116,7 @@ public class MoveManager {
         try {
             fm  = p.getFamilyMemberFromColor(move.get("familyMember").asText());
         } catch (Exception e) {
-            new RuntimeException(e);
+            logger.error(e);
         }
         undoGetActionSpaceFromJson(b, move, fm);
     }
@@ -136,7 +139,7 @@ public class MoveManager {
         try {
             fm  = p.getFamilyMemberFromColor(move.get("familyMember").asText());
         } catch (Exception e) {
-            new RuntimeException(e);
+            logger.error(e);
             throw new ActionAbortedException(false, "Wrong Family Member's Color");
         }
         if (fm.isUsed()){
@@ -160,7 +163,7 @@ public class MoveManager {
         try {
             space = b.getActionSpaceByID(move.get("slotID").asInt());
         } catch (Exception e) {
-            new RuntimeException(e);
+            logger.error(e);
         }
         undoApplyPlayerPermanentBonus(move, fm, space);
     }
@@ -186,7 +189,7 @@ public class MoveManager {
         try {
             space = b.getActionSpaceByID(move.get("slotID").asInt());
         } catch (Exception e) {
-            new RuntimeException(e);
+            logger.error(e);
             throw new ActionAbortedException(false, "This Action Space does not exist or the ID is not an integer");
         }
         if (fm.canBePlacedInArea(space.getArea())&&
@@ -389,7 +392,7 @@ public class MoveManager {
         try {
             root = mapper.readTree(faithPointsJson);
         } catch (IOException e){
-            new RuntimeException(e);
+            logger.error(e);
         }
         json=root;
         JsonNode excommunicationRequests = json.get("excommunicationRequests");

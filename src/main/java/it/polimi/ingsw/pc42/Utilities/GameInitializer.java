@@ -7,6 +7,8 @@ import it.polimi.ingsw.pc42.Control.ActionSpace.iActionSpace;
 import it.polimi.ingsw.pc42.Model.Board;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.iCard;
 import it.polimi.ingsw.pc42.Model.Player;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ import java.util.Iterator;
 import static it.polimi.ingsw.pc42.Utilities.CardParser.createCard;
 
 public class GameInitializer {
+    private static Logger logger= LogManager.getLogger();
 
     /**
      * Takes the file path as parameter and returns the mapper of the JSON object at the root node.
@@ -29,7 +32,7 @@ public class GameInitializer {
             File file = new File(path);
             return mapper.readTree(file);
         } catch (Exception e){
-            new RuntimeException(e);
+            logger.error(e);
             return null;
         }
     }
@@ -54,7 +57,7 @@ public class GameInitializer {
         try {
             root=readFile("src/res/actionsSpaces.json").get("action_spaces");
         } catch (Exception e){
-            new RuntimeException(e);
+            logger.error(e);
         }
         sent=root;
         return sent;
@@ -80,7 +83,7 @@ public class GameInitializer {
         try {
             root=readFile("src/res/privileges.json").get("privileges");
         } catch (Exception e){
-            new RuntimeException(e);
+            logger.error(e);
         }
         sent=root;
         return sent;
@@ -105,7 +108,7 @@ public class GameInitializer {
             try {
                 Player.PlayerColor.fromString(playerColor);
             } catch (Exception e){
-                new RuntimeException(e);
+                logger.error(e);
                 return false;
             }
             for (int j = 0; j<i; j++){
@@ -143,7 +146,7 @@ public class GameInitializer {
                     getDefaultCardsJson(),
                     shuffle, getDefaultPrivileges());
         } catch (Exception e) {
-            new RuntimeException(e);
+            logger.error(e);
         }
         return b;
     }
@@ -164,7 +167,7 @@ public class GameInitializer {
                     getDefaultCardsJson(),
                     shuffle, getDefaultPrivileges());
         } catch (Exception e) {
-            new RuntimeException(e);
+            logger.error(e);
         }
         return b;
     }

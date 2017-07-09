@@ -2,6 +2,8 @@ package it.polimi.ingsw.pc42.View;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import it.polimi.ingsw.pc42.Control.ActionAbortedException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -10,6 +12,7 @@ import java.util.Iterator;
  * Created by diego on 04/07/2017.
  */
 public class OutputStringGenerator {
+    private static Logger logger= LogManager.getLogger();
 
     /**
      * Converts an ArrayList of strings in a string.
@@ -175,7 +178,7 @@ public class OutputStringGenerator {
                         out.add("\n\t\t\tPrice discount: ");
                         out.addAll(parseResources(node.get(field)));
                     }
-                    new RuntimeException(e);
+                    logger.info(e);
                 }
                 if ("foreach".equalsIgnoreCase(field)){
                     String left=node.get("foreach").get("left").asText();
@@ -193,7 +196,7 @@ public class OutputStringGenerator {
                         }
                     } catch (Exception x){
                         System.out.println("invalid input");
-                        new RuntimeException(x);
+                        logger.info(x);
                     }
                 }
             }
@@ -212,7 +215,7 @@ public class OutputStringGenerator {
                 boolean plur = node.get(field).asInt()>1;
                 out.add(getResourceNameIgnoringCards(field, plur)+": "+ node.get(field).asInt()+ "\n\t");
             } catch (Exception e) {
-                new RuntimeException(e);
+                logger.error(e);
             }
         }
         return out;
@@ -265,7 +268,7 @@ public class OutputStringGenerator {
     try {
         return getResourceNameIgnoringCards(field, plural);
     }catch (Exception e) {
-        new RuntimeException(e);
+        logger.info(e);
         if ("territories".equalsIgnoreCase(field)) {
             return (plural ? "Territories" : "Territory");
         } else if ("buildings".equalsIgnoreCase(field)) {

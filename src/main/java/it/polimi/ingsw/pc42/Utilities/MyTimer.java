@@ -2,6 +2,8 @@ package it.polimi.ingsw.pc42.Utilities;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.util.Timer;
@@ -15,11 +17,13 @@ public class MyTimer {
     int seconds;
     Timer t;
     myTimerTask task;
+    private static Logger logger=LogManager.getLogger();
 
     public MyTimer(int seconds, myTimerTask task){
         this.seconds=seconds;
         t = new Timer();
         this.task= task;
+        logger= LogManager.getLogger();
     }
 
     public void startTimer (){
@@ -56,7 +60,7 @@ public class MyTimer {
             timerSettings= mapper.readTree(timeoutJSON);
             return timerSettings;
         } catch (Exception e){
-            new RuntimeException(e);
+            logger.error(e);
             return null;
         }
     }

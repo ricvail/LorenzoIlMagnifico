@@ -3,11 +3,14 @@ package it.polimi.ingsw.pc42.View;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Created by RICVA on 04/07/2017.
  */
 public class MoveBuilder {
+    private static Logger logger= LogManager.getLogger();
 
 
 
@@ -52,24 +55,24 @@ public class MoveBuilder {
                 int i = Integer.parseInt(userChoice);
                 userChoice= serverResponsePayload.get("options").get(i).asText();
             } catch (Exception e) {
-                new RuntimeException(e);
+                logger.error(e);
             }
             move.put(field, userChoice);
         } else if ("slotID".equalsIgnoreCase(field)){
             try {
                 move.put(field, Integer.parseInt(userChoice));
             } catch (Exception e){
-                new RuntimeException(e);
+                logger.error(e);
             }
         } else if ("servants".equalsIgnoreCase(field)){
-            if (userChoice.equalsIgnoreCase("a")){
+            if ("a".equalsIgnoreCase(userChoice)){
                 userChoice= serverResponsePayload.get("options").get(0).asText();
             }
             try {
                 move.put(field, Integer.parseInt(userChoice));
             } catch (Exception e){
                 move.put(field, (userChoice));
-                new RuntimeException(e);
+                logger.error(e);
             }
         }else if ("privileges".equalsIgnoreCase(field)){
             try {
@@ -81,13 +84,13 @@ public class MoveBuilder {
                     move.set(field, node);
                 }
             }catch (Exception e){
-                new RuntimeException(e);
+                logger.error(e);
             }
         }else if ("paymentChoice".equalsIgnoreCase(field)){
             try {
                 move.put(field, Integer.parseInt(userChoice));
             } catch (Exception e){
-                new RuntimeException(e);
+                logger.error(e);
             }
         }else if ("vaticanChoice".equalsIgnoreCase(field)){
             if ("y".equalsIgnoreCase(userChoice)){
