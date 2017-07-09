@@ -43,6 +43,7 @@ public class Client extends MessageSender {
     String userQuery;
     JsonNode currentMove;
     ArrayList<moveBuildingState> moveStack;
+
     public void startClient() throws IOException {
         Socket socket = new Socket(IP, PORT);
         System.out.println("Connection Established");

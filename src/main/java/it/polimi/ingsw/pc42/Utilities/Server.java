@@ -10,11 +10,15 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Logger;
+
+import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 
 public class Server {
 
     public static ExecutorService executor = Executors.newCachedThreadPool();
 
+    private static final Logger logger = Logger.getGlobal();
     private ArrayList<ClientHandler> clients;
     private ArrayList<Game> games;
     private int counter=4;
@@ -25,8 +29,8 @@ public class Server {
         ServerSocket serverSocket = new ServerSocket(PORT);
         System.out.println("Server socket ready on port: " + PORT);
         System.out.println("Server ready");
-        clients=new ArrayList<ClientHandler>();
-        games= new ArrayList<Game>();
+        clients=new ArrayList<>();
+        games= new ArrayList<>();
         boolean end =false;
         while (!end) {
             try {
@@ -34,7 +38,7 @@ public class Server {
                 ClientHandler client = new ClientHandler(socket, this);
                 executor.submit(client);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.info("connection exception");
             }
         }
         executor.shutdown();
@@ -82,7 +86,7 @@ public class Server {
             clients.clear();
             counter = 4;
         } catch (Exception e ){
-            e.printStackTrace();
+            logger.info("can't clean clients");
         }
     }
 
@@ -105,7 +109,7 @@ public class Server {
         try {
             server.startServer();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.info("main failed");
         }
     }
 }
