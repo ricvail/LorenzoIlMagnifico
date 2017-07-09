@@ -1,15 +1,15 @@
 package it.polimi.ingsw.pc42;
 
-        import com.fasterxml.jackson.databind.JsonNode;
-        import it.polimi.ingsw.pc42.Control.ActionAbortedException;
-        import it.polimi.ingsw.pc42.Control.ResourceType;
-        import it.polimi.ingsw.pc42.Model.Board;
-        import it.polimi.ingsw.pc42.Model.FamilyMember;
-        import it.polimi.ingsw.pc42.Model.Player;
-        import it.polimi.ingsw.pc42.Utilities.GameInitializer;
-        import junit.framework.Test;
-        import junit.framework.TestCase;
-        import junit.framework.TestSuite;
+import com.fasterxml.jackson.databind.JsonNode;
+import it.polimi.ingsw.pc42.Control.ActionAbortedException;
+import it.polimi.ingsw.pc42.Control.ResourceType;
+import it.polimi.ingsw.pc42.Model.Board;
+import it.polimi.ingsw.pc42.Model.FamilyMember;
+import it.polimi.ingsw.pc42.Model.Player;
+import it.polimi.ingsw.pc42.Utilities.GameInitializer;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 
 public class Move3Test extends TestCase
