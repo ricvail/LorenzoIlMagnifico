@@ -47,20 +47,21 @@ public class MoveBuilder {
         for (int i = 0; i<level; i++){
             move = inner(move);
         }
-        if (field.equalsIgnoreCase("familyMember")){
+        if ("familyMember".equalsIgnoreCase(field)){
             try {
                 int i = Integer.parseInt(userChoice);
                 userChoice= serverResponsePayload.get("options").get(i).asText();
             } catch (Exception e) {
+                new RuntimeException(e);
             }
             move.put(field, userChoice);
-        } else if (field.equalsIgnoreCase("slotID")){
+        } else if ("slotID".equalsIgnoreCase(field)){
             try {
                 move.put(field, Integer.parseInt(userChoice));
             } catch (Exception e){
-
+                new RuntimeException(e);
             }
-        } else if (field.equalsIgnoreCase("servants")){
+        } else if ("servants".equalsIgnoreCase(field)){
             if (userChoice.equalsIgnoreCase("a")){
                 userChoice= serverResponsePayload.get("options").get(0).asText();
             }
@@ -68,8 +69,9 @@ public class MoveBuilder {
                 move.put(field, Integer.parseInt(userChoice));
             } catch (Exception e){
                 move.put(field, (userChoice));
+                new RuntimeException(e);
             }
-        }else if (field.equalsIgnoreCase("privileges")){
+        }else if ("privileges".equalsIgnoreCase(field)){
             try {
                 if (move.has(field)){
                     ((ArrayNode)move.get(field)).add(Integer.parseInt(userChoice));
@@ -79,18 +81,18 @@ public class MoveBuilder {
                     move.set(field, node);
                 }
             }catch (Exception e){
-
+                new RuntimeException(e);
             }
-        }else if (field.equalsIgnoreCase("paymentChoice")){
+        }else if ("paymentChoice".equalsIgnoreCase(field)){
             try {
                 move.put(field, Integer.parseInt(userChoice));
             } catch (Exception e){
-
+                new RuntimeException(e);
             }
-        }else if (field.equalsIgnoreCase("vaticanChoice")){
-            if (userChoice.equalsIgnoreCase("y")){
+        }else if ("vaticanChoice".equalsIgnoreCase(field)){
+            if ("y".equalsIgnoreCase(userChoice)){
                 move.put(field, true);
-            }else if (userChoice.equalsIgnoreCase("n")){
+            }else if ("n".equalsIgnoreCase(userChoice)){
                 move.put(field, false);
             }
         }

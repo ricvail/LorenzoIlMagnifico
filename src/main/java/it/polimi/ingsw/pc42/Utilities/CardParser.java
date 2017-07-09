@@ -36,11 +36,6 @@ public class CardParser {
                 c = immediateEffectIterator(immediateEffectNode, c);
             }
 
-            if (root.has("permanentEffects")) {
-                JsonNode permanentEffectNode = root.get("permanentEffects");
-                //c = permanentEffectIterator(permanentEffectNode, c);
-            }
-
             //decorate costs
             if (root.has("costs")) {
                 ArrayNode costsNode = (ArrayNode) root.get("costs");
@@ -50,6 +45,7 @@ public class CardParser {
         } catch (Exception e){
             System.out.println(root.get("name").asText());
             e.printStackTrace();
+            new RuntimeException(e);
         }
         return c;
     }
@@ -70,20 +66,21 @@ public class CardParser {
             try {
                 c = applyResource(key, jsonNode.get(key).asInt(), c);
             } catch (IllegalArgumentException e){
-                if (key.equalsIgnoreCase("privileges")){
+                if ("privileges".equalsIgnoreCase(key)){
                     if (jsonNode.get(key).isInt()){
                         c = new PrivilegeImmediateBonus(jsonNode.get(key).asInt(), c);
                     } else{
                         throw new Exception("Invalid privileges field");
                     }
-                } else if (key.equalsIgnoreCase("card")){
+                } else if ("card".equalsIgnoreCase(key)){
                     c = applyExtraCardBonus(c, jsonNode.get("card"));
 
-                } else if (key.equalsIgnoreCase("foreach")){
+                } else if ("foreach".equalsIgnoreCase(key)){
                     c = applyForeachImmediate(jsonNode.get("foreach"), c);
                 } else {
                     throw new Exception("Invalid immediate effect: "+ key);
                 }
+                new RuntimeException(e);
             }
         }
         return c;
@@ -137,6 +134,7 @@ public class CardParser {
                         Area a = Area.fromString(type);
                         areas.add(a);
                     } catch (Exception ex) {
+                        new RuntimeException(e);
                         if ("all".equalsIgnoreCase(type)) {
                             areas.add(Area.TERRITORY);
                             areas.add(Area.BUILDING);
@@ -147,6 +145,7 @@ public class CardParser {
                         }
                     }
                 }
+                new RuntimeException(e);
             }
         }
         return new ExtraCard(c, areas, bonuses, value);
@@ -169,6 +168,7 @@ public class CardParser {
             ResourceType toBeCounted = ResourceType.fromString(jsonNode.get("right").asText());
             return new ForeachImmediate(c, obtained,(float) jsonNode.get("ratio").asDouble(), toBeCounted);
         } catch (Exception e){
+            new RuntimeException(e);
             Card.CardType toBeCounted = Card.CardType.fromString(jsonNode.get("right").asText());
             return new ForeachImmediate(c, obtained,(float) jsonNode.get("ratio").asDouble(), toBeCounted);
         }
@@ -210,7 +210,7 @@ public class CardParser {
             try {
                 c = applyResource(key, jsonNode.get(key).asInt()*-1, c);
             } catch (IllegalArgumentException e){
-                if (key.equalsIgnoreCase("militaryPointsRequired")){
+                if ("militaryPointsRequired".equalsIgnoreCase(key)){
                     if (jsonNode.get(key).isInt()&&
                             jsonNode.has("militaryPointsSubtracted")&&
                             jsonNode.get("militaryPointsSubtracted").isInt()){
@@ -219,11 +219,13 @@ public class CardParser {
                     } else {
                         throw new Exception("Invalid military cost");
                     }
-                } else if (key.equalsIgnoreCase("militaryPointsSubtracted")){
+                } else if ("militaryPointsSubtracted".equalsIgnoreCase(key)){
                     //ignore, already added above
                 } else {
                     throw new Exception("Invalid cost: "+ key);
                 }
+                new RuntimeException(e);
+
             }
         }
         return c;

@@ -63,7 +63,7 @@ public class ClientHandler extends MessageSender implements Runnable {
             socketIn = new Scanner(socket.getInputStream());
             socketOut = new PrintWriter(socket.getOutputStream());
         } catch (IOException e) {
-            e.printStackTrace();
+            new RuntimeException(e);
             isConnected=false;
             return;
         }
@@ -74,8 +74,7 @@ public class ClientHandler extends MessageSender implements Runnable {
             try {
                 loopBody();
             } catch (Exception e){
-                //Unhandled Exception
-                e.printStackTrace();
+                new RuntimeException(e);
                 sendCriticalErrorMessage();
             }
             if (!isConnected) continueLoop=false;
@@ -86,7 +85,7 @@ public class ClientHandler extends MessageSender implements Runnable {
             socketOut.close();
             socket.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            new RuntimeException(e);
         }
     }
 
@@ -95,6 +94,7 @@ public class ClientHandler extends MessageSender implements Runnable {
         try {
             line = socketIn.next();
         } catch(NoSuchElementException e){
+            new RuntimeException(e);
             isConnected=false;
             return;
         }
@@ -102,7 +102,7 @@ public class ClientHandler extends MessageSender implements Runnable {
         try {
             jsonNode = StreamMapper.fromStringToJson(line);
         } catch (Exception e) {
-            e.printStackTrace();
+            new RuntimeException(e);
             sendCriticalErrorMessage();
             return;
         }
@@ -121,6 +121,7 @@ public class ClientHandler extends MessageSender implements Runnable {
                         g.replaceClient(this, cli);
                     }
                 } catch (Exception e) {
+                    new RuntimeException(e);
                     ObjectNode p = JsonNodeFactory.instance.objectNode();
                     sendMessage(Strings.MessageTypes.GAME_NOT_FOUND, p);
                 }
@@ -156,6 +157,7 @@ public class ClientHandler extends MessageSender implements Runnable {
             }
             return;
         } catch (ActionAbortedException e){
+            new RuntimeException(e);
             if (!e.isValid){
                 ObjectNode payload = JsonNodeFactory.instance.objectNode();
                 payload.put("message", e.getMessage());
@@ -175,6 +177,7 @@ public class ClientHandler extends MessageSender implements Runnable {
                 return;
             }
         } catch (Exception e){
+            new RuntimeException(e);
             sendCriticalErrorMessage();
         }
     }

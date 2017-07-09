@@ -108,7 +108,6 @@ public class OutputStringGenerator {
                         if (space.get("familyMembers").size() > 0) {
                             out.add("\tNumber of family members: " + space.get("familyMembers").size());
                         }
-                        Iterator<JsonNode> immediateEffects = space.get("immediateResourceEffect").elements();
                         if (space.has("immediateResourceEffect")) {
                             if (space.get("immediateResourceEffect").size() == 1 &&
                                     space.get("immediateResourceEffect").has("effect")) {
@@ -176,11 +175,12 @@ public class OutputStringGenerator {
                         out.add("\n\t\t\tPrice discount: ");
                         out.addAll(parseResources(node.get(field)));
                     }
+                    new RuntimeException(e);
                 }
                 if ("foreach".equalsIgnoreCase(field)){
                     String left=node.get("foreach").get("left").asText();
                     String right= node.get("foreach").get("right").asText();
-                    float ratio= (float) node.get("foreach").get("ratio").asDouble();
+                    double ratio= node.get("foreach").get("ratio").asDouble();
                     try {
                         if (ratio==0.5){
                             out.add("Earn 1 " + getResourceName(right, false)+" for every 2 "+ getResourceName(left, true));
@@ -193,6 +193,8 @@ public class OutputStringGenerator {
                         }
                     } catch (Exception x){
                         System.out.println("invalid input");
+                        new RuntimeException(e);
+
                     }
                 }
             }
@@ -211,7 +213,7 @@ public class OutputStringGenerator {
                 boolean plur = node.get(field).asInt()>1;
                 out.add(getResourceNameIgnoringCards(field, plur)+": "+ node.get(field).asInt()+ "\n\t");
             } catch (Exception e) {
-
+                new RuntimeException(e);
             }
         }
         return out;
@@ -264,6 +266,7 @@ public class OutputStringGenerator {
     try {
         return getResourceNameIgnoringCards(field, plural);
     }catch (Exception e) {
+        new RuntimeException(e);
         if ("territories".equalsIgnoreCase(field)) {
             return (plural ? "Territories" : "Territory");
         } else if ("buildings".equalsIgnoreCase(field)) {
@@ -343,7 +346,7 @@ public class OutputStringGenerator {
      */
     public static ArrayList<String> cardParser (JsonNode card){
         ArrayList<String> out = new ArrayList<>();
-        if (card.asText().equalsIgnoreCase("none")){
+        if ("none".equalsIgnoreCase(card.asText())){
             out.add("\n\tCard: None");
         } else {
             out.add("\n\tCard: " + card.get("name").asText());
@@ -394,7 +397,7 @@ public class OutputStringGenerator {
     public static ArrayList<String> theWinnerIs(JsonNode board){
         ArrayList<String> out= new ArrayList<>();
         Iterator<JsonNode> playerOrder = board.get("players").elements();
-        out.add(("\n\nFINAL RANK"));
+        out.add("\n\nFINAL RANK");
         int counter=1;
         while (playerOrder.hasNext()){
             JsonNode turnOrder=playerOrder.next();
