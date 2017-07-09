@@ -16,7 +16,6 @@ public class Server {
 
     public static ExecutorService executor = Executors.newCachedThreadPool();
 
-    private static final Logger logger = Logger.getGlobal();
     private ArrayList<ClientHandler> clients;
     private ArrayList<Game> games;
     private int counter=4;
@@ -84,7 +83,7 @@ public class Server {
             clients.clear();
             counter = 4;
         } catch (Exception e ){
-            logger.info("can't clean clients");
+            throw new RuntimeException(e);
         }
     }
 
@@ -107,7 +106,7 @@ public class Server {
         try {
             server.startServer();
         } catch (IOException e) {
-            logger.info("main failed");
+            throw new RuntimeException(e);
         }
     }
 }
