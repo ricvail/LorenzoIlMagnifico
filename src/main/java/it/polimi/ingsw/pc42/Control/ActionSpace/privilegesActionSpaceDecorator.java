@@ -31,8 +31,7 @@ public class privilegesActionSpaceDecorator extends AbstractDecorator {
             try {
                 getBoard().getPrivilegeManager().undoPrivileges(fm.owner, move);
             } catch (Exception e1) {
-                //this should NOT happen.
-                e1.printStackTrace();
+                new RuntimeException(e);
             }
             throw e;
         }
@@ -43,8 +42,7 @@ public class privilegesActionSpaceDecorator extends AbstractDecorator {
         try {
             getBoard().getPrivilegeManager().undoPrivileges(fm.owner, move);
         } catch (Exception e1) {
-            //this should NOT happen.
-            e1.printStackTrace();
+            new RuntimeException(e1);
         }
         super.undoAction(move, fm);
     }

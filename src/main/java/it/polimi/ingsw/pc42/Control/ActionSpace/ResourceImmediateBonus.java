@@ -28,6 +28,7 @@ public class ResourceImmediateBonus extends AbstractDecorator {
         try {
             fm.owner.getResource(resourceType).add(q);
         } catch (IllegalArgumentException e){
+            new RuntimeException(e);
             fm.owner.getResource(resourceType).add(q * -1);
             throw new ActionAbortedException(false, "Not enough resources");
         }
@@ -44,7 +45,7 @@ public class ResourceImmediateBonus extends AbstractDecorator {
         try {
             fm.owner.getResource(resourceType).add(q * -1);
         } catch (Exception e){
-            //nada
+            new RuntimeException(e);
         }
         super.undoAction(move, fm);
     }

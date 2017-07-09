@@ -92,7 +92,7 @@ public class Game {
         try {
             throw new Exception();
         } catch (Exception e){
-            e.printStackTrace();
+            new RuntimeException(e);
         }
         return null;
     }
@@ -123,11 +123,15 @@ public class Game {
                         fm = fmList.get(i);
                     }
                 }
-                ghostNode.put("familyMember", fm.getDiceColor().getDiceColorString());
+                try{
+                    ghostNode.put("familyMember", fm.getDiceColor().getDiceColorString());
+                } catch (Exception e){
+                    new RuntimeException(e);
+                }
                 try {
                     MoveManager.makeMove(b, p, ghostNode);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    new RuntimeException(e);
                 }
                 ObjectNode payload =JsonNodeFactory.instance.objectNode();
                 payload.put("timedOutPlayer", timedOutPlayer);
