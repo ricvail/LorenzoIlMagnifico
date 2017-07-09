@@ -24,9 +24,14 @@ public class Client extends MessageSender {
     private final static int PORT = 3000;
     private final static String IP="127.0.0.1";
     private JsonNode board;
-
     private Scanner socketIn;
-
+    boolean continueLoop;
+    boolean isInGame;
+    boolean isMyTurn;
+    boolean moveComplete;
+    String userQuery;
+    JsonNode currentMove;
+    ArrayList<moveBuildingState> moveStack;
     private boolean waitingForResponse;
 
     public void setSocket (Socket socket){
@@ -36,13 +41,7 @@ public class Client extends MessageSender {
     public Socket getSocket() {
         return socket;
     }
-    boolean continueLoop;
-    boolean isInGame;
-    boolean isMyTurn;
-    boolean moveComplete;
-    String userQuery;
-    JsonNode currentMove;
-    ArrayList<moveBuildingState> moveStack;
+
 
     public void startClient() throws IOException {
         Socket socket = new Socket(IP, PORT);

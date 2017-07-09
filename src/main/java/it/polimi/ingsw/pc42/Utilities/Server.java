@@ -20,8 +20,8 @@ public class Server {
     private ArrayList<Game> games;
     private int counter=4;
     private MyTimer timer;
-
     private final static int PORT = 3000;
+
     public void startServer() throws IOException {
         ServerSocket serverSocket = new ServerSocket(PORT);
         System.out.println("Server socket ready on port: " + PORT);
