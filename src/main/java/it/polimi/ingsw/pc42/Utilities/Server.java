@@ -12,8 +12,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 
-import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
-
 public class Server {
 
     public static ExecutorService executor = Executors.newCachedThreadPool();
@@ -38,7 +36,7 @@ public class Server {
                 ClientHandler client = new ClientHandler(socket, this);
                 executor.submit(client);
             } catch (Exception e) {
-                logger.info("connection exception");
+                throw new RuntimeException(e);
             }
         }
         executor.shutdown();
