@@ -106,7 +106,7 @@ public class Client extends MessageSender {
             }
 
             if (type.equalsIgnoreCase(Strings.MessageTypes.MOVE_INCOMPLETE)){
-                if (payload.get("field").asText().equalsIgnoreCase("immediateEffect")){
+                if ("immediateEffect".equalsIgnoreCase(payload.get("field").asText())){
                     MoveBuilder.addInner((ObjectNode)currentMove, (ObjectNode)payload);
                     waitingForResponse = true;
                     sendMessage(Strings.MoveTypes.MOVE, currentMove);
@@ -187,6 +187,7 @@ public class Client extends MessageSender {
             try {
                 gen = OutputStringGenerator.generateOutputStringOf_A(board, "CHARACTER");
             }catch (Exception e){
+                new RuntimeException(e);
                 return;
             }
         }
@@ -194,6 +195,7 @@ public class Client extends MessageSender {
             try {
                 gen=OutputStringGenerator.generateOutputStringOf_A(board, "BUILDING");
             }catch (Exception e){
+                new RuntimeException(e);
                 return;
             }
         }
@@ -208,6 +210,7 @@ public class Client extends MessageSender {
             try {
                 gen=OutputStringGenerator.generateOutputStringOf_A(board, "COUNCIL");
             }catch (Exception e){
+                new RuntimeException(e);
                 return;
             }
         }
@@ -222,6 +225,7 @@ public class Client extends MessageSender {
             try {
                 gen=OutputStringGenerator.generateOutputStringOf_A(board, "HARVEST");
             }catch (Exception e){
+                new RuntimeException(e);
                 return;
             }
         }
@@ -229,6 +233,7 @@ public class Client extends MessageSender {
             try {
                 gen=OutputStringGenerator.generateOutputStringOf_A(board, "MARKET");
             }catch (Exception e){
+                new RuntimeException(e);
                 return;
             }
         }
@@ -237,6 +242,7 @@ public class Client extends MessageSender {
                 gen=OutputStringGenerator.getPlayerStatus(board, "red");
             }catch (Exception e){
                 System.out.println("Red player doesn't exist");
+                new RuntimeException(e);
                 return;
             }
         }
@@ -244,6 +250,7 @@ public class Client extends MessageSender {
             try {
                 gen=OutputStringGenerator.getPlayerStatus(board, "blue");
             }catch (Exception e){
+                new RuntimeException(e);
                 System.out.println("Blue player doesn't exist");
                 return;
             }
@@ -252,6 +259,7 @@ public class Client extends MessageSender {
             try {
                 gen=OutputStringGenerator.getPlayerStatus(board, "yellow");
             }catch (Exception e){
+                new RuntimeException(e);
                 System.out.println("Yellow player doesn't exist");
                 return;
             }
@@ -260,6 +268,7 @@ public class Client extends MessageSender {
             try {
                 gen=OutputStringGenerator.getPlayerStatus(board, "green");
             }catch (Exception e){
+                new RuntimeException(e);
                 System.out.println("Green player doesn't exist");
                 return;
             }
