@@ -56,16 +56,18 @@ public class MyTimer {
             timerSettings= mapper.readTree(timeoutJSON);
             return timerSettings;
         } catch (Exception e){
-            e.printStackTrace();
+            new RuntimeException(e);
             return null;
         }
     }
 
     public static int getLobbyTimeout(){
-        return getTimerSettings().get("lobbyTimeoutSeconds").asInt();
+        int i=getTimerSettings().get("lobbyTimeoutSeconds").asInt();
+        return i;
     }
     public static int getMoveTimeout(){
-        return getTimerSettings().get("moveTimeoutSeconds").asInt();
+        int i=getTimerSettings().get("moveTimeoutSeconds").asInt();
+        return i;
     }
 
 }

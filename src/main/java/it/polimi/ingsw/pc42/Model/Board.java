@@ -25,7 +25,6 @@ public class Board {
     private int era;
     private int round;
     private Player currentPlayer;
-//private int currentTurn;
     private ArrayList<Player> playerArrayList;
     private ArrayList<iActionSpace> actionSpaces;
     private ArrayList<iCard> cards;
@@ -60,7 +59,7 @@ public class Board {
                     iActionSpace spaceDecorator = getActionSpaceByID(spaceJson.get("id").asInt());
                     spaceDecorator.updateDescription(spaceJson);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    new RuntimeException(e);
                 }
             }
 
@@ -349,7 +348,7 @@ public class Board {
         try{
             index=getPlayerIndex(currentPlayer);
         }catch (Exception e){
-            e.printStackTrace();
+            new RuntimeException(e);
         }
         if (index==playerArrayList.size()-1) {
             vatican=false;
@@ -383,7 +382,7 @@ public class Board {
                 cleanUp();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            new RuntimeException(e);
         }
     }
 
@@ -407,7 +406,7 @@ public class Board {
         try {
             changeTurnOrder(getActionSpaceByID(councilID)); //this must happen before council.cleanup is called
         } catch (Exception e) {
-            e.printStackTrace();
+            new RuntimeException(e);
         }
         Iterator<iActionSpace> iterator = actionSpaces.iterator();
         while (iterator.hasNext()){
@@ -429,7 +428,7 @@ public class Board {
             try {
                 j = getPlayerIndex(player);
             } catch (Exception e) {
-                e.printStackTrace();
+                new RuntimeException(e);
             }
             playerArrayList.add(0,playerArrayList.remove(j));
         }
@@ -487,17 +486,20 @@ public class Board {
         File faithPointsJson = new File("src/res/faithPoints.json");
         ObjectMapper mapper = new ObjectMapper();
         JsonNode victoryPointsFromFaithPoints=null;
+        int victoryPoints;
         try {
             victoryPointsFromFaithPoints = mapper.readTree(faithPointsJson);
         } catch (IOException e){
-            e.printStackTrace();
+            new RuntimeException(e);
         }
         int faith = player.getResource(ResourceType.FAITHPOINTS).get();
         try {
-            return victoryPointsFromFaithPoints.get("faithPoints").get(faith).asInt();
+            victoryPoints = victoryPointsFromFaithPoints.get("faithPoints").get(faith).asInt();
         } catch (NullPointerException npe){
-            return (player.getResource(ResourceType.FAITHPOINTS).get()-15)*5+30;
+            new RuntimeException(npe);
+            victoryPoints= (player.getResource(ResourceType.FAITHPOINTS).get()-15)*5+30;
         }
+        return victoryPoints;
     }
 
     /**

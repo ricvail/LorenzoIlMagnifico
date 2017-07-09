@@ -29,7 +29,7 @@ public class GameInitializer {
             File file = new File(path);
             return mapper.readTree(file);
         } catch (Exception e){
-            e.printStackTrace();
+            new RuntimeException(e);
             return null;
         }
     }
@@ -49,7 +49,15 @@ public class GameInitializer {
      * @return root node for the list of action spaces
      */
     public static JsonNode getDefaultActionSpacesJson(){
-        return readFile("src/res/actionsSpaces.json").get("action_spaces");
+        JsonNode root=null;
+        JsonNode sent;
+        try {
+            root=readFile("src/res/actionsSpaces.json").get("action_spaces");
+        } catch (Exception e){
+            new RuntimeException(e);
+        }
+        sent=root;
+        return sent;
     }
 
     /**
@@ -67,7 +75,15 @@ public class GameInitializer {
      * @return root node for the list of privileges
      */
     public static JsonNode getDefaultPrivileges() {
-        return readFile("src/res/privileges.json").get("privileges");
+        JsonNode root=null;
+        JsonNode sent;
+        try {
+            root=readFile("src/res/privileges.json").get("privileges");
+        } catch (Exception e){
+            new RuntimeException(e);
+        }
+        sent=root;
+        return sent;
     }
 
     /**
@@ -89,7 +105,7 @@ public class GameInitializer {
             try {
                 Player.PlayerColor.fromString(playerColor);
             } catch (Exception e){
-                e.printStackTrace();
+                new RuntimeException(e);
                 return false;
             }
             for (int j = 0; j<i; j++){
@@ -127,7 +143,7 @@ public class GameInitializer {
                     getDefaultCardsJson(),
                     shuffle, getDefaultPrivileges());
         } catch (Exception e) {
-            e.printStackTrace();
+            new RuntimeException(e);
         }
         return b;
     }
@@ -148,7 +164,7 @@ public class GameInitializer {
                     getDefaultCardsJson(),
                     shuffle, getDefaultPrivileges());
         } catch (Exception e) {
-            e.printStackTrace();
+            new RuntimeException(e);
         }
         return b;
     }

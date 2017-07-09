@@ -193,7 +193,7 @@ public class OutputStringGenerator {
                         }
                     } catch (Exception x){
                         System.out.println("invalid input");
-                        new RuntimeException(e);
+                        new RuntimeException(x);
 
                     }
                 }

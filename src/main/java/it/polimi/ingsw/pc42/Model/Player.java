@@ -49,7 +49,7 @@ public class Player {
         try {
             col= PlayerColor.fromString(color);
         } catch (Exception e) {
-            e.printStackTrace();
+            new RuntimeException(e);
         }
         return createPlayer(col);
     }
@@ -147,16 +147,16 @@ public class Player {
         ArrayNode listOfBuildingsCards=factory.arrayNode();
         ArrayNode listOfVenturesCards=factory.arrayNode();
         for (iCard card: cardsOwned) {
-            if (card.getCardType().getString().equalsIgnoreCase("territories")) {
+            if ("territories".equalsIgnoreCase(card.getCardType().getString())) {
                 listOfTerritoriesCards.add(card.getJSONDescriptionOfCards());
             }
-            if (card.getCardType().getString().equalsIgnoreCase("characters")) {
+            if ("characters".equalsIgnoreCase(card.getCardType().getString())) {
                 listOfCharacterCards.add(card.getJSONDescriptionOfCards());
             }
-            if (card.getCardType().getString().equalsIgnoreCase("buildings")) {
+            if ("buildings".equalsIgnoreCase(card.getCardType().getString())) {
                 listOfBuildingsCards.add(card.getJSONDescriptionOfCards());
             }
-            if (card.getCardType().getString().equalsIgnoreCase("ventures")) {
+            if ("ventures".equalsIgnoreCase(card.getCardType().getString())) {
                 listOfVenturesCards.add(card.getJSONDescriptionOfCards());
             }
         }

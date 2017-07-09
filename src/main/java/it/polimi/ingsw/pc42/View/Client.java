@@ -155,7 +155,7 @@ public class Client extends MessageSender {
                     }
                 }
             }catch (Exception e){
-                throw new RuntimeException(e);
+                new RuntimeException(e);
             }
             if (type.equalsIgnoreCase(Strings.MessageTypes.UPDATE)){
                 printStatus();
@@ -218,6 +218,7 @@ public class Client extends MessageSender {
             try {
                 gen=OutputStringGenerator.generateOutputStringOf_A(board, "PRODUCTION");
             }catch (Exception e){
+                new RuntimeException(e);
                 return;
             }
         }
@@ -443,6 +444,8 @@ public class Client extends MessageSender {
                 client.startClient();
                 asd=false;
             } catch (IOException e) {
+                new RuntimeException(e);
+
             }
         }
     }

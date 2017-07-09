@@ -44,9 +44,10 @@ public class ActionSpaceParser {
                         Card.CardType cardType = Card.CardType.fromString(effect);
                         actionSpace = new CardDecorator(cardType, actionSpace);
                     } catch (Exception e) {
-                        if (effect.equalsIgnoreCase("harvest")) {
+                        new RuntimeException(e);
+                        if ("harvest".equalsIgnoreCase(effect)) {
                             actionSpace = new ActionDecorator(ActionDecorator.ActionType.HARVEST, actionSpace);
-                        } else if (effect.equalsIgnoreCase("production")) {
+                        } else if ("production".equalsIgnoreCase(effect)) {
                             actionSpace = new ActionDecorator(ActionDecorator.ActionType.PRODUCTION, actionSpace);
                         } else {
                             throw new Exception("Invalid effect detected: "+effect);
@@ -63,10 +64,11 @@ public class ActionSpaceParser {
                         int q = actionSpaceJson.get("immediateResourceEffect").get(key).asInt();
                         actionSpace = new ResourceImmediateBonus(rt, q, actionSpace);
                     } catch (IllegalArgumentException e) {
-                        if (key.equalsIgnoreCase("privileges")) {
+                        new RuntimeException(e);
+                        if ("privileges".equalsIgnoreCase(key)) {
                             int q = actionSpaceJson.get("immediateResourceEffect").get(key).asInt();
                             actionSpace = new privilegesActionSpaceDecorator(q, actionSpace);
-                        } else if (key.equalsIgnoreCase("effect")) {
+                        } else if ("effect".equalsIgnoreCase(key)) {
 
                         } else {
                             throw new Exception("Invalid immediateResourceEffect detected: "+key);

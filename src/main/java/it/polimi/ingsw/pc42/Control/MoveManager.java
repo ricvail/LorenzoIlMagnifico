@@ -113,7 +113,7 @@ public class MoveManager {
         try {
             fm  = p.getFamilyMemberFromColor(move.get("familyMember").asText());
         } catch (Exception e) {
-            e.printStackTrace();
+            new RuntimeException(e);
         }
         undoGetActionSpaceFromJson(b, move, fm);
     }
@@ -136,6 +136,7 @@ public class MoveManager {
         try {
             fm  = p.getFamilyMemberFromColor(move.get("familyMember").asText());
         } catch (Exception e) {
+            new RuntimeException(e);
             throw new ActionAbortedException(false, "Wrong Family Member's Color");
         }
         if (fm.isUsed()){
@@ -159,7 +160,7 @@ public class MoveManager {
         try {
             space = b.getActionSpaceByID(move.get("slotID").asInt());
         } catch (Exception e) {
-            e.printStackTrace();
+            new RuntimeException(e);
         }
         undoApplyPlayerPermanentBonus(move, fm, space);
     }
@@ -185,6 +186,7 @@ public class MoveManager {
         try {
             space = b.getActionSpaceByID(move.get("slotID").asInt());
         } catch (Exception e) {
+            new RuntimeException(e);
             throw new ActionAbortedException(false, "This Action Space does not exist or the ID is not an integer");
         }
         if (fm.canBePlacedInArea(space.getArea())&&
@@ -383,12 +385,14 @@ public class MoveManager {
         File faithPointsJson = new File("src/res/faithPoints.json");
         ObjectMapper mapper = new ObjectMapper();
         JsonNode root=null;
+        JsonNode json;
         try {
             root = mapper.readTree(faithPointsJson);
         } catch (IOException e){
-            e.printStackTrace();
+            new RuntimeException(e);
         }
-        JsonNode excommunicationRequests = root.get("excommunicationRequests");
+        json=root;
+        JsonNode excommunicationRequests = json.get("excommunicationRequests");
         int minFaithPoints = excommunicationRequests.get(board.getEra()-2).asInt();
         if (player.getResource(ResourceType.FAITHPOINTS).get()<minFaithPoints){
             return false;
