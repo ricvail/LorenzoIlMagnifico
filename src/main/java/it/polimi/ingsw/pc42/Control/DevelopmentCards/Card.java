@@ -101,12 +101,12 @@ public class Card implements iCard{
     }
 
     @Override
-    public void onAction(JsonNode move, FamilyMember fm) throws ActionAbortedException {
+    public void onAction(JsonNode move, FamilyMember fm, iActionSpace space){
 
     }
 
     @Override
-    public void undoOnAction(JsonNode move, FamilyMember fm) throws ActionAbortedException {
+    public void undoOnAction(JsonNode move, FamilyMember fm, iActionSpace space) {
 
     }
 

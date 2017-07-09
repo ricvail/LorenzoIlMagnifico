@@ -6,6 +6,9 @@ public class ResourceWrapper extends IntWrapper implements iResourceWrapper {
     ResourceType type;
     public CostBonus activeBonus;
 
+    public boolean accumulatorEnabled;
+    public int accumulated;
+
 
     public CostBonus getBonus(){
         return activeBonus;
@@ -20,6 +23,8 @@ public class ResourceWrapper extends IntWrapper implements iResourceWrapper {
     public ResourceWrapper(ResourceType t, int q){
         super (q);
         type=t;
+        accumulatorEnabled=false;
+        accumulated=0;
     }
 
     /**
@@ -52,6 +57,8 @@ public class ResourceWrapper extends IntWrapper implements iResourceWrapper {
         b.initialBonus+= bonus;
         b.remainingBonus+=bonus;
     }
+
+
 
     /**
      * TODO javadoc1
@@ -123,9 +130,21 @@ public class ResourceWrapper extends IntWrapper implements iResourceWrapper {
 
     @Override
     public void add(int i) throws IllegalArgumentException {
-        myInt+=i;
-        if (myInt<0) {
-            throw new IllegalArgumentException();
+        if (!accumulatorEnabled||i<0) {
+            myInt += i;
+            if (myInt < 0) {
+                throw new IllegalArgumentException();
+            }
+        } else {
+            accumulated+=i;
+        }
+    }
+
+    public void setAccumulatorEnabled(boolean acc){
+        accumulatorEnabled=acc;
+        if (acc==false){
+            myInt+=accumulated;
+            accumulated=0;
         }
     }
 
