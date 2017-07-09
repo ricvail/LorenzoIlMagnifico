@@ -26,7 +26,6 @@ public class Client extends MessageSender {
     private final static int PORT = 3000;
     private final static String IP="127.0.0.1";
     private JsonNode board;
-    private static Logger logger= LogManager.getLogger();
 
     private Scanner socketIn;
 
@@ -71,7 +70,7 @@ public class Client extends MessageSender {
                 payload = j.get("payload");
                 type = j.get("type").asText();
             } catch (Exception e) {
-                logger.error(e);
+                LogManager.getLogger().error(e);
                 continue;
             }
             if (type.equalsIgnoreCase(Strings.MessageTypes.ADDED_TO_LOBBY)){
@@ -158,7 +157,7 @@ public class Client extends MessageSender {
                     }
                 }
             }catch (Exception e){
-                logger.error(e);
+                LogManager.getLogger().error(e);
             }
             if (type.equalsIgnoreCase(Strings.MessageTypes.UPDATE)){
                 printStatus();
@@ -182,7 +181,7 @@ public class Client extends MessageSender {
             try {
                 gen=OutputStringGenerator.generateOutputStringOf_A(board, "TERRITORY");
             }catch (Exception e){
-                logger.error(e);
+                LogManager.getLogger().error(e);
                 return;
             }
         }
@@ -190,7 +189,7 @@ public class Client extends MessageSender {
             try {
                 gen = OutputStringGenerator.generateOutputStringOf_A(board, "CHARACTER");
             }catch (Exception e){
-                logger.error(e);
+                LogManager.getLogger().error(e);
                 return;
             }
         }
@@ -198,7 +197,7 @@ public class Client extends MessageSender {
             try {
                 gen=OutputStringGenerator.generateOutputStringOf_A(board, "BUILDING");
             }catch (Exception e){
-                logger.error(e);
+                LogManager.getLogger().error(e);
                 return;
             }
         }
@@ -206,7 +205,7 @@ public class Client extends MessageSender {
             try {
                 gen=OutputStringGenerator.generateOutputStringOf_A(board, "VENTURE");
             }catch (Exception e){
-                logger.error(e);
+                LogManager.getLogger().error(e);
                 return;
             }
         }
@@ -214,7 +213,7 @@ public class Client extends MessageSender {
             try {
                 gen=OutputStringGenerator.generateOutputStringOf_A(board, "COUNCIL");
             }catch (Exception e){
-                logger.error(e);
+                LogManager.getLogger().error(e);
                 return;
             }
         }
@@ -222,7 +221,7 @@ public class Client extends MessageSender {
             try {
                 gen=OutputStringGenerator.generateOutputStringOf_A(board, "PRODUCTION");
             }catch (Exception e){
-                logger.error(e);
+                LogManager.getLogger().error(e);
                 return;
             }
         }
@@ -230,7 +229,7 @@ public class Client extends MessageSender {
             try {
                 gen=OutputStringGenerator.generateOutputStringOf_A(board, "HARVEST");
             }catch (Exception e){
-                logger.error(e);
+                LogManager.getLogger().error(e);
                 return;
             }
         }
@@ -238,7 +237,7 @@ public class Client extends MessageSender {
             try {
                 gen=OutputStringGenerator.generateOutputStringOf_A(board, "MARKET");
             }catch (Exception e){
-                logger.error(e);
+                LogManager.getLogger().error(e);
                 return;
             }
         }
@@ -247,7 +246,7 @@ public class Client extends MessageSender {
                 gen=OutputStringGenerator.getPlayerStatus(board, "red");
             }catch (Exception e){
                 System.out.println("Red player doesn't exist");
-                logger.info(e);
+                LogManager.getLogger().info(e);
                 return;
             }
         }
@@ -255,7 +254,7 @@ public class Client extends MessageSender {
             try {
                 gen=OutputStringGenerator.getPlayerStatus(board, "blue");
             }catch (Exception e){
-                logger.info(e);
+                LogManager.getLogger().info(e);
                 System.out.println("Blue player doesn't exist");
                 return;
             }
@@ -264,7 +263,7 @@ public class Client extends MessageSender {
             try {
                 gen=OutputStringGenerator.getPlayerStatus(board, "yellow");
             }catch (Exception e){
-                logger.info(e);
+                LogManager.getLogger().info(e);
                 System.out.println("Yellow player doesn't exist");
                 return;
             }
@@ -273,7 +272,7 @@ public class Client extends MessageSender {
             try {
                 gen=OutputStringGenerator.getPlayerStatus(board, "green");
             }catch (Exception e){
-                logger.info(e);
+                LogManager.getLogger().info(e);
                 System.out.println("Green player doesn't exist");
                 return;
             }
@@ -365,7 +364,7 @@ public class Client extends MessageSender {
                                 id = Integer.parseInt(stdin.next());
                                 flag=false;
                             } catch (Exception e){
-                                logger.error(e);
+                                LogManager.getLogger().error(e);
                             }
                         }
                         flag=true;
@@ -376,7 +375,7 @@ public class Client extends MessageSender {
                                 color = stdin.next();
                                 flag=false;
                             } catch (Exception e){
-                                logger.error(e);
+                                LogManager.getLogger().error(e);
                             }
                         }
                         ObjectNode node = JsonNodeFactory.instance.objectNode();
@@ -440,6 +439,8 @@ public class Client extends MessageSender {
 
 
     public static void main(String[] args) {
+
+        System.getProperties().setProperty("log4j.configurationFile", "log4j2.xml");
         Client client = new Client();
         boolean asd = true;
 
@@ -448,7 +449,7 @@ public class Client extends MessageSender {
                 client.startClient();
                 asd=false;
             } catch (IOException e) {
-                logger.error(e);
+                LogManager.getLogger().error(e);
 
             }
         }

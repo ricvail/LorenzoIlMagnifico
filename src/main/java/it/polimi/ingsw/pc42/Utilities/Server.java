@@ -21,7 +21,6 @@ public class Server {
     private ArrayList<Game> games;
     private int counter=4;
     private MyTimer timer;
-    private static Logger logger= LogManager.getLogger();
     private final static int PORT = 3000;
     public void startServer() throws IOException {
         ServerSocket serverSocket = new ServerSocket(PORT);
@@ -36,7 +35,7 @@ public class Server {
                 ClientHandler client = new ClientHandler(socket, this);
                 executor.submit(client);
             } catch (Exception e) {
-                logger.error(e);
+                LogManager.getLogger().error(e);
             }
         }
         executor.shutdown();
@@ -84,7 +83,7 @@ public class Server {
             clients.clear();
             counter = 4;
         } catch (Exception e ){
-            logger.error(e);
+            LogManager.getLogger().error(e);
         }
     }
 
@@ -103,11 +102,12 @@ public class Server {
     }
 
     public static void main(String[] args) {
+        System.getProperties().setProperty("log4j.configurationFile", "log4j2.xml");
         Server server = new Server();
         try {
             server.startServer();
         } catch (IOException e) {
-            logger.error(e);
+            LogManager.getLogger().error(e);
         }
     }
 }
