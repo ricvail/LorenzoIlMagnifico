@@ -443,7 +443,6 @@ public class Client extends MessageSender {
                 client.startClient();
                 asd=false;
             } catch (IOException e) {
-                throw new RuntimeException(e);
             }
         }
     }
