@@ -97,6 +97,37 @@
         {},
         {}
       ]
+    },
+    {
+      "DESCRIZIONE": "red production val 1+2",
+      "familyMember": "white",
+      "servants": 0,
+      "slotID":  18,
+      "cardChoices": [
+        {"optionToActivate": 1,
+          "privileges": [0] },
+        {"optionToActivate": 2 },
+        {},
+        {},
+        {}
+      ]
+    },
+    {
+      "DESCRIZIONE": "Blue slotID 14 -> production val 3, 5 final victory",
+      "familyMember": "orange",
+      "servants": 0,
+      "slotID":  14,
+      "immediateEffect": {
+        "servants": 2,
+        "slotID":  18,
+        "cardChoices": [
+          {"optionToActivate": 1},
+          {},
+          {},
+          {},
+          {}
+        ]
+      }
     }
 
 

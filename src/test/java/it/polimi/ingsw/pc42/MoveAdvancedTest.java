@@ -5,6 +5,7 @@ import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.Control.ResourceType;
 import it.polimi.ingsw.pc42.Model.Board;
+import it.polimi.ingsw.pc42.Model.Dice;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
 import it.polimi.ingsw.pc42.Model.Player;
 import it.polimi.ingsw.pc42.Utilities.GameInitializer;
@@ -218,6 +219,7 @@ public class MoveAdvancedTest extends TestCase {
         assertEquals(false, exception);
         assertEquals(false, board.isVatican());
         //END VATICAN PHASE--------------------------------------------------------------------------------------------
+
         //CHEAT MODE player Blue---------------------
         board.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.COIN).add(6); blueCoin+=6;
         //-------------------------------------------
@@ -254,14 +256,14 @@ public class MoveAdvancedTest extends TestCase {
         assertEquals(false, fm.isUsed());*/
         //re-try------------------------------------------------------------------------------------------------------
         try {
-            board.makeMove(nodeGhostMove("black"));//Red ghost white
+            board.makeMove(nodeGhostMove("black"));//Red ghost black
         } catch (Exception e) {
             e.printStackTrace();
         }
         //end  18th move----------------------------------------------------------------------------------------------
         try {
             board.makeMove(mosse.get(13));//Blue harvest val 3 con fm orange
-        }catch (ActionAbortedException ae){
+        } catch (ActionAbortedException ae){
             exception = true;
             message = ae.getMessage();
         } catch (Exception e) {
@@ -280,20 +282,224 @@ public class MoveAdvancedTest extends TestCase {
         //assertEquals(blueStone, fm.owner.getResource(ResourceType.STONE).get());
         //assertEquals(blueWooD, fm.owner.getResource(ResourceType.WOOD).get());
         //end 19th move------------------------------------------------------------------------------------------------
+        //scelgo di attivare i privileges (1 stone/wood) e la seconda scelta della scenda carta, fallisce per stone
+        try {
+            board.makeMove(mosse.get(14));//REd fm white production val 3 slotID 18
+        }  catch (ActionAbortedException ae){
+            exception = true;
+            message = ae.getMessage();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(message);
+        fm = null;
+        try {
+            fm = board.getPlayerByColor(Player.PlayerColor.RED).getFamilyMemberFromColor("white");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertEquals(false, fm.isUsed());
+        assertEquals(redCoin, fm.owner.getResource(ResourceType.COIN).get());
+        assertEquals(redStone, fm.owner.getResource(ResourceType.STONE).get());
+        assertEquals(redMilitaryPts, fm.owner.getResource(ResourceType.MILITARYPOINTS).get());
+        //re-try------------------------------------------------------------------------------------------------------
+        //CHEAT MODE player Red---------------------
+        board.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.STONE).add(2); redStone+=2;
+        //------------------------------------------
+        try {
+            board.makeMove(mosse.get(14));//REd fm white production val 3 slotID 18
+        }  catch (ActionAbortedException ae){
+            exception = true;
+            message = ae.getMessage();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertEquals(false, exception);
+        fm = null;
+        try {
+            fm = board.getPlayerByColor(Player.PlayerColor.RED).getFamilyMemberFromColor("white");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertEquals(false, fm.isUsed());
+        //1 coin per 1 stone/1wood, 2 stone per 5 coins, base tile 1 milpts 2 coins
+        redCoin+=6; redStone-=1; redMilitaryPts-=1; redWood+=1;
+        //test
+        assertEquals(redCoin, fm.owner.getResource(ResourceType.COIN).get());
+        assertEquals(redStone, fm.owner.getResource(ResourceType.STONE).get());
+        assertEquals(redWood, fm.owner.getResource(ResourceType.WOOD).get());
+        assertEquals(redMilitaryPts, fm.owner.getResource(ResourceType.MILITARYPOINTS).get());
+        //end of 20 th move--------------------------------------------------------------------------------------------
+        try {
+            board.makeMove(nodeGhostMove("white"));//Blue ghost white
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            board.makeMove(nodeGhostMove("orange"));//Red ghost orange
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            board.makeMove(nodeGhostMove("neutral"));//Blue ghost neutral
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            board.makeMove(nodeGhostMove("neutral"));//Red ghost neutral
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //end 3rd round-----------------------------------------------------------------------------------------------
+        for (Dice.DiceColor diceColor : Dice.DiceColor.values()){
+            if (!"ghost".equalsIgnoreCase(diceColor.getDiceColorString())){
+                try {
+                    board.makeMove(nodeGhostMove(diceColor.getDiceColorString())); //blue
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                try {
+                    board.makeMove(nodeGhostMove(diceColor.getDiceColorString())); //red
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        //end 4th round------------------------------------------------------------------------------------------------
+
+        //VATICAN PHASE------------------------------------------------------------------------------------------------
+        //cheat mode
+        exception = false;
+        try {
+            board.makeMove(mosse.get(10));//VATICAN CHOICE BLU
+        } catch (Exception e) {
+            exception = true;
+            e.printStackTrace();
+        }
+        assertEquals(false, exception);
+        assertEquals(true, board.isVatican());
+
+        exception = false;
+        try {
+            board.makeMove(mosse.get(10));//VATICAN CHOICE RED
+        } catch (Exception e) {
+            exception = true;
+            e.printStackTrace();
+        }
+        assertEquals(false, exception);
+        assertEquals(false, board.isVatican());
+        //END VATICAN PHASE--------------------------------------------------------------------------------------------
 
 
+        for (Dice.DiceColor diceColor : Dice.DiceColor.values()){
+            if (!"ghost".equalsIgnoreCase(diceColor.getDiceColorString())){
+                try {
+                    board.makeMove(nodeGhostMove(diceColor.getDiceColorString())); //blue
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                try {
+                    board.makeMove(nodeGhostMove(diceColor.getDiceColorString())); //red
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        //end 5th round-----------------------------------------------------------------------------------------------
+        //Blue slotID 14 -> production val 3
+        try {
+            board.makeMove(mosse.get(15));//Blue slotID 14 -> production val 3, 5 final victory
+        } catch (ActionAbortedException ae){
+            exception = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertEquals(false, exception);
+        //cost 3 serv 4 coins
+        blueServant-=3; blueCoin-=4;
+        //harvest -> 2 victory points aggiungendo 2 servants (è option to activate 1?)
+        blueServant-=2; blueVictoryPts+=2;
+        fm = null;
+        try {
+            fm = board.getPlayerByColor(Player.PlayerColor.BLUE).getFamilyMemberFromColor("orange");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertEquals(true, fm.isUsed());
+        assertEquals(blueCoin, fm.owner.getResource(ResourceType.COIN).get());
+        assertEquals(blueServant, fm.owner.getResource(ResourceType.SERVANT).get());
+        assertEquals(blueVictoryPts, fm.owner.getResource(ResourceType.VICTORYPOINTS).get());
+       //end move-----------------------------------------------------------------------------------------------------
+        try {
+            board.makeMove(nodeGhostMove("orange"));//Red ghost orange
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            board.makeMove(nodeGhostMove("white"));//Blue ghost white
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            board.makeMove(nodeGhostMove("white"));//Red ghost white
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            board.makeMove(nodeGhostMove("neutral"));//Blue ghost neutral
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            board.makeMove(nodeGhostMove("neutral"));//Red ghost neutral
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            board.makeMove(nodeGhostMove("black"));//Blue ghost black
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            board.makeMove(nodeGhostMove("black"));//Red ghost black
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //END OF THE GAME - FINAL CHECK--------------------------------------------------------------------------------
+        /* to check:
+        * -number of characters cards
+        * -number of territories cards
+        * -military points for first e second
+        * -faith points
+        * -(wood,stone,coins,servant)/5
+        * -victory points +final victory points */
+        //BLUE check
 
-        //zappata <5 e una production
-        //production, provare che la scelta 0 non fa niente, provare una scelta, provare quella con privileges e che
-        //le resource per le trade siano controllate tutte prima, non può usare quelle di privileges per quella dopo
-        //prendere un paio di venture con final victory
+        /*
+        int finalVictoryPoints = blueVictoryPts;
+        finalVictoryPoints+=; // for 1 char cards
+        finalVictoryPoints+=; // for military points
+        finalVictoryPoints+=0; // faith points
+        finalVictoryPoints+=10; // for final victory points
+        finalVictoryPoints+=((blueWooD+blueStone+blueServant+blueCoin)/5);
+        assertEquals(finalVictoryPoints, board.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.VICTORYPOINTS).get());
+
+        //RED check
+        finalVictoryPoints = redVictoryPts;
+        finalVictoryPoints+=; // for char cards
+        finalVictoryPoints+=; // territory cards
+        finalVictoryPoints+=; // for military points
+        finalVictoryPoints+=0; // faith points
+        finalVictoryPoints+=0; // for final victory points
+
+        finalVictoryPoints+=((redWood+redStone+redServant+redCoin)/5); /
+        assertEquals(finalVictoryPoints, board.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.VICTORYPOINTS).get());
+        */
 
 
-
-        printStatus();
-        printResources(board.getPlayerByColor(Player.PlayerColor.RED));
-        printResources(board.getPlayerByColor(Player.PlayerColor.BLUE));
-
+        //printStatus();
+        //printResources(board.getPlayerByColor(Player.PlayerColor.RED));
+        //printResources(board.getPlayerByColor(Player.PlayerColor.BLUE));
     }
 
 
