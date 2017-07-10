@@ -353,7 +353,7 @@ public class OutputStringGenerator {
                 out.add("Press 0 to refuse the activation");
                 for (int i=1; i<permanentEffect.size(); i++){
                     JsonNode choice = permanentEffect.get(i);
-                    out.add("\nFor this choice:"+choice.asText()+"press"+i);
+                    out.add("\nFor this choice: "+parseResources(choice)+" press "+i);
                 }
             }
         }
