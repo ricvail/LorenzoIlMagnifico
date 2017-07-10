@@ -2,6 +2,8 @@ package it.polimi.ingsw.pc42.Model;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import it.polimi.ingsw.pc42.Control.ResourceWrapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 
@@ -9,6 +11,7 @@ public class PersonalBonusTile {
 
     public ArrayList<ResourceWrapper> harvestBonuses, productionBonuses;
     public JsonNode json;
+    private static Logger logger=LogManager.getLogger();
 
     /**
      * Class constructor. Initializes the harvest and production lists.
@@ -44,7 +47,7 @@ public class PersonalBonusTile {
             try {
                 p.getResource(bonus.getResourceType()).add(bonus.get()*-1);
             } catch (Exception e){
-
+                logger.error(e);
             }
         }
     }
