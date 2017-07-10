@@ -9,12 +9,15 @@ import it.polimi.ingsw.pc42.Control.ForeachManager;
 import it.polimi.ingsw.pc42.Control.ResourceType;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
 import it.polimi.ingsw.pc42.Model.Player;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class ForeachProduction extends AbstractDecorator {
 
     private counter counter;
     ResourceType resObtained;
     float ratio;
+    private Logger logger;
 
     /**
      *Class constructor. Decorates the immediate "for each" effect, in this case has to count a resource type.
@@ -34,6 +37,7 @@ public class ForeachProduction extends AbstractDecorator {
         };
         this.resObtained=resObtained;
         this.ratio=ratio;
+        logger= LogManager.getLogger();
     }
 
     /**
@@ -73,7 +77,7 @@ public class ForeachProduction extends AbstractDecorator {
         try {
             super.undoOnProduction(move, fm);
         } catch (ActionAbortedException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
     }
 }

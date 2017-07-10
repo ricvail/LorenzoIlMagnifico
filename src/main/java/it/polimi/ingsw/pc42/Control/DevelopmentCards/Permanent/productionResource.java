@@ -6,8 +6,8 @@ import it.polimi.ingsw.pc42.Control.DevelopmentCards.AbstractDecorator;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.iCard;
 import it.polimi.ingsw.pc42.Control.ResourceType;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
-
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Created by RICVA on 07/07/2017.
@@ -15,11 +15,13 @@ import java.util.logging.Logger;
 public class productionResource extends AbstractDecorator {
     private ResourceType resourceType;
     private int q;
+    private Logger logger;
 
     public productionResource(ResourceType rt, int quantity, iCard c) {
         super(c);
         q= quantity;
         resourceType=rt;
+        logger= LogManager.getLogger();
     }
 
     @Override
@@ -28,10 +30,11 @@ public class productionResource extends AbstractDecorator {
             try {
                 fm.owner.getResource(resourceType).add(q);
             } catch (IllegalArgumentException e) {
+                logger.info(e);
                 try {
                     fm.owner.getResource(resourceType).add(q * -1);
                 } catch (Exception e1){
-
+                    logger.error(e1);
                 }
                 throw new ActionAbortedException(false, "Not enough resources");
             }
@@ -41,7 +44,7 @@ public class productionResource extends AbstractDecorator {
                 try {
                     fm.owner.getResource(resourceType).add(q * -1);
                 } catch (Exception ex){
-
+                    logger.error(ex);
                 }
                 throw e;
             }
@@ -54,7 +57,7 @@ public class productionResource extends AbstractDecorator {
             try {
                 fm.owner.getResource(resourceType).add(q * -1);
             } catch (Exception e) {
-                //e.printStackTrace();
+                logger.error(e);
             }
             super.undoOnProduction(move, fm);
         }

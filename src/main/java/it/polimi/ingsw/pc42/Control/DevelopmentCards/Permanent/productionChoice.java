@@ -8,15 +8,19 @@ import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.AbstractDecorator;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.iCard;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 
 public class productionChoice extends AbstractDecorator{
     public final ArrayList<iCard> choices;
+    private Logger logger;
     public final String fieldName="optionToActivate";
     public productionChoice(iCard c) {
         super(c);
         choices=new ArrayList<>();
+        logger= LogManager.getLogger();
     }
 
     public void addChoice(){
@@ -42,7 +46,7 @@ public class productionChoice extends AbstractDecorator{
         try {
             choices.get(move.get(fieldName).asInt()).undoOnProduction(move, fm);
         } catch (ActionAbortedException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
     }
 }

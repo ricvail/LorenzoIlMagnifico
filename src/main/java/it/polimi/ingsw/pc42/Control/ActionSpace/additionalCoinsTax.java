@@ -4,10 +4,14 @@ import com.fasterxml.jackson.databind.JsonNode;
 import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
 import it.polimi.ingsw.pc42.Control.ResourceType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 public class additionalCoinsTax extends AbstractDecorator {
 
     private int coins;
+    private Logger logger;
 
     /**
      * Class constructor. Decorates the additional coins tax that is applied to a player if there is already a family
@@ -19,6 +23,7 @@ public class additionalCoinsTax extends AbstractDecorator {
     public additionalCoinsTax(int coins, iActionSpace actionSpace) {
         super(actionSpace);
         this.coins=coins;
+        logger= LogManager.getLogger();
     }
 
     @Override
@@ -27,6 +32,7 @@ public class additionalCoinsTax extends AbstractDecorator {
             try {
                 fm.owner.getResource(ResourceType.COIN).add(coins * -1);
             } catch (IllegalArgumentException e) {
+                logger.info(e);
                 fm.owner.getResource(ResourceType.COIN).add(coins);
                 throw new ActionAbortedException(false, "You don't have enough coins to pay the Tax");
             }

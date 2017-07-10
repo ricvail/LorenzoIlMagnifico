@@ -5,15 +5,19 @@ import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.AbstractDecorator;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.iCard;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Created by RICVA on 07/07/2017.
  */
 public class productionPrivileges extends AbstractDecorator {
     private int quantity;
+    private Logger logger;
     public productionPrivileges(int quantity, iCard c) {
         super(c);
         this.quantity=quantity;
+        logger= LogManager.getLogger();
     }
 
     @Override
@@ -30,8 +34,7 @@ public class productionPrivileges extends AbstractDecorator {
                 try {
                     getBoard().getPrivilegeManager().undoPrivileges(fm.owner, move);
                 } catch (Exception e1) {
-                    //this should NOT happen.
-                    e1.printStackTrace();
+                    logger.error(e1);
                 }
                 throw e;
             }
@@ -44,8 +47,7 @@ public class productionPrivileges extends AbstractDecorator {
             try {
                 getBoard().getPrivilegeManager().undoPrivileges(fm.owner, move);
             } catch (Exception e1) {
-                //this should NOT happen.
-                e1.printStackTrace();
+                logger.error(e1);
             }
             super.undoOnProduction(move, fm);
         }

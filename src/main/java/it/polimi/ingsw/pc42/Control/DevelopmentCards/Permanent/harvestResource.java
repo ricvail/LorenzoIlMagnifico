@@ -6,6 +6,8 @@ import it.polimi.ingsw.pc42.Control.DevelopmentCards.AbstractDecorator;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.iCard;
 import it.polimi.ingsw.pc42.Control.ResourceType;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Created by RICVA on 07/07/2017.
@@ -13,11 +15,13 @@ import it.polimi.ingsw.pc42.Model.FamilyMember;
 public class harvestResource extends AbstractDecorator {
     private ResourceType resourceType;
     private int q;
+    private Logger logger;
 
     public harvestResource(ResourceType rt, int quantity, iCard c) {
         super(c);
         q= quantity;
         resourceType=rt;
+        logger= LogManager.getLogger();
     }
 
     @Override
@@ -26,6 +30,7 @@ public class harvestResource extends AbstractDecorator {
             try {
                 fm.owner.getResource(resourceType).add(q);
             } catch (IllegalArgumentException e) {
+                logger.info(e);
                 fm.owner.getResource(resourceType).add(q * -1);
                 throw new ActionAbortedException(false, "Not enough resources");
             }
@@ -44,7 +49,7 @@ public class harvestResource extends AbstractDecorator {
             try {
                 fm.owner.getResource(resourceType).add(q * -1);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error(e);
             }
             super.undoOnHarvest(move, fm);
         }
