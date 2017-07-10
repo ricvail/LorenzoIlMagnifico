@@ -9,6 +9,7 @@ import it.polimi.ingsw.pc42.Model.Dice;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
 import it.polimi.ingsw.pc42.Model.Player;
 import it.polimi.ingsw.pc42.Utilities.GameInitializer;
+import it.polimi.ingsw.pc42.Utilities.myException;
 import it.polimi.ingsw.pc42.View.OutputStringGenerator;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -45,6 +46,7 @@ public class MoveAdvancedTest extends TestCase {
         JsonNode mosse = GameInitializer.readFile("src/res/testing/mosse_per_moveAdvancedTest.json").get("moves");
         boolean exception = false;
         String message = "";
+        printFullStatus(board);
         //1st move----------------------------------------------------------------------------------------------------
         try {
             board.makeMove(mosse.get(0));//Blue fm orange slotID 2, card harvest val 2 ->1 wood
@@ -146,12 +148,10 @@ public class MoveAdvancedTest extends TestCase {
         }
         assertEquals(false, fm.isUsed());
         assertEquals(blueServant, board.getCurrentPlayer().getResource(ResourceType.SERVANT).get());
-        System.out.println(message);
-
         //re-try-----------------------------------------------------------------------------------------------------
         exception=false;
         try {
-            board.makeMove(mosse.get(8)); //Blue fm white + 4 servants, harvest slotIID 19
+            board.makeMove(mosse.get(8)); //Blue fm white + 4 servants, harvest slotID 19
         } catch (ActionAbortedException ae){
             ae.printStackTrace();
             exception = true;
@@ -187,11 +187,23 @@ public class MoveAdvancedTest extends TestCase {
         // cost4 coins 2 stone, +2 victor
         redCoin-=4; redStone-=2; redVictoryPts+=2; redServant-=3;
         //end 14th move-----------------------------------------------------------------------------------------------
+        //CHEAT MODE player Blue---------------------
+        board.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.SERVANT).add(7); blueServant+=7;
+        board.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.COIN).add(3); blueCoin+=3;
+        //-------------------------------------------
         try {
-            board.makeMove(nodeGhostMove("neutral"));//Blue ghost neutral
-        } catch (Exception e) {
+            board.makeMove(mosse.get(16));//Blue fm neutral +7 servants slotID 4, card harvest val 6 -> privilege
+        } catch (ActionAbortedException e) {
+            exception = true;
+            e.printStackTrace();
+        } catch (myException e) {
             e.printStackTrace();
         }
+        assertEquals(false, exception);
+        blueServant-=7;
+        assertEquals(blueCoin,board.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.COIN).get() );
+        assertEquals(blueWooD, board.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.WOOD).get());
+        //end 15th move-----------------------------------------------------------------------------------------------
         try {
             board.makeMove(nodeGhostMove("white"));//Red ghost white
         } catch (Exception e) {
@@ -246,7 +258,6 @@ public class MoveAdvancedTest extends TestCase {
             e.printStackTrace();
         }
         assertEquals(true, exception);
-        System.out.println(message);
         fm = null;
         try {
             fm = board.getCurrentPlayer().getFamilyMemberFromColor("black");
@@ -267,7 +278,6 @@ public class MoveAdvancedTest extends TestCase {
         } catch (ActionAbortedException ae){
             exception = true;
             message = ae.getMessage();
-            System.out.println(message);
             ae.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
@@ -295,7 +305,6 @@ public class MoveAdvancedTest extends TestCase {
             e.printStackTrace();
         }
         assertEquals(true, exception);
-        //System.out.println(message);
         fm = null;
         try {
             fm = board.getPlayerByColor(Player.PlayerColor.RED).getFamilyMemberFromColor("white");
@@ -360,13 +369,13 @@ public class MoveAdvancedTest extends TestCase {
             if (!"ghost".equalsIgnoreCase(diceColor.getDiceColorString())){
                 try {
                     board.makeMove(nodeGhostMove(diceColor.getDiceColorString())); //blue
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
                 try {
                     board.makeMove(nodeGhostMove(diceColor.getDiceColorString())); //red
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
             }
         }
@@ -411,10 +420,8 @@ public class MoveAdvancedTest extends TestCase {
             }
         }
         //end 5th round-----------------------------------------------------------------------------------------------
-        //Blue slotID 14 -> production val 3
         board.getCurrentPlayer().getResource(ResourceType.COIN).add(4);blueCoin+=4;
         board.getCurrentPlayer().getResource(ResourceType.SERVANT).add(3);blueServant+=3;
-
         exception=false;
         try {
             board.makeMove(mosse.get(15));//Blue slotID 14 -> production val 3, 5 final victory
@@ -426,9 +433,9 @@ public class MoveAdvancedTest extends TestCase {
         }
         assertEquals(false, exception);
         //cost 3 serv 4 coins
-        blueServant-=3; blueCoin-=0;
-        //harvest -> 2 victory points aggiungendo 2 servants (è option to activate 1?)
-        blueServant-=2; //blueVictoryPts+=2;
+        blueServant-=3; blueCoin-=4;
+        //harvest -> 2 victory points aggiungendo 2 servants
+        blueServant-=2; blueCoin+=5; blueMilitaryPts+=1;
         fm = null;
         try {
             fm = board.getPlayerByColor(Player.PlayerColor.BLUE).getFamilyMemberFromColor("orange");
@@ -445,11 +452,27 @@ public class MoveAdvancedTest extends TestCase {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        //------------------------------------------------------------------------------------------------------------
+        assertEquals(3, board.getCurrentPlayer().getNumberOfCards(Card.CardType.TERRITORY));
         try {
-            board.makeMove(nodeGhostMove("white"));//Blue ghost white
+            board.makeMove(mosse.get(17));//Blue harvest val 6
         } catch (Exception e) {
             e.printStackTrace();
         }
+        assertEquals(false, exception);
+        fm = null;
+        try {
+            fm = board.getPlayerByColor(Player.PlayerColor.BLUE).getFamilyMemberFromColor("black");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertEquals(true, fm.isUsed());
+        blueServant+=1; blueStone+=3; blueWooD+=3; blueMilitaryPts+=2;
+        assertEquals(blueServant, fm.owner.getResource(ResourceType.SERVANT).get());
+        assertEquals(blueStone, fm.owner.getResource(ResourceType.STONE).get());
+        assertEquals(blueWooD, fm.owner.getResource(ResourceType.WOOD).get());
+        assertEquals(blueMilitaryPts, fm.owner.getResource(ResourceType.MILITARYPOINTS).get());
+        //-----------------------------------------------------------------------------------------------------------
         try {
             board.makeMove(nodeGhostMove("white"));//Red ghost white
         } catch (Exception e) {
@@ -466,7 +489,7 @@ public class MoveAdvancedTest extends TestCase {
             e.printStackTrace();
         }
         try {
-            board.makeMove(nodeGhostMove("black"));//Blue ghost black
+            board.makeMove(nodeGhostMove("white"));//Blue ghost white
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -488,6 +511,7 @@ public class MoveAdvancedTest extends TestCase {
         int finalVictoryPoints = blueVictoryPts;
         finalVictoryPoints+=1 ; // for 1 char cards
         finalVictoryPoints+=5; // for military points
+        finalVictoryPoints+=1; // territory cards
         finalVictoryPoints+=4; // faith points
         finalVictoryPoints+=10; // for final victory points
         finalVictoryPoints+=((blueWooD+blueStone+blueServant+blueCoin)/5); //2

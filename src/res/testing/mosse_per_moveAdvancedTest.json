@@ -109,6 +109,7 @@
         {"optionToActivate": 2 },
         {},
         {},
+        {},
         {}
       ]
     },
@@ -121,15 +122,26 @@
         "servants": 2,
         "slotID":  18,
         "cardChoices": [
-          {},
-          {},
-          {},
-          {},
           {}
         ]
       }
+    },
+    {
+      "DESCRIZIONE": "Blue fm neutral +7 servants slotID 4, card harvest val 6 -> privilege",
+      "familyMember": "neutral",
+      "servants": 7,
+      "slotID":  4
+    },
+    {
+      "DESCRIZIONE": "Blue harvest val 6",
+      "familyMember": "black",
+      "servants": 0,
+      "slotID":  19,
+      "cardChoices": [
+        {},
+        {},
+        {"privileges": [0]}
+      ]
     }
-
-
   ]
 }

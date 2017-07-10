@@ -542,12 +542,6 @@ public class Move2Test extends TestCase
         //END SECOND ROUND---------------------------------------------------------------------------------------------
         assertEquals(2, b.getRound());
 
-
-        //JsonNode jsonNodef=b.generateJsonDescription();
-        //System.out.print(OutputStringGenerator.ArrayToString(OutputStringGenerator.generateOutputStringOf_A(jsonNodef, "CHARACTER")));
-        //System.out.print(OutputStringGenerator.ArrayToString(OutputStringGenerator.getPlayerStatus(jsonNodef, "red")));
-
-
         //VATICAN PHASE------------------------------------------------------------------------------------------------
         //cheat mode
         exception = false;
@@ -600,7 +594,6 @@ public class Move2Test extends TestCase
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //TODO finisce in una exception un po' vaga?
         assertEquals("Family Member can't be place in this Area or this Action Space is not active in 2 players game-mode", message);
         assertEquals(redStone, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.STONE).get());
         assertEquals(redCoin, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.COIN).get());
@@ -1092,11 +1085,6 @@ public class Move2Test extends TestCase
         finalVictoryPoints+=11; //8 faith points
         finalVictoryPoints+=((redWood+redStone+redServant+redCoin)/5); //2
         assertEquals(finalVictoryPoints, b.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.VICTORYPOINTS).get());
-
-        //printResources(b.getPlayerByColor(Player.PlayerColor.RED));
-        //printResources(b.getPlayerByColor(Player.PlayerColor.BLUE));
-        //printStatus();
-
     }
 
     private boolean checkFamilyMemberUsed(ArrayList<FamilyMember> familyMembers){
