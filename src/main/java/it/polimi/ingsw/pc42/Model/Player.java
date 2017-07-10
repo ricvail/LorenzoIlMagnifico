@@ -31,6 +31,7 @@ public class Player {
     private static Logger logger=LogManager.getLogger();
     private boolean isAdvanced;
 
+
     public void enableAdvanced(){
         isAdvanced=true;
     }
@@ -138,7 +139,7 @@ public class Player {
                             try {
                                 cardsOwned.get(j).undoOnHarvest(move.get("cardChoices").get(i), fm);
                             } catch (ActionAbortedException ex) {
-                                ex.printStackTrace(); //this is not expected to happen
+                                logger.error(ex);
                             }
                             i--;
                         }
@@ -159,7 +160,7 @@ public class Player {
                 try {
                     cardsOwned.get(i).undoOnHarvest(move.get("cardChoices").get(j), fm);
                 } catch (ActionAbortedException e) {
-                    e.printStackTrace();
+                    logger.error(e);
                 }
                 j++;
             }
@@ -192,7 +193,7 @@ public class Player {
                             try {
                                 cardsOwned.get(j).undoOnProduction(move.get("cardChoices").get(i), fm);
                             } catch (ActionAbortedException ex) {
-                                ex.printStackTrace(); //this is not expected to happen
+                                logger.error(ex); //this is not expected to happen
                             }
                             i--;
                         }
@@ -220,7 +221,7 @@ public class Player {
                 try {
                     cardsOwned.get(i).undoOnProduction(move.get("cardChoices").get(j), fm);
                 } catch (ActionAbortedException e) {
-                    e.printStackTrace();
+                    logger.error(e);
                 }
                 j++;
             }
