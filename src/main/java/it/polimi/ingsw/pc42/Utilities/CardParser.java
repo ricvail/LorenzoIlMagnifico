@@ -87,6 +87,7 @@ public class CardParser {
                 try {
                     c = new harvestResource(ResourceType.fromString(key), jsonNode.get(key).asInt(), c);
                 } catch (IllegalArgumentException e){
+                    logger.info(e);
                     if ("privileges".equalsIgnoreCase(key)){
                         c= new harvestPrivileges(jsonNode.get(key).asInt(), c);
                     }else{
@@ -97,6 +98,7 @@ public class CardParser {
                 try {
                     c = new productionResource(ResourceType.fromString(key), jsonNode.get(key).asInt(), c);
                 } catch (IllegalArgumentException e){
+                    logger.info(e);
                     if ("privileges".equalsIgnoreCase(key)){
                         c= new productionPrivileges(jsonNode.get(key).asInt(), c);
                     } else if ("foreach".equalsIgnoreCase(key)){
@@ -106,7 +108,7 @@ public class CardParser {
                     }
                 }
             }
-            if (key.equalsIgnoreCase("addValueToDice")){
+            if ("addValueToDice".equalsIgnoreCase(key)){
                 JsonNode addValue = jsonNode.get(key);
                 ArrayList<ResourceWrapper> bonusList= new ArrayList<>();
                 if (addValue.has("value")&&addValue.has("type")){
@@ -118,7 +120,8 @@ public class CardParser {
                                     ResourceType.fromString(bonus), addValue.get(bonus).asInt()
                             ));
                         } catch (IllegalArgumentException e){
-                            if (bonus.equalsIgnoreCase("value")||bonus.equalsIgnoreCase("type"));
+                            logger.info(e);
+                            if ("value".equalsIgnoreCase(bonus)||"type".equalsIgnoreCase(bonus));
                             else throw new Exception("Missing value or type on AddValueToDice");
                         }
                     }
@@ -127,10 +130,10 @@ public class CardParser {
                     throw new Exception("Missing value or type on AddValueToDice");
                 }
             }
-            if (key.equalsIgnoreCase("disableImmediateBonus")&&jsonNode.get(key).asBoolean()){
+            if ("disableImmediateBonus".equalsIgnoreCase(key)&&jsonNode.get(key).asBoolean()){
                 c= new DisableImmediateBonus(c);
             }
-            if (key.equalsIgnoreCase("finalVictoryPoint")){
+            if ("finalVictoryPoint".equalsIgnoreCase(key)){
                 if (jsonNode.get(key).isInt()){
                     c = new endGameVictoryPoints(jsonNode.get(key).asInt(), c);
                 } else{
@@ -226,7 +229,7 @@ public class CardParser {
                         Area a = Area.fromString(type);
                         areas.add(a);
                     } catch (Exception ex) {
-                        logger.info(e);
+                        logger.info(ex);
                         if ("all".equalsIgnoreCase(type)) {
                             areas.add(Area.TERRITORY);
                             areas.add(Area.BUILDING);
@@ -271,6 +274,7 @@ public class CardParser {
             ResourceType toBeCounted = ResourceType.fromString(jsonNode.get("right").asText());
             return new ForeachProduction(c, obtained,(float) jsonNode.get("ratio").asDouble(), toBeCounted);
         } catch (Exception e){
+            logger.info(e);
             Card.CardType toBeCounted = Card.CardType.fromString(jsonNode.get("right").asText());
             return new ForeachProduction(c, obtained,(float) jsonNode.get("ratio").asDouble(), toBeCounted);
         }
