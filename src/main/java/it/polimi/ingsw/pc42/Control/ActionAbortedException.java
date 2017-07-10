@@ -6,7 +6,7 @@ public class ActionAbortedException extends Exception{
     public boolean isComplete;
     public boolean isValid;
     public String nextMoveField;
-    public JsonNode availableChoices;
+    public transient JsonNode availableChoices;
     public int level;
     public boolean isCardChoice;
     public int card;

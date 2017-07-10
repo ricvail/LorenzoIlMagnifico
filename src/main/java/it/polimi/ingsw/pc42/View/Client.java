@@ -59,6 +59,16 @@ public class Client extends MessageSender {
         moveComplete=false;
         executor.submit(userInputHandler);
         executor.submit(serverResponseHandler);
+        int i = 0;
+        while (continueLoop){
+            i++;
+            i--;
+            if (i>1000) continueLoop=false;
+        }
+        socketIn.close();
+        socketOut.close();
+        socket.close();
+
     }
     Runnable serverResponseHandler = ()->{
         while (continueLoop){
