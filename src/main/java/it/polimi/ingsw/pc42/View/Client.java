@@ -26,18 +26,8 @@ public class Client extends MessageSender {
     private final static int PORT = 3000;
     private final static String IP="127.0.0.1";
     private JsonNode board;
-
     private Scanner socketIn;
-
     private boolean waitingForResponse;
-
-    public void setSocket (Socket socket){
-        this.socket=socket;
-    }
-
-    public Socket getSocket() {
-        return socket;
-    }
     boolean continueLoop;
     boolean isInGame;
     boolean isMyTurn;
@@ -46,6 +36,15 @@ public class Client extends MessageSender {
     JsonNode currentMove;
     ArrayList<moveBuildingState> moveStack;
     public String playerColor;
+
+    public void setSocket (Socket socket){
+        this.socket=socket;
+    }
+
+    public Socket getSocket() {
+        return socket;
+    }
+
     public void startClient() throws IOException {
         Socket socket = new Socket(IP, PORT);
         System.out.println("Connection Established");
@@ -352,7 +351,7 @@ public class Client extends MessageSender {
             try {
                 out= OutputStringGenerator.ArrayToString(OutputStringGenerator.getProducionChoice(board, playerColor, payload.get("card").asInt()));
             } catch (Exception e) {
-                e.printStackTrace();
+                LogManager.getLogger().error(e);
             }
         }
         if ("vaticanChoice".equalsIgnoreCase(field)){
