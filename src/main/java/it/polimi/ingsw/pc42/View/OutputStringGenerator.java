@@ -399,7 +399,8 @@ public class OutputStringGenerator {
                     JsonNode permanentEffect = permanentEffects.get(0);
                     out.addAll(parseResources(permanentEffect));
                 } else {
-                    for (int i = 0; i<permanentEffects.size(); i++) {
+                    out.add("\n\t\t\tChoice 0: refuse the activation");
+                    for (int i = 1; i<permanentEffects.size(); i++) {
                         out.add("\n\t\t\tChoice "+ i+ ": ");
                         JsonNode permanentEffect = permanentEffects.get(i);
                         out.addAll(parseResources(permanentEffect));
