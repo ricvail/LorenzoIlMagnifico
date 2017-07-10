@@ -55,7 +55,10 @@ public class GameInitializer {
         JsonNode root=null;
         JsonNode sent;
         try {
-            root=readFile("src/res/actionsSpaces.json").get("action_spaces");
+            JsonNode file = readFile("src/res/actionsSpaces.json");
+            if (file!=null){
+                root=file.get("action_spaces");
+            } else throw new myException();
         } catch (Exception e){
             logger.error(e);
         }
@@ -81,7 +84,10 @@ public class GameInitializer {
         JsonNode root=null;
         JsonNode sent;
         try {
-            root=readFile("src/res/privileges.json").get("privileges");
+            JsonNode file = readFile("src/res/actionsSpaces.json");
+            if (file!=null){
+                root=readFile("src/res/privileges.json");
+            } else throw new myException();
         } catch (Exception e){
             logger.error(e);
         }

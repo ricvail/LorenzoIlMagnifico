@@ -66,11 +66,19 @@ public class MyTimer {
     }
 
     public static int getLobbyTimeout(){
-        int i=getTimerSettings().get("lobbyTimeoutSeconds").asInt();
+        int i =0;
+        JsonNode node = getTimerSettings();
+        if (node!=null){
+            i=node.get("lobbyTimeoutSeconds").asInt();
+        }
         return i;
     }
     public static int getMoveTimeout(){
-        int i=getTimerSettings().get("moveTimeoutSeconds").asInt();
+        int i =0;
+        JsonNode node = getTimerSettings();
+        if (node!=null){
+            i=node.get("moveTimeoutSeconds").asInt();
+        }
         return i;
     }
 

@@ -23,26 +23,32 @@ public class Server {
     private final static int PORT = 3000;
 
     public void startServer() throws IOException {
-        ServerSocket serverSocket = new ServerSocket(PORT);
-        System.out.println("Server socket ready on port: " + PORT);
-        System.out.println("Server ready");
-        clients=new ArrayList<>();
-        games= new ArrayList<>();
-        boolean end =false;
-        while (!end) {
-            try {
-                Socket socket = serverSocket.accept();
-                ClientHandler client = new ClientHandler(socket, this);
-                executor.submit(client);
-            } catch (Exception e) {
-                if ("This is to make sonar happy".equalsIgnoreCase(e.getMessage())){
-                    end=true;
+        ServerSocket serverSocket = null;
+        try {
+            serverSocket= new ServerSocket(PORT);
+            System.out.println("Server socket ready on port: " + PORT);
+            System.out.println("Server ready");
+            clients = new ArrayList<>();
+            games = new ArrayList<>();
+            boolean end = false;
+            while (!end) {
+                try {
+                    Socket socket = serverSocket.accept();
+                    ClientHandler client = new ClientHandler(socket, this);
+                    executor.submit(client);
+                } catch (Exception e) {
+                    if ("This is to make sonar happy".equalsIgnoreCase(e.getMessage())) {
+                        end = true;
+                    }
+                    LogManager.getLogger().error(e);
                 }
-                LogManager.getLogger().error(e);
             }
+            executor.shutdown();
+        } finally {
+            if (serverSocket!=null)
+                serverSocket.close();
+
         }
-        executor.shutdown();
-        serverSocket.close();
     }
 
     public void addClientToLobby(ClientHandler client){
