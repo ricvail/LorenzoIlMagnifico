@@ -53,10 +53,6 @@ public class ResourceImmediateBonus extends AbstractDecorator {
 
     @Override
     public void undoAction(JsonNode move, FamilyMember fm) {
-        try {
-            fm.owner.getResource(resourceType).add(q * -1);
-        } catch (Exception e){
-            logger.error(e);
         if(!isDisabled(move)) {
             try {
                 fm.owner.getResource(resourceType).add(q * -1);

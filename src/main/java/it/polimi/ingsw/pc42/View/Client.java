@@ -461,7 +461,7 @@ public class Client extends MessageSender {
                 client.startClient();
                 asd=false;
             } catch (IOException e) {
-                LogManager.getLogger().error(e);
+                LogManager.getLogger().info(e);
 
             }
         }

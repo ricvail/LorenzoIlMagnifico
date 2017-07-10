@@ -449,7 +449,7 @@ public class OutputStringGenerator {
             turnOrder.get("victoryPoints").asInt()+ " victory points");
             counter++;
         }
-        out.add("\nGIVE US A 30");
+        out.add("\nThanks for playing!");
         return out;
     }
 
