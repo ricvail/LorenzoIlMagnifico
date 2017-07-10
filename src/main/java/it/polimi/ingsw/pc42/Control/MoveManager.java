@@ -9,6 +9,7 @@ import it.polimi.ingsw.pc42.Control.ActionSpace.iActionSpace;
 import it.polimi.ingsw.pc42.Model.Board;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
 import it.polimi.ingsw.pc42.Model.Player;
+import it.polimi.ingsw.pc42.Utilities.myException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,7 +26,7 @@ public class MoveManager {
      * @param move higher node of a JSON object that describes the move to be executed
      * @throws Exception re-throws from the callee
      */
-    public static void makeMove (Board b, JsonNode move) throws Exception {
+    public static void makeMove (Board b, JsonNode move) throws myException, ActionAbortedException {
         makeMove (b, b.getCurrentPlayer(), move);
 
         if (move.has("checking")&&move.get("checking").asBoolean()){
@@ -42,7 +43,7 @@ public class MoveManager {
      * @param move higher node of a JSON object that describes the move to be reverted
      * @throws Exception re-throws from the callee
      */
-    public static void undoMove(Board b, Player p, JsonNode move) throws Exception {
+    public static void undoMove(Board b, Player p, JsonNode move) throws myException, ActionAbortedException {
         undoGetFamilyMemberFromJson(b, move, p);
     }
 
@@ -55,9 +56,9 @@ public class MoveManager {
      * @param move higher node of a JSON object that describes the move to be executed
      * @throws Exception if was a checking move, to not end the turn, or re-throws
      */
-    public static void makeMove(Board b, Player p, JsonNode move) throws Exception {
+    public static void makeMove(Board b, Player p, JsonNode move) throws myException, ActionAbortedException {
         if (!b.isPlayerTurn(p)){
-            throw new Exception("it's not this player's turn");
+            throw new myException("it's not this player's turn");
         }
         if (b.isVatican()){
             makeVaticanChoice(b, p, move);
@@ -86,7 +87,7 @@ public class MoveManager {
      * @param move higher node of a JSON object that describes the move to be executed
      * @throws Exception if the player can't do that choice in the Vatican phase or if the JSON of the move is not valid
      */
-    public static void makeVaticanChoice(Board b, Player p, JsonNode move) throws Exception {
+    public static void makeVaticanChoice(Board b, Player p, JsonNode move) throws myException, ActionAbortedException {
         if (move.has("vaticanChoice")){
             if (move.get("vaticanChoice").asBoolean()){
                 if (enoughFaithPoints(p, b)){

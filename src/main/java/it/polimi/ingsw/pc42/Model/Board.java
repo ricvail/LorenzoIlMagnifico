@@ -5,12 +5,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Control.MoveManager;
 import it.polimi.ingsw.pc42.Control.ActionSpace.iActionSpace;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.iCard;
 import it.polimi.ingsw.pc42.Control.PrivilegeManager;
 import it.polimi.ingsw.pc42.Control.ResourceType;
+import it.polimi.ingsw.pc42.Utilities.myException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -157,12 +159,12 @@ public class Board {
      * @param councilID index of the slot to be set as Council
      * @throws Exception if the councilID attribute is already been set
      */
-    public void setCouncilID(int councilID) throws Exception {
+    public void setCouncilID(int councilID) throws myException {
         if (!councilHasBeenSet) {
             this.councilID = councilID;
             //cleanUp();
         } else{
-            throw new Exception("Council ID has already been set");
+            throw new myException("Council ID has already been set");
         }
     }
 
@@ -171,12 +173,12 @@ public class Board {
      *
      * @throws Exception if council ID has already been set
      */
-    public void firstCleanup() throws Exception {
+    public void firstCleanup() throws myException {
         if (!councilHasBeenSet) {
             councilHasBeenSet=true;
             cleanUp();
         } else{
-            throw new Exception("Council ID has already been set");
+            throw new myException("Council ID has already been set");
         }
     }
 
@@ -217,7 +219,7 @@ public class Board {
      * @param move JSON of the move, already mapped
      * @throws Exception re-throws the exception if it occurs in the controller class
      */
-    public void makeMove(JsonNode move) throws Exception {
+    public void makeMove(JsonNode move) throws myException, ActionAbortedException {
         MoveManager.makeMove(this, move);
     }
 
@@ -228,7 +230,7 @@ public class Board {
      * @return  an object that implements the interface for the action space
      * @throws Exception if such ID doesn't exist on the board
      */
-    public iActionSpace getActionSpaceByID(int id) throws Exception {
+    public iActionSpace getActionSpaceByID(int id) throws myException {
         Iterator<iActionSpace> iterator = actionSpaces.iterator();
         while (iterator.hasNext()){
             iActionSpace actionSpace = iterator.next();
@@ -236,7 +238,7 @@ public class Board {
                 return actionSpace;
             }
         }
-        throw new Exception("Could not find an actionSpace with ID "+id);
+        throw new myException("Could not find an actionSpace with ID "+id);
     }
 
     /**
@@ -278,7 +280,7 @@ public class Board {
      * @return an object that implements the card interface
      * @throws Exception if the list is run out of cards of a certain type/Era
      */
-    public iCard getCard(Card.CardType type) throws Exception {
+    public iCard getCard(Card.CardType type) throws myException {
         Iterator<iCard> cardIterator = cards.iterator();
         while (cardIterator.hasNext()){
             iCard card= cardIterator.next();
@@ -287,7 +289,7 @@ public class Board {
                 return card;
             }
         }
-        throw new Exception("Out of cards of type "+type.getString()+" and era "+era);
+        throw new myException("Out of cards of type "+type.getString()+" and era "+era);
     }
 
     /**
@@ -317,7 +319,7 @@ public class Board {
      * @return the player that will make the next move
      * @throws Exception if it doesn't find a possible next player in the list
      */
-    private Player getNextPlayer() throws Exception {
+    private Player getNextPlayer() throws myException {
         int currentTurn=getPlayerIndex(currentPlayer);
         for (int i = 1; i<=playerArrayList.size(); i++){
             Player nextPlayer=playerArrayList.get((currentTurn+i)%playerArrayList.size());
@@ -327,7 +329,7 @@ public class Board {
                 if (!fm.isUsed()) {return nextPlayer;}
             }
         }
-        throw new Exception("No next payer");
+        throw new myException("No next payer");
     }
 
     /**
@@ -337,11 +339,11 @@ public class Board {
      * @return the index of the player, 0 is first in the turn order
      * @throws Exception if the player passed is not playing in the game or has an invalid color
      */
-    private int getPlayerIndex(Player p) throws Exception {
+    private int getPlayerIndex(Player p) throws myException {
         for (int i =0; i<playerArrayList.size(); i++){
             if (playerArrayList.get(i).getColor()==p.getColor()) return  i;
         }
-        throw new Exception("No player with such color "+ p.getColor().getPlayerColorString());
+        throw new myException("No player with such color "+ p.getColor().getPlayerColorString());
     }
 
     /**

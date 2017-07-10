@@ -7,6 +7,7 @@ import it.polimi.ingsw.pc42.Model.Board;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
 import it.polimi.ingsw.pc42.Model.Player;
 import it.polimi.ingsw.pc42.Utilities.BoardProvider;
+import it.polimi.ingsw.pc42.Utilities.myException;
 
 public class Card implements iCard{
 
@@ -137,13 +138,13 @@ public class Card implements iCard{
          * @return a card type value, if matches the parameter
          * @throws Exception if the string passed represent an invalid card type
          */
-        public static CardType fromString(String s) throws Exception {
+        public static CardType fromString(String s) throws myException {
             for (CardType cardType : CardType.values()) {
                 if (cardType.getString().equalsIgnoreCase(s)) {
                     return cardType;
                 }
             }
-            throw new Exception("Invalid card type: "+ s);
+            throw new myException("Invalid card type: "+ s);
         }
 
     }

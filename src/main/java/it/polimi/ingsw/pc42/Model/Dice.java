@@ -1,6 +1,8 @@
 package it.polimi.ingsw.pc42.Model;
 
 
+import it.polimi.ingsw.pc42.Utilities.myException;
+
 public class Dice {
     private int value;
     private DiceColor color;
@@ -56,13 +58,13 @@ public class Dice {
          * @return a dice color value of the Enum
          * @throws Exception if doesn't find a match between parameter and Enum values
          */
-        public static DiceColor fromString(String dc) throws Exception {
+        public static DiceColor fromString(String dc) throws myException {
             for (DiceColor color : DiceColor.values()) {
                 if (color.diceColor.equalsIgnoreCase(dc)) {
                     return color;
                 }
             }
-            throw new Exception(dc+" is not a valid dice color");
+            throw new myException(dc+" is not a valid dice color");
         }
     }
 }

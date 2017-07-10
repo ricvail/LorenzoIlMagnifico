@@ -14,6 +14,7 @@ import it.polimi.ingsw.pc42.Control.ResourceWrapper;
 import it.polimi.ingsw.pc42.Control.iResourceWrapper;
 import it.polimi.ingsw.pc42.Utilities.GameInitializer;
 import it.polimi.ingsw.pc42.Utilities.PersonalBonusTileParser;
+import it.polimi.ingsw.pc42.Utilities.myException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -346,7 +347,7 @@ public class Player {
      * @return a reference to a family member
      * @throws Exception if it could not find a family member of the specific color
      */
-    public FamilyMember getFamilyMemberFromColor(String s) throws Exception {
+    public FamilyMember getFamilyMemberFromColor(String s) throws myException {
         Dice.DiceColor color = Dice.DiceColor.fromString(s);
         Iterator<FamilyMember> iterator = familyMembers.iterator();
         while (iterator.hasNext()){
@@ -355,7 +356,7 @@ public class Player {
                 return fm;
             }
         }
-        throw new Exception("Could not find a family member with color "+s);
+        throw new myException("Could not find a family member with color "+s);
     }
 
     /**
@@ -422,13 +423,13 @@ public class Player {
          * @return a player color if matches the parameter
          * @throws Exception if it doesn't find a match in the player color Enum values
          */
-        public static PlayerColor fromString(String color) throws Exception {
+        public static PlayerColor fromString(String color) throws myException {
             for (PlayerColor pc : PlayerColor.values()) {
                 if (pc.getPlayerColorString().equalsIgnoreCase(color)) {
                     return pc;
                 }
             }
-            throw new Exception("Invalid player color: "+ color);
+            throw new myException("Invalid player color: "+ color);
         }
     }
 }

@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
 
 public class Server {
 
-    public static ExecutorService executor = Executors.newCachedThreadPool();
+    private static ExecutorService executor = Executors.newCachedThreadPool();
 
     private ArrayList<ClientHandler> clients;
     private ArrayList<Game> games;
@@ -65,11 +65,11 @@ public class Server {
         }
     }
 
-    public Game getGame(int id) throws Exception {
+    public Game getGame(int id) throws myException {
         for (Game g: games){
             if (g.id==id) return g;
         }
-        throw new Exception();
+        throw new myException();
     }
 
     public void createGame(){

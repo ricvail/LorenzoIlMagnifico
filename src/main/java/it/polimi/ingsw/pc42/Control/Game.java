@@ -7,10 +7,7 @@ import it.polimi.ingsw.pc42.Model.Board;
 import it.polimi.ingsw.pc42.Model.Dice;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
 import it.polimi.ingsw.pc42.Model.Player;
-import it.polimi.ingsw.pc42.Utilities.ClientHandler;
-import it.polimi.ingsw.pc42.Utilities.GameInitializer;
-import it.polimi.ingsw.pc42.Utilities.MyTimer;
-import it.polimi.ingsw.pc42.Utilities.Strings;
+import it.polimi.ingsw.pc42.Utilities.*;
 import it.polimi.ingsw.pc42.View.Client;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -27,7 +24,7 @@ public class Game {
     private Board b;
     private Logger logger;
 
-    public static int nextID = 0;
+    private static int nextID = 0;
 
     public int id;
 
@@ -95,7 +92,7 @@ public class Game {
             }
         }
         try {
-            throw new Exception();
+            throw new myException();
         } catch (Exception e){
             logger.error(e);
         }

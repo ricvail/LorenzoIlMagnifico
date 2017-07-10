@@ -26,10 +26,10 @@ public class ActionSpaceParser {
      * @param spaces list of objects that implement the action space interface
      * @throws Exception if the JSON object for the action space, or the effect specification, is not valid
      */
-    public static void actionSpace(JsonNode root, BoardProvider bp, ArrayList<iActionSpace> spaces) throws Exception {
+    public static void actionSpace(JsonNode root, BoardProvider bp, ArrayList<iActionSpace> spaces) throws myException {
 
         if (!isJsonValid(root)){
-            throw new Exception("ActionSpace JSON is not valid");
+            throw new myException("ActionSpace JSON is not valid");
         }
 
         Iterator<JsonNode> iterator=root.get("actionSpaces").elements();
@@ -53,7 +53,7 @@ public class ActionSpaceParser {
                         } else if ("production".equalsIgnoreCase(effect)) {
                             actionSpace = new ActionDecorator(ActionDecorator.ActionType.PRODUCTION, actionSpace);
                         } else {
-                            throw new Exception("Invalid effect detected: "+effect);
+                            throw new myException("Invalid effect detected: "+effect);
                         }
                     }
 
@@ -74,7 +74,7 @@ public class ActionSpaceParser {
                         } else if ("effect".equalsIgnoreCase(key)) {
 
                         } else {
-                            throw new Exception("Invalid immediateResourceEffect detected: "+key);
+                            throw new myException("Invalid immediateResourceEffect detected: "+key);
                         }
                     }
                 } //end of immediate resource effect
@@ -110,7 +110,7 @@ public class ActionSpaceParser {
      * @return the index of the council, if it exist
      * @throws Exception if it doesn't find any council, after reaching the end of the list of action spaces
      */
-    public static int getCouncilID(JsonNode areaList) throws Exception {
+    public static int getCouncilID(JsonNode areaList) throws myException {
 
         Iterator<JsonNode> roots = areaList.iterator();
         while (roots.hasNext()) {
@@ -124,7 +124,7 @@ public class ActionSpaceParser {
                 }
             }
         }
-        throw new Exception("Council not found");
+        throw new myException("Council not found");
     }
 
     /**

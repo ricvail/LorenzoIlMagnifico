@@ -351,7 +351,7 @@ public class Client extends MessageSender {
             try {
                 out= OutputStringGenerator.ArrayToString(OutputStringGenerator.getProducionChoice(board, playerColor, payload.get("card").asInt()));
             } catch (Exception e) {
-                LogManager.getLogger().error(e);
+                LogManager.getLogger().info(e);
             }
         }
         if ("vaticanChoice".equalsIgnoreCase(field)){

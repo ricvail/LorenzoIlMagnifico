@@ -200,7 +200,7 @@ public class GameInitializer {
      * @return list of objects that implement the action space interface (already decorated)
      * @throws Exception re-throws exception from the creator of action spaces
      */
-    private static ArrayList<iActionSpace> readActionSpaces(JsonNode spacesList, BoardProvider boardProvider) throws Exception {
+    private static ArrayList<iActionSpace> readActionSpaces(JsonNode spacesList, BoardProvider boardProvider) throws myException {
         ArrayList<iActionSpace> actionSpaceList = new ArrayList<>();
         Iterator<JsonNode> actionSpacesIterator= spacesList.iterator();
         while (actionSpacesIterator.hasNext()) {
@@ -236,9 +236,9 @@ public class GameInitializer {
      * @return a list of players
      * @throws Exception if the the list of players that want to start a new game is not valid
      */
-    private static ArrayList<Player> initBasicPlayers(JsonNode playerList, boolean shuffle) throws Exception {
+    private static ArrayList<Player> initBasicPlayers(JsonNode playerList, boolean shuffle) throws myException {
         if (!isBasicPlayerListJsonValid(playerList)){
-            throw new Exception("Invalid PlayerInit Json");
+            throw new myException("Invalid PlayerInit Json");
         }
         ArrayList<Player> players = new ArrayList<>();
         Iterator<JsonNode> playerIterator =playerList.get("players").iterator();
@@ -277,7 +277,7 @@ public class GameInitializer {
      * @throws Exception re-throws exception from the creation of players, cards, action spaces or privileges
      */
     private static Board initGame(boolean advanced, JsonNode playerList, JsonNode actionSpaces,
-                                 JsonNode cards, boolean shuffle, JsonNode privileges) throws Exception {
+                                 JsonNode cards, boolean shuffle, JsonNode privileges) throws myException {
 
         ArrayList<Player> players = initBasicPlayers(playerList, shuffle);
 
@@ -298,7 +298,7 @@ public class GameInitializer {
      * @throws Exception re-throws exception from the creation of cards, action spaces or privileges
      */
     private static Board initGame(boolean advanced, ArrayList<Player> players, JsonNode actionSpaces,
-                                 JsonNode cards, boolean shuffle, JsonNode privileges) throws Exception {
+                                 JsonNode cards, boolean shuffle, JsonNode privileges) throws myException {
 
         if (advanced){
             for (Player p : players){

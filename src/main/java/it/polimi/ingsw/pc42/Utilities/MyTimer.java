@@ -50,7 +50,7 @@ public class MyTimer {
         void onEnd();
     }
 
-    public static JsonNode timerSettings = null;
+    private static JsonNode timerSettings = null;
 
     public static JsonNode getTimerSettings(){
         if (timerSettings!=null) return timerSettings;

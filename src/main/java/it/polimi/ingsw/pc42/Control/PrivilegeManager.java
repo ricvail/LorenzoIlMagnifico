@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import it.polimi.ingsw.pc42.Model.Player;
+import it.polimi.ingsw.pc42.Utilities.myException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -87,7 +88,7 @@ public class PrivilegeManager {
      * @param j node of an array of privileges in a move
      * @throws Exception re-throws from the callee that applies the privileges
      */
-    private void applyDifferentPrivileges(Player p, JsonNode j) throws Exception {
+    private void applyDifferentPrivileges(Player p, JsonNode j) throws myException {
         int i = 0;
         while (j.get("privileges").has(i)){
             applyPrivilege(p, j.get("privileges").get(i).asInt(), getPrivileges());
@@ -117,7 +118,7 @@ public class PrivilegeManager {
      * @param j node of an array of privileges in a move
      * @throws Exception  re-throws from the callee
      */
-    public void undoPrivileges(Player p, JsonNode j) throws Exception {
+    public void undoPrivileges(Player p, JsonNode j) throws myException {
         int i=0;
         while (j.get("privileges").has(i)){
             undoPrivilege(p, j.get("privileges").get(i).asInt(), getPrivileges());
@@ -158,7 +159,7 @@ public class PrivilegeManager {
      * @param privileges node of the array of privileges of the game
      * @throws Exception re-throws exception from the callee that tries to apply the privilege
      */
-    private void applyPrivilege(Player p,  int i, JsonNode privileges) throws Exception {
+    private void applyPrivilege(Player p,  int i, JsonNode privileges) throws myException {
         usePrivilege(p, i, privileges, false);
     }
 
@@ -171,7 +172,7 @@ public class PrivilegeManager {
      * @param privileges node of the array of privileges of the game
      * @throws Exception re-throws exception from the callee that tries to undo the privilege application
      */
-    private void undoPrivilege(Player p, int i, JsonNode privileges) throws Exception {
+    private void undoPrivilege(Player p, int i, JsonNode privileges) throws myException {
         usePrivilege(p, i, privileges, true);
     }
 
@@ -186,7 +187,7 @@ public class PrivilegeManager {
      * @param subtract <code>true</code> if is an undo privilege move
      * @throws Exception if the privilege of the specified index does not exist
      */
-    private void usePrivilege(Player p, int i, JsonNode privileges, boolean subtract) throws Exception {
+    private void usePrivilege(Player p, int i, JsonNode privileges, boolean subtract) throws myException {
         if (privileges.has(i)){
             Iterator<String> iterator = privileges.get(i).fieldNames();
             while (iterator.hasNext()){
@@ -200,7 +201,7 @@ public class PrivilegeManager {
                 }
             }
         } else{
-            throw new Exception("A privilege with this number does not exist: "+ i);
+            throw new myException("A privilege with this number does not exist: "+ i);
         }
     }
 

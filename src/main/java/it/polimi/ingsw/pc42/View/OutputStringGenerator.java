@@ -2,6 +2,7 @@ package it.polimi.ingsw.pc42.View;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import it.polimi.ingsw.pc42.Control.ActionAbortedException;
+import it.polimi.ingsw.pc42.Utilities.myException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -223,7 +224,7 @@ public class OutputStringGenerator {
      * @return a string of the name
      * @throws Exception if doesn't enter in any check
      */
-    public static String getResourceNameIgnoringCards(String field, boolean plural) throws Exception {
+    public static String getResourceNameIgnoringCards(String field, boolean plural) throws myException {
 
         if ("stone".equalsIgnoreCase(field)||"stones".equalsIgnoreCase(field)){
             return "Stone"+ (plural?"s":"");
@@ -251,7 +252,7 @@ public class OutputStringGenerator {
             return "Production";
         }else if ("finalVictoryPoint".equalsIgnoreCase(field)) {
             return "finalVictoryPoints";
-        }else throw new Exception();
+        }else throw new myException();
     }
 
     /**
@@ -261,7 +262,7 @@ public class OutputStringGenerator {
      * @return a string of the name
      * @throws Exception if doesn't enter in any check
      */
-    public static String getResourceName(String field, boolean plural) throws Exception {
+    public static String getResourceName(String field, boolean plural) throws myException {
     try {
         return getResourceNameIgnoringCards(field, plural);
     }catch (Exception e) {
@@ -275,7 +276,7 @@ public class OutputStringGenerator {
         } else if ("characters".equalsIgnoreCase(field)) {
             return "Character" + (plural ? "s" : "");
         }
-        throw new Exception();
+        throw new myException();
         }
     }
 
@@ -287,7 +288,7 @@ public class OutputStringGenerator {
      * @return  an arrayList with the description
      * @throws Exception
      */
-    public static ArrayList<String> getPlayerStatus (JsonNode board, String playerColor) throws Exception {
+    public static ArrayList<String> getPlayerStatus (JsonNode board, String playerColor) throws myException {
         ArrayList<String> out = new ArrayList<>();
         Iterator<JsonNode> players= board.get("players").elements();
         while (players.hasNext()){
@@ -343,10 +344,10 @@ public class OutputStringGenerator {
                 return out;
             }
         }
-        throw new Exception();
+        throw new myException();
     }
 
-    public static ArrayList<String> getProducionChoice (JsonNode board, String playerColor, int index) throws Exception {
+    public static ArrayList<String> getProducionChoice (JsonNode board, String playerColor, int index) throws myException {
         ArrayList<String> out = new ArrayList<>();
         Iterator<JsonNode> players = board.get("players").elements();
         while (players.hasNext()) {

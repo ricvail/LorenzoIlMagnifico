@@ -79,7 +79,7 @@ public class CardParser {
         return c;
     }
 
-    private static iCard permanentEffectIterator(JsonNode jsonNode, iCard c) throws Exception {
+    private static iCard permanentEffectIterator(JsonNode jsonNode, iCard c) throws myException {
         Iterator<String> it = jsonNode.fieldNames();
         while (it.hasNext()) {
             String key = it.next();
@@ -91,7 +91,7 @@ public class CardParser {
                     if ("privileges".equalsIgnoreCase(key)){
                         c= new harvestPrivileges(jsonNode.get(key).asInt(), c);
                     }else{
-                        throw new Exception("Invalid territory field: "+ key);
+                        throw new myException("Invalid territory field: "+ key);
                     }
                 }
             }else if (c.getCardType()== Card.CardType.BUILDING) {
@@ -104,7 +104,7 @@ public class CardParser {
                     } else if ("foreach".equalsIgnoreCase(key)){
                         c=applyForeachProduction(jsonNode.get(key), c);
                     } else{
-                        throw new Exception("Invalid building field: "+ key);
+                        throw new myException("Invalid building field: "+ key);
                     }
                 }
             }
@@ -122,12 +122,12 @@ public class CardParser {
                         } catch (IllegalArgumentException e){
                             logger.info(e);
                             if ("value".equalsIgnoreCase(bonus)||"type".equalsIgnoreCase(bonus));
-                            else throw new Exception("Missing value or type on AddValueToDice");
+                            else throw new myException("Missing value or type on AddValueToDice");
                         }
                     }
                     c= new DiceBonus(bonusList, addValue.get("value").asInt(), Area.fromString(addValue.get("type").asText()), c);
                 } else {
-                    throw new Exception("Missing value or type on AddValueToDice");
+                    throw new myException("Missing value or type on AddValueToDice");
                 }
             }
             if ("disableImmediateBonus".equalsIgnoreCase(key)&&jsonNode.get(key).asBoolean()){
@@ -137,7 +137,7 @@ public class CardParser {
                 if (jsonNode.get(key).isInt()){
                     c = new endGameVictoryPoints(jsonNode.get(key).asInt(), c);
                 } else{
-                    throw new Exception("Invalid finalVictoryPoint field");
+                    throw new myException("Invalid finalVictoryPoint field");
                 }
             }
         }
@@ -153,7 +153,7 @@ public class CardParser {
      * @return an object that implements the card interface, decorated with the immediate effect
      * @throws Exception if a field has an invalid specification of part of the effect to be decorated
      */
-    private static iCard immediateEffectIterator(JsonNode jsonNode, iCard c) throws Exception {
+    private static iCard immediateEffectIterator(JsonNode jsonNode, iCard c) throws myException {
         Iterator<String> it = jsonNode.fieldNames();
         while (it.hasNext()) {
             String key = it.next();
@@ -164,7 +164,7 @@ public class CardParser {
                     if (jsonNode.get(key).isInt()){
                         c = new PrivilegeImmediateBonus(jsonNode.get(key).asInt(), c);
                     } else{
-                        throw new Exception("Invalid privileges field");
+                        throw new myException("Invalid privileges field");
                     }
                 } else if ("card".equalsIgnoreCase(key)){
                     c = applyExtraCardBonus(c, jsonNode.get("card"));
@@ -172,7 +172,7 @@ public class CardParser {
                 } else if ("foreach".equalsIgnoreCase(key)){
                     c = applyForeachImmediate(jsonNode.get("foreach"), c);
                 } else {
-                    throw new Exception("Invalid immediate effect: "+ key);
+                    throw new myException("Invalid immediate effect: "+ key);
                 }
                 logger.info(e);
             }
@@ -206,9 +206,9 @@ public class CardParser {
      * @return an object that implements the card interface, decorated with a extra card bonus
      * @throws Exception if a needed field is missing or is not a valid card type
      */
-    private static iCard applyExtraCardBonus(iCard c, JsonNode node) throws Exception {
+    private static iCard applyExtraCardBonus(iCard c, JsonNode node) throws myException {
         if (!(node.has("value")&&node.has("type"))){
-            throw new Exception("missing value or type");
+            throw new myException("missing value or type");
         }
         ArrayList<Area> areas = new ArrayList<>();
         ArrayList<ExtraCard.bonus> bonuses = new ArrayList<>();
@@ -237,7 +237,7 @@ public class CardParser {
                             areas.add(Area.VENTURE);
                             logger.info(e);
                         } else {
-                            throw new Exception("Not a valid card type: " + type);
+                            throw new myException("Not a valid card type: " + type);
                         }
                     }
                 }
@@ -257,7 +257,7 @@ public class CardParser {
      * @return an object that implements the card interface, decorated with a "for each" bonus
      * @throws Exception  from the for each decorator if even the card type is not correct
      */
-    private static iCard applyForeachImmediate(JsonNode jsonNode, iCard c) throws Exception{
+    private static iCard applyForeachImmediate(JsonNode jsonNode, iCard c) throws myException{
         ResourceType obtained = ResourceType.fromString(jsonNode.get("left").asText());
         try {
             ResourceType toBeCounted = ResourceType.fromString(jsonNode.get("right").asText());
@@ -268,7 +268,7 @@ public class CardParser {
             return new ForeachImmediate(c, obtained,(float) jsonNode.get("ratio").asDouble(), toBeCounted);
         }
     }
-    private static iCard applyForeachProduction(JsonNode jsonNode, iCard c) throws Exception{
+    private static iCard applyForeachProduction(JsonNode jsonNode, iCard c) throws myException{
         ResourceType obtained = ResourceType.fromString(jsonNode.get("left").asText());
         try {
             ResourceType toBeCounted = ResourceType.fromString(jsonNode.get("right").asText());
@@ -289,7 +289,7 @@ public class CardParser {
      * @return an object that implements the card interface, decorated with the cost bonus
      * @throws Exception from the decorator
      */
-    private static iCard costIterator(JsonNode jsonNode, iCard c) throws Exception {
+    private static iCard costIterator(JsonNode jsonNode, iCard c) throws myException {
         if (jsonNode.size()>1){
             c = choiceIterator(jsonNode, c);
         } else {
@@ -309,7 +309,7 @@ public class CardParser {
      * @return an object that implements the card interface, decorated with the single cost bonus
      * @throws Exception if encounter an invalid military cost specification, or resource cost in general
      */
-    private static iCard singleCostIterator(JsonNode jsonNode, iCard c) throws Exception {
+    private static iCard singleCostIterator(JsonNode jsonNode, iCard c) throws myException {
         Iterator<String> it = jsonNode.fieldNames();
         while (it.hasNext()) {
             String key = it.next();
@@ -324,12 +324,12 @@ public class CardParser {
                         c=new militaryCost(c, jsonNode.get("militaryPointsRequired").asInt(),
                                 jsonNode.get("militaryPointsSubtracted").asInt());
                     } else {
-                        throw new Exception("Invalid military cost");
+                        throw new myException("Invalid military cost");
                     }
                 } else if ("militaryPointsSubtracted".equalsIgnoreCase(key)){
                     //ignore, already added above
                 } else {
-                    throw new Exception("Invalid cost: "+ key);
+                    throw new myException("Invalid cost: "+ key);
                 }
             }
         }
@@ -347,7 +347,7 @@ public class CardParser {
      * @return an object that implements the card interface, decorated with the choice cost bonus
      * @throws Exception
      */
-    private static iCard choiceIterator(JsonNode jsonNode, iCard c) throws Exception {
+    private static iCard choiceIterator(JsonNode jsonNode, iCard c) throws myException {
         ImmediateBonusChoice choiceDec = new ImmediateBonusChoice(c);
         for (int i = 0; i<jsonNode.size(); i++){
             choiceDec.addChoice();
@@ -363,35 +363,35 @@ public class CardParser {
      * @param root is the highest node of a single card object in the JSON file
      * @throws Exception if a basic field is missing in the card
      */
-    private static void isJsonValid(JsonNode root) throws Exception{
+    private static void isJsonValid(JsonNode root) throws myException{
         if (!(root.has("era")&&root.get("era").isInt()&&
                 root.has("name")&&
                 root.has("type")
                 //&& root.has("id")&&root.get("id").isInt()
         )){
-            throw new Exception("missing base field");
+            throw new myException("missing base field");
         }
 
         Card.CardType type = Card.CardType.fromString(root.get("type").asText());
         if (type== Card.CardType.TERRITORY || type== Card.CardType.BUILDING){
             if (!(root.has("activationCost")&&root.get("activationCost").isInt())){
-                throw new Exception("missing activation cost");
+                throw new myException("missing activation cost");
             }
         }
 
         if (root.has("immediateEffect")&&
                 !root.get("immediateEffect").isObject()) {
-            throw new Exception("wrong type of immediateEffect");
+            throw new myException("wrong type of immediateEffect");
         }
 
         if (root.has("permanentEffects")&&
                 !root.get("permanentEffects").isArray()) {
-            throw new Exception("wrong type of permanentEffects");
+            throw new myException("wrong type of permanentEffects");
         }
 
         if (root.has("costs")&&
                 !root.get("costs").isArray()) {
-            throw new Exception("wrong type of costs");
+            throw new myException("wrong type of costs");
         }
     }
 }

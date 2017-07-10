@@ -120,7 +120,7 @@ public class ClientHandler extends MessageSender implements Runnable {
                     Game g= server.getGame(jsonNode.get("payload").get("id").asInt());
                     ClientHandler cli =g.getClient(Player.PlayerColor.fromString(jsonNode.get("payload").get("color").asText()));
                     if (cli.isConnected){
-                        throw new Exception();
+                        throw new myException();
                     } else {
                         g.replaceClient(this, cli);
                     }

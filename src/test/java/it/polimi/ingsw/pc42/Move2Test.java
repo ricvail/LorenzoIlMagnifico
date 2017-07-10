@@ -10,6 +10,7 @@ import it.polimi.ingsw.pc42.Model.Dice;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
 import it.polimi.ingsw.pc42.Model.Player;
 import it.polimi.ingsw.pc42.Utilities.GameInitializer;
+import it.polimi.ingsw.pc42.Utilities.myException;
 import it.polimi.ingsw.pc42.View.OutputStringGenerator;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -37,7 +38,7 @@ public class Move2Test extends TestCase
     private int redMilitaryPts = 0; private int redFaithPts = 0; private int redVictoryPts = 0;
 
 
-    public void testMove2() throws Exception {
+    public void testMove2() throws myException {
         JsonNode mosse = GameInitializer.readFile("src/res/mosse_per_moveTest2.json").get("moves");
         Board b = GameInitializer.initBaseGame(false);
         //RED and BLUE playing; servants=3, wood=stone=2, coins=5+i
