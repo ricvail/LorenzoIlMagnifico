@@ -94,6 +94,12 @@ public class MoveBuilder {
             }catch (Exception e){
 
             }
+        }else if (field.equalsIgnoreCase("optionToActivate")){
+            try {
+                move.put(field, Integer.parseInt(userChoice));
+            }catch (Exception e){
+
+            }
         }else if (field.equalsIgnoreCase("paymentChoice")){
             try {
                 move.put(field, Integer.parseInt(userChoice));
