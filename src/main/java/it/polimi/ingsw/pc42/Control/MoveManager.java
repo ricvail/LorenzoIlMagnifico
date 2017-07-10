@@ -248,10 +248,10 @@ public class MoveManager {
      * @throws ActionAbortedException re-throws from the callee
      */
     private static void undoApplyServants(JsonNode move, FamilyMember fm, iActionSpace space) throws ActionAbortedException {
+        undoCheckActionValue(move, fm, space);
         int servants = move.get("servants").asInt();
         fm.owner.getResource(ResourceType.SERVANT).add(servants);
         fm.setValue(fm.getValue()-servants);
-        undoCheckActionValue(move, fm, space);
     }
 
     /**

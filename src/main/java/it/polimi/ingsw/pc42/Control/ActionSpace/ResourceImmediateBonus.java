@@ -15,28 +15,37 @@ public class ResourceImmediateBonus extends AbstractDecorator {
         resourceType=rt;
     }
 
+    public boolean isDisabled(JsonNode move){
+        return (move.has("disableImmediateSlotBonus")&&move.get("disableImmediateSlotBonus").asBoolean());
+    }
+
     @Override
     public void performAction(JsonNode move, FamilyMember fm) throws ActionAbortedException {
-        try {
-            fm.owner.getResource(resourceType).add(q);
-        } catch (IllegalArgumentException e){
-            fm.owner.getResource(resourceType).add(q * -1);
-            throw new ActionAbortedException(false, "Not enough resources");
+        if(!isDisabled(move)){
+            try {
+                fm.owner.getResource(resourceType).add(q);
+            } catch (IllegalArgumentException e){
+                fm.owner.getResource(resourceType).add(q * -1);
+                throw new ActionAbortedException(false, "Not enough resources");
+            }
         }
         try {
             super.performAction(move, fm);
         } catch (ActionAbortedException e){
-            fm.owner.getResource(resourceType).add(q * -1);
+            if(!isDisabled(move))
+                fm.owner.getResource(resourceType).add(q * -1);
             throw e;
         }
     }
 
     @Override
     public void undoAction(JsonNode move, FamilyMember fm) {
-        try {
-            fm.owner.getResource(resourceType).add(q * -1);
-        } catch (Exception e){
-            //nada
+        if(!isDisabled(move)) {
+            try {
+                fm.owner.getResource(resourceType).add(q * -1);
+            } catch (Exception e) {
+                //nada
+            }
         }
         super.undoAction(move, fm);
     }

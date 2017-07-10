@@ -28,13 +28,21 @@ public class productionResource extends AbstractDecorator {
             try {
                 fm.owner.getResource(resourceType).add(q);
             } catch (IllegalArgumentException e) {
-                fm.owner.getResource(resourceType).add(q * -1);
+                try {
+                    fm.owner.getResource(resourceType).add(q * -1);
+                } catch (Exception e1){
+
+                }
                 throw new ActionAbortedException(false, "Not enough resources");
             }
             try {
                 super.onProduction(move, fm);
             } catch (ActionAbortedException e) {
-                fm.owner.getResource(resourceType).add(q * -1);
+                try {
+                    fm.owner.getResource(resourceType).add(q * -1);
+                } catch (Exception ex){
+
+                }
                 throw e;
             }
         }
@@ -46,7 +54,7 @@ public class productionResource extends AbstractDecorator {
             try {
                 fm.owner.getResource(resourceType).add(q * -1);
             } catch (Exception e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
             super.undoOnProduction(move, fm);
         }

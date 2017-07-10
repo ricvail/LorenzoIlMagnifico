@@ -6,6 +6,7 @@ import it.polimi.ingsw.pc42.Control.ActionSpace.Area;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.*;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.Permanent.*;
 import it.polimi.ingsw.pc42.Control.ResourceType;
+import it.polimi.ingsw.pc42.Control.ResourceWrapper;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -56,6 +57,7 @@ public class CardParser {
                         choiceDec.choices.set(i, permanentEffectIterator(permanentEffectNode.get(i),
                                 choiceDec.choices.get(i)));
                     }
+                    c=choiceDec;
                 } else {
                     c = permanentEffectIterator(permanentEffectNode.get(0), c);
                 }
@@ -101,7 +103,31 @@ public class CardParser {
                     }
                 }
             }
-                if (key.equalsIgnoreCase("finalVictoryPoint")){
+            if (key.equalsIgnoreCase("addValueToDice")){
+                JsonNode addValue = jsonNode.get(key);
+                ArrayList<ResourceWrapper> bonusList= new ArrayList<>();
+                if (addValue.has("value")&&addValue.has("type")){
+                    Iterator<String> bonuses = addValue.fieldNames();
+                    while (bonuses.hasNext()){
+                        String bonus= bonuses.next();
+                        try {
+                            bonusList.add(new ResourceWrapper(
+                                    ResourceType.fromString(bonus), addValue.get(bonus).asInt()
+                            ));
+                        } catch (IllegalArgumentException e){
+                            if (bonus.equalsIgnoreCase("value")||bonus.equalsIgnoreCase("type"));
+                            else throw new Exception("Missing value or type on AddValueToDice");
+                        }
+                    }
+                    c= new DiceBonus(bonusList, addValue.get("value").asInt(), Area.fromString(addValue.get("type").asText()), c);
+                } else {
+                    throw new Exception("Missing value or type on AddValueToDice");
+                }
+            }
+            if (key.equalsIgnoreCase("disableImmediateBonus")&&jsonNode.get(key).asBoolean()){
+                c= new DisableImmediateBonus(c);
+            }
+            if (key.equalsIgnoreCase("finalVictoryPoint")){
                 if (jsonNode.get(key).isInt()){
                     c = new endGameVictoryPoints(jsonNode.get(key).asInt(), c);
                 } else{

@@ -125,6 +125,8 @@ public class Player {
                     cardsOwned.get(j).onHarvest(move.get("cardChoices").get(i), fm);
                 } catch (ActionAbortedException e) {
                     PersonalBonusTile.undoBonuses(bonusTile.harvestBonuses, this);
+                    j--;
+                    i--;
                     for (; j >= 0; j--) {
                         if (cardsOwned.get(j).getCardType() == Card.CardType.TERRITORY) {
                             try {
@@ -136,6 +138,7 @@ public class Player {
                         }
                     }
                     e.isCardChoice = true;
+                    e.card=j;
                     throw e;
                 }
                 i++;
@@ -148,9 +151,9 @@ public class Player {
         if (!isAdvanced) return;
         int j = 0;
         for (int i = 0; i<cardsOwned.size(); i++){
-            if (cardsOwned.get(j).getCardType()== Card.CardType.TERRITORY) {
+            if (cardsOwned.get(i).getCardType()== Card.CardType.TERRITORY) {
                 try {
-                    cardsOwned.get(i).undoOnHarvest(move.get("cardChoices").get(i), fm);
+                    cardsOwned.get(i).undoOnHarvest(move.get("cardChoices").get(j), fm);
                 } catch (ActionAbortedException e) {
                     e.printStackTrace();
                 }
@@ -174,7 +177,10 @@ public class Player {
                     }
                     cardsOwned.get(j).onProduction(move.get("cardChoices").get(i), fm);
                 } catch (ActionAbortedException e) {
+                    setAccumulate(false);
                     PersonalBonusTile.undoBonuses(bonusTile.productionBonuses, this);
+                    j--;
+                    i--;
                     for (; j >= 0; j--) {
                         if (cardsOwned.get(j).getCardType() == Card.CardType.BUILDING) {
                             try {
@@ -186,6 +192,7 @@ public class Player {
                         }
                     }
                     e.isCardChoice = true;
+                    e.card=j;
                     throw e;
                 }
                 i++;
@@ -205,9 +212,9 @@ public class Player {
         if (!isAdvanced) return;
         int j = 0;
         for (int i = 0; i<cardsOwned.size(); i++){
-            if (cardsOwned.get(j).getCardType()== Card.CardType.BUILDING) {
+            if (cardsOwned.get(i).getCardType()== Card.CardType.BUILDING) {
                 try {
-                    cardsOwned.get(i).undoOnProduction(move.get("cardChoices").get(i), fm);
+                    cardsOwned.get(i).undoOnProduction(move.get("cardChoices").get(j), fm);
                 } catch (ActionAbortedException e) {
                     e.printStackTrace();
                 }
