@@ -57,19 +57,6 @@ public class Client extends MessageSender {
         isMyTurn=false;
         moveComplete=false;
         executor.submit(userInputHandler);
-        executor.submit(serverResponseHandler);
-        int i = 0;
-        while (continueLoop){
-            i++;
-            i--;
-            if (i>1000) continueLoop=false;
-        }
-        socketIn.close();
-        socketOut.close();
-        socket.close();
-
-    }
-    Runnable serverResponseHandler = ()->{
         while (continueLoop){
             String line = socketIn.nextLine();
             JsonNode payload = null;
@@ -183,7 +170,11 @@ public class Client extends MessageSender {
                 System.out.println(OutputStringGenerator.ArrayToString(OutputStringGenerator.theWinnerIs(board)));
             }
         }
-    };
+        socketIn.close();
+        socketOut.close();
+        socket.close();
+
+    }
 
     public void printStatus(){
         waitingForResponse=false;
