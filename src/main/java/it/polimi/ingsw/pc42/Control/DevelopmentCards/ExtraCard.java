@@ -78,7 +78,7 @@ public class ExtraCard extends AbstractDecorator{
         } catch (ActionAbortedException e){
             setOldBonuses(fm);
             super.undoDrawCard(move, fm);
-            e.level++;
+            e.setLevel(e.getLevel()+1);
             throw e;
         }
     }

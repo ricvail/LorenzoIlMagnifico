@@ -35,7 +35,7 @@ public class PrivilegeImmediateBonus extends AbstractDecorator {
         try {
             getBoard().getPrivilegeManager().applyPrivileges(fm.owner, move.get("immediateEffect"),quantity); //automatically throws exception if something goes wrong
         } catch (ActionAbortedException e){
-            e.level++;
+            e.setLevel(e.getLevel()+1);
             throw e;
         }
         try {

@@ -159,22 +159,22 @@ public class ClientHandler extends MessageSender implements Runnable {
             return;
         } catch (ActionAbortedException e){
             logger.info(e);
-            if (!e.isValid){
+            if (!e.isValid()){
                 ObjectNode payload = JsonNodeFactory.instance.objectNode();
                 payload.put("message", e.getMessage());
                 sendMessage(Strings.MessageTypes.MOVE_INVALID, payload);
                 return;
             } else {
-                if (e.isComplete){
+                if (e.isComplete()){
                     ObjectNode payload = JsonNodeFactory.instance.objectNode();
                     sendMessage(Strings.MessageTypes.MOVE_COMPLETE, payload);
                 } else {
                     ObjectNode payload = JsonNodeFactory.instance.objectNode();
-                    payload.put("field", e.nextMoveField);
-                    payload.put("level", e.level);
-                    payload.put("isCardChoice", e.isCardChoice);
-                    if (e.isCardChoice) payload.put("card", e.card);
-                    payload.set("options", e.availableChoices);
+                    payload.put("field", e.getNextMoveField());
+                    payload.put("level", e.getLevel());
+                    payload.put("isCardChoice", e.isCardChoice());
+                    if (e.isCardChoice()) payload.put("card", e.getCard());
+                    payload.set("options", e.getAvailableChoices());
                     sendMessage(Strings.MessageTypes.MOVE_INCOMPLETE, payload);
                 }
                 return;

@@ -130,8 +130,8 @@ public class Player {
                     }
                     cardsOwned.get(j).onHarvest(move.get("cardChoices").get(i), fm);
                 } catch (ActionAbortedException e) {
-                    e.isCardChoice = true;
-                    e.card=j;
+                    e.setCardChoice(true);
+                    e.setCard(j);
                     PersonalBonusTile.undoBonuses(bonusTile.harvestBonuses, this);
                     j--;
                     i--;
@@ -184,8 +184,8 @@ public class Player {
                     cardsOwned.get(j).onProduction(move.get("cardChoices").get(i), fm);
                 } catch (ActionAbortedException e) {
                     setAccumulate(false);
-                    e.isCardChoice = true;
-                    e.card=j;
+                    e.setCardChoice(true);
+                    e.setCard(j);
                     PersonalBonusTile.undoBonuses(bonusTile.productionBonuses, this);
                     j--;
                     i--;
