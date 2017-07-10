@@ -29,7 +29,7 @@ public class VaticanTest extends TestCase
     }
 
     public void testVaticanPhase(){
-        JsonNode mosse = GameInitializer.readFile("src/res/vaticanPhaseTestMove.json").get("moves");
+        JsonNode mosse = GameInitializer.readFile("src/res/testing/vaticanPhaseTestMove.json").get("moves");
         Board b = GameInitializer.initBaseGame(false);
         boolean exception=false;
         try {

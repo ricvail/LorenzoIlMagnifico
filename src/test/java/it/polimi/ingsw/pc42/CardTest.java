@@ -43,7 +43,7 @@ public class CardTest {
         ObjectMapper mapper = new ObjectMapper();
         Player player =Player.createPlayer("RED");
         try {
-            File file = new File("src/res/test_card.json");
+            File file = new File("src/res/testing/test_card.json");
             JsonNode jsonNode = mapper.readTree(file);
             BoardProvider bp=new BoardProvider();
             iCard card = createCard(jsonNode, bp);

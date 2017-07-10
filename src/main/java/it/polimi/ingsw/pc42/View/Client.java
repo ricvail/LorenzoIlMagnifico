@@ -24,7 +24,6 @@ import java.util.concurrent.Executors;
 public class Client extends MessageSender {
     private Socket socket;
     private final static int PORT = 3000;
-    private final static String IP="127.0.0.1";
     private JsonNode board;
     private Scanner socketIn;
     private boolean waitingForResponse;
@@ -46,6 +45,7 @@ public class Client extends MessageSender {
     }
 
     public void startClient() throws IOException {
+        String IP= GameInitializer.readFile("src/res/timeout.json").get("serverIP").asText();
         Socket socket = new Socket(IP, PORT);
         System.out.println("Connection Established");
         socketIn= new Scanner((socket.getInputStream()));

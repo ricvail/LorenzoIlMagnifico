@@ -68,7 +68,7 @@ public class AppTest
     public void testJSON(){
         ObjectMapper mapper=new ObjectMapper();
         try {
-            JsonNode json = mapper.readTree("res/prova_carta.json");
+            JsonNode json = mapper.readTree("res/testing/prova_carta.json");
             assertEquals(json.get("era").asInt(), 2);
             assertEquals(json.get("costs"). get(1).get("coins").asInt(), 4);
         } catch (Exception e) {

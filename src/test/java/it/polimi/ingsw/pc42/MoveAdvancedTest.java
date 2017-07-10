@@ -42,7 +42,7 @@ public class MoveAdvancedTest extends TestCase {
         players.add(Player.createPlayer("red"));
 
         Board board = GameInitializer.initBaseGame(players , false, true);
-        JsonNode mosse = GameInitializer.readFile("src/res/mosse_per_moveAdvancedTest.json").get("moves");
+        JsonNode mosse = GameInitializer.readFile("src/res/testing/mosse_per_moveAdvancedTest.json").get("moves");
         boolean exception = false;
         String message = "";
         //1st move----------------------------------------------------------------------------------------------------

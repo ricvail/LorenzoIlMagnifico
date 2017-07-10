@@ -161,7 +161,7 @@ public class ClientHandler extends MessageSender implements Runnable {
             }
             return;
         } catch (ActionAbortedException e){
-            logger.error(e);
+            logger.info(e);
             if (!e.isValid){
                 ObjectNode payload = JsonNodeFactory.instance.objectNode();
                 payload.put("message", e.getMessage());

@@ -1,4 +1,5 @@
 {
   "moveTimeoutSeconds": 180,
-  "lobbyTimeoutSeconds": 10
+  "lobbyTimeoutSeconds": 10,
+   "serverIP": "127.0.0.1"
 }

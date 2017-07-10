@@ -126,7 +126,7 @@ public class GameInitializer {
      * @return reference a to board ready to start a game
      */
     public static Board initBaseGame(boolean shuffle){
-        return initBaseGame(readFile("src/res/prova_playerInit.json"), shuffle);
+        return initBaseGame(readFile("src/res/testing/prova_playerInit.json"), shuffle);
     }
 
     /**

@@ -39,7 +39,7 @@ public class Move2Test extends TestCase
 
 
     public void testMove2() throws myException {
-        JsonNode mosse = GameInitializer.readFile("src/res/mosse_per_moveTest2.json").get("moves");
+        JsonNode mosse = GameInitializer.readFile("src/res/testing/mosse_per_moveTest2.json").get("moves");
         Board b = GameInitializer.initBaseGame(false);
         //RED and BLUE playing; servants=3, wood=stone=2, coins=5+i
         String message = "";

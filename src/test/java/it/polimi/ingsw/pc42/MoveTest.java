@@ -30,7 +30,7 @@ public class MoveTest
     }
 
     public void testMove() {
-        JsonNode mosse = GameInitializer.readFile("src/res/mosse_per_moveTest.json").get("moves");
+        JsonNode mosse = GameInitializer.readFile("src/res/testing/mosse_per_moveTest.json").get("moves");
 
         Board b = GameInitializer.initBaseGame(false);
         /**

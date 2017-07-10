@@ -25,8 +25,8 @@ public class Move3Test extends TestCase
     }
 
     public void testMove3(){
-        JsonNode mosse = GameInitializer.readFile("src/res/mosse_per_moveTest3.json").get("moves");
-        JsonNode players = GameInitializer.readFile("src/res/prova_playerInit4.json");
+        JsonNode mosse = GameInitializer.readFile("src/res/testing/mosse_per_moveTest3.json").get("moves");
+        JsonNode players = GameInitializer.readFile("src/res/testing/prova_playerInit4.json");
         Board b = GameInitializer.initBaseGame(players, false);
         //RED, BLUE, YELLOW, GREEN playing; servants=3, wood=stone=2, coins=5+i
         //BONUS TILE: 1 militaryPoint, 2 coins | 1 wood, 1 stone, 1 servant
