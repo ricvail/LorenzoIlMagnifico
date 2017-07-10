@@ -211,7 +211,7 @@ public class OutputStringGenerator {
                 boolean plur = node.get(field).asInt()>1;
                 out.add(getResourceNameIgnoringCards(field, plur)+": "+ node.get(field).asInt()+ "\n\t");
             } catch (Exception e) {
-                logger.error(e);
+                logger.info(e);
             }
         }
         return out;

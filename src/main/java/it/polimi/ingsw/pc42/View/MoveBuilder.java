@@ -68,14 +68,14 @@ public class MoveBuilder {
                 int i = Integer.parseInt(userChoice);
                 userChoice= serverResponsePayload.get("options").get(i).asText();
             } catch (Exception e) {
-                logger.error(e);
+                logger.info(e);
             }
             move.put(field, userChoice);
         } else if ("slotID".equalsIgnoreCase(field)){
             try {
                 move.put(field, Integer.parseInt(userChoice));
             } catch (Exception e){
-                logger.error(e);
+                logger.info(e);
             }
         } else if ("servants".equalsIgnoreCase(field)){
             if ("a".equalsIgnoreCase(userChoice)){
@@ -97,7 +97,7 @@ public class MoveBuilder {
                     move.set(field, node);
                 }
             }catch (Exception e){
-                logger.error(e);
+                logger.info(e);
             }
         }else if ("optionToActivate".equalsIgnoreCase(field)){
             try {
