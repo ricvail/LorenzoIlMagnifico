@@ -370,7 +370,6 @@ public class Move2Test extends TestCase
         assertEquals(false, blueFMUsed);
         boolean redFMUsed = checkFamilyMemberUsed(b.getPlayerByColor(Player.PlayerColor.RED).getFamilyMembers());
         assertEquals(false, redFMUsed);
-        //TODO check cards cleanup
         assertEquals(1, b.getRound());
         //CHEAT MODE player Blue---------------------------------------------------------------------------------------
         b.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.SERVANT).add(1);

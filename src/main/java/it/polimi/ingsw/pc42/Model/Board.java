@@ -140,9 +140,6 @@ public class Board {
         currentPlayer=playerArrayList.get(0);
         era = 1;
         vatican= false;
-        //TODO cancellare?
-        //cleanUp();//Council will be empty, so nothing happens to turn order;
-                    //cleanUp also rolls dices and causes tower action spaces to receive their first card
     }
 
     /**

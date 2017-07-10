@@ -84,7 +84,6 @@ public class ExtraCard extends AbstractDecorator{
     }
 
     /**
-     * TODO javadoc5
      * Iterates through resource types and set the active bonuses equal to the previous ones.
      *
      * @param fm family member of the player to be accessed
@@ -97,7 +96,6 @@ public class ExtraCard extends AbstractDecorator{
     }
 
     /**
-     * TODO javadoc6
      * Iterates through resource types and creates new bonuses.
      *
      * @param fm family member of the player to be accessed

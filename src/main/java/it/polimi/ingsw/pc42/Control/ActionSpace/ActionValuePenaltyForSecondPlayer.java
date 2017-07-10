@@ -15,7 +15,7 @@ public class ActionValuePenaltyForSecondPlayer extends AbstractDecorator {
 
     /**
      * Class constructor. Decorates an action space with an action value penalty for the second family member placed.
-     * TODO dummy one e two?
+     *
      * @param penalty value of the penalty
      * @param actionSpace action space on which this penalty will be added
      */
@@ -74,28 +74,6 @@ public class ActionValuePenaltyForSecondPlayer extends AbstractDecorator {
         }
         return super.updateDescription(node);
     }
-
-    //TODO cancellare?
-    /*    @Override
-    public void placeFamilyMember(FamilyMember familyMember, JsonNode json) {
-        if (doesPenaltyApply(familyMember)){
-            familyMember.setValue(familyMember.getValue()-penalty);
-        }
-        super.placeFamilyMember(familyMember, json);
-
-    }
-
-    @Override
-    public boolean canPlace(FamilyMember familyMember) {
-        if (doesPenaltyApply(familyMember)) {
-            familyMember.setValue(familyMember.getValue()-penalty);
-            boolean b = super.canPlace(familyMember);
-            familyMember.setValue(familyMember.getValue()+penalty);
-            return b;
-        } else {
-            return super.canPlace(familyMember);
-        }
-    }*/
 
     /**
      * Checks if the penalty has to be applied to the family member that will be placed.

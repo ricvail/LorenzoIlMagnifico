@@ -55,34 +55,6 @@ public class additionalCoinsTax extends AbstractDecorator {
         super.undoAction(move, fm);
     }
 
-    //TODO cancellare?
-    /*    @Override
-    public void placeFamilyMember(FamilyMember familyMember, JsonNode json) {
-        if (doesTaxApply()){
-            familyMember.owner.getResource(ResourceType.COIN).add(coins*-1);
-        }
-        super.placeFamilyMember(familyMember, json);
-
-    }
-
-
-    @Override
-    public boolean canPlace(FamilyMember familyMember) {
-        if (doesTaxApply()) {
-            try {
-                familyMember.owner.getResource(ResourceType.COIN).add(coins * -1);
-            } catch (IllegalArgumentException e) {
-                familyMember.owner.getResource(ResourceType.COIN).add(coins);
-                return false;
-            }
-            boolean b = super.canPlace(familyMember);
-            familyMember.owner.getResource(ResourceType.COIN).add(coins);
-            return b;
-        } else {
-            return super.canPlace(familyMember);
-        }
-    }*/
-
     /**
      * Checks if the tax applies to the owner of the family member.
      *
