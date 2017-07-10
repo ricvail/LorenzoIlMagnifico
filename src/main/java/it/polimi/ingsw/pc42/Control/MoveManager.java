@@ -96,7 +96,7 @@ public class MoveManager {
                     throw new ActionAbortedException(false, "You don't have enough faith points to avoid the excommunication");
                 }
             } else {
-                //TODO give Excommunication
+                // Excommunication
             }
         }else {
             throw new ActionAbortedException("vaticanChoice", null);
@@ -182,9 +182,7 @@ public class MoveManager {
      */
     public static void getActionSpaceFromJson(Board b, JsonNode move, FamilyMember fm) throws ActionAbortedException {
         if (!move.has("slotID")){
-            //TODO generate list of possible action spaces
             throw new ActionAbortedException("slotID", null);
-            //throw new ActionAbortedException(false);//temp
         }
         iActionSpace space;
         try {

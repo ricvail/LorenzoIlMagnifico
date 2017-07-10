@@ -91,10 +91,11 @@ public class OutputStringGenerator {
      * Generates an arrayList of strings that describes the status of a specific area and of the actions spaces
      * place there. For each action spaces specifies all details and, if them contain a card, all the specifications
      * about that card.
+     *
      * @param board json of the board
      * @param inputArea area of which generate the description
      * @return an arrayList with the description
-     * @throws ActionAbortedException
+     * @throws ActionAbortedException re-throws from callee or if there's no such area
      */
     public static ArrayList<String>  generateOutputStringOf_A(JsonNode board, String inputArea) throws ActionAbortedException {
         ArrayList<String> out = new ArrayList<>();

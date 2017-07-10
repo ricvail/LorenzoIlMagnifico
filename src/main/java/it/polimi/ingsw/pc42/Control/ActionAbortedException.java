@@ -10,32 +10,16 @@ public class ActionAbortedException extends Exception{
         return isComplete;
     }
 
-    public void setComplete(boolean complete) {
-        isComplete = complete;
-    }
-
     public boolean isValid() {
         return isValid;
-    }
-
-    public void setValid(boolean valid) {
-        isValid = valid;
     }
 
     public String getNextMoveField() {
         return nextMoveField;
     }
 
-    public void setNextMoveField(String nextMoveField) {
-        this.nextMoveField = nextMoveField;
-    }
-
     public JsonNode getAvailableChoices() {
         return availableChoices;
-    }
-
-    public void setAvailableChoices(JsonNode availableChoices) {
-        this.availableChoices = availableChoices;
     }
 
     public int getLevel() {
@@ -69,22 +53,23 @@ public class ActionAbortedException extends Exception{
     private int card;
 
     /**
-     * Class constructor. The <code>boolean</code> parameter indicates if the action that aborts is completed.
+     * Class constructor for invalid or complete moves.
      *
-     * @param isValid
-     * @param message
+     * @param isValid <code>true</code> if the move is valid until this point
+     * @param message detailed message of the cause
      */
     public ActionAbortedException(boolean isValid, String message) {
-        super(message); //detailed message of the cause
+        super(message);
         this.isComplete = isValid;
         this.isValid = isValid;
         isCardChoice=false;
     }
 
     /**
-     *TODO javadoc4
-     * @param nextMoveField
-     * @param availableChoices
+     *Class constructor for incomplete moves.
+     *
+     * @param nextMoveField next fieldname of thee move
+     * @param availableChoices node of the list of available choices
      */
     public ActionAbortedException (String nextMoveField, JsonNode availableChoices){
         this.nextMoveField=nextMoveField;

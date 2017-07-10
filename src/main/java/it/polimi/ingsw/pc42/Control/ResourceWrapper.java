@@ -26,6 +26,7 @@ public class ResourceWrapper extends IntWrapper implements iResourceWrapper {
     /**
      * Class constructor. Takes a resources type, creates a wrapper around it with an attribute for quantity that can
      * be modified flexibly.
+     *
      * @param t resource type to wrap
      * @param q quantity to be set
      */
@@ -70,8 +71,9 @@ public class ResourceWrapper extends IntWrapper implements iResourceWrapper {
 
 
     /**
-     * TODO javadoc1
-     * @param q
+     * Integrates the mechanism of discount bonus for card cost or card immediate effect.
+     *
+     * @param q quantity of the discount
      */
     public void addUsingBonus(int q){
         if (activeBonus ==null){
@@ -91,10 +93,6 @@ public class ResourceWrapper extends IntWrapper implements iResourceWrapper {
         }
     }
 
-    /**
-     *TODO javadoc2
-     * @param q
-     */
     public void abortAddUsingBonus(int q){
         if (q<0&& activeBonus.remainingBonus< activeBonus.initialBonus){
             q*=-1;
@@ -110,10 +108,6 @@ public class ResourceWrapper extends IntWrapper implements iResourceWrapper {
         }
     }
 
-    /**
-     *TODO javadoc3
-     * @param q
-     */
     public void undoAddUsingBonus(int q){
         if (activeBonus ==null){
             activeBonus =new CostBonus(0);
