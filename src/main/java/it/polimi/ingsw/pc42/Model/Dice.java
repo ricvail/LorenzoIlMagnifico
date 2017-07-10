@@ -3,6 +3,8 @@ package it.polimi.ingsw.pc42.Model;
 
 import it.polimi.ingsw.pc42.Utilities.myException;
 
+import java.util.Random;
+
 public class Dice {
     private int value;
     private DiceColor color;
@@ -27,8 +29,9 @@ public class Dice {
     /**
      * Generates a random value for the dice, between 1 and 6 included.
      */
-    public void rollDice(){
-        value = (int) (Math.floor(Math.random()*6)+1);
+    public void rollDice() {
+        Random r =new Random();
+        value = (int) (Math.floor(r.nextInt(6))+1);
     }
 
     public enum DiceColor{

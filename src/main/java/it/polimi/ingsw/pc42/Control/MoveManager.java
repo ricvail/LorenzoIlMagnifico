@@ -140,7 +140,7 @@ public class MoveManager {
         try {
             fm  = p.getFamilyMemberFromColor(move.get("familyMember").asText());
         } catch (Exception e) {
-            logger.error(e);
+            logger.info(e);
             throw new ActionAbortedException(false, "Wrong Family Member's Color");
         }
         if (fm.isUsed()){
@@ -190,7 +190,7 @@ public class MoveManager {
         try {
             space = b.getActionSpaceByID(move.get("slotID").asInt());
         } catch (Exception e) {
-            logger.error(e);
+            logger.info(e);
             throw new ActionAbortedException(false, "This Action Space does not exist or the ID is not an integer");
         }
         if (fm.canBePlacedInArea(space.getArea())&&

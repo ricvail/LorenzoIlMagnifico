@@ -44,7 +44,7 @@ public class productionResource extends AbstractDecorator {
                 try {
                     fm.owner.getResource(resourceType).add(q * -1);
                 } catch (Exception ex){
-                    logger.error(ex);
+                    logger.info(ex);
                 }
                 throw e;
             }
