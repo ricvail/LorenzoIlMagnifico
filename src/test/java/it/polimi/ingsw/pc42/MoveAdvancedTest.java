@@ -287,14 +287,15 @@ public class MoveAdvancedTest extends TestCase {
         //end 19th move------------------------------------------------------------------------------------------------
         //scelgo di attivare i privileges (1 stone/wood) e la seconda scelta della scenda carta, fallisce per stone
         try {
-            board.makeMove(mosse.get(14));//REd fm white production val 3 slotID 18
+            board.makeMove(mosse.get(14));//REd fm white production val 3 slotID 18 -> exception
         }  catch (ActionAbortedException ae){
             exception = true;
             message = ae.getMessage();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(message);
+        assertEquals(true, exception);
+        //System.out.println(message);
         fm = null;
         try {
             fm = board.getPlayerByColor(Player.PlayerColor.RED).getFamilyMemberFromColor("white");
@@ -413,7 +414,7 @@ public class MoveAdvancedTest extends TestCase {
         //Blue slotID 14 -> production val 3
         board.getCurrentPlayer().getResource(ResourceType.COIN).add(4);blueCoin+=4;
         board.getCurrentPlayer().getResource(ResourceType.SERVANT).add(3);blueServant+=3;
-        printFullStatus(board);
+
         exception=false;
         try {
             board.makeMove(mosse.get(15));//Blue slotID 14 -> production val 3, 5 final victory
@@ -437,7 +438,7 @@ public class MoveAdvancedTest extends TestCase {
         assertEquals(true, fm.isUsed());
         assertEquals(blueCoin, fm.owner.getResource(ResourceType.COIN).get());
         assertEquals(blueServant, fm.owner.getResource(ResourceType.SERVANT).get());
-        //assertEquals(blueVictoryPts, fm.owner.getResource(ResourceType.VICTORYPOINTS).get());
+        assertEquals(blueVictoryPts, fm.owner.getResource(ResourceType.VICTORYPOINTS).get());
        //end move-----------------------------------------------------------------------------------------------------
         try {
             board.makeMove(nodeGhostMove("orange"));//Red ghost orange
@@ -484,64 +485,27 @@ public class MoveAdvancedTest extends TestCase {
         * -victory points +final victory points */
         //BLUE check
 
-        /*
         int finalVictoryPoints = blueVictoryPts;
-        finalVictoryPoints+=; // for 1 char cards
-        finalVictoryPoints+=; // for military points
-        finalVictoryPoints+=0; // faith points
+        finalVictoryPoints+=1 ; // for 1 char cards
+        finalVictoryPoints+=5; // for military points
+        finalVictoryPoints+=4; // faith points
         finalVictoryPoints+=10; // for final victory points
-        finalVictoryPoints+=((blueWooD+blueStone+blueServant+blueCoin)/5);
+        finalVictoryPoints+=((blueWooD+blueStone+blueServant+blueCoin)/5); //2
         assertEquals(finalVictoryPoints, board.getPlayerByColor(Player.PlayerColor.BLUE).getResource(ResourceType.VICTORYPOINTS).get());
 
         //RED check
         finalVictoryPoints = redVictoryPts;
-        finalVictoryPoints+=; // for char cards
-        finalVictoryPoints+=; // territory cards
-        finalVictoryPoints+=; // for military points
+        finalVictoryPoints+=3; // for char cards
+        finalVictoryPoints+=0; // territory cards
+        finalVictoryPoints+=2; // for military points
         finalVictoryPoints+=0; // faith points
         finalVictoryPoints+=0; // for final victory points
 
-        finalVictoryPoints+=((redWood+redStone+redServant+redCoin)/5); /
+        finalVictoryPoints+=((redWood+redStone+redServant+redCoin)/5); //3
         assertEquals(finalVictoryPoints, board.getPlayerByColor(Player.PlayerColor.RED).getResource(ResourceType.VICTORYPOINTS).get());
-        */
-
-
-        //printStatus();
-        //printResources(board.getPlayerByColor(Player.PlayerColor.RED));
-        //printResources(board.getPlayerByColor(Player.PlayerColor.BLUE));
     }
 
 
-
-    private void printStatus(){
-        //BLUE
-        System.out.println();
-        System.out.print(" bluecoin:"+blueCoin);
-        System.out.print(" blueservant:"+blueServant);
-        System.out.print(" blueStone:"+blueStone);
-        System.out.print(" blueWooD:"+blueWooD);
-        System.out.print(" blueMilitaryPts:"+blueMilitaryPts);
-        System.out.print(" blueFaithPts:"+blueFaithPts);
-        System.out.print(" blueVictoryPts:"+blueVictoryPts);
-        //RED
-        System.out.println();
-        System.out.print(" redCoin:"+redCoin);
-        System.out.print(" redServant:"+redServant);
-        System.out.print(" redStone:"+redStone);
-        System.out.print(" redWood:"+redWood);
-        System.out.print(" redMilitaryPts:"+redMilitaryPts);
-        System.out.print(" redFaithPts:"+redFaithPts);
-        System.out.print(" redVictoryPts:"+redVictoryPts);
-    }
-
-    private void printResources(Player player){
-        System.out.println();
-        for(ResourceType rt : ResourceType.values()){
-            System.out.print(" #"+player.getColor().getPlayerColorString());
-            System.out.print(rt.getString()+":"+player.getResource(rt).get());
-        }
-
-    }
     public void printFullStatus(Board b){
         JsonNode j = b.generateJsonDescription();
         try {
