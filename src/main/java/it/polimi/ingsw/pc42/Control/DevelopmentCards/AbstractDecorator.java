@@ -2,6 +2,7 @@ package it.polimi.ingsw.pc42.Control.DevelopmentCards;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import it.polimi.ingsw.pc42.Control.ActionAbortedException;
+import it.polimi.ingsw.pc42.Control.ActionSpace.iActionSpace;
 import it.polimi.ingsw.pc42.Model.Board;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
 import it.polimi.ingsw.pc42.Model.Player;
@@ -35,13 +36,13 @@ public abstract class AbstractDecorator implements iCard{
     }
 
     @Override
-    public void onAction(JsonNode move, FamilyMember fm) throws ActionAbortedException {
-        card.onAction(move, fm);
+    public void onAction(JsonNode move, FamilyMember fm, iActionSpace space){
+        card.onAction(move, fm, space);
     }
 
     @Override
-    public void undoOnAction(JsonNode move, FamilyMember fm) throws ActionAbortedException {
-        card.undoOnAction(move, fm);
+    public void undoOnAction(JsonNode move, FamilyMember fm, iActionSpace space){
+        card.undoOnAction(move, fm, space);
     }
 
     @Override

@@ -206,10 +206,9 @@ public class MoveManager {
      * @throws ActionAbortedException re-throws from the callee
      */
     private static void undoApplyPlayerPermanentBonus(JsonNode move, FamilyMember fm, iActionSpace space) throws ActionAbortedException {
+        fm.owner.applyPermanentBonuses(move, fm, space);
         undoApplyServants(move, fm, space);
-        for (ResourceWrapper w : fm.owner.resources) {
-            w.resetBonus();
-        }
+        fm.owner.undoApplyPermanentBonuses(move, fm, space);
     }
 
     /**
@@ -229,11 +228,14 @@ public class MoveManager {
          *          Enable resourceWrapper CostBonus
          *      Also an undo permanent CostBonus (for the catch segment)
          */
-
-        applyServants(move, fm, space);
-        for (ResourceWrapper w:fm.owner.resources) {
-            w.resetBonus();
+        fm.owner.applyPermanentBonuses(move, fm, space);
+        try {
+            applyServants(move, fm, space);
+        } catch (ActionAbortedException e){
+            fm.owner.undoApplyPermanentBonuses(move, fm, space);
+            throw e;
         }
+        fm.owner.undoApplyPermanentBonuses(move, fm, space);
     }
 
     /**
@@ -246,10 +248,10 @@ public class MoveManager {
      * @throws ActionAbortedException re-throws from the callee
      */
     private static void undoApplyServants(JsonNode move, FamilyMember fm, iActionSpace space) throws ActionAbortedException {
+        undoCheckActionValue(move, fm, space);
         int servants = move.get("servants").asInt();
         fm.owner.getResource(ResourceType.SERVANT).add(servants);
         fm.setValue(fm.getValue()-servants);
-        undoCheckActionValue(move, fm, space);
     }
 
     /**

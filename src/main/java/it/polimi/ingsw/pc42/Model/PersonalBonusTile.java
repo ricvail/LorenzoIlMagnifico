@@ -41,7 +41,11 @@ public class PersonalBonusTile {
      */
     public static void undoBonuses(ArrayList<ResourceWrapper> bonuses, Player p){
         for (ResourceWrapper bonus : bonuses){
-            p.getResource(bonus.getResourceType()).add(bonus.get()*-1);
+            try {
+                p.getResource(bonus.getResourceType()).add(bonus.get()*-1);
+            } catch (Exception e){
+
+            }
         }
     }
 }

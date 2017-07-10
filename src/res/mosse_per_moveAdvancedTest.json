@@ -1,55 +1,55 @@
 {
   "moves":[
     {
-      "DESCRIZIONE": "Blue fm orange slotID 2, card harvest val 2",
+      "DESCRIZIONE": "0Blue fm orange slotID 2, card harvest val 2",
       "familyMember": "orange",
       "servants": 0,
       "slotID": 2
     },
     {
-      "DESCRIZIONE": "Red fm black slotID 7, card +2 bonus su char e discount 1 coin",
+      "DESCRIZIONE": "1Red fm black slotID 7, card +2 bonus su char e discount 1 coin",
       "familyMember": "black",
       "servants": 0,
       "slotID": 7
     },
     {
-      "DESCRIZIONE": "Blue fm white fm black slotID 10, card foreach terr activ cost 5",
+      "DESCRIZIONE": "2Blue fm white fm black slotID 10, card foreach terr activ cost 5",
       "familyMember": "black",
       "servants": 0,
       "slotID": 10
     },
     {
-      "DESCRIZIONE": "Blue fm black slotID 3, card harvest val 5 -> 2 mil 1 stone",
+      "DESCRIZIONE": "3Blue fm black slotID 3, card harvest val 5 -> 2 mil 1 stone",
       "familyMember": "black",
       "servants": 0,
       "slotID": 3
     },
     {
-      "DESCRIZIONE": "RED fm black slotID 6, card +2 production val",
+      "DESCRIZIONE": "4RED fm black slotID 6, card +2 production val",
       "familyMember": "orange",
       "servants": 0,
       "slotID":  6
     },
     {
-      "DESCRIZIONE": "Blue fm orange + 2 serv in slotID 7, -5 coins -> divieto 5 e 7 per sempre",
+      "DESCRIZIONE": "5Blue fm orange + 2 serv in slotID 7, -5 coins -> divieto 5 e 7 per sempre",
       "familyMember": "orange",
       "servants": 2,
       "slotID":  7
     },
     {
-      "DESCRIZIONE": "Red fm black +1 serv slotId 12 card prod val 1 -> 1 coin per 1 privileges",
+      "DESCRIZIONE": "6Red fm black +1 serv slotId 12 card prod val 1 -> 1 coin per 1 privileges",
       "familyMember": "black",
       "servants": 1,
       "slotID":  12
     },
     {
-      "DESCRIZIONE": "Blue tries fm white + servants slotID 15 -> exception val 5",
+      "DESCRIZIONE": "7Blue tries fm white + servants slotID 15 -> exception val 5",
       "familyMember": "white",
-      "servants": 4,
+      "servants": 3,
       "slotID":  15
     },
     {
-      "DESCRIZIONE": "Blue harvest ",
+      "DESCRIZIONE": "8Blue harvest ",
       "familyMember": "white",
       "servants": 4,
       "slotID":  19,
@@ -61,7 +61,7 @@
       ]
     },
     {
-      "DESCRIZIONE": "Red fm neutral + 3serv slotID 10, card prod val 3 -> choice 1/2 stone per 3/5 coins",
+      "DESCRIZIONE": "9Red fm neutral + 3serv slotID 10, card prod val 3 -> choice 1/2 stone per 3/5 coins",
       "familyMember": "neutral",
       "servants": 3,
       "slotID":  10
@@ -70,23 +70,23 @@
       "vaticanChoice": false
     },
     {
-      "DESCRIZIONE": "Blue fm black slotID 13 , 5 final victory points",
+      "DESCRIZIONE": "11Blue fm black slotID 13 , 5 final victory points",
       "familyMember": "black",
       "servants": 0,
       "slotID":  13
     },
     {
-      "DESCRIZIONE": "Red fm fm black slotID 6, draw slot Id 11 ma exception -> vietato val 5",
+      "DESCRIZIONE": "12Red fm fm black slotID 6, draw slot Id 11 ma exception -> vietato val 5",
       "familyMember": "black",
       "servants": 0,
       "slotID":  6,
       "immediateEffect":{
-        "slotID": 11,
+        "slotID": 7,
         "servants":0
       }
     },
     {
-      "DESCRIZIONE": "Blue harvest val 3",
+      "DESCRIZIONE": "13Blue harvest val 3",
       "familyMember": "orange",
       "servants": 0,
       "slotID":  19,
@@ -99,7 +99,7 @@
       ]
     },
     {
-      "DESCRIZIONE": "red production val 1+2",
+      "DESCRIZIONE": "14red production val 1+2",
       "familyMember": "white",
       "servants": 0,
       "slotID":  18,
@@ -113,7 +113,7 @@
       ]
     },
     {
-      "DESCRIZIONE": "Blue slotID 14 -> production val 3, 5 final victory",
+      "DESCRIZIONE": "15Blue slotID 14 -> production val 3, 5 final victory",
       "familyMember": "orange",
       "servants": 0,
       "slotID":  14,
@@ -121,7 +121,7 @@
         "servants": 2,
         "slotID":  18,
         "cardChoices": [
-          {"optionToActivate": 1},
+          {},
           {},
           {},
           {},

@@ -4,10 +4,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import it.polimi.ingsw.pc42.Control.ActionSpace.Area;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.*;
-import it.polimi.ingsw.pc42.Control.DevelopmentCards.Permanent.endGameVictoryPoints;
-import it.polimi.ingsw.pc42.Control.DevelopmentCards.Permanent.harvestPrivileges;
-import it.polimi.ingsw.pc42.Control.DevelopmentCards.Permanent.harvestResource;
+import it.polimi.ingsw.pc42.Control.DevelopmentCards.Permanent.*;
 import it.polimi.ingsw.pc42.Control.ResourceType;
+import it.polimi.ingsw.pc42.Control.ResourceWrapper;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -52,7 +51,13 @@ public class CardParser {
             if (root.has("permanentEffects")&&advanced) {
                 JsonNode permanentEffectNode = root.get("permanentEffects");
                 if (permanentEffectNode.size()>1){
-                    //apply as array
+                    productionChoice choiceDec = new productionChoice(c);
+                    for (int i = 0; i<permanentEffectNode.size(); i++){
+                        choiceDec.addChoice();
+                        choiceDec.choices.set(i, permanentEffectIterator(permanentEffectNode.get(i),
+                                choiceDec.choices.get(i)));
+                    }
+                    c=choiceDec;
                 } else {
                     c = permanentEffectIterator(permanentEffectNode.get(0), c);
                 }
@@ -81,8 +86,46 @@ public class CardParser {
                 } catch (IllegalArgumentException e){
                     if ("privileges".equalsIgnoreCase(key)){
                         c= new harvestPrivileges(jsonNode.get(key).asInt(), c);
+                    }else{
+                        throw new Exception("Invalid territory field: "+ key);
                     }
                 }
+            }else if (c.getCardType()== Card.CardType.BUILDING) {
+                try {
+                    c = new productionResource(ResourceType.fromString(key), jsonNode.get(key).asInt(), c);
+                } catch (IllegalArgumentException e){
+                    if ("privileges".equalsIgnoreCase(key)){
+                        c= new productionPrivileges(jsonNode.get(key).asInt(), c);
+                    } else if ("foreach".equalsIgnoreCase(key)){
+                        c=applyForeachProduction(jsonNode.get(key), c);
+                    } else{
+                        throw new Exception("Invalid building field: "+ key);
+                    }
+                }
+            }
+            if (key.equalsIgnoreCase("addValueToDice")){
+                JsonNode addValue = jsonNode.get(key);
+                ArrayList<ResourceWrapper> bonusList= new ArrayList<>();
+                if (addValue.has("value")&&addValue.has("type")){
+                    Iterator<String> bonuses = addValue.fieldNames();
+                    while (bonuses.hasNext()){
+                        String bonus= bonuses.next();
+                        try {
+                            bonusList.add(new ResourceWrapper(
+                                    ResourceType.fromString(bonus), addValue.get(bonus).asInt()
+                            ));
+                        } catch (IllegalArgumentException e){
+                            if (bonus.equalsIgnoreCase("value")||bonus.equalsIgnoreCase("type"));
+                            else throw new Exception("Missing value or type on AddValueToDice");
+                        }
+                    }
+                    c= new DiceBonus(bonusList, addValue.get("value").asInt(), Area.fromString(addValue.get("type").asText()), c);
+                } else {
+                    throw new Exception("Missing value or type on AddValueToDice");
+                }
+            }
+            if (key.equalsIgnoreCase("disableImmediateBonus")&&jsonNode.get(key).asBoolean()){
+                c= new DisableImmediateBonus(c);
             }
             if (key.equalsIgnoreCase("finalVictoryPoint")){
                 if (jsonNode.get(key).isInt()){
@@ -212,6 +255,16 @@ public class CardParser {
         } catch (Exception e){
             Card.CardType toBeCounted = Card.CardType.fromString(jsonNode.get("right").asText());
             return new ForeachImmediate(c, obtained,(float) jsonNode.get("ratio").asDouble(), toBeCounted);
+        }
+    }
+    private static iCard applyForeachProduction(JsonNode jsonNode, iCard c) throws Exception{
+        ResourceType obtained = ResourceType.fromString(jsonNode.get("left").asText());
+        try {
+            ResourceType toBeCounted = ResourceType.fromString(jsonNode.get("right").asText());
+            return new ForeachProduction(c, obtained,(float) jsonNode.get("ratio").asDouble(), toBeCounted);
+        } catch (Exception e){
+            Card.CardType toBeCounted = Card.CardType.fromString(jsonNode.get("right").asText());
+            return new ForeachProduction(c, obtained,(float) jsonNode.get("ratio").asDouble(), toBeCounted);
         }
     }
 

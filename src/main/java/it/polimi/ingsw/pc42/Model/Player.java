@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Control.ActionSpace.ActionDecorator;
+import it.polimi.ingsw.pc42.Control.ActionSpace.iActionSpace;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.iCard;
 import it.polimi.ingsw.pc42.Control.ResourceType;
@@ -114,24 +115,33 @@ public class Player {
     public void performHarvest (JsonNode move, FamilyMember fm)throws ActionAbortedException {
         PersonalBonusTile.applyBonuses(bonusTile.harvestBonuses, this);
         if (!isAdvanced) return;
-        for (int i = 0; i<cardsOwned.size(); i++){
-            try {
-                if (!(move.has("cardChoices")&&move.get("cardChoices").size()>i)){
-                    throw new ActionAbortedException("cardChoices", JsonNodeFactory.instance.arrayNode());
-                }
-                cardsOwned.get(i).onHarvest(move.get("cardChoices").get(i), fm);
-            } catch (ActionAbortedException e){
-                PersonalBonusTile.undoBonuses(bonusTile.harvestBonuses, this);
-                for (int j = i - 1; j >= 0; j--) {
-                    try {
-                        cardsOwned.get(j).undoOnHarvest(move.get("cardChoices").get(i), fm);
-                    } catch (ActionAbortedException ex) {
-                        ex.printStackTrace(); //this is not expected to happen
+        int i = 0;
+        for (int j = 0; j<cardsOwned.size(); j++){
+            if (cardsOwned.get(j).getCardType()== Card.CardType.TERRITORY) {
+                try {
+                    if (!(move.has("cardChoices") && move.get("cardChoices").size() > i)) {
+                        throw new ActionAbortedException("cardChoices", JsonNodeFactory.instance.arrayNode());
                     }
+                    cardsOwned.get(j).onHarvest(move.get("cardChoices").get(i), fm);
+                } catch (ActionAbortedException e) {
+                    e.isCardChoice = true;
+                    e.card=j;
+                    PersonalBonusTile.undoBonuses(bonusTile.harvestBonuses, this);
+                    j--;
+                    i--;
+                    for (; j >= 0; j--) {
+                        if (cardsOwned.get(j).getCardType() == Card.CardType.TERRITORY) {
+                            try {
+                                cardsOwned.get(j).undoOnHarvest(move.get("cardChoices").get(i), fm);
+                            } catch (ActionAbortedException ex) {
+                                ex.printStackTrace(); //this is not expected to happen
+                            }
+                            i--;
+                        }
+                    }
+                    throw e;
                 }
-                e.isCardChoice=true;
-                e.card=i;
-                throw e;
+                i++;
             }
         }
     }
@@ -139,22 +149,94 @@ public class Player {
     public void undoHarvest(JsonNode move, FamilyMember fm) {
         PersonalBonusTile.undoBonuses(bonusTile.harvestBonuses, this);
         if (!isAdvanced) return;
+        int j = 0;
         for (int i = 0; i<cardsOwned.size(); i++){
-            try {
-                cardsOwned.get(i).undoOnHarvest(move.get("cardChoices").get(i), fm);
-            } catch (ActionAbortedException e){
-                e.printStackTrace();
+            if (cardsOwned.get(i).getCardType()== Card.CardType.TERRITORY) {
+                try {
+                    cardsOwned.get(i).undoOnHarvest(move.get("cardChoices").get(j), fm);
+                } catch (ActionAbortedException e) {
+                    e.printStackTrace();
+                }
+                j++;
             }
         }
     }
     public void performProduction (JsonNode move, FamilyMember fm)throws ActionAbortedException {
+        setAccumulate(true);
         PersonalBonusTile.applyBonuses(bonusTile.productionBonuses, this);
+        if (!isAdvanced){
+            setAccumulate(false);
+            return;
+        }
+        int i = 0;
+        for (int j = 0; j<cardsOwned.size(); j++){
+            if (cardsOwned.get(j).getCardType()== Card.CardType.BUILDING) {
+                try {
+                    if (!(move.has("cardChoices") && move.get("cardChoices").size() > i)) {
+                        throw new ActionAbortedException("cardChoices", JsonNodeFactory.instance.arrayNode());
+                    }
+                    cardsOwned.get(j).onProduction(move.get("cardChoices").get(i), fm);
+                } catch (ActionAbortedException e) {
+                    setAccumulate(false);
+                    e.isCardChoice = true;
+                    e.card=j;
+                    PersonalBonusTile.undoBonuses(bonusTile.productionBonuses, this);
+                    j--;
+                    i--;
+                    for (; j >= 0; j--) {
+                        if (cardsOwned.get(j).getCardType() == Card.CardType.BUILDING) {
+                            try {
+                                cardsOwned.get(j).undoOnProduction(move.get("cardChoices").get(i), fm);
+                            } catch (ActionAbortedException ex) {
+                                ex.printStackTrace(); //this is not expected to happen
+                            }
+                            i--;
+                        }
+                    }
+                    throw e;
+                }
+                i++;
+            }
+        }
+        setAccumulate(false);
+    }
+
+    public void setAccumulate(boolean acc){
+        for (ResourceWrapper r:resources) {
+            r.setAccumulatorEnabled(acc);
+        }
     }
 
     public void undoProduction(JsonNode move, FamilyMember fm) {
         PersonalBonusTile.undoBonuses(bonusTile.productionBonuses, this);
+        if (!isAdvanced) return;
+        int j = 0;
+        for (int i = 0; i<cardsOwned.size(); i++){
+            if (cardsOwned.get(i).getCardType()== Card.CardType.BUILDING) {
+                try {
+                    cardsOwned.get(i).undoOnProduction(move.get("cardChoices").get(j), fm);
+                } catch (ActionAbortedException e) {
+                    e.printStackTrace();
+                }
+                j++;
+            }
+        }
     }
 
+    public void applyPermanentBonuses(JsonNode move, FamilyMember fm, iActionSpace space){
+        for (int i = 0; i<cardsOwned.size(); i++){
+            cardsOwned.get(i).onAction(move, fm, space);
+        }
+    }
+
+    public void undoApplyPermanentBonuses(JsonNode move, FamilyMember fm, iActionSpace space){
+        for (int i = 0; i<cardsOwned.size(); i++){
+            cardsOwned.get(i).undoOnAction(move, fm, space);
+        }
+        for (ResourceWrapper w:resources) {
+            w.resetBonus();
+        }
+    }
     /**
      * iterate through the resources, until it finds a match for the parameter and then returns a
      * <code>ResourceWrapper</code> or null, if the resource type does not exist.

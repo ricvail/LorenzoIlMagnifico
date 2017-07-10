@@ -9,15 +9,15 @@ import it.polimi.ingsw.pc42.Model.FamilyMember;
 /**
  * Created by RICVA on 07/07/2017.
  */
-public class harvestPrivileges extends AbstractDecorator {
+public class productionPrivileges extends AbstractDecorator {
     private int quantity;
-    public harvestPrivileges(int quantity, iCard c) {
+    public productionPrivileges(int quantity, iCard c) {
         super(c);
         this.quantity=quantity;
     }
 
     @Override
-    public void onHarvest(JsonNode move, FamilyMember fm) throws ActionAbortedException {
+    public void onProduction(JsonNode move, FamilyMember fm) throws ActionAbortedException {
         if (fm.getValue()>=getActionValue()) {
             try {
                 getBoard().getPrivilegeManager().applyPrivileges(fm.owner, move, quantity); //automatically throws exception if something goes wrong
@@ -25,7 +25,7 @@ public class harvestPrivileges extends AbstractDecorator {
                 throw e;
             }
             try {
-                super.onHarvest(move, fm);
+                super.onProduction(move, fm);
             } catch (ActionAbortedException e) {
                 try {
                     getBoard().getPrivilegeManager().undoPrivileges(fm.owner, move);
@@ -39,7 +39,7 @@ public class harvestPrivileges extends AbstractDecorator {
     }
 
     @Override
-    public void undoOnHarvest(JsonNode move, FamilyMember fm) throws ActionAbortedException {
+    public void undoOnProduction(JsonNode move, FamilyMember fm) throws ActionAbortedException {
         if (fm.getValue()>=getActionValue()) {
             try {
                 getBoard().getPrivilegeManager().undoPrivileges(fm.owner, move);
@@ -47,7 +47,7 @@ public class harvestPrivileges extends AbstractDecorator {
                 //this should NOT happen.
                 e1.printStackTrace();
             }
-            super.undoOnHarvest(move, fm);
+            super.undoOnProduction(move, fm);
         }
     }
 

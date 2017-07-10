@@ -53,9 +53,9 @@ public interface iCard {
 
     void undoOnProduction (JsonNode move, FamilyMember fm) throws ActionAbortedException;
 
-    void onAction (JsonNode move, FamilyMember fm) throws ActionAbortedException;
+    void onAction (JsonNode move, FamilyMember fm, iActionSpace space);
 
-    void undoOnAction (JsonNode move, FamilyMember fm) throws ActionAbortedException;
+    void undoOnAction (JsonNode move, FamilyMember fm, iActionSpace space);
 
     int getEra();
 
@@ -66,6 +66,4 @@ public interface iCard {
     Board getBoard();
 
     int getActionValue();
-
-
 }
