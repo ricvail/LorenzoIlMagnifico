@@ -84,9 +84,9 @@ public class GameInitializer {
         JsonNode root=null;
         JsonNode sent;
         try {
-            JsonNode file = readFile("src/res/actionsSpaces.json");
+            JsonNode file = readFile("src/res/privileges.json");
             if (file!=null){
-                root=readFile("src/res/privileges.json");
+                root=file.get("privileges");;
             } else throw new myException();
         } catch (Exception e){
             logger.error(e);
