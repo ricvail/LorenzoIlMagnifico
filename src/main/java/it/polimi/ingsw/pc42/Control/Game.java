@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.polimi.ingsw.pc42.Model.Board;
+import it.polimi.ingsw.pc42.Model.Dice;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
 import it.polimi.ingsw.pc42.Model.Player;
 import it.polimi.ingsw.pc42.Utilities.ClientHandler;
@@ -128,7 +129,10 @@ public class Game {
                     }
                 }
                 try{
-                    ghostNode.put("familyMember", fm.getDiceColor().getDiceColorString());
+                    if (fm!=null) {
+                        Dice.DiceColor color =fm.getDiceColor();
+                        ghostNode.put("familyMember", color.getDiceColorString());
+                    }
                 } catch (Exception e){
                     logger.error(e);
                 }

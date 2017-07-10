@@ -397,10 +397,11 @@ public class MoveManager {
             logger.error(e);
         }
         json=root;
-        JsonNode excommunicationRequests = json.get("excommunicationRequests");
-        int minFaithPoints = excommunicationRequests.get(board.getEra()-2).asInt();
-        if (player.getResource(ResourceType.FAITHPOINTS).get()<minFaithPoints){
-            return false;
+        if (json!=null){
+            int minFaithPoints = json.get("excommunicationRequests").get(board.getEra()-2).asInt();
+            if (player.getResource(ResourceType.FAITHPOINTS).get()<minFaithPoints){
+                return false;
+            }
         }
         return true;
     }

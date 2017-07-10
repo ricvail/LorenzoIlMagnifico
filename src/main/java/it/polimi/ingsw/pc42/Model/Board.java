@@ -499,7 +499,9 @@ public class Board {
         }
         int faith = player.getResource(ResourceType.FAITHPOINTS).get();
         try {
-            victoryPoints = victoryPointsFromFaithPoints.get("faithPoints").get(faith).asInt();
+            if (victoryPointsFromFaithPoints!=null){
+                victoryPoints = victoryPointsFromFaithPoints.get("faithPoints").get(faith).asInt();
+            } else throw new NullPointerException();
         } catch (NullPointerException npe){
             logger.error(npe);
             victoryPoints= (player.getResource(ResourceType.FAITHPOINTS).get()-15)*5+30;
