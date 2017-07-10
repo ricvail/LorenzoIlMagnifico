@@ -113,7 +113,7 @@ public class Client extends MessageSender {
                     MoveBuilder.addInner((ObjectNode)currentMove, (ObjectNode)payload);
                     waitingForResponse = true;
                     sendMessage(Strings.MoveTypes.MOVE, currentMove);
-                } else if (payload.get("field").asText().equalsIgnoreCase("cardChoices")){
+                } else if ("cardChoices".equalsIgnoreCase(payload.get("field").asText())){
                     MoveBuilder.addCardChoice((ObjectNode)currentMove, (ObjectNode)payload);
                     waitingForResponse = true;
                     sendMessage(Strings.MoveTypes.MOVE, currentMove);

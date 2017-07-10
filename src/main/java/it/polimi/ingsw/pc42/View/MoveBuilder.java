@@ -99,17 +99,17 @@ public class MoveBuilder {
             }catch (Exception e){
                 logger.error(e);
             }
-        }else if (field.equalsIgnoreCase("optionToActivate")){
+        }else if ("optionToActivate".equalsIgnoreCase(field)){
             try {
                 move.put(field, Integer.parseInt(userChoice));
-            }catch (Exception e){
-
+            }catch (Exception a){
+                logger.error(a);
             }
         }else if ("paymentChoice".equalsIgnoreCase(field)){
             try {
                 move.put(field, Integer.parseInt(userChoice));
-            } catch (Exception e){
-                logger.error(e);
+            } catch (Exception i){
+                logger.error(i);
             }
         }else if ("vaticanChoice".equalsIgnoreCase(field)){
             if ("y".equalsIgnoreCase(userChoice)){
