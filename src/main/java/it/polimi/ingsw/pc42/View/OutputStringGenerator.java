@@ -112,7 +112,6 @@ public class OutputStringGenerator {
                         if (space.get("familyMembers").size() > 0) {
                             out.add("\tNumber of family members: " + space.get("familyMembers").size());
                         }
-                        Iterator<JsonNode> immediateEffects = space.get("immediateResourceEffect").elements();
                         if (space.has("immediateResourceEffect")) {
                             if (space.get("immediateResourceEffect").size() == 1 &&
                                     space.get("immediateResourceEffect").has("effect")) {
