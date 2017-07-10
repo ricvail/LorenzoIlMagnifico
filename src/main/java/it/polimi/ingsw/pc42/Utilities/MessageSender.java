@@ -11,7 +11,15 @@ import java.io.PrintWriter;
  */
 public abstract class MessageSender {
 
-    public PrintWriter socketOut;
+    public PrintWriter getSocketOut() {
+        return socketOut;
+    }
+
+    public void setSocketOut(PrintWriter socketOut) {
+        this.socketOut = socketOut;
+    }
+
+    private PrintWriter socketOut;
 
     public void sendMessage(String type, JsonNode payload){
         JsonNodeFactory factory= JsonNodeFactory.instance;

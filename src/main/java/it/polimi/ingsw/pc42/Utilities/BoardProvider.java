@@ -15,6 +15,6 @@ public class BoardProvider {
         this.board = board;
     }
 
-    public Board board;
+    private Board board;
 
 }

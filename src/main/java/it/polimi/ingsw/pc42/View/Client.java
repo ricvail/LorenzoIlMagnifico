@@ -34,7 +34,7 @@ public class Client extends MessageSender {
     String userQuery;
     JsonNode currentMove;
     ArrayList<moveBuildingState> moveStack;
-    public String playerColor;
+    private String playerColor;
 
     public void setSocket (Socket socket){
         this.socket=socket;
@@ -49,7 +49,7 @@ public class Client extends MessageSender {
         Socket socket = new Socket(IP, PORT);
         System.out.println("Connection Established");
         socketIn= new Scanner((socket.getInputStream()));
-        socketOut=new PrintWriter(socket.getOutputStream());
+        setSocketOut(new PrintWriter(socket.getOutputStream()));
         ExecutorService executor = Executors.newFixedThreadPool(2);
         continueLoop = true;
         isInGame=false;
@@ -171,7 +171,7 @@ public class Client extends MessageSender {
             }
         }
         socketIn.close();
-        socketOut.close();
+        getSocketOut().close();
         socket.close();
 
     }
@@ -472,6 +472,6 @@ public class Client extends MessageSender {
             this.move = move;
             this.serverResponse = serverResponse;
         }
-        public JsonNode move, serverResponse;
+        private JsonNode move, serverResponse;
     }
 }

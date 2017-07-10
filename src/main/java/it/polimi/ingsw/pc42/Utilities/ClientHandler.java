@@ -62,7 +62,7 @@ public class ClientHandler extends MessageSender implements Runnable {
     public void run() {
         try {
             socketIn = new Scanner(socket.getInputStream());
-            socketOut = new PrintWriter(socket.getOutputStream());
+            setSocketOut(new PrintWriter(socket.getOutputStream()));
         } catch (IOException e) {
             logger.error(e);
             isConnected=false;
@@ -83,7 +83,7 @@ public class ClientHandler extends MessageSender implements Runnable {
         //END MAIN LOOP____________________________________________________________________
         try {
             socketIn.close();
-            socketOut.close();
+            getSocketOut().close();
             socket.close();
         } catch (IOException e) {
             logger.error(e);
