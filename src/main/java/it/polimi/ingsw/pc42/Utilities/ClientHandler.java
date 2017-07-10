@@ -21,13 +21,14 @@ public class ClientHandler extends MessageSender implements Runnable {
 
     private Board board;
     private Logger logger;
-
     private boolean isConnected;
-
-
     private boolean isInGame;
     private Game game;
     private Server server;
+    private Player player;
+    private Socket socket;
+    Scanner socketIn;
+
     public void setBoard(Board b) {
         this.board = b;
     }
@@ -40,10 +41,6 @@ public class ClientHandler extends MessageSender implements Runnable {
         this.player = player;
     }
 
-    private Player player;
-
-    private Socket socket;
-    Scanner socketIn;
     public ClientHandler(Socket socket, Server server) {
         this.server=server;
         this.socket = socket;

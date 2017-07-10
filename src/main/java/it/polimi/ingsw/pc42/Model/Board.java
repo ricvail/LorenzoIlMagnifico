@@ -22,9 +22,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 
-/**
- * Created by diego on 28/05/2017.
- */
 public class Board {
     private static Logger logger;
     private int era;
@@ -39,7 +36,6 @@ public class Board {
     private PrivilegeManager privilegesManager;
     private ArrayNode spacesDescription;
     private boolean isGameOver;
-
     private boolean vatican;
 
     public PrivilegeManager getPrivilegeManager(){
@@ -51,6 +47,11 @@ public class Board {
         return isGameOver;
     }
 
+    /**
+     * Generates the description of the state of the game: board, players, dices etc.
+     *
+     * @return the higher node of the description
+     */
     public JsonNode generateJsonDescription () {
         JsonNodeFactory factory= JsonNodeFactory.instance;
         ObjectNode board = factory.objectNode();
@@ -139,6 +140,7 @@ public class Board {
         currentPlayer=playerArrayList.get(0);
         era = 1;
         vatican= false;
+        //TODO cancellare?
         //cleanUp();//Council will be empty, so nothing happens to turn order;
                     //cleanUp also rolls dices and causes tower action spaces to receive their first card
     }
