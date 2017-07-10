@@ -23,12 +23,7 @@ public class ForeachImmediate extends AbstractDecorator {
      */
     public ForeachImmediate(iCard c, ResourceType resObtained, float ratio, ResourceType resCounted) {
         super(c);
-        this.counter =new counter(){
-            @Override
-            public int getCount(Player p) {
-                return ForeachManager.getCount(p, resCounted);
-            }
-        };
+        this.counter = p -> ForeachManager.getCount(p, resCounted);
         this.resObtained=resObtained;
         this.ratio=ratio;
     }
@@ -43,12 +38,7 @@ public class ForeachImmediate extends AbstractDecorator {
      */
     public ForeachImmediate(iCard c, ResourceType resObtained, float ratio, Card.CardType cardCounted) {
         super(c);
-        this.counter =new counter(){
-            @Override
-            public int getCount(Player p) {
-                return ForeachManager.getCount(p, cardCounted);
-            }
-        };
+        this.counter = p -> ForeachManager.getCount(p, cardCounted);
         this.resObtained=resObtained;
         this.ratio=ratio;
     }

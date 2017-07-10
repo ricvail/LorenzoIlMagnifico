@@ -7,12 +7,15 @@ import it.polimi.ingsw.pc42.Control.ActionSpace.*;
 import it.polimi.ingsw.pc42.Control.ActionSpace.ActionDecorator;
 import it.polimi.ingsw.pc42.Control.DevelopmentCards.Card;
 import it.polimi.ingsw.pc42.Control.ResourceType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class ActionSpaceParser {
+    private static Logger logger= LogManager.getLogger();
 
     /**
      *Factory method that adds the action space, tied to a board, to the spaces list, delegating the decoration and
@@ -44,9 +47,10 @@ public class ActionSpaceParser {
                         Card.CardType cardType = Card.CardType.fromString(effect);
                         actionSpace = new CardDecorator(cardType, actionSpace);
                     } catch (Exception e) {
-                        if (effect.equalsIgnoreCase("harvest")) {
+                        logger.info(e);
+                        if ("harvest".equalsIgnoreCase(effect)) {
                             actionSpace = new ActionDecorator(ActionDecorator.ActionType.HARVEST, actionSpace);
-                        } else if (effect.equalsIgnoreCase("production")) {
+                        } else if ("production".equalsIgnoreCase(effect)) {
                             actionSpace = new ActionDecorator(ActionDecorator.ActionType.PRODUCTION, actionSpace);
                         } else {
                             throw new Exception("Invalid effect detected: "+effect);
@@ -63,10 +67,11 @@ public class ActionSpaceParser {
                         int q = actionSpaceJson.get("immediateResourceEffect").get(key).asInt();
                         actionSpace = new ResourceImmediateBonus(rt, q, actionSpace);
                     } catch (IllegalArgumentException e) {
-                        if (key.equalsIgnoreCase("privileges")) {
+                        logger.info(e);
+                        if ("privileges".equalsIgnoreCase(key)) {
                             int q = actionSpaceJson.get("immediateResourceEffect").get(key).asInt();
                             actionSpace = new privilegesActionSpaceDecorator(q, actionSpace);
-                        } else if (key.equalsIgnoreCase("effect")) {
+                        } else if ("effect".equalsIgnoreCase(key)) {
 
                         } else {
                             throw new Exception("Invalid immediateResourceEffect detected: "+key);

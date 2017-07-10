@@ -12,6 +12,7 @@ import java.util.Iterator;
  * Created by RICVA on 01/07/2017.
  */
 public class PersonalBonusTileParser {
+
     public static PersonalBonusTile parse(JsonNode json){
         PersonalBonusTile tile=new PersonalBonusTile(json);
 

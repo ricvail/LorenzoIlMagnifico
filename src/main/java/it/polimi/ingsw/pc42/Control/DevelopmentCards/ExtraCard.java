@@ -8,6 +8,8 @@ import it.polimi.ingsw.pc42.Control.ResourceType;
 import it.polimi.ingsw.pc42.Control.ResourceWrapper;
 import it.polimi.ingsw.pc42.Model.Dice;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 
@@ -23,6 +25,7 @@ public class ExtraCard extends AbstractDecorator{
     ArrayList<bonus> bonuses;
     FamilyMember ghost;
     ArrayList<Area> allowedAreas;
+    private Logger logger;
 
     /**
      * Class constructor. Decorates a card for the effect that allows you to draw an extra card, specifying from what
@@ -39,6 +42,7 @@ public class ExtraCard extends AbstractDecorator{
         this.allowedAreas = allowedAreas;
         this.extraActionValue=actionValue;
         this.bonuses=bonuses;
+        logger= LogManager.getLogger();
     }
 
     /**
@@ -114,7 +118,7 @@ public class ExtraCard extends AbstractDecorator{
         try {
             MoveManager.undoGetActionSpaceFromJson(getBoard(), move.get("immediateEffect"), ghost);
         } catch (ActionAbortedException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
         setOldBonuses(fm);
     }

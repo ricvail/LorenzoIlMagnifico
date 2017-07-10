@@ -4,12 +4,15 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import it.polimi.ingsw.pc42.Model.Player;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Iterator;
 
 public class PrivilegeManager {
 
     private JsonNode privileges;
+    private Logger logger;
 
     JsonNode getPrivileges(){
         return privileges;
@@ -21,6 +24,7 @@ public class PrivilegeManager {
      * @param privileges node of an array of privileges
      */
     public PrivilegeManager(JsonNode privileges){
+        logger= LogManager.getLogger();
         this.privileges=privileges;
     }
 
@@ -43,8 +47,7 @@ public class PrivilegeManager {
         try {
             applyDifferentPrivileges(p, move);
         } catch (Exception e) {
-            //this should never happen
-            e.printStackTrace();
+            logger.error(e);
         }
 
     }

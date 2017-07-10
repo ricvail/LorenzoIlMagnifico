@@ -8,6 +8,8 @@ import it.polimi.ingsw.pc42.Utilities.GameInitializer;
 import it.polimi.ingsw.pc42.Utilities.MessageSender;
 import it.polimi.ingsw.pc42.Utilities.StreamMapper;
 import it.polimi.ingsw.pc42.Utilities.Strings;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.net.Socket;
@@ -68,7 +70,7 @@ public class Client extends MessageSender {
                 payload = j.get("payload");
                 type = j.get("type").asText();
             } catch (Exception e) {
-                e.printStackTrace();
+                LogManager.getLogger().error(e);
                 continue;
             }
             if (type.equalsIgnoreCase(Strings.MessageTypes.ADDED_TO_LOBBY)){
@@ -107,7 +109,7 @@ public class Client extends MessageSender {
             }
 
             if (type.equalsIgnoreCase(Strings.MessageTypes.MOVE_INCOMPLETE)){
-                if (payload.get("field").asText().equalsIgnoreCase("immediateEffect")){
+                if ("immediateEffect".equalsIgnoreCase(payload.get("field").asText())){
                     MoveBuilder.addInner((ObjectNode)currentMove, (ObjectNode)payload);
                     waitingForResponse = true;
                     sendMessage(Strings.MoveTypes.MOVE, currentMove);
@@ -160,7 +162,7 @@ public class Client extends MessageSender {
                     }
                 }
             }catch (Exception e){
-
+                LogManager.getLogger().error(e);
             }
             if (type.equalsIgnoreCase(Strings.MessageTypes.UPDATE)){
                 printStatus();
@@ -177,105 +179,105 @@ public class Client extends MessageSender {
     public void printStatus(){
         waitingForResponse=false;
         ArrayList<String> gen= new ArrayList<>();
-        if (userQuery.equalsIgnoreCase("B")){
+        if ("B".equalsIgnoreCase(userQuery)){
             gen=OutputStringGenerator.generateOutputStringOf_B(board);
         }
-        if (userQuery.equalsIgnoreCase("TT")){
+        if ("TT".equalsIgnoreCase(userQuery)){
             try {
                 gen=OutputStringGenerator.generateOutputStringOf_A(board, "TERRITORY");
             }catch (Exception e){
-                e.printStackTrace();
+                LogManager.getLogger().error(e);
                 return;
             }
         }
-        if (userQuery.equalsIgnoreCase("CT")){
+        if ("CT".equalsIgnoreCase(userQuery)){
             try {
                 gen = OutputStringGenerator.generateOutputStringOf_A(board, "CHARACTER");
             }catch (Exception e){
-                e.printStackTrace();
+                LogManager.getLogger().error(e);
                 return;
             }
         }
-        if (userQuery.equalsIgnoreCase("BT")){
+        if ("BT".equalsIgnoreCase(userQuery)){
             try {
                 gen=OutputStringGenerator.generateOutputStringOf_A(board, "BUILDING");
             }catch (Exception e){
-                e.printStackTrace();
+                LogManager.getLogger().error(e);
                 return;
             }
         }
-        if (userQuery.equalsIgnoreCase("VT")){
+        if ("VT".equalsIgnoreCase(userQuery)){
             try {
                 gen=OutputStringGenerator.generateOutputStringOf_A(board, "VENTURE");
             }catch (Exception e){
-                e.printStackTrace();
+                LogManager.getLogger().error(e);
                 return;
             }
         }
-        if (userQuery.equalsIgnoreCase("C")){
+        if ("C".equalsIgnoreCase(userQuery)){
             try {
                 gen=OutputStringGenerator.generateOutputStringOf_A(board, "COUNCIL");
             }catch (Exception e){
-                e.printStackTrace();
+                LogManager.getLogger().error(e);
                 return;
             }
         }
-        if (userQuery.equalsIgnoreCase("P")){
+        if ("P".equalsIgnoreCase(userQuery)){
             try {
                 gen=OutputStringGenerator.generateOutputStringOf_A(board, "PRODUCTION");
             }catch (Exception e){
-                e.printStackTrace();
+                LogManager.getLogger().error(e);
                 return;
             }
         }
-        if (userQuery.equalsIgnoreCase("HV")){
+        if ("HV".equalsIgnoreCase(userQuery)){
             try {
                 gen=OutputStringGenerator.generateOutputStringOf_A(board, "HARVEST");
             }catch (Exception e){
-                e.printStackTrace();
+                LogManager.getLogger().error(e);
                 return;
             }
         }
-        if (userQuery.equalsIgnoreCase("MK")){
+        if ("MK".equalsIgnoreCase(userQuery)){
             try {
                 gen=OutputStringGenerator.generateOutputStringOf_A(board, "MARKET");
             }catch (Exception e){
-                e.printStackTrace();
+                LogManager.getLogger().error(e);
                 return;
             }
         }
-        if (userQuery.equalsIgnoreCase("RP")){
+        if ("RP".equalsIgnoreCase(userQuery)){
             try {
                 gen=OutputStringGenerator.getPlayerStatus(board, "red");
             }catch (Exception e){
-                e.printStackTrace();
                 System.out.println("Red player doesn't exist");
+                LogManager.getLogger().info(e);
                 return;
             }
         }
-        if (userQuery.equalsIgnoreCase("BP")){
+        if ("BP".equalsIgnoreCase(userQuery)){
             try {
                 gen=OutputStringGenerator.getPlayerStatus(board, "blue");
             }catch (Exception e){
-                e.printStackTrace();
+                LogManager.getLogger().info(e);
                 System.out.println("Blue player doesn't exist");
                 return;
             }
         }
-        if (userQuery.equalsIgnoreCase("YP")){
+        if ("YP".equalsIgnoreCase(userQuery)){
             try {
                 gen=OutputStringGenerator.getPlayerStatus(board, "yellow");
             }catch (Exception e){
-                e.printStackTrace();
+                LogManager.getLogger().info(e);
                 System.out.println("Yellow player doesn't exist");
                 return;
             }
         }
-        if (userQuery.equalsIgnoreCase("GP")){
+        if ("GP".equalsIgnoreCase(userQuery)){
             try {
                 gen=OutputStringGenerator.getPlayerStatus(board, "green");
             }catch (Exception e){
-                e.printStackTrace();
+                LogManager.getLogger().info(e);
                 System.out.println("Green player doesn't exist");
                 return;
             }
@@ -351,7 +353,7 @@ public class Client extends MessageSender {
 
     public void resetMove(){
         moveComplete=false;
-        moveStack=new ArrayList<moveBuildingState>();
+        moveStack=new ArrayList<>();
     }
 
     Runnable userInputHandler= ()->{
@@ -361,11 +363,11 @@ public class Client extends MessageSender {
             String inputLine = stdin.next();
             if (!waitingForResponse) {
                 if (!isInGame) {
-                    if (inputLine.equalsIgnoreCase("n")) {
+                    if ("n".equalsIgnoreCase(inputLine)) {
                         ObjectNode payload = JsonNodeFactory.instance.objectNode();
                         sendMessage(Strings.MoveTypes.NEWGAME, payload);
                         waitingForResponse=true;
-                    } else if (inputLine.equalsIgnoreCase("r")) {
+                    } else if ("r".equalsIgnoreCase(inputLine)) {
                         boolean flag = true;
                         int id=0;
                         while (flag){
@@ -374,7 +376,7 @@ public class Client extends MessageSender {
                                 id = Integer.parseInt(stdin.next());
                                 flag=false;
                             } catch (Exception e){
-
+                                LogManager.getLogger().error(e);
                             }
                         }
                         flag=true;
@@ -385,6 +387,7 @@ public class Client extends MessageSender {
                                 color = stdin.next();
                                 flag=false;
                             } catch (Exception e){
+                                LogManager.getLogger().error(e);
                             }
                         }
                         ObjectNode node = JsonNodeFactory.instance.objectNode();
@@ -399,27 +402,27 @@ public class Client extends MessageSender {
                     gameMoveLoop(inputLine);
                 }
             }
-        }                                                                
+        }
     };
 
 
 
     public void gameMoveLoop(String in){
-        if(in.equalsIgnoreCase("H")) {
+        if("H".equalsIgnoreCase(in)) {
             ArrayList<String> gen=OutputStringGenerator.generateMenuCommands();
             System.out.print(OutputStringGenerator.ArrayToString(gen));
         }
-        else if (in.equalsIgnoreCase("M")){
+        else if ("M".equalsIgnoreCase(in)){
             currentMove=MoveBuilder.createBlankMove(true);
             waitingForResponse = true;
             sendMessage(Strings.MoveTypes.MOVE, currentMove);
-        }else if (in.equalsIgnoreCase("U")){
+        }else if ("U".equalsIgnoreCase(in)){
             if (moveStack.size()>1){
                 moveStack.remove(0);
                 currentMove=moveStack.get(0).move.deepCopy();
                 printNextFieldInstructions(moveStack.get(0).serverResponse);
             }
-        } else if (in.equalsIgnoreCase("E")){
+        } else if ("E".equalsIgnoreCase(in)){
             if (moveComplete){
                 waitingForResponse = true;
                 MoveBuilder.setChecking((ObjectNode)currentMove, false);
@@ -427,13 +430,13 @@ public class Client extends MessageSender {
             } else {
                 System.out.println("Your move is not yet complete");
             }
-        }  else if (in.equalsIgnoreCase("B")||in.equalsIgnoreCase("TT")||
-                in.equalsIgnoreCase("CT")||in.equalsIgnoreCase("BT")||
-                in.equalsIgnoreCase("VT")||in.equalsIgnoreCase("C")||
-                in.equalsIgnoreCase("P")||in.equalsIgnoreCase("HV")||
-                in.equalsIgnoreCase("MK")||in.equalsIgnoreCase("RP")||
-                in.equalsIgnoreCase("BP")|| in.equalsIgnoreCase("YP")||
-                in.equalsIgnoreCase("GP")){
+        }  else if ("B".equalsIgnoreCase(in)||"TT".equalsIgnoreCase(in)||
+                "CT".equalsIgnoreCase(in)||"BT".equalsIgnoreCase(in)||
+                "VT".equalsIgnoreCase(in)||"C".equalsIgnoreCase(in)||
+                "P".equalsIgnoreCase(in)||"HV".equalsIgnoreCase(in)||
+                "MK".equalsIgnoreCase(in)||"RP".equalsIgnoreCase(in)||
+                "BP".equalsIgnoreCase(in)|| "YP".equalsIgnoreCase(in)||
+                "GP".equalsIgnoreCase(in)){
             userQuery=in;
             ObjectNode node = JsonNodeFactory.instance.objectNode();
             waitingForResponse=true;
@@ -448,6 +451,8 @@ public class Client extends MessageSender {
 
 
     public static void main(String[] args) {
+
+        System.getProperties().setProperty("log4j.configurationFile", "log4j2.xml");
         Client client = new Client();
         boolean asd = true;
 
@@ -456,7 +461,8 @@ public class Client extends MessageSender {
                 client.startClient();
                 asd=false;
             } catch (IOException e) {
-                //e.printStackTrace();
+                LogManager.getLogger().error(e);
+
             }
         }
     }
@@ -467,9 +473,5 @@ public class Client extends MessageSender {
             this.serverResponse = serverResponse;
         }
         public JsonNode move, serverResponse;
-    }
-
-    public void printCommandsMenu(){
-
     }
 }

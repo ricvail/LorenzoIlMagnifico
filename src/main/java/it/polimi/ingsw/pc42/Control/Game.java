@@ -11,6 +11,8 @@ import it.polimi.ingsw.pc42.Utilities.GameInitializer;
 import it.polimi.ingsw.pc42.Utilities.MyTimer;
 import it.polimi.ingsw.pc42.Utilities.Strings;
 import it.polimi.ingsw.pc42.View.Client;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,6 +24,7 @@ public class Game {
     private ArrayList<Player> playerArrayList;
     private ArrayList<ClientHandler> clients;
     private Board b;
+    private Logger logger;
 
     public static int nextID = 0;
 
@@ -34,6 +37,7 @@ public class Game {
         for (ClientHandler c : clients){
             this.clients.add(c);
         }
+        logger= LogManager.getLogger();
     }
     public void start(){
         playerArrayList = new ArrayList<Player>();
@@ -92,7 +96,7 @@ public class Game {
         try {
             throw new Exception();
         } catch (Exception e){
-            e.printStackTrace();
+            logger.error(e);
         }
         return null;
     }
@@ -123,11 +127,15 @@ public class Game {
                         fm = fmList.get(i);
                     }
                 }
-                ghostNode.put("familyMember", fm.getDiceColor().getDiceColorString());
+                try{
+                    ghostNode.put("familyMember", fm.getDiceColor().getDiceColorString());
+                } catch (Exception e){
+                    logger.error(e);
+                }
                 try {
                     MoveManager.makeMove(b, p, ghostNode);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.error(e);
                 }
                 ObjectNode payload =JsonNodeFactory.instance.objectNode();
                 payload.put("timedOutPlayer", timedOutPlayer);

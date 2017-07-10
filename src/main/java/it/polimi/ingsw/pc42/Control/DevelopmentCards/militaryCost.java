@@ -5,13 +5,18 @@ import it.polimi.ingsw.pc42.Control.ActionAbortedException;
 import it.polimi.ingsw.pc42.Control.ResourceType;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
 
-/**
- * Created by RICVA on 15/06/2017.
- */
 public class militaryCost extends AbstractDecorator {
 
     private int required, subtracted;
 
+    /**
+     * Class contructor. Decorates a card of it has a cost type that requires a check on military points: first the
+     * required ones and then the effective subtraction of another amount.
+     *
+     * @param c card to be decorated
+     * @param required required military points to draw the card
+     * @param subtracted effective military points that are subtracted
+     */
     public militaryCost(iCard c, int required, int subtracted) {
         super(c);
         this.required=required;

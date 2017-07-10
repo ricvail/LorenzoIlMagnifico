@@ -3,13 +3,19 @@ package it.polimi.ingsw.pc42.Control.ActionSpace;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import it.polimi.ingsw.pc42.Control.ActionAbortedException;
+import it.polimi.ingsw.pc42.Control.ActionSpace.AbstractDecorator;
+import it.polimi.ingsw.pc42.Control.ActionSpace.iActionSpace;
 import it.polimi.ingsw.pc42.Model.FamilyMember;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import it.polimi.ingsw.pc42.Control.PrivilegeManager;
 
 
 public class privilegesActionSpaceDecorator extends AbstractDecorator {
 
     private int quantity;
+    private Logger logger;
+
     /**
      * Class constructor.  Decorates an action space (council) with a privileges bonus.
      *
@@ -19,6 +25,7 @@ public class privilegesActionSpaceDecorator extends AbstractDecorator {
     public privilegesActionSpaceDecorator(int q, iActionSpace actionSpace) {
         super(actionSpace);
         this.quantity=q;
+        logger= LogManager.getLogger();
     }
 
     @Override
@@ -30,8 +37,7 @@ public class privilegesActionSpaceDecorator extends AbstractDecorator {
             try {
                 getBoard().getPrivilegeManager().undoPrivileges(fm.owner, move);
             } catch (Exception e1) {
-                //this should NOT happen.
-                e1.printStackTrace();
+                logger.error(e1);
             }
             throw e;
         }
@@ -42,8 +48,7 @@ public class privilegesActionSpaceDecorator extends AbstractDecorator {
         try {
             getBoard().getPrivilegeManager().undoPrivileges(fm.owner, move);
         } catch (Exception e1) {
-            //this should NOT happen.
-            e1.printStackTrace();
+            logger.error("undoActionFailed",e1);
         }
         super.undoAction(move, fm);
     }
