@@ -23,7 +23,7 @@ different timeout for user moves.
 ###Server
 All card and actionSpace effects are implemented as decorators of their respective base class. <br>
 We exploited the mechanism of catching and rethrowing Exceptions to bubble up through the stack of method calls, in case
-something goes wrong when applying a particular decorator (for example is the user is left with negative resources 
+something goes wrong when applying a particular decorator (for example if the user is left with negative resources 
 because he tried a move he could not afford)<br>
 Board holds a list of action spaces and of players (for turn management). This class also holds a reference to the Dices. <br>
 Game Initializer has the job of instantiating the board. It reads configuration data from the .json files mentioned above
