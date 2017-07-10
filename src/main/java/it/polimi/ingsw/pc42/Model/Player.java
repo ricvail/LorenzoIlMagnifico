@@ -27,8 +27,13 @@ public class Player {
     private PlayerColor color;
     private ArrayList<iCard> cardsOwned;
     private ArrayList<FamilyMember> familyMembers;
-    public ArrayList<ResourceWrapper> resources;
-    public PersonalBonusTile bonusTile;
+
+    public ArrayList<ResourceWrapper> getResources() {
+        return resources;
+    }
+
+    private ArrayList<ResourceWrapper> resources;
+    private PersonalBonusTile bonusTile;
     private static Logger logger=LogManager.getLogger();
     private boolean isAdvanced;
 
@@ -119,7 +124,7 @@ public class Player {
     }
 
     public void performHarvest (JsonNode move, FamilyMember fm)throws ActionAbortedException {
-        PersonalBonusTile.applyBonuses(bonusTile.harvestBonuses, this);
+        PersonalBonusTile.applyBonuses(bonusTile.getHarvestBonuses(), this);
         if (!isAdvanced) return;
         int i = 0;
         for (int j = 0; j<cardsOwned.size(); j++){
@@ -132,7 +137,7 @@ public class Player {
                 } catch (ActionAbortedException e) {
                     e.setCardChoice(true);
                     e.setCard(j);
-                    PersonalBonusTile.undoBonuses(bonusTile.harvestBonuses, this);
+                    PersonalBonusTile.undoBonuses(bonusTile.getHarvestBonuses(), this);
                     j--;
                     i--;
                     for (; j >= 0; j--) {
@@ -153,7 +158,7 @@ public class Player {
     }
 
     public void undoHarvest(JsonNode move, FamilyMember fm) {
-        PersonalBonusTile.undoBonuses(bonusTile.harvestBonuses, this);
+        PersonalBonusTile.undoBonuses(bonusTile.getHarvestBonuses(), this);
         if (!isAdvanced) return;
         int j = 0;
         for (int i = 0; i<cardsOwned.size(); i++){
@@ -169,7 +174,7 @@ public class Player {
     }
     public void performProduction (JsonNode move, FamilyMember fm)throws ActionAbortedException {
         setAccumulate(true);
-        PersonalBonusTile.applyBonuses(bonusTile.productionBonuses, this);
+        PersonalBonusTile.applyBonuses(bonusTile.getProductionBonuses(), this);
         if (!isAdvanced){
             setAccumulate(false);
             return;
@@ -186,7 +191,7 @@ public class Player {
                     setAccumulate(false);
                     e.setCardChoice(true);
                     e.setCard(j);
-                    PersonalBonusTile.undoBonuses(bonusTile.productionBonuses, this);
+                    PersonalBonusTile.undoBonuses(bonusTile.getProductionBonuses(), this);
                     j--;
                     i--;
                     for (; j >= 0; j--) {
@@ -214,7 +219,7 @@ public class Player {
     }
 
     public void undoProduction(JsonNode move, FamilyMember fm) {
-        PersonalBonusTile.undoBonuses(bonusTile.productionBonuses, this);
+        PersonalBonusTile.undoBonuses(bonusTile.getProductionBonuses(), this);
         if (!isAdvanced) return;
         int j = 0;
         for (int i = 0; i<cardsOwned.size(); i++){
@@ -287,7 +292,7 @@ public class Player {
         for (iResourceWrapper rw:resources){
             root.put(rw.getResourceType().getString(), rw.get());
         }
-        root.set("bonusTiles", bonusTile.json);
+        root.set("bonusTiles", bonusTile.getJson());
         ArrayNode listOfTerritoriesCards=factory.arrayNode();
         ArrayNode listOfCharacterCards=factory.arrayNode();
         ArrayNode listOfBuildingsCards=factory.arrayNode();
@@ -319,7 +324,7 @@ public class Player {
         root.set("characters", listOfCharacterCards);
         root.set("buildings", listOfBuildingsCards);
         root.set("ventures", listOfVenturesCards);
-        root.set("bonusTiles", bonusTile.json);
+        root.set("bonusTiles", bonusTile.getJson());
         return root;
     }
 

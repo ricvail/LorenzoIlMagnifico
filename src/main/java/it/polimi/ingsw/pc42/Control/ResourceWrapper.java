@@ -4,10 +4,19 @@ package it.polimi.ingsw.pc42.Control;
 public class ResourceWrapper extends IntWrapper implements iResourceWrapper {
 
     ResourceType type;
-    public CostBonus activeBonus;
 
-    public boolean accumulatorEnabled;
-    public int accumulated;
+    public CostBonus getActiveBonus() {
+        return activeBonus;
+    }
+
+    public void setActiveBonus(CostBonus activeBonus) {
+        this.activeBonus = activeBonus;
+    }
+
+    private CostBonus activeBonus;
+
+    private boolean accumulatorEnabled;
+    private int accumulated;
 
 
     public CostBonus getBonus(){

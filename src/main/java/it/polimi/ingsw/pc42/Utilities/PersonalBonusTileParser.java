@@ -16,8 +16,8 @@ public class PersonalBonusTileParser {
     public static PersonalBonusTile parse(JsonNode json){
         PersonalBonusTile tile=new PersonalBonusTile(json);
 
-        addBonuses(json.get("harvest"), tile.harvestBonuses);
-        addBonuses(json.get("production"), tile.productionBonuses);
+        addBonuses(json.get("harvest"), tile.getHarvestBonuses());
+        addBonuses(json.get("production"), tile.getProductionBonuses());
 
         return tile;
     }

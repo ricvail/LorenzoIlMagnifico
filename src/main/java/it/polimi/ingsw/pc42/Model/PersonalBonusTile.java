@@ -9,8 +9,33 @@ import java.util.ArrayList;
 
 public class PersonalBonusTile {
 
-    public ArrayList<ResourceWrapper> harvestBonuses, productionBonuses;
-    public JsonNode json;
+    private ArrayList<ResourceWrapper> harvestBonuses, productionBonuses;
+
+    public ArrayList<ResourceWrapper> getHarvestBonuses() {
+        return harvestBonuses;
+    }
+
+    public void setHarvestBonuses(ArrayList<ResourceWrapper> harvestBonuses) {
+        this.harvestBonuses = harvestBonuses;
+    }
+
+    public ArrayList<ResourceWrapper> getProductionBonuses() {
+        return productionBonuses;
+    }
+
+    public void setProductionBonuses(ArrayList<ResourceWrapper> productionBonuses) {
+        this.productionBonuses = productionBonuses;
+    }
+
+    public JsonNode getJson() {
+        return json;
+    }
+
+    public void setJson(JsonNode json) {
+        this.json = json;
+    }
+
+    private JsonNode json;
     private static Logger logger=LogManager.getLogger();
 
     /**

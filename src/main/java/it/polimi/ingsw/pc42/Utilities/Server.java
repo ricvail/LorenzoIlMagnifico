@@ -73,7 +73,7 @@ public class Server {
 
     public Game getGame(int id) throws myException {
         for (Game g: games){
-            if (g.id==id) return g;
+            if (g.getId()==id) return g;
         }
         throw new myException();
     }

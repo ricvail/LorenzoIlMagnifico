@@ -90,9 +90,9 @@ public class ExtraCard extends AbstractDecorator{
      * @param fm family member of the player to be accessed
      */
     public void setOldBonuses(FamilyMember fm){
-        for (ResourceWrapper rw:fm.owner.resources){
+        for (ResourceWrapper rw:fm.owner.getResources()){
             bonus b=findBonusByType(rw.getResourceType());
-            rw.activeBonus=b.previousBonus;
+            rw .setActiveBonus(b.previousBonus);
         }
     }
 
@@ -103,7 +103,7 @@ public class ExtraCard extends AbstractDecorator{
      * @param fm family member of the player to be accessed
      */
     public void setNewBonuses(FamilyMember fm){
-        for (ResourceWrapper rw:fm.owner.resources){
+        for (ResourceWrapper rw:fm.owner.getResources()){
             bonus b=findBonusByType(rw.getResourceType());
             b.previousBonus=rw.getBonus();
             rw.resetBonus();
@@ -128,9 +128,9 @@ public class ExtraCard extends AbstractDecorator{
      */
     public static class bonus {
 
-        public ResourceType res;
-        public int bonusToAdd;
-        public ResourceWrapper.CostBonus previousBonus;
+        private ResourceType res;
+        private int bonusToAdd;
+        private ResourceWrapper.CostBonus previousBonus;
 
         /**
          * Class constructor. Takes a resource type and a value of a bonus discount to add and tied them together.

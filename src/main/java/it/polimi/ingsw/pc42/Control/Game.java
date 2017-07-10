@@ -26,7 +26,11 @@ public class Game {
 
     private static int nextID = 0;
 
-    public int id;
+    public int getId() {
+        return id;
+    }
+
+    private int id;
 
     public Game(ArrayList<ClientHandler> clients) {
         this.id = nextID;
@@ -100,7 +104,7 @@ public class Game {
     }
 
 
-    public MyTimer timer;
+    private MyTimer timer;
     public MyTimer createTimer(Board b, ClientHandler client){
         Player p = b.getCurrentPlayer();
         return new MyTimer(MyTimer.getMoveTimeout(), new MyTimer.myTimerTask() {
